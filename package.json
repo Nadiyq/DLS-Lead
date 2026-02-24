@@ -1,0 +1,8 @@
+{
+  "name": "dls-design-tokens",
+  "version": "1.0.0",
+  "description": "DLS Design System — Design Tokens",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

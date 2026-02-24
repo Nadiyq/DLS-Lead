@@ -1,0 +1,493 @@
+/* ==========================================================================
+   DLS-Lead Design Tokens — CSS Custom Properties
+   4-layer system: Primitives → System Semantics → State → Component
+   ========================================================================== */
+
+:root {
+  /* --------------------------------------------------------------------------
+     Layer 1 — Color Primitives (do not use directly in components)
+     -------------------------------------------------------------------------- */
+  --dls-color-neutral-0: #FFFFFF;
+  --dls-color-neutral-50: #FAFAFA;
+  --dls-color-neutral-100: #F5F5F5;
+  --dls-color-neutral-200: #E9EAEB;
+  --dls-color-neutral-300: #D5D7DA;
+  --dls-color-neutral-400: #A4A7AE;
+  --dls-color-neutral-500: #717680;
+  --dls-color-neutral-600: #535862;
+  --dls-color-neutral-700: #414651;
+  --dls-color-neutral-800: #252B37;
+  --dls-color-neutral-900: #181D27;
+  --dls-color-neutral-950: #0A0D12;
+
+  --dls-color-primary-50: #F9F5FF;
+  --dls-color-primary-100: #F4EBFF;
+  --dls-color-primary-200: #E9D7FE;
+  --dls-color-primary-300: #D6BBFB;
+  --dls-color-primary-400: #B692F6;
+  --dls-color-primary-500: #9E77ED;
+  --dls-color-primary-600: #7F56D9;
+  --dls-color-primary-700: #6941C6;
+  --dls-color-primary-800: #53389E;
+  --dls-color-primary-900: #42307D;
+  --dls-color-primary-950: #2C1C5F;
+
+  --dls-color-info-50: #EFF8FF;
+  --dls-color-info-100: #D1E9FF;
+  --dls-color-info-200: #B2DDFF;
+  --dls-color-info-300: #84CAFF;
+  --dls-color-info-400: #53B1FD;
+  --dls-color-info-500: #2E90FA;
+  --dls-color-info-600: #1570EF;
+  --dls-color-info-700: #175CD3;
+  --dls-color-info-800: #1849A9;
+  --dls-color-info-900: #194185;
+  --dls-color-info-950: #102A56;
+
+  --dls-color-success-50: #ECFDF3;
+  --dls-color-success-100: #D1FADF;
+  --dls-color-success-200: #A6F4C5;
+  --dls-color-success-300: #6CE9A6;
+  --dls-color-success-400: #32D583;
+  --dls-color-success-500: #12B76A;
+  --dls-color-success-600: #039855;
+  --dls-color-success-700: #027A48;
+  --dls-color-success-800: #05603A;
+  --dls-color-success-900: #054F31;
+  --dls-color-success-950: #053321;
+
+  --dls-color-warning-50: #FFFAEB;
+  --dls-color-warning-100: #FEF0C7;
+  --dls-color-warning-200: #FEDF89;
+  --dls-color-warning-300: #FEC84B;
+  --dls-color-warning-400: #FDB022;
+  --dls-color-warning-500: #F79009;
+  --dls-color-warning-600: #DC6803;
+  --dls-color-warning-700: #B54708;
+  --dls-color-warning-800: #93370D;
+  --dls-color-warning-900: #7A2E0E;
+  --dls-color-warning-950: #4E1D09;
+
+  --dls-color-danger-50: #FEF3F2;
+  --dls-color-danger-100: #FEE4E2;
+  --dls-color-danger-200: #FECDCA;
+  --dls-color-danger-300: #FDA29B;
+  --dls-color-danger-400: #F97066;
+  --dls-color-danger-500: #F04438;
+  --dls-color-danger-600: #D92D20;
+  --dls-color-danger-700: #B42318;
+  --dls-color-danger-800: #912018;
+  --dls-color-danger-900: #7A271A;
+  --dls-color-danger-950: #55160C;
+
+  --dls-color-opacity-light-20: rgba(255, 255, 255, 0.2);
+  --dls-color-opacity-light-40: rgba(255, 255, 255, 0.4);
+  --dls-color-opacity-light-60: rgba(255, 255, 255, 0.6);
+  --dls-color-opacity-light-80: rgba(255, 255, 255, 0.8);
+  --dls-color-opacity-dark-20: rgba(0, 0, 0, 0.2);
+  --dls-color-opacity-dark-40: rgba(0, 0, 0, 0.4);
+  --dls-color-opacity-dark-60: rgba(0, 0, 0, 0.6);
+  --dls-color-opacity-dark-80: rgba(0, 0, 0, 0.8);
+
+  /* --------------------------------------------------------------------------
+     Layer 2 — System Semantics (surface, text, border, intent, overlay)
+     -------------------------------------------------------------------------- */
+  --dls-color-surface-base: var(--dls-color-neutral-0);
+  --dls-color-surface-subtle: var(--dls-color-neutral-50);
+  --dls-color-surface-muted: var(--dls-color-neutral-100);
+  --dls-color-surface-strong: var(--dls-color-neutral-300);
+  --dls-color-surface-inverse: var(--dls-color-neutral-900);
+  --dls-color-surface-disabled: var(--dls-color-neutral-50);
+
+  --dls-color-text-primary: var(--dls-color-neutral-900);
+  --dls-color-text-secondary: var(--dls-color-neutral-700);
+  --dls-color-text-inverse: var(--dls-color-neutral-0);
+  --dls-color-text-disabled: var(--dls-color-neutral-500);
+  --dls-color-text-placeholder: var(--dls-color-neutral-600);
+
+  --dls-color-border-base: var(--dls-color-neutral-300);
+  --dls-color-border-subtle: var(--dls-color-neutral-200);
+  --dls-color-border-strong: var(--dls-color-neutral-500);
+  --dls-color-border-focus: var(--dls-color-neutral-700);
+  --dls-color-border-disabled: var(--dls-color-neutral-200);
+  --dls-color-border-inverse: var(--dls-color-neutral-0);
+
+  --dls-color-intent-primary-base: var(--dls-color-primary-700);
+  --dls-color-intent-primary-subtle: var(--dls-color-primary-50);
+  --dls-color-intent-primary-strong: var(--dls-color-primary-800);
+  --dls-color-intent-primary-text: var(--dls-color-primary-900);
+  --dls-color-intent-primary-border: var(--dls-color-primary-200);
+
+  --dls-color-intent-success-base: var(--dls-color-success-700);
+  --dls-color-intent-success-subtle: var(--dls-color-success-50);
+  --dls-color-intent-success-strong: var(--dls-color-success-800);
+  --dls-color-intent-success-text: var(--dls-color-success-900);
+  --dls-color-intent-success-border: var(--dls-color-success-200);
+
+  --dls-color-intent-warning-base: var(--dls-color-warning-700);
+  --dls-color-intent-warning-subtle: var(--dls-color-warning-50);
+  --dls-color-intent-warning-strong: var(--dls-color-warning-800);
+  --dls-color-intent-warning-text: var(--dls-color-warning-900);
+  --dls-color-intent-warning-border: var(--dls-color-warning-200);
+
+  --dls-color-intent-danger-base: var(--dls-color-danger-600);
+  --dls-color-intent-danger-subtle: var(--dls-color-danger-50);
+  --dls-color-intent-danger-strong: var(--dls-color-danger-700);
+  --dls-color-intent-danger-text: var(--dls-color-danger-900);
+  --dls-color-intent-danger-border: var(--dls-color-danger-200);
+
+  --dls-color-intent-info-base: var(--dls-color-info-600);
+  --dls-color-intent-info-subtle: var(--dls-color-info-50);
+  --dls-color-intent-info-strong: var(--dls-color-info-700);
+  --dls-color-intent-info-text: var(--dls-color-info-900);
+  --dls-color-intent-info-border: var(--dls-color-info-200);
+
+  --dls-color-intent-neutral-base: var(--dls-color-neutral-800);
+  --dls-color-intent-neutral-subtle: var(--dls-color-neutral-50);
+  --dls-color-intent-neutral-strong: var(--dls-color-neutral-900);
+  --dls-color-intent-neutral-text: var(--dls-color-neutral-900);
+  --dls-color-intent-neutral-border: var(--dls-color-neutral-200);
+
+  --dls-color-overlay-scrim: rgba(0, 0, 0, 0.5);
+  --dls-color-overlay-backdrop: rgba(0, 0, 0, 0.3);
+
+  /* --------------------------------------------------------------------------
+     Layer 3 — State abstraction (behavioral only)
+     -------------------------------------------------------------------------- */
+  /* OKLCH algorithm constants — code side only.
+     Usage: oklch(from var(--base-color) calc(l + var(--dls-state-l-delta-hover)) c h) */
+  --dls-state-l-delta-hover: -0.05;
+  --dls-state-l-delta-pressed: -0.10;
+  /* Opacity overlays — Figma-compatible approximation of OKLCH L-shift.
+     Use for ghost/transparent-base backgrounds; apply as second fill layer in Figma.
+     Dark mode overrides below in [data-theme="dark"]. */
+  --dls-state-hover-overlay: rgba(0, 0, 0, 0.05);
+  --dls-state-pressed-overlay: rgba(0, 0, 0, 0.10);
+  --dls-state-disabled-opacity: 0.38;
+  --dls-state-focus-ring-color: var(--dls-color-info-300);
+
+  /* --------------------------------------------------------------------------
+     Layer 4 — Component tokens (override-safe; use these in components)
+     -------------------------------------------------------------------------- */
+  /* ⚠️ Component-level tokens are for development, theming, and white-label override only.
+     Do NOT use as a replacement for semantic tokens in core design system code.
+     Use these for:
+       - Custom branding/white-labeling
+       - Theme overrides
+       - Temporary dev overrides
+     For production, prefer semantic tokens unless you have a strong reason.
+  */
+  /* Button primary — hover/pressed bg via OKLCH: oklch(from var(--dls-color-component-button-primary-bg-base) calc(l - 0.05) c h) */
+  --dls-color-component-button-primary-bg-base: var(--dls-color-intent-primary-base);
+  --dls-color-component-button-primary-bg-disabled: var(--dls-color-surface-disabled);
+  --dls-color-component-button-primary-fg-base: var(--dls-color-text-inverse);
+  --dls-color-component-button-primary-fg-disabled: var(--dls-color-text-disabled);
+  --dls-color-component-button-primary-border-base: var(--dls-color-intent-primary-base);
+  --dls-color-component-button-primary-border-disabled: var(--dls-color-border-disabled);
+
+  /* Button secondary — hover/pressed bg via OKLCH: oklch(from var(--dls-color-component-button-secondary-bg-base) calc(l - 0.05) c h) */
+  --dls-color-component-button-secondary-bg-base: var(--dls-color-surface-subtle);
+  --dls-color-component-button-secondary-bg-disabled: var(--dls-color-surface-disabled);
+  --dls-color-component-button-secondary-fg-base: var(--dls-color-text-primary);
+  --dls-color-component-button-secondary-fg-disabled: var(--dls-color-text-disabled);
+  --dls-color-component-button-secondary-border-base: var(--dls-color-border-base);
+  --dls-color-component-button-secondary-border-hover: var(--dls-color-border-strong);
+  --dls-color-component-button-secondary-border-pressed: var(--dls-color-border-strong);
+  --dls-color-component-button-secondary-border-disabled: var(--dls-color-border-disabled);
+
+  /* Button ghost — hover/pressed bg use var(--dls-state-hover-overlay) / var(--dls-state-pressed-overlay) */
+  --dls-color-component-button-ghost-bg-base: transparent;
+  --dls-color-component-button-ghost-bg-disabled: transparent;
+  --dls-color-component-button-ghost-fg-base: var(--dls-color-text-primary);
+  --dls-color-component-button-ghost-fg-disabled: var(--dls-color-text-disabled);
+
+  /* Input */
+  --dls-color-component-input-bg-base: var(--dls-color-surface-base);
+  --dls-color-component-input-bg-disabled: var(--dls-color-surface-disabled);
+  --dls-color-component-input-fg-base: var(--dls-color-text-primary);
+  --dls-color-component-input-fg-placeholder: var(--dls-color-text-placeholder);
+  --dls-color-component-input-fg-disabled: var(--dls-color-text-disabled);
+  --dls-color-component-input-border-base: var(--dls-color-border-base);
+  --dls-color-component-input-border-hover: var(--dls-color-border-strong);
+  --dls-color-component-input-border-focus: var(--dls-color-border-focus);
+  --dls-color-component-input-border-disabled: var(--dls-color-border-disabled);
+
+  /* Table */
+  --dls-color-component-table-row-bg-base: transparent;
+  --dls-color-component-table-row-bg-selected: var(--dls-color-intent-primary-subtle);
+  --dls-color-component-table-header-bg: var(--dls-color-surface-muted);
+  --dls-color-component-table-header-fg: var(--dls-color-text-secondary);
+  --dls-color-component-table-header-border: var(--dls-color-border-subtle);
+
+  /* Dialog, dropdown, sidebar, etc. */
+  --dls-color-component-dialog-overlay: var(--dls-color-overlay-scrim);
+  --dls-color-component-dialog-bg: var(--dls-color-surface-base);
+  --dls-color-component-dialog-border: var(--dls-color-border-subtle);
+  --dls-color-component-dropdown-bg: var(--dls-color-surface-base);
+  --dls-color-component-dropdown-border: var(--dls-color-border-base);
+  --dls-color-component-dropdown-item-fg: var(--dls-color-text-primary);
+  --dls-color-component-sidebar-bg: var(--dls-color-surface-subtle);
+  --dls-color-component-sidebar-border: var(--dls-color-border-subtle);
+  --dls-color-component-sidebar-item-fg-base: var(--dls-color-text-secondary);
+  --dls-color-component-sidebar-item-fg-active: var(--dls-color-text-primary);
+  --dls-color-component-sidebar-item-bg-active: var(--dls-color-surface-muted);
+
+  /* Badge (per variant: bg, fg, border) */
+  --dls-color-component-badge-neutral-bg: var(--dls-color-intent-neutral-subtle);
+  --dls-color-component-badge-neutral-fg: var(--dls-color-intent-neutral-text);
+  --dls-color-component-badge-neutral-border: var(--dls-color-intent-neutral-border);
+  --dls-color-component-badge-primary-bg: var(--dls-color-intent-primary-subtle);
+  --dls-color-component-badge-primary-fg: var(--dls-color-intent-primary-text);
+  --dls-color-component-badge-primary-border: var(--dls-color-intent-primary-border);
+  --dls-color-component-badge-success-bg: var(--dls-color-intent-success-subtle);
+  --dls-color-component-badge-success-fg: var(--dls-color-intent-success-text);
+  --dls-color-component-badge-success-border: var(--dls-color-intent-success-border);
+  --dls-color-component-badge-warning-bg: var(--dls-color-intent-warning-subtle);
+  --dls-color-component-badge-warning-fg: var(--dls-color-intent-warning-text);
+  --dls-color-component-badge-warning-border: var(--dls-color-intent-warning-border);
+  --dls-color-component-badge-danger-bg: var(--dls-color-intent-danger-subtle);
+  --dls-color-component-badge-danger-fg: var(--dls-color-intent-danger-text);
+  --dls-color-component-badge-danger-border: var(--dls-color-intent-danger-border);
+  --dls-color-component-badge-info-bg: var(--dls-color-intent-info-subtle);
+  --dls-color-component-badge-info-fg: var(--dls-color-intent-info-text);
+  --dls-color-component-badge-info-border: var(--dls-color-intent-info-border);
+
+  /* Chip */
+  --dls-color-component-chip-bg-base: var(--dls-color-surface-muted);
+  --dls-color-component-chip-bg-disabled: var(--dls-color-surface-disabled);
+  --dls-color-component-chip-fg-base: var(--dls-color-text-primary);
+  --dls-color-component-chip-fg-disabled: var(--dls-color-text-disabled);
+  --dls-color-component-chip-border-base: var(--dls-color-border-subtle);
+  --dls-color-component-chip-border-disabled: var(--dls-color-border-disabled);
+
+  /* Tab */
+  --dls-color-component-tab-fg-base: var(--dls-color-text-secondary);
+  --dls-color-component-tab-fg-active: var(--dls-color-text-primary);
+  --dls-color-component-tab-fg-hover: var(--dls-color-text-primary);
+  --dls-color-component-tab-fg-disabled: var(--dls-color-text-disabled);
+  --dls-color-component-tab-border-active: var(--dls-color-intent-primary-base);
+
+  /* Pagination */
+  --dls-color-component-pagination-fg-base: var(--dls-color-text-primary);
+  --dls-color-component-pagination-fg-disabled: var(--dls-color-text-disabled);
+  --dls-color-component-pagination-bg-base: transparent;
+  --dls-color-component-pagination-bg-active: var(--dls-color-surface-muted);
+
+  /* Accordion */
+  --dls-color-component-accordion-border: var(--dls-color-border-base);
+  --dls-color-component-accordion-title-fg: var(--dls-color-text-primary);
+  --dls-color-component-accordion-content-fg: var(--dls-color-text-secondary);
+  --dls-color-component-accordion-bg-hover: var(--dls-state-hover-overlay);
+  --dls-color-component-accordion-bg-pressed: var(--dls-state-pressed-overlay);
+  --dls-shadow-component-accordion-focus-ring: var(--dls-shadow-focus-ring);
+  --dls-state-component-accordion-disabled-opacity: var(--dls-state-disabled-opacity);
+
+  /* Alert (per variant) */
+  --dls-color-component-alert-neutral-bg: var(--dls-color-surface-muted);
+  --dls-color-component-alert-neutral-fg: var(--dls-color-text-primary);
+  --dls-color-component-alert-neutral-border: var(--dls-color-border-base);
+  --dls-color-component-alert-success-bg: var(--dls-color-intent-success-subtle);
+  --dls-color-component-alert-success-fg: var(--dls-color-intent-success-text);
+  --dls-color-component-alert-success-border: var(--dls-color-intent-success-border);
+  --dls-color-component-alert-warning-bg: var(--dls-color-intent-warning-subtle);
+  --dls-color-component-alert-warning-fg: var(--dls-color-intent-warning-text);
+  --dls-color-component-alert-warning-border: var(--dls-color-intent-warning-border);
+  --dls-color-component-alert-danger-bg: var(--dls-color-intent-danger-subtle);
+  --dls-color-component-alert-danger-fg: var(--dls-color-intent-danger-text);
+  --dls-color-component-alert-danger-border: var(--dls-color-intent-danger-border);
+  --dls-color-component-alert-info-bg: var(--dls-color-intent-info-subtle);
+  --dls-color-component-alert-info-fg: var(--dls-color-intent-info-text);
+  --dls-color-component-alert-info-border: var(--dls-color-intent-info-border);
+
+  /* --------------------------------------------------------------------------
+     Shadow — Raw and semantic
+     -------------------------------------------------------------------------- */
+  --dls-shadow-raw-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --dls-shadow-raw-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --dls-shadow-raw-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --dls-shadow-surface-sm: var(--dls-shadow-raw-sm);
+  --dls-shadow-surface-md: var(--dls-shadow-raw-md);
+  --dls-shadow-surface-lg: var(--dls-shadow-raw-lg);
+  --dls-shadow-overlay: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --dls-shadow-focus-ring: 0 0 0 2px var(--dls-state-focus-ring-color);
+
+  /* --------------------------------------------------------------------------
+     Font
+     -------------------------------------------------------------------------- */
+  --dls-font-family: "Inter", sans-serif;
+  --dls-font-weight-normal: 400;
+  --dls-font-weight-medium: 500;
+  --dls-font-weight-semibold: 600;
+  --dls-font-weight-bold: 800;
+  --dls-font-weight-black: 900;
+
+  /* --------------------------------------------------------------------------
+     Text — Primitive size scale
+     -------------------------------------------------------------------------- */
+  --dls-text-xs-font-size: 10px;
+  --dls-text-xs-line-height: 14px;
+  --dls-text-s-font-size: 12px;
+  --dls-text-s-line-height: 16px;
+  --dls-text-m-font-size: 14px;
+  --dls-text-m-line-height: 20px;
+  --dls-text-l-font-size: 16px;
+  --dls-text-l-line-height: 24px;
+  --dls-text-xl-font-size: 18px;
+  --dls-text-xl-line-height: 26px;
+  --dls-text-2xl-font-size: 24px;
+  --dls-text-2xl-line-height: 32px;
+  --dls-text-3xl-font-size: 32px;
+  --dls-text-3xl-line-height: 40px;
+  --dls-text-hero-font-size: 36px;
+  --dls-text-hero-line-height: 46px;
+
+  /* Semantic typography (map to primitive scale + weight) */
+  --dls-text-heading-xl-font-size: var(--dls-text-2xl-font-size);
+  --dls-text-heading-xl-line-height: var(--dls-text-2xl-line-height);
+  --dls-text-heading-xl-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-heading-l-font-size: var(--dls-text-xl-font-size);
+  --dls-text-heading-l-line-height: var(--dls-text-xl-line-height);
+  --dls-text-heading-l-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-heading-m-font-size: var(--dls-text-l-font-size);
+  --dls-text-heading-m-line-height: var(--dls-text-l-line-height);
+  --dls-text-heading-m-font-weight: var(--dls-font-weight-medium);
+  --dls-text-body-l-font-size: var(--dls-text-l-font-size);
+  --dls-text-body-l-line-height: var(--dls-text-l-line-height);
+  --dls-text-body-m-font-size: var(--dls-text-m-font-size);
+  --dls-text-body-m-line-height: var(--dls-text-m-line-height);
+  --dls-text-body-s-font-size: var(--dls-text-s-font-size);
+  --dls-text-body-s-line-height: var(--dls-text-s-line-height);
+  --dls-text-label-m-font-size: var(--dls-text-m-font-size);
+  --dls-text-label-m-line-height: var(--dls-text-m-line-height);
+  --dls-text-label-m-font-weight: var(--dls-font-weight-medium);
+  --dls-text-label-s-font-size: var(--dls-text-s-font-size);
+  --dls-text-label-s-line-height: var(--dls-text-s-line-height);
+  --dls-text-label-s-font-weight: var(--dls-font-weight-medium);
+  --dls-text-caption-font-size: var(--dls-text-xs-font-size);
+  --dls-text-caption-line-height: var(--dls-text-xs-line-height);
+
+  /* --------------------------------------------------------------------------
+     Radius — Primitive and component
+     -------------------------------------------------------------------------- */
+  --dls-radius-0: 0px;
+  --dls-radius-xs: 2px;
+  --dls-radius-s: 4px;
+  --dls-radius-m: 6px;
+  --dls-radius-l: 8px;
+  --dls-radius-xl: 12px;
+  --dls-radius-2xl: 16px;
+  --dls-radius-full: 9999px;
+  --dls-radius-component-button: var(--dls-radius-s);
+  --dls-radius-component-card: var(--dls-radius-l);
+  --dls-radius-component-modal: var(--dls-radius-xl);
+  --dls-radius-component-input: var(--dls-radius-s);
+  --dls-radius-component-badge: var(--dls-radius-full);
+  --dls-radius-component-chip: var(--dls-radius-full);
+  --dls-radius-component-tooltip: var(--dls-radius-s);
+  --dls-radius-component-dropdown: var(--dls-radius-m);
+  --dls-radius-component-alert: var(--dls-radius-m);
+
+  /* --------------------------------------------------------------------------
+     Spacing (8pt grid)
+     -------------------------------------------------------------------------- */
+  --dls-spacing-0: 0px;
+  --dls-spacing-0-5: 2px;
+  --dls-spacing-1: 4px;
+  --dls-spacing-1-5: 6px;
+  --dls-spacing-2: 8px;
+  --dls-spacing-2-5: 10px;
+  --dls-spacing-3: 12px;
+  --dls-spacing-4: 16px;
+  --dls-spacing-6: 24px;
+  --dls-spacing-8: 32px;
+  --dls-spacing-10: 40px;
+  --dls-spacing-11: 44px;
+  --dls-spacing-12: 48px;
+  --dls-spacing-14: 56px;
+  --dls-spacing-16: 64px;
+
+  /* --------------------------------------------------------------------------
+     Icon stroke
+     -------------------------------------------------------------------------- */
+  --dls-icon-stroke-12: 1;
+  --dls-icon-stroke-16: 1.33;
+  --dls-icon-stroke-24: 2;
+}
+
+/* ==========================================================================
+   Dark theme — override Layer 2 (system semantics) and focus ring
+   Component tokens inherit via var()
+   ========================================================================== */
+
+[data-theme="dark"],
+.theme-dark {
+  /* Surface */
+  --dls-color-surface-base: var(--dls-color-neutral-950);
+  --dls-color-surface-subtle: var(--dls-color-neutral-900);
+  --dls-color-surface-muted: var(--dls-color-neutral-800);
+  --dls-color-surface-strong: var(--dls-color-neutral-700);
+  --dls-color-surface-inverse: var(--dls-color-neutral-0);
+  --dls-color-surface-disabled: var(--dls-color-neutral-800);
+
+  /* Text */
+  --dls-color-text-primary: var(--dls-color-neutral-0);
+  --dls-color-text-secondary: var(--dls-color-neutral-200);
+  --dls-color-text-inverse: var(--dls-color-neutral-950);
+  --dls-color-text-disabled: var(--dls-color-neutral-500);
+  --dls-color-text-placeholder: var(--dls-color-neutral-400);
+
+  /* Border */
+  --dls-color-border-base: var(--dls-color-neutral-600);
+  --dls-color-border-subtle: var(--dls-color-neutral-700);
+  --dls-color-border-strong: var(--dls-color-neutral-400);
+  --dls-color-border-focus: var(--dls-color-neutral-100);
+  --dls-color-border-disabled: var(--dls-color-neutral-700);
+  --dls-color-border-inverse: var(--dls-color-neutral-950);
+
+  /* Intent primary */
+  --dls-color-intent-primary-base: var(--dls-color-primary-600);
+  --dls-color-intent-primary-subtle: var(--dls-color-primary-900);
+  --dls-color-intent-primary-strong: var(--dls-color-primary-500);
+  --dls-color-intent-primary-text: var(--dls-color-primary-300);
+  --dls-color-intent-primary-border: var(--dls-color-primary-600);
+
+  /* Intent success */
+  --dls-color-intent-success-base: var(--dls-color-success-500);
+  --dls-color-intent-success-subtle: var(--dls-color-success-900);
+  --dls-color-intent-success-strong: var(--dls-color-success-400);
+  --dls-color-intent-success-text: var(--dls-color-success-300);
+  --dls-color-intent-success-border: var(--dls-color-success-600);
+
+  /* Intent warning */
+  --dls-color-intent-warning-base: var(--dls-color-warning-500);
+  --dls-color-intent-warning-subtle: var(--dls-color-warning-900);
+  --dls-color-intent-warning-strong: var(--dls-color-warning-400);
+  --dls-color-intent-warning-text: var(--dls-color-warning-300);
+  --dls-color-intent-warning-border: var(--dls-color-warning-600);
+
+  /* Intent danger */
+  --dls-color-intent-danger-base: var(--dls-color-danger-600);
+  --dls-color-intent-danger-subtle: var(--dls-color-danger-900);
+  --dls-color-intent-danger-strong: var(--dls-color-danger-500);
+  --dls-color-intent-danger-text: var(--dls-color-danger-300);
+  --dls-color-intent-danger-border: var(--dls-color-danger-600);
+
+  /* Intent info */
+  --dls-color-intent-info-base: var(--dls-color-info-600);
+  --dls-color-intent-info-subtle: var(--dls-color-info-900);
+  --dls-color-intent-info-strong: var(--dls-color-info-500);
+  --dls-color-intent-info-text: var(--dls-color-info-300);
+  --dls-color-intent-info-border: var(--dls-color-info-600);
+
+  /* Intent neutral */
+  --dls-color-intent-neutral-base: var(--dls-color-neutral-50);
+  --dls-color-intent-neutral-subtle: var(--dls-color-neutral-800);
+  --dls-color-intent-neutral-strong: var(--dls-color-neutral-100);
+  --dls-color-intent-neutral-text: var(--dls-color-neutral-200);
+  --dls-color-intent-neutral-border: var(--dls-color-neutral-700);
+
+  /* State overlays — dark mode: light overlays to brighten dark surfaces */
+  --dls-state-hover-overlay: rgba(255, 255, 255, 0.08);
+  --dls-state-pressed-overlay: rgba(255, 255, 255, 0.15);
+  --dls-state-focus-ring-color: var(--dls-color-info-400);
+}

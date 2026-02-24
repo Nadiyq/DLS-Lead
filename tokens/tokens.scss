@@ -1,0 +1,488 @@
+// ==========================================================================
+// DLS-Lead Design Tokens — SCSS Variables
+// 4-layer system: Primitives → System Semantics → State → Component
+// ==========================================================================
+
+// ---------------------------------------------------------------------------
+// Layer 1 — Color Primitives (do not use directly in components)
+// ---------------------------------------------------------------------------
+$dls-color-neutral-0: #FFFFFF;
+$dls-color-neutral-50: #FAFAFA;
+$dls-color-neutral-100: #F5F5F5;
+$dls-color-neutral-200: #E9EAEB;
+$dls-color-neutral-300: #D5D7DA;
+$dls-color-neutral-400: #A4A7AE;
+$dls-color-neutral-500: #717680;
+$dls-color-neutral-600: #535862;
+$dls-color-neutral-700: #414651;
+$dls-color-neutral-800: #252B37;
+$dls-color-neutral-900: #181D27;
+$dls-color-neutral-950: #0A0D12;
+
+$dls-color-primary-50: #F9F5FF;
+$dls-color-primary-100: #F4EBFF;
+$dls-color-primary-200: #E9D7FE;
+$dls-color-primary-300: #D6BBFB;
+$dls-color-primary-400: #B692F6;
+$dls-color-primary-500: #9E77ED;
+$dls-color-primary-600: #7F56D9;
+$dls-color-primary-700: #6941C6;
+$dls-color-primary-800: #53389E;
+$dls-color-primary-900: #42307D;
+$dls-color-primary-950: #2C1C5F;
+
+$dls-color-info-50: #EFF8FF;
+$dls-color-info-100: #D1E9FF;
+$dls-color-info-200: #B2DDFF;
+$dls-color-info-300: #84CAFF;
+$dls-color-info-400: #53B1FD;
+$dls-color-info-500: #2E90FA;
+$dls-color-info-600: #1570EF;
+$dls-color-info-700: #175CD3;
+$dls-color-info-800: #1849A9;
+$dls-color-info-900: #194185;
+$dls-color-info-950: #102A56;
+
+$dls-color-success-50: #ECFDF3;
+$dls-color-success-100: #D1FADF;
+$dls-color-success-200: #A6F4C5;
+$dls-color-success-300: #6CE9A6;
+$dls-color-success-400: #32D583;
+$dls-color-success-500: #12B76A;
+$dls-color-success-600: #039855;
+$dls-color-success-700: #027A48;
+$dls-color-success-800: #05603A;
+$dls-color-success-900: #054F31;
+$dls-color-success-950: #053321;
+
+$dls-color-warning-50: #FFFAEB;
+$dls-color-warning-100: #FEF0C7;
+$dls-color-warning-200: #FEDF89;
+$dls-color-warning-300: #FEC84B;
+$dls-color-warning-400: #FDB022;
+$dls-color-warning-500: #F79009;
+$dls-color-warning-600: #DC6803;
+$dls-color-warning-700: #B54708;
+$dls-color-warning-800: #93370D;
+$dls-color-warning-900: #7A2E0E;
+$dls-color-warning-950: #4E1D09;
+
+$dls-color-danger-50: #FEF3F2;
+$dls-color-danger-100: #FEE4E2;
+$dls-color-danger-200: #FECDCA;
+$dls-color-danger-300: #FDA29B;
+$dls-color-danger-400: #F97066;
+$dls-color-danger-500: #F04438;
+$dls-color-danger-600: #D92D20;
+$dls-color-danger-700: #B42318;
+$dls-color-danger-800: #912018;
+$dls-color-danger-900: #7A271A;
+$dls-color-danger-950: #55160C;
+
+// Additional palettes
+$dls-color-additional-purple-100: #F8CFFC;
+$dls-color-additional-purple-300: #EF9CF9;
+$dls-color-additional-purple-500: #E244F3;
+$dls-color-additional-purple-700: #B20DC5;
+$dls-color-additional-violet-100: #E3CBFB;
+$dls-color-additional-violet-300: #BA7EF5;
+$dls-color-additional-violet-500: #9439EF;
+$dls-color-additional-violet-700: #620FB3;
+$dls-color-additional-pink-100: #FFE0F3;
+$dls-color-additional-pink-300: #FFB2E1;
+$dls-color-additional-pink-500: #FF4ABA;
+$dls-color-additional-pink-700: #D60084;
+$dls-color-additional-blue-100: #E6E9FF;
+$dls-color-additional-blue-300: #C0C7FF;
+$dls-color-additional-blue-500: #475DFF;
+$dls-color-additional-blue-700: #0019D6;
+$dls-color-additional-teal-100: #C8F8FE;
+$dls-color-additional-teal-300: #76EDFD;
+$dls-color-additional-teal-500: #03CCE7;
+$dls-color-additional-teal-700: #03A6BB;
+$dls-color-additional-yellow-100: #FFF1C5;
+$dls-color-additional-yellow-300: #FFDB6E;
+$dls-color-additional-yellow-500: #FFC71F;
+$dls-color-additional-yellow-700: #D6A100;
+$dls-color-additional-green-100: #C8FDC7;
+$dls-color-additional-green-300: #76F974;
+$dls-color-additional-green-500: #0CC308;
+$dls-color-additional-green-700: #099B06;
+$dls-color-additional-gold-100: #F4EECF;
+$dls-color-additional-gold-300: #E4D486;
+$dls-color-additional-gold-500: #DAC65D;
+$dls-color-additional-gold-700: #9A8623;
+$dls-color-additional-cinnamon-100: #F6E9E4;
+$dls-color-additional-cinnamon-300: #E6C1B2;
+$dls-color-additional-cinnamon-500: #CD866A;
+$dls-color-additional-cinnamon-700: #995033;
+$dls-color-additional-orange-100: #FFEAD7;
+$dls-color-additional-orange-300: #FECA9A;
+$dls-color-additional-orange-500: #FD9535;
+$dls-color-additional-orange-700: #CA6202;
+
+$dls-color-opacity-light-20: rgba(255, 255, 255, 0.2);
+$dls-color-opacity-light-40: rgba(255, 255, 255, 0.4);
+$dls-color-opacity-light-60: rgba(255, 255, 255, 0.6);
+$dls-color-opacity-light-80: rgba(255, 255, 255, 0.8);
+$dls-color-opacity-dark-20: rgba(0, 0, 0, 0.2);
+$dls-color-opacity-dark-40: rgba(0, 0, 0, 0.4);
+$dls-color-opacity-dark-60: rgba(0, 0, 0, 0.6);
+$dls-color-opacity-dark-80: rgba(0, 0, 0, 0.8);
+
+// ---------------------------------------------------------------------------
+// Layer 2 — System Semantics (use in components or via component tokens)
+// ---------------------------------------------------------------------------
+$dls-color-surface-base: $dls-color-neutral-0;
+$dls-color-surface-subtle: $dls-color-neutral-50;
+$dls-color-surface-muted: $dls-color-neutral-100;
+$dls-color-surface-strong: $dls-color-neutral-300;
+$dls-color-surface-inverse: $dls-color-neutral-900;
+$dls-color-surface-disabled: $dls-color-neutral-50;
+
+$dls-color-text-primary: $dls-color-neutral-900;
+$dls-color-text-secondary: $dls-color-neutral-700;
+$dls-color-text-inverse: $dls-color-neutral-0;
+$dls-color-text-disabled: $dls-color-neutral-500;
+$dls-color-text-placeholder: $dls-color-neutral-600;
+
+$dls-color-border-base: $dls-color-neutral-300;
+$dls-color-border-subtle: $dls-color-neutral-200;
+$dls-color-border-strong: $dls-color-neutral-500;
+$dls-color-border-focus: $dls-color-neutral-700;
+$dls-color-border-disabled: $dls-color-neutral-200;
+$dls-color-border-inverse: $dls-color-neutral-0;
+
+$dls-color-intent-primary-base: $dls-color-primary-700;
+$dls-color-intent-primary-subtle: $dls-color-primary-50;
+$dls-color-intent-primary-strong: $dls-color-primary-800;
+$dls-color-intent-primary-text: $dls-color-primary-900;
+$dls-color-intent-primary-border: $dls-color-primary-200;
+
+$dls-color-intent-success-base: $dls-color-success-700;
+$dls-color-intent-success-subtle: $dls-color-success-50;
+$dls-color-intent-success-strong: $dls-color-success-800;
+$dls-color-intent-success-text: $dls-color-success-900;
+$dls-color-intent-success-border: $dls-color-success-200;
+
+$dls-color-intent-warning-base: $dls-color-warning-700;
+$dls-color-intent-warning-subtle: $dls-color-warning-50;
+$dls-color-intent-warning-strong: $dls-color-warning-800;
+$dls-color-intent-warning-text: $dls-color-warning-900;
+$dls-color-intent-warning-border: $dls-color-warning-200;
+
+$dls-color-intent-danger-base: $dls-color-danger-600;
+$dls-color-intent-danger-subtle: $dls-color-danger-50;
+$dls-color-intent-danger-strong: $dls-color-danger-700;
+$dls-color-intent-danger-text: $dls-color-danger-900;
+$dls-color-intent-danger-border: $dls-color-danger-200;
+
+$dls-color-intent-info-base: $dls-color-info-600;
+$dls-color-intent-info-subtle: $dls-color-info-50;
+$dls-color-intent-info-strong: $dls-color-info-700;
+$dls-color-intent-info-text: $dls-color-info-900;
+$dls-color-intent-info-border: $dls-color-info-200;
+
+$dls-color-intent-neutral-base: $dls-color-neutral-800;
+$dls-color-intent-neutral-subtle: $dls-color-neutral-50;
+$dls-color-intent-neutral-strong: $dls-color-neutral-900;
+$dls-color-intent-neutral-text: $dls-color-neutral-900;
+$dls-color-intent-neutral-border: $dls-color-neutral-200;
+
+$dls-color-overlay-scrim: rgba(0, 0, 0, 0.5);
+$dls-color-overlay-backdrop: rgba(0, 0, 0, 0.3);
+
+// ---------------------------------------------------------------------------
+// Layer 2 — Semantic maps (for theme switching: use map-get($dls-semantic-surface, base))
+// ---------------------------------------------------------------------------
+$dls-semantic-surface: (
+  base:    $dls-color-surface-base,
+  subtle:  $dls-color-surface-subtle,
+  muted:   $dls-color-surface-muted,
+  strong:  $dls-color-surface-strong,
+  inverse: $dls-color-surface-inverse,
+  disabled: $dls-color-surface-disabled,
+);
+
+$dls-semantic-text: (
+  primary:    $dls-color-text-primary,
+  secondary:  $dls-color-text-secondary,
+  inverse:    $dls-color-text-inverse,
+  disabled:   $dls-color-text-disabled,
+  placeholder: $dls-color-text-placeholder,
+);
+
+$dls-semantic-border: (
+  base:    $dls-color-border-base,
+  subtle:   $dls-color-border-subtle,
+  strong:   $dls-color-border-strong,
+  focus:    $dls-color-border-focus,
+  disabled: $dls-color-border-disabled,
+  inverse:  $dls-color-border-inverse,
+);
+
+$dls-semantic-intent: (
+  primary: (
+    base:   $dls-color-intent-primary-base,
+    subtle: $dls-color-intent-primary-subtle,
+    strong: $dls-color-intent-primary-strong,
+    text:   $dls-color-intent-primary-text,
+    border: $dls-color-intent-primary-border,
+  ),
+  success: (
+    base:   $dls-color-intent-success-base,
+    subtle: $dls-color-intent-success-subtle,
+    strong: $dls-color-intent-success-strong,
+    text:   $dls-color-intent-success-text,
+    border: $dls-color-intent-success-border,
+  ),
+  warning: (
+    base:   $dls-color-intent-warning-base,
+    subtle: $dls-color-intent-warning-subtle,
+    strong: $dls-color-intent-warning-strong,
+    text:   $dls-color-intent-warning-text,
+    border: $dls-color-intent-warning-border,
+  ),
+  danger: (
+    base:   $dls-color-intent-danger-base,
+    subtle: $dls-color-intent-danger-subtle,
+    strong: $dls-color-intent-danger-strong,
+    text:   $dls-color-intent-danger-text,
+    border: $dls-color-intent-danger-border,
+  ),
+  info: (
+    base:   $dls-color-intent-info-base,
+    subtle: $dls-color-intent-info-subtle,
+    strong: $dls-color-intent-info-strong,
+    text:   $dls-color-intent-info-text,
+    border: $dls-color-intent-info-border,
+  ),
+  neutral: (
+    base:   $dls-color-intent-neutral-base,
+    subtle: $dls-color-intent-neutral-subtle,
+    strong: $dls-color-intent-neutral-strong,
+    text:   $dls-color-intent-neutral-text,
+    border: $dls-color-intent-neutral-border,
+  ),
+);
+
+// ---------------------------------------------------------------------------
+// Layer 3 — State abstraction
+// ---------------------------------------------------------------------------
+// OKLCH algorithm constants — code side only.
+// Usage: oklch(from #{$base} calc(l + $dls-state-l-delta-hover) c h)
+$dls-state-l-delta-hover: -0.05;
+$dls-state-l-delta-pressed: -0.10;
+// Opacity overlays — Figma-compatible approximation of OKLCH L-shift.
+// Apply as second fill layer in Figma. Dark mode: use rgba(255,255,255,.08) / rgba(255,255,255,.15)
+$dls-state-hover-overlay: rgba(0, 0, 0, 0.05);
+$dls-state-pressed-overlay: rgba(0, 0, 0, 0.10);
+$dls-state-disabled-opacity: 0.38;
+$dls-state-focus-ring-color: $dls-color-info-300;
+
+$dls-component-tokens-doc: "\1F6A7 Component-level tokens are for development, theming, and white-label override only.\A\A- Do NOT use as a replacement for semantic tokens in core design system code.\A- Use for custom branding, theme overrides, or temporary dev overrides.\A- For production, prefer semantic tokens unless you have a strong reason.";
+// ---------------------------------------------------------------------------
+// Layer 4 — Component tokens (override-safe)
+// ---------------------------------------------------------------------------
+// ⚠️ Component-level tokens are for development, theming, and white-label override only.
+//    Do NOT use as a replacement for semantic tokens in core design system code.
+//    Use these for:
+//      - Custom branding/white-labeling
+//      - Theme overrides
+//      - Temporary dev overrides
+//    For production, prefer semantic tokens unless you have a strong reason.
+// ---------------------------------------------------------------------------
+// Button primary — hover/pressed bg via OKLCH in component stylesheets
+$dls-component-button-primary-bg: (
+  base:    $dls-color-intent-primary-base,
+  disabled: $dls-color-surface-disabled,
+);
+$dls-component-button-primary-fg: (
+  base:    $dls-color-text-inverse,
+  disabled: $dls-color-text-disabled,
+);
+$dls-component-button-primary-border: (
+  base:    $dls-color-intent-primary-base,
+  disabled: $dls-color-border-disabled,
+);
+
+// Button secondary — hover/pressed bg via OKLCH in component stylesheets
+$dls-component-button-secondary-bg: (
+  base:    $dls-color-surface-subtle,
+  disabled: $dls-color-surface-disabled,
+);
+$dls-component-button-secondary-fg: (
+  base:    $dls-color-text-primary,
+  disabled: $dls-color-text-disabled,
+);
+$dls-component-button-secondary-border: (
+  base:    $dls-color-border-base,
+  hover:   $dls-color-border-strong,
+  pressed: $dls-color-border-strong,
+  disabled: $dls-color-border-disabled,
+);
+
+$dls-component-input-bg: (
+  base:    $dls-color-surface-base,
+  disabled: $dls-color-surface-disabled,
+);
+$dls-component-input-fg: (
+  base:    $dls-color-text-primary,
+  placeholder: $dls-color-text-placeholder,
+  disabled: $dls-color-text-disabled,
+);
+$dls-component-input-border: (
+  base:    $dls-color-border-base,
+  hover:   $dls-color-border-strong,
+  focus:   $dls-color-border-focus,
+  disabled: $dls-color-border-disabled,
+);
+
+$dls-component-table-row-bg: (
+  base:     transparent,
+  selected: $dls-color-intent-primary-subtle,
+);
+$dls-component-table-header-bg: $dls-color-surface-muted;
+$dls-component-table-header-fg: $dls-color-text-secondary;
+$dls-component-table-header-border: $dls-color-border-subtle;
+
+$dls-component-badge-neutral: (bg: $dls-color-intent-neutral-subtle, fg: $dls-color-intent-neutral-text, border: $dls-color-intent-neutral-border);
+$dls-component-badge-primary: (bg: $dls-color-intent-primary-subtle, fg: $dls-color-intent-primary-text, border: $dls-color-intent-primary-border);
+$dls-component-badge-success: (bg: $dls-color-intent-success-subtle, fg: $dls-color-intent-success-text, border: $dls-color-intent-success-border);
+$dls-component-badge-warning: (bg: $dls-color-intent-warning-subtle, fg: $dls-color-intent-warning-text, border: $dls-color-intent-warning-border);
+$dls-component-badge-danger: (bg: $dls-color-intent-danger-subtle, fg: $dls-color-intent-danger-text, border: $dls-color-intent-danger-border);
+$dls-component-badge-info: (bg: $dls-color-intent-info-subtle, fg: $dls-color-intent-info-text, border: $dls-color-intent-info-border);
+
+$dls-component-chip-bg: (base: $dls-color-surface-muted, disabled: $dls-color-surface-disabled);
+$dls-component-chip-fg: (base: $dls-color-text-primary, disabled: $dls-color-text-disabled);
+$dls-component-chip-border: (base: $dls-color-border-subtle, disabled: $dls-color-border-disabled);
+
+$dls-component-tab-fg: (base: $dls-color-text-secondary, active: $dls-color-text-primary, hover: $dls-color-text-primary, disabled: $dls-color-text-disabled);
+$dls-component-tab-border-active: $dls-color-intent-primary-base;
+
+$dls-component-pagination-fg: (base: $dls-color-text-primary, disabled: $dls-color-text-disabled);
+$dls-component-pagination-bg: (base: transparent, active: $dls-color-surface-muted);
+
+$dls-component-alert-neutral: (bg: $dls-color-surface-muted, fg: $dls-color-text-primary, border: $dls-color-border-base);
+$dls-component-alert-success: (bg: $dls-color-intent-success-subtle, fg: $dls-color-intent-success-text, border: $dls-color-intent-success-border);
+$dls-component-alert-warning: (bg: $dls-color-intent-warning-subtle, fg: $dls-color-intent-warning-text, border: $dls-color-intent-warning-border);
+$dls-component-alert-danger: (bg: $dls-color-intent-danger-subtle, fg: $dls-color-intent-danger-text, border: $dls-color-intent-danger-border);
+$dls-component-alert-info: (bg: $dls-color-intent-info-subtle, fg: $dls-color-intent-info-text, border: $dls-color-intent-info-border);
+
+// ---------------------------------------------------------------------------
+// Shadow
+// ---------------------------------------------------------------------------
+$dls-shadow-raw-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$dls-shadow-raw-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+$dls-shadow-raw-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+$dls-shadow-surface-sm: $dls-shadow-raw-sm;
+$dls-shadow-surface-md: $dls-shadow-raw-md;
+$dls-shadow-surface-lg: $dls-shadow-raw-lg;
+$dls-shadow-overlay: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+$dls-shadow-focus-ring: 0 0 0 2px $dls-state-focus-ring-color;
+
+// ---------------------------------------------------------------------------
+// Font
+// ---------------------------------------------------------------------------
+$dls-font-family: "Inter", sans-serif;
+$dls-font-weight-normal: 400;
+$dls-font-weight-medium: 500;
+$dls-font-weight-semibold: 600;
+$dls-font-weight-bold: 800;
+$dls-font-weight-black: 900;
+
+// ---------------------------------------------------------------------------
+// Text — Primitive scale
+// ---------------------------------------------------------------------------
+$dls-text-xs-font-size: 10px;
+$dls-text-xs-line-height: 14px;
+$dls-text-s-font-size: 12px;
+$dls-text-s-line-height: 16px;
+$dls-text-m-font-size: 14px;
+$dls-text-m-line-height: 20px;
+$dls-text-l-font-size: 16px;
+$dls-text-l-line-height: 24px;
+$dls-text-xl-font-size: 18px;
+$dls-text-xl-line-height: 26px;
+$dls-text-2xl-font-size: 24px;
+$dls-text-2xl-line-height: 32px;
+$dls-text-3xl-font-size: 32px;
+$dls-text-3xl-line-height: 40px;
+$dls-text-hero-font-size: 36px;
+$dls-text-hero-line-height: 46px;
+
+// Semantic typography (map to primitive + weight)
+$dls-text-heading-xl: (font-size: $dls-text-2xl-font-size, line-height: $dls-text-2xl-line-height, font-weight: $dls-font-weight-semibold);
+$dls-text-heading-l: (font-size: $dls-text-xl-font-size, line-height: $dls-text-xl-line-height, font-weight: $dls-font-weight-semibold);
+$dls-text-heading-m: (font-size: $dls-text-l-font-size, line-height: $dls-text-l-line-height, font-weight: $dls-font-weight-medium);
+$dls-text-body-l: (font-size: $dls-text-l-font-size, line-height: $dls-text-l-line-height, font-weight: $dls-font-weight-normal);
+$dls-text-body-m: (font-size: $dls-text-m-font-size, line-height: $dls-text-m-line-height, font-weight: $dls-font-weight-normal);
+$dls-text-body-s: (font-size: $dls-text-s-font-size, line-height: $dls-text-s-line-height, font-weight: $dls-font-weight-normal);
+$dls-text-label-m: (font-size: $dls-text-m-font-size, line-height: $dls-text-m-line-height, font-weight: $dls-font-weight-medium);
+$dls-text-label-s: (font-size: $dls-text-s-font-size, line-height: $dls-text-s-line-height, font-weight: $dls-font-weight-medium);
+$dls-text-caption: (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-normal);
+
+// ---------------------------------------------------------------------------
+// Radius — Primitive and component
+// ---------------------------------------------------------------------------
+$dls-radius-0: 0px;
+$dls-radius-xs: 2px;
+$dls-radius-s: 4px;
+$dls-radius-m: 6px;
+$dls-radius-l: 8px;
+$dls-radius-xl: 12px;
+$dls-radius-2xl: 16px;
+$dls-radius-full: 9999px;
+$dls-radius-component-button: $dls-radius-s;
+$dls-radius-component-card: $dls-radius-l;
+$dls-radius-component-modal: $dls-radius-xl;
+$dls-radius-component-input: $dls-radius-s;
+$dls-radius-component-badge: $dls-radius-full;
+$dls-radius-component-chip: $dls-radius-full;
+$dls-radius-component-tooltip: $dls-radius-s;
+$dls-radius-component-dropdown: $dls-radius-m;
+$dls-radius-component-alert: $dls-radius-m;
+
+// ---------------------------------------------------------------------------
+// Spacing (8pt grid)
+// ---------------------------------------------------------------------------
+$dls-spacing-0: 0px;
+$dls-spacing-0-5: 2px;
+$dls-spacing-1: 4px;
+$dls-spacing-1-5: 6px;
+$dls-spacing-2: 8px;
+$dls-spacing-2-5: 10px;
+$dls-spacing-3: 12px;
+$dls-spacing-4: 16px;
+$dls-spacing-6: 24px;
+$dls-spacing-8: 32px;
+$dls-spacing-10: 40px;
+$dls-spacing-11: 44px;
+$dls-spacing-12: 48px;
+$dls-spacing-14: 56px;
+$dls-spacing-16: 64px;
+
+$dls-spacing: (
+  0:    $dls-spacing-0,
+  0.5:  $dls-spacing-0-5,
+  1:    $dls-spacing-1,
+  1.5:  $dls-spacing-1-5,
+  2:    $dls-spacing-2,
+  2.5:  $dls-spacing-2-5,
+  3:    $dls-spacing-3,
+  4:    $dls-spacing-4,
+  6:    $dls-spacing-6,
+  8:    $dls-spacing-8,
+  10:   $dls-spacing-10,
+  11:   $dls-spacing-11,
+  12:   $dls-spacing-12,
+  14:   $dls-spacing-14,
+  16:   $dls-spacing-16,
+);
+
+// ---------------------------------------------------------------------------
+// Icon stroke
+// ---------------------------------------------------------------------------
+$dls-icon-stroke-12: 1;
+$dls-icon-stroke-16: 1.33;
+$dls-icon-stroke-24: 2;

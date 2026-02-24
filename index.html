@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DLS Design Tokens</title>
+  <style>
+    /* ----- Reset & Base ----- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background: var(--dls-color-surface-muted, #F5F5F5);
+      color: var(--dls-color-text-primary, #181D27);
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ----- Layout ----- */
+    .shell { display: flex; min-height: 100vh; }
+    .sidebar {
+      position: fixed; top: 0; left: 0; bottom: 0; width: 240px;
+      background: #181D27; color: #E9EAEB; padding: 24px 0;
+      overflow-y: auto; z-index: 10;
+      display: flex; flex-direction: column;
+    }
+    .sidebar-title { padding: 0 24px 20px; font-size: 14px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: #A4A7AE; }
+    .sidebar nav { flex: 1; }
+    .sidebar nav a {
+      display: block; padding: 8px 24px; font-size: 13px; font-weight: 500;
+      color: #A4A7AE; transition: color .15s, background .15s; border-left: 3px solid transparent;
+    }
+    .sidebar nav a:hover { color: #fff; background: rgba(255,255,255,.05); }
+    .sidebar nav a.active { color: #fff; border-left-color: #7F56D9; background: rgba(127,86,217,.12); }
+    .sidebar nav .nav-group { padding: 16px 24px 6px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #535862; }
+    .sidebar-footer { padding: 16px 24px; border-top: 1px solid #252B37; }
+
+    .main { margin-left: 240px; flex: 1; padding: 40px 48px 80px; max-width: 1200px; }
+
+    /* ----- Theme Toggle ----- */
+    .theme-toggle {
+      display: inline-flex; align-items: center; gap: 8px;
+      cursor: pointer; font-size: 13px; color: #A4A7AE;
+      background: none; border: none; padding: 8px 12px; border-radius: 8px;
+      transition: background .15s;
+    }
+    .theme-toggle:hover { background: rgba(255,255,255,.08); color: #fff; }
+    .theme-toggle svg { width: 16px; height: 16px; }
+
+    /* ----- Section ----- */
+    .section { margin-bottom: 56px; }
+    .section-title {
+      font-size: 28px; font-weight: 700; margin-bottom: 6px; color: #181D27;
+      scroll-margin-top: 32px;
+    }
+    .section-desc { font-size: 14px; color: #535862; margin-bottom: 24px; max-width: 680px; }
+
+    .subsection { margin-bottom: 32px; }
+    .subsection-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #252B37; }
+
+    /* ----- Color Swatch Grid ----- */
+    .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+    .color-card {
+      border-radius: 12px; overflow: hidden; background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.04);
+      transition: transform .15s, box-shadow .15s; cursor: pointer;
+    }
+    .color-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.1), 0 0 0 1px rgba(0,0,0,.06); }
+    .color-swatch { height: 72px; position: relative; }
+    .color-swatch.checker {
+      background-image: linear-gradient(45deg, #ddd 25%, transparent 25%),
+        linear-gradient(-45deg, #ddd 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ddd 75%),
+        linear-gradient(-45deg, transparent 75%, #ddd 75%);
+      background-size: 12px 12px;
+      background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+    }
+    .color-swatch .fill { position: absolute; inset: 0; }
+    .color-info { padding: 8px 10px; }
+    .color-name { font-size: 11px; font-weight: 600; color: #414651; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .color-hex { font-size: 11px; font-family: "SF Mono", "Fira Code", monospace; color: #A4A7AE; }
+
+    /* ----- Wide Swatch (for primitives) ----- */
+    .color-scale { display: flex; gap: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.04); margin-bottom: 16px; }
+    .color-scale-item {
+      flex: 1; min-width: 0; height: 64px; position: relative; cursor: pointer;
+      transition: flex .2s;
+    }
+    .color-scale-item:hover { flex: 2; }
+    .color-scale-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 4px 6px; font-size: 10px; font-family: "SF Mono", "Fira Code", monospace;
+      text-align: center; opacity: 0; transition: opacity .15s;
+      background: rgba(0,0,0,.45); color: #fff; backdrop-filter: blur(4px);
+    }
+    .color-scale-item:hover .color-scale-label { opacity: 1; }
+
+    /* ----- Semantic Token Row ----- */
+    .semantic-table { width: 100%; border-collapse: collapse; }
+    .semantic-table th {
+      text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .04em; color: #A4A7AE; padding: 8px 12px; border-bottom: 2px solid #D5D7DA;
+    }
+    .semantic-table td { padding: 10px 12px; border-bottom: 1px solid #E9EAEB; font-size: 13px; vertical-align: middle; }
+    .semantic-table tr:hover td { background: #FAFAFA; }
+    .semantic-swatch {
+      width: 28px; height: 28px; border-radius: 6px; display: inline-block; vertical-align: middle;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); flex-shrink: 0;
+    }
+    .semantic-token { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; color: #252B37; }
+    .semantic-ref { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; color: #535862; }
+    .semantic-desc { font-size: 12px; color: #A4A7AE; }
+    .token-cell { display: flex; align-items: center; gap: 10px; }
+
+    /* ----- Generic Token Table ----- */
+    .token-table { width: 100%; border-collapse: collapse; }
+    .token-table th {
+      text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .04em; color: #A4A7AE; padding: 8px 12px; border-bottom: 2px solid #D5D7DA;
+    }
+    .token-table td { padding: 10px 12px; border-bottom: 1px solid #E9EAEB; font-size: 13px; }
+    .token-table tr:hover td { background: #FAFAFA; }
+    .token-table .mono { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; color: #252B37; }
+    .token-table .css-var { font-family: "SF Mono", "Fira Code", monospace; font-size: 11px; color: #535862; }
+
+    /* ----- Spacing Preview ----- */
+    .spacing-bar { height: 20px; background: #7F56D9; border-radius: 4px; min-width: 2px; }
+
+    /* ----- Radius Preview ----- */
+    .radius-box { width: 48px; height: 48px; background: #7F56D9; }
+
+    /* ----- Text Preview ----- */
+    .text-preview { font-family: "Inter", sans-serif; color: #181D27; }
+
+    /* ----- Copied Toast ----- */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: #181D27; color: #fff; padding: 10px 20px; border-radius: 8px;
+      font-size: 13px; font-weight: 500; pointer-events: none;
+      opacity: 0; transition: transform .25s ease, opacity .25s ease; z-index: 100;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ----- Dark mode ----- */
+    [data-theme="dark"] body { background: #0A0D12; color: #E9EAEB; }
+    [data-theme="dark"] .section-title { color: #E9EAEB; }
+    [data-theme="dark"] .section-desc { color: #A4A7AE; }
+    [data-theme="dark"] .subsection-title { color: #D5D7DA; }
+    [data-theme="dark"] .color-card { background: #252B37; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+    [data-theme="dark"] .color-name { color: #D5D7DA; }
+    [data-theme="dark"] .color-hex { color: #A4A7AE; }
+    [data-theme="dark"] .semantic-table th { border-bottom-color: #414651; color: #535862; }
+    [data-theme="dark"] .semantic-table td { border-bottom-color: #252B37; }
+    [data-theme="dark"] .semantic-table tr:hover td { background: #181D27; }
+    [data-theme="dark"] .semantic-token { color: #E9EAEB; }
+    [data-theme="dark"] .token-table th { border-bottom-color: #414651; color: #535862; }
+    [data-theme="dark"] .token-table td { border-bottom-color: #252B37; }
+    [data-theme="dark"] .token-table tr:hover td { background: #181D27; }
+    [data-theme="dark"] .token-table .mono { color: #E9EAEB; }
+    [data-theme="dark"] .text-preview { color: #E9EAEB; }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens/tokens.css" />
+<body>
+
+<div class="shell">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-title">DLS Tokens</div>
+    <nav>
+      <div class="nav-group">Color</div>
+      <a href="#primitives-base">Primitives — Base</a>
+      <a href="#primitives-additional">Primitives — Additional</a>
+      <a href="#primitives-opacity">Primitives — Opacity</a>
+      <a href="#semantic-colors">Semantic Colors</a>
+      <a href="#component-tokens">Component Tokens</a>
+      <a href="#shadow-tokens">Shadow Tokens</a>
+      <div class="nav-group">Typography</div>
+      <a href="#font">Font</a>
+      <a href="#text">Text Scale</a>
+      <div class="nav-group">Layout</div>
+      <a href="#border-radius">Border Radius</a>
+      <a href="#spacing">Spacing</a>
+      <div class="nav-group">Icons</div>
+      <a href="#icon-stroke">Icon Stroke</a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="theme-toggle" id="themeToggle">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <span id="themeLabel">Dark mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main" id="content">
+    <p style="color:#98a8ba;font-size:13px;">Loading tokens...</p>
+  </main>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const $ = (s, p = document) => p.querySelector(s);
+const $$ = (s, p = document) => [...p.querySelectorAll(s)];
+
+/* ---- Theme toggle ---- */
+const toggle = $("#themeToggle");
+const label = $("#themeLabel");
+const icon = $("#themeIcon");
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  label.textContent = t === "light" ? "Dark mode" : "Light mode";
+  icon.innerHTML = t === "light"
+    ? '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
+    : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+}
+toggle.addEventListener("click", () => setTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light"));
+
+/* ---- Copy toast ---- */
+function copyToast(text) {
+  navigator.clipboard.writeText(text);
+  const t = $("#toast");
+  t.textContent = `Copied: ${text}`;
+  t.classList.add("show");
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+/* ---- Helpers ---- */
+function hexOrValue(v) { return v; }
+function contrastText(hex) {
+  if (!hex || hex.startsWith("rgba")) return "#000";
+  const c = hex.replace("#", "");
+  const r = parseInt(c.substring(0, 2), 16);
+  const g = parseInt(c.substring(2, 4), 16);
+  const b = parseInt(c.substring(4, 6), 16);
+  return (r * 0.299 + g * 0.587 + b * 0.114) > 150 ? "#181D27" : "#FFFFFF";
+}
+function isRgba(v) { return v && v.startsWith("rgba"); }
+function h(tag, attrs = {}, ...children) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "style" && typeof v === "object") Object.assign(el.style, v);
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v);
+  }
+  for (const c of children) {
+    if (typeof c === "string") el.appendChild(document.createTextNode(c));
+    else if (c) el.appendChild(c);
+  }
+  return el;
+}
+
+/* ---- Resolve primitive and semantic refs ---- */
+let primitiveMap = {};
+let semanticRefMap = {};
+const PRIMITIVE_KEYS = ["neutral", "primary", "info", "success", "warning", "danger", "additional", "opacity"];
+
+function buildPrimitiveMap(colorObj) {
+  function walk(obj, prefix) {
+    for (const [k, v] of Object.entries(obj)) {
+      if (k.startsWith("$")) continue;
+      if (!PRIMITIVE_KEYS.includes(prefix.split(".")[0]) && prefix) return;
+      if (v && v.$value !== undefined && typeof v.$value === "string" && (v.$value.startsWith("#") || v.$value.startsWith("rgba"))) {
+        primitiveMap[prefix + k] = v.$value;
+      } else if (typeof v === "object" && v !== null && !v.$value) {
+        walk(v, prefix + k + ".");
+      }
+    }
+  }
+  for (const key of PRIMITIVE_KEYS) {
+    if (colorObj[key]) walk(colorObj[key], key + ".");
+  }
+}
+
+function buildSemanticRefMap(colorObj) {
+  function walk(obj, prefix) {
+    for (const [k, v] of Object.entries(obj)) {
+      if (k.startsWith("$")) continue;
+      const path = prefix ? prefix + "." + k : k;
+      if (v && v.$value && typeof v.$value === "string") {
+        semanticRefMap[path] = v.$value;
+      } else if (typeof v === "object" && v !== null && !Array.isArray(v) && !v.$type) {
+        walk(v, path);
+      }
+    }
+  }
+  for (const key of ["surface", "text", "border", "intent", "overlay"]) {
+    if (colorObj[key]) walk(colorObj[key], key);
+  }
+  if (colorObj.component) walk(colorObj.component, "component");
+}
+
+function resolveRef(val) {
+  if (!val || typeof val !== "string") return val;
+  const colorM = val.match(/^\{color\.(.+)\}$/);
+  if (colorM) {
+    const key = colorM[1];
+    if (primitiveMap[key]) return primitiveMap[key];
+    if (semanticRefMap[key]) return resolveRef(semanticRefMap[key]);
+    return val;
+  }
+  const stateM = val.match(/^\{state\.(.+)\}$/);
+  if (stateM && semanticRefMap["state." + stateM[1]]) return resolveRef(semanticRefMap["state." + stateM[1]]);
+  return val;
+}
+
+/* ---- Render ---- */
+async function render() {
+  const res = await fetch("/tokens/tokens.json");
+  const tokens = await res.json();
+  const main = $("#content");
+  main.innerHTML = "";
+
+  buildPrimitiveMap(tokens.color);
+  buildSemanticRefMap(tokens.color);
+  if (tokens.state) {
+    function walkState(obj, prefix) {
+      for (const [k, v] of Object.entries(obj)) {
+        if (k.startsWith("$")) continue;
+        const path = prefix ? prefix + "." + k : k;
+        if (v && v.$value !== undefined && typeof v.$value === "string") semanticRefMap["state." + path] = v.$value;
+        else if (typeof v === "object" && v !== null && !v.$type) walkState(v, path);
+      }
+    }
+    walkState(tokens.state, "");
+  }
+
+  /* ========== PRIMITIVES BASE ========== */
+  const baseSection = h("div", { class: "section", id: "primitives-base" },
+    h("h2", { class: "section-title" }, "Color Primitives — Base"),
+    h("p", { class: "section-desc" }, "The base palette of raw color values. Not tied to any UI meaning — they form the foundation for semantic colors and themes."),
+  );
+  const baseScales = ["neutral", "primary", "info", "success", "warning", "danger"];
+  for (const name of baseScales) {
+    const scale = tokens.color[name];
+    if (!scale) continue;
+    const sub = h("div", { class: "subsection" },
+      h("h3", { class: "subsection-title" }, name.charAt(0).toUpperCase() + name.slice(1)),
+    );
+    const grid = h("div", { class: "color-grid" });
+    for (const [step, def] of Object.entries(scale)) {
+      if (step.startsWith("$")) continue;
+      const hex = def && def.$value;
+      if (!hex || typeof hex !== "string") continue;
+      grid.appendChild(h("div", { class: "color-card", onclick: () => copyToast(hex) },
+        h("div", { class: "color-swatch", style: { background: hex } }),
+        h("div", { class: "color-info" },
+          h("div", { class: "color-name" }, `${name}.${step}`),
+          h("div", { class: "color-hex" }, hex),
+        ),
+      ));
+    }
+    sub.appendChild(grid);
+    baseSection.appendChild(sub);
+  }
+  main.appendChild(baseSection);
+
+  /* ========== PRIMITIVES ADDITIONAL ========== */
+  const addSection = h("div", { class: "section", id: "primitives-additional" },
+    h("h2", { class: "section-title" }, "Color Primitives — Additional"),
+    h("p", { class: "section-desc" }, "Supporting colors used directly in the UI to emphasize specific meanings, states, or categories not covered by core brand colors."),
+  );
+  const additional = tokens.color.additional;
+  for (const [name, scale] of Object.entries(additional)) {
+    if (name.startsWith("$")) continue;
+    const sub = h("div", { class: "subsection" },
+      h("h3", { class: "subsection-title" }, name.charAt(0).toUpperCase() + name.slice(1)),
+    );
+    const grid = h("div", { class: "color-grid" });
+    for (const [step, def] of Object.entries(scale)) {
+      if (step.startsWith("$")) continue;
+      const hex = def.$value;
+      grid.appendChild(h("div", { class: "color-card", onclick: () => copyToast(hex) },
+        h("div", { class: "color-swatch", style: { background: hex } }),
+        h("div", { class: "color-info" },
+          h("div", { class: "color-name" }, `${name}.${step}`),
+          h("div", { class: "color-hex" }, hex),
+        ),
+      ));
+    }
+    sub.appendChild(grid);
+    addSection.appendChild(sub);
+  }
+  main.appendChild(addSection);
+
+  /* ========== PRIMITIVES OPACITY ========== */
+  const opacitySection = h("div", { class: "section", id: "primitives-opacity" },
+    h("h2", { class: "section-title" }, "Color Primitives — Opacity"),
+    h("p", { class: "section-desc" }, "Light and dark overlay colors based on white and black, using fixed opacity steps. Use for overlays, hover/pressed states, scrims, and subtle UI layers."),
+  );
+  for (const [name, scale] of Object.entries(tokens.color.opacity)) {
+    if (name.startsWith("$") || (name !== "light" && name !== "dark")) continue;
+    const sub = h("div", { class: "subsection" },
+      h("h3", { class: "subsection-title" }, name.charAt(0).toUpperCase() + name.slice(1) + (name === "light" ? " (white-based)" : " (black-based)")),
+    );
+    const grid = h("div", { class: "color-grid" });
+    for (const [step, def] of Object.entries(scale)) {
+      if (step.startsWith("$")) continue;
+      const val = def.$value;
+      if (typeof val !== "string") continue;
+      grid.appendChild(h("div", { class: "color-card", onclick: () => copyToast(val) },
+        h("div", { class: "color-swatch checker" },
+          h("div", { class: "fill", style: { background: val } }),
+        ),
+        h("div", { class: "color-info" },
+          h("div", { class: "color-name" }, "opacity." + name + "." + step),
+          h("div", { class: "color-hex" }, val),
+        ),
+      ));
+    }
+    sub.appendChild(grid);
+    opacitySection.appendChild(sub);
+  }
+  main.appendChild(opacitySection);
+
+  /* ========== SEMANTIC COLORS (Layer 2: surface, text, border, intent, overlay) ========== */
+  const semSection = h("div", { class: "section", id: "semantic-colors" },
+    h("h2", { class: "section-title" }, "Semantic Colors"),
+    h("p", { class: "section-desc" }, "Layer 2 — System semantics map primitives to UI roles (surface, text, border, intent, overlay). Use these or component tokens in components; they support theming and accessible contrast."),
+  );
+  const semanticGroups = [
+    { name: "Surface", path: "surface", obj: tokens.color.surface },
+    { name: "Text", path: "text", obj: tokens.color.text },
+    { name: "Border", path: "border", obj: tokens.color.border },
+    { name: "Overlay", path: "overlay", obj: tokens.color.overlay },
+  ];
+  if (tokens.color.intent) {
+    for (const [intentName, intentObj] of Object.entries(tokens.color.intent)) {
+      if (intentName.startsWith("$")) continue;
+      semanticGroups.push({ name: "Intent — " + intentName.charAt(0).toUpperCase() + intentName.slice(1), path: "intent." + intentName, obj: intentObj });
+    }
+  }
+  for (const group of semanticGroups) {
+    if (!group.obj) continue;
+    const sub = h("div", { class: "subsection" },
+      h("h3", { class: "subsection-title" }, group.name),
+    );
+    const table = h("table", { class: "semantic-table" });
+    table.appendChild(h("thead", {},
+      h("tr", {},
+        h("th", {}, ""),
+        h("th", {}, "Token"),
+        h("th", {}, "Reference"),
+        h("th", {}, "Resolved"),
+        h("th", {}, "CSS Variable"),
+        h("th", {}, "Description"),
+      ),
+    ));
+    const tbody = h("tbody");
+    function addRows(obj, pathPrefix) {
+      for (const [name, def] of Object.entries(obj)) {
+        if (name.startsWith("$")) continue;
+        const tokenPath = pathPrefix ? pathPrefix + "." + name : name;
+        const ref = def.$value || "";
+        const resolved = typeof ref === "string" ? resolveRef(ref) : ref;
+        const cssName = tokenPath.replace(/\./g, "-");
+        const cssVar = `var(--dls-color-${cssName})`;
+        const row = h("tr", { onclick: () => copyToast(cssVar), style: { cursor: "pointer" } },
+          h("td", {}, h("span", { class: "semantic-swatch", style: { background: resolved } })),
+          h("td", { class: "semantic-token" }, "color." + tokenPath),
+          h("td", { class: "semantic-ref" }, String(ref).replace(/[{}]/g, "")),
+          h("td", { class: "semantic-ref" }, resolved),
+          h("td", { class: "semantic-ref" }, cssVar),
+          h("td", { class: "semantic-desc" }, def.$description || ""),
+        );
+        tbody.appendChild(row);
+      }
+    }
+    addRows(group.obj, group.path);
+    table.appendChild(tbody);
+    sub.appendChild(table);
+    semSection.appendChild(sub);
+  }
+  main.appendChild(semSection);
+
+  /* ========== COMPONENT TOKENS (Layer 4) ========== */
+  function collectComponentLeaves(obj, pathPrefix, out) {
+    for (const [name, def] of Object.entries(obj)) {
+      if (name.startsWith("$")) continue;
+      const path = pathPrefix ? pathPrefix + "." + name : name;
+      if (def && def.$value !== undefined && typeof def.$value === "string") {
+        out.push({ path, ref: def.$value, description: def.$description || "" });
+      } else if (typeof def === "object" && def !== null && !def.$type) {
+        collectComponentLeaves(def, path, out);
+      }
+    }
+  }
+  const compSection = h("div", { class: "section", id: "component-tokens" },
+    h("h2", { class: "section-title" }, "Component Tokens"),
+    h("p", { class: "section-desc" }, "Layer 4 — Override-safe tokens per component and variant. Use only these (or other component tokens) in UI components; they map to system semantics and inherit theme."),
+  );
+  if (tokens.color.component) {
+    const leaves = [];
+    collectComponentLeaves(tokens.color.component, "component", leaves);
+    const byComponent = {};
+    for (const item of leaves) {
+      const top = item.path.split(".")[1];
+      if (!byComponent[top]) byComponent[top] = [];
+      byComponent[top].push(item);
+    }
+    const compOrder = ["button", "badge", "chip", "tab", "input", "table", "pagination", "alert", "dialog", "dropdown", "sidebar"];
+    for (const compName of compOrder) {
+      const items = byComponent[compName];
+      if (!items || items.length === 0) continue;
+      const sub = h("div", { class: "subsection" },
+        h("h3", { class: "subsection-title" }, compName.charAt(0).toUpperCase() + compName.slice(1)),
+      );
+      const table = h("table", { class: "semantic-table" });
+      table.appendChild(h("thead", {},
+        h("tr", {},
+          h("th", {}, ""),
+          h("th", {}, "Token"),
+          h("th", {}, "Reference"),
+          h("th", {}, "Resolved"),
+          h("th", {}, "CSS Variable"),
+          h("th", {}, "Description"),
+        ),
+      ));
+      const tbody = h("tbody");
+      for (const item of items) {
+        const fullPath = "color." + item.path;
+        const resolved = resolveRef(item.ref);
+        const cssName = item.path.replace(/\./g, "-");
+        const cssVar = "var(--dls-color-" + cssName + ")";
+        tbody.appendChild(h("tr", { onclick: () => copyToast(cssVar), style: { cursor: "pointer" } },
+          h("td", {}, h("span", { class: "semantic-swatch", style: { background: resolved } })),
+          h("td", { class: "semantic-token" }, fullPath),
+          h("td", { class: "semantic-ref" }, item.ref.replace(/[{}]/g, "")),
+          h("td", { class: "semantic-ref" }, resolved),
+          h("td", { class: "semantic-ref" }, cssVar),
+          h("td", { class: "semantic-desc" }, item.description),
+        ));
+      }
+      table.appendChild(tbody);
+      sub.appendChild(table);
+      compSection.appendChild(sub);
+    }
+  }
+  main.appendChild(compSection);
+
+  /* ========== SHADOW TOKENS ========== */
+  const shadowSection = h("div", { class: "section", id: "shadow-tokens" },
+    h("h2", { class: "section-title" }, "Shadow Tokens"),
+    h("p", { class: "section-desc" }, "Semantic shadows for components. Use only shadow.surface, shadow.overlay, and shadow.focus.ring in components — do not reference shadow.raw or primitives directly."),
+  );
+  if (tokens.shadow) {
+    const shadowTable = h("table", { class: "token-table" });
+    shadowTable.appendChild(h("thead", {},
+      h("tr", {},
+        h("th", {}, "Token"),
+        h("th", {}, "Reference / Value"),
+        h("th", {}, "CSS Variable"),
+      ),
+    ));
+    const shadowBody = h("tbody");
+    const shadowSemantic = [
+      { path: "shadow.surface.sm", val: tokens.shadow.surface?.sm?.$value, css: "var(--dls-shadow-surface-sm)" },
+      { path: "shadow.surface.md", val: tokens.shadow.surface?.md?.$value, css: "var(--dls-shadow-surface-md)" },
+      { path: "shadow.surface.lg", val: tokens.shadow.surface?.lg?.$value, css: "var(--dls-shadow-surface-lg)" },
+      { path: "shadow.overlay", val: tokens.shadow.overlay?.$value, css: "var(--dls-shadow-overlay)" },
+      { path: "shadow.focus.ring", val: tokens.shadow.focus?.ring?.$value, css: "var(--dls-shadow-focus-ring)" },
+    ];
+    for (const row of shadowSemantic) {
+      if (!row.val) continue;
+      shadowBody.appendChild(h("tr", { onclick: () => copyToast(row.css), style: { cursor: "pointer" } },
+        h("td", { class: "mono" }, row.path),
+        h("td", { class: "semantic-ref" }, String(row.val).replace(/[{}]/g, "")),
+        h("td", { class: "css-var" }, row.css),
+      ));
+    }
+    shadowTable.appendChild(shadowBody);
+    shadowSection.appendChild(shadowTable);
+  }
+  main.appendChild(shadowSection);
+
+  /* ========== FONT ========== */
+  const fontSection = h("div", { class: "section", id: "font" },
+    h("h2", { class: "section-title" }, "Font"),
+    h("p", { class: "section-desc" }, "Core font settings used across the UI, including font family and font weight."),
+  );
+  const fontTable = h("table", { class: "token-table" });
+  fontTable.appendChild(h("thead", {},
+    h("tr", {},
+      h("th", {}, "Token"),
+      h("th", {}, "Value"),
+      h("th", {}, "CSS Variable"),
+      h("th", {}, "Preview"),
+    ),
+  ));
+  const fontBody = h("tbody");
+  // Family
+  fontBody.appendChild(h("tr", { onclick: () => copyToast("var(--dls-font-family)"), style: { cursor: "pointer" } },
+    h("td", { class: "mono" }, "font.family"),
+    h("td", {}, tokens.font.family.$value),
+    h("td", { class: "css-var" }, "var(--dls-font-family)"),
+    h("td", {}, h("span", { style: { fontFamily: `"${tokens.font.family.$value}", sans-serif`, fontSize: "16px" } }, "The quick brown fox")),
+  ));
+  // Weights
+  for (const [name, def] of Object.entries(tokens.font.weight)) {
+    fontBody.appendChild(h("tr", { onclick: () => copyToast(`var(--dls-font-weight-${name})`), style: { cursor: "pointer" } },
+      h("td", { class: "mono" }, `font.weight.${name}`),
+      h("td", {}, String(def.$value)),
+      h("td", { class: "css-var" }, `var(--dls-font-weight-${name})`),
+      h("td", {}, h("span", { style: { fontWeight: String(def.$value), fontSize: "16px" } }, `Weight ${def.$value}`)),
+    ));
+  }
+  fontTable.appendChild(fontBody);
+  fontSection.appendChild(fontTable);
+  main.appendChild(fontSection);
+
+  /* ========== TEXT SCALE ========== */
+  const textSection = h("div", { class: "section", id: "text" },
+    h("h2", { class: "section-title" }, "Text Scale"),
+    h("p", { class: "section-desc" }, "Font sizing system across the UI, including font size and line height."),
+  );
+  const textTable = h("table", { class: "token-table" });
+  textTable.appendChild(h("thead", {},
+    h("tr", {},
+      h("th", {}, "Scale"),
+      h("th", {}, "Font Size"),
+      h("th", {}, "Line Height"),
+      h("th", {}, "Preview"),
+    ),
+  ));
+  const textBody = h("tbody");
+  const textScaleKeys = ["xs", "s", "m", "l", "xl", "2xl", "3xl", "hero"];
+  for (const name of textScaleKeys) {
+    const def = tokens.text[name];
+    if (!def) continue;
+    const fs = def.fontSize?.$value || def["font-size"]?.$value;
+    const lh = def.lineHeight?.$value || def["line-height"]?.$value;
+    if (!fs || !lh) continue;
+    textBody.appendChild(h("tr", {},
+      h("td", { class: "mono" }, "text." + name),
+      h("td", {}, fs),
+      h("td", {}, lh),
+      h("td", {}, h("span", { class: "text-preview", style: { fontSize: fs, lineHeight: lh } }, "The quick brown fox — " + name)),
+    ));
+  }
+  textTable.appendChild(textBody);
+  textSection.appendChild(textTable);
+  /* Semantic typography */
+  if (tokens.text.heading || tokens.text.body || tokens.text.label || tokens.text.caption) {
+    const semTypoSub = h("div", { class: "subsection" },
+      h("h3", { class: "subsection-title" }, "Semantic Typography"),
+      h("p", { class: "section-desc", style: { marginBottom: "12px" } }, "Semantic text roles map to primitive size + font weight. Use in components instead of raw scale."),
+    );
+    const semTypoTable = h("table", { class: "token-table" });
+    semTypoTable.appendChild(h("thead", {},
+      h("tr", {},
+        h("th", {}, "Token"),
+        h("th", {}, "Maps to"),
+        h("th", {}, "CSS Variables"),
+      ),
+    ));
+    const semTypoBody = h("tbody");
+    const semTypoRows = [
+      { path: "text.heading.xl", maps: "text.2xl + font.weight.semibold", vars: "--dls-text-heading-xl-*" },
+      { path: "text.heading.l", maps: "text.xl + font.weight.semibold", vars: "--dls-text-heading-l-*" },
+      { path: "text.heading.m", maps: "text.l + font.weight.medium", vars: "--dls-text-heading-m-*" },
+      { path: "text.body.l", maps: "text.l + font.weight.normal", vars: "--dls-text-body-l-*" },
+      { path: "text.body.m", maps: "text.m + font.weight.normal", vars: "--dls-text-body-m-*" },
+      { path: "text.body.s", maps: "text.s + font.weight.normal", vars: "--dls-text-body-s-*" },
+      { path: "text.label.m", maps: "text.m + font.weight.medium", vars: "--dls-text-label-m-*" },
+      { path: "text.label.s", maps: "text.s + font.weight.medium", vars: "--dls-text-label-s-*" },
+      { path: "text.caption", maps: "text.xs + font.weight.normal", vars: "--dls-text-caption-*" },
+    ];
+    for (const row of semTypoRows) {
+      semTypoBody.appendChild(h("tr", {},
+        h("td", { class: "mono" }, row.path),
+        h("td", {}, row.maps),
+        h("td", { class: "css-var" }, row.vars),
+      ));
+    }
+    semTypoTable.appendChild(semTypoBody);
+    semTypoSub.appendChild(semTypoTable);
+    textSection.appendChild(semTypoSub);
+  }
+  main.appendChild(textSection);
+
+  /* ========== BORDER RADIUS ========== */
+  const brSection = h("div", { class: "section", id: "border-radius" },
+    h("h2", { class: "section-title" }, "Border Radius"),
+    h("p", { class: "section-desc" }, "Corner rounding used across components (inputs, buttons, cards, modals, etc.)."),
+  );
+  const brTable = h("table", { class: "token-table" });
+  brTable.appendChild(h("thead", {},
+    h("tr", {},
+      h("th", {}, "Token"),
+      h("th", {}, "Value"),
+      h("th", {}, "CSS Variable"),
+      h("th", {}, "Preview"),
+    ),
+  ));
+  const brBody = h("tbody");
+  const radiusObj = tokens.radius || tokens["border-radius"];
+  if (radiusObj) {
+    for (const [name, def] of Object.entries(radiusObj)) {
+      if (name.startsWith("$")) continue;
+      if (name === "component") {
+        for (const [compName, compDef] of Object.entries(def)) {
+          if (compName.startsWith("$")) continue;
+          const val = compDef.$value;
+          if (!val) continue;
+          const cssName = "component-" + compName;
+          brBody.appendChild(h("tr", { onclick: () => copyToast("var(--dls-radius-" + cssName + ")"), style: { cursor: "pointer" } },
+            h("td", { class: "mono" }, "radius.component." + compName),
+            h("td", {}, val),
+            h("td", { class: "css-var" }, "var(--dls-radius-" + cssName + ")"),
+            h("td", {}, h("div", { class: "radius-box", style: { borderRadius: val } })),
+          ));
+        }
+        continue;
+      }
+      const val = def.$value;
+      if (!val) continue;
+      const cssName = name.replace(".", "-");
+      brBody.appendChild(h("tr", { onclick: () => copyToast("var(--dls-radius-" + cssName + ")"), style: { cursor: "pointer" } },
+        h("td", { class: "mono" }, "radius." + name),
+        h("td", {}, val),
+        h("td", { class: "css-var" }, "var(--dls-radius-" + cssName + ")"),
+        h("td", {}, h("div", { class: "radius-box", style: { borderRadius: val } })),
+      ));
+    }
+  }
+  brTable.appendChild(brBody);
+  brSection.appendChild(brTable);
+  main.appendChild(brSection);
+
+  /* ========== SPACING ========== */
+  const spSection = h("div", { class: "section", id: "spacing" },
+    h("h2", { class: "section-title" }, "Spacing"),
+    h("p", { class: "section-desc" }, "Consistent padding, margins, and gaps used across the UI."),
+  );
+  const spTable = h("table", { class: "token-table" });
+  spTable.appendChild(h("thead", {},
+    h("tr", {},
+      h("th", {}, "Token"),
+      h("th", {}, "Value"),
+      h("th", {}, "CSS Variable"),
+      h("th", { style: { width: "50%" } }, "Preview"),
+    ),
+  ));
+  const spBody = h("tbody");
+  for (const [name, def] of Object.entries(tokens.spacing)) {
+    if (name.startsWith("$")) continue;
+    const val = def.$value;
+    const cssName = name.replace(".", "-");
+    spBody.appendChild(h("tr", { onclick: () => copyToast(`var(--dls-spacing-${cssName})`), style: { cursor: "pointer" } },
+      h("td", { class: "mono" }, `space.${name}`),
+      h("td", {}, val),
+      h("td", { class: "css-var" }, `var(--dls-spacing-${cssName})`),
+      h("td", {}, h("div", { class: "spacing-bar", style: { width: val === "0px" ? "2px" : val } })),
+    ));
+  }
+  spTable.appendChild(spBody);
+  spSection.appendChild(spTable);
+  main.appendChild(spSection);
+
+  /* ========== ICON STROKE ========== */
+  const icSection = h("div", { class: "section", id: "icon-stroke" },
+    h("h2", { class: "section-title" }, "Icon Stroke"),
+    h("p", { class: "section-desc" }, "Standard border (stroke) weight used for icons. Tokens icon.stroke-12, icon.stroke-16, and icon.stroke-24 reflect the icon sizes used in this design system."),
+  );
+  const icTable = h("table", { class: "token-table" });
+  icTable.appendChild(h("thead", {},
+    h("tr", {},
+      h("th", {}, "Token"),
+      h("th", {}, "Stroke Weight"),
+      h("th", {}, "CSS Variable"),
+      h("th", {}, "Preview"),
+    ),
+  ));
+  const icBody = h("tbody");
+  for (const [name, def] of Object.entries(tokens.icon)) {
+    if (name.startsWith("$")) continue;
+    const val = def.$value;
+    const size = parseInt(name.replace("stroke-", ""));
+    icBody.appendChild(h("tr", { onclick: () => copyToast(`var(--dls-icon-${name})`), style: { cursor: "pointer" } },
+      h("td", { class: "mono" }, `icon.${name}`),
+      h("td", {}, String(val)),
+      h("td", { class: "css-var" }, `var(--dls-icon-${name})`),
+      h("td", {}, (() => {
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("width", size);
+        svg.setAttribute("height", size);
+        svg.setAttribute("viewBox", `0 0 ${size} ${size}`);
+        svg.setAttribute("fill", "none");
+        svg.setAttribute("stroke", "currentColor");
+        svg.setAttribute("stroke-width", val);
+        svg.setAttribute("stroke-linecap", "round");
+        svg.setAttribute("stroke-linejoin", "round");
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", size / 2);
+        circle.setAttribute("cy", size / 2);
+        circle.setAttribute("r", size / 2 - val - 1);
+        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line1.setAttribute("x1", size * 0.35); line1.setAttribute("y1", size * 0.35);
+        line1.setAttribute("x2", size * 0.65); line1.setAttribute("y2", size * 0.65);
+        const line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line2.setAttribute("x1", size * 0.65); line2.setAttribute("y1", size * 0.35);
+        line2.setAttribute("x2", size * 0.35); line2.setAttribute("y2", size * 0.65);
+        svg.appendChild(circle);
+        svg.appendChild(line1);
+        svg.appendChild(line2);
+        return svg;
+      })()),
+    ));
+  }
+  icTable.appendChild(icBody);
+  icSection.appendChild(icTable);
+  main.appendChild(icSection);
+
+  /* ---- Sidebar active state ---- */
+  const sections = $$(".section[id]");
+  const navLinks = $$(".sidebar nav a[href]");
+  const observer = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove("active"));
+        const link = $(`.sidebar nav a[href="#${e.target.id}"]`);
+        if (link) link.classList.add("active");
+      }
+    }
+  }, { rootMargin: "-20% 0px -60% 0px" });
+  sections.forEach(s => observer.observe(s));
+}
+
+render();
+</script>
+</body>
+</html>

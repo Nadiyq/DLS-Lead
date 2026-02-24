@@ -1,0 +1,60 @@
+.accordion {
+  display: flex;
+  flex-direction: column;
+  width: 328px;
+}
+
+/* Item wrapper — holds trigger + content */
+.accordion-item {
+  border-bottom: 1px solid; /* color set via inline style from token */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Clickable header row */
+.accordion-item__trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-3);
+  padding: var(--dls-spacing-3) 0;
+  width: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+  border-radius: var(--dls-radius-component-input);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-label-m-font-size);
+  line-height: var(--dls-text-label-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  transition: background-color 0.15s ease;
+}
+
+.accordion-item__trigger:disabled {
+  cursor: not-allowed;
+}
+
+.accordion-item__title {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* Chevron SVG */
+.accordion-item__icon {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.accordion-item__icon--open {
+  transform: rotate(180deg);
+}
+
+/* Expanded content */
+.accordion-item__content {
+  padding-bottom: var(--dls-spacing-3);
+  font-size: var(--dls-text-body-m-font-size);
+  line-height: var(--dls-text-body-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+}
