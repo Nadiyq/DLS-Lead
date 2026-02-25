@@ -8,7 +8,7 @@
  *   surface/base, surface/subtle, surface/muted, surface/strong, surface/inverse, surface/disabled
  *   text/primary, text/secondary, text/inverse, text/disabled, text/placeholder
  *   border/base, border/subtle, border/strong, border/focus, border/disabled, border/inverse
- *   intent/primary|success|warning|danger|info|neutral with .base, .subtle, .strong, .text, .border
+ *   intent/primary|success|warning|danger|info|neutral with .base, .on-base, .subtle, .strong, .text, .border
  *   overlay/scrim, overlay/backdrop (raw RGBA, fixed for both modes)
  *   state/hover-overlay, state/pressed-overlay (raw RGBA, not aliases), state/focus/ring
  */
@@ -51,31 +51,37 @@
     { name: 'border/disabled', desc: 'Disabled border', default: 'neutral/200', dark: 'neutral/700' },
     { name: 'border/inverse', desc: 'Border on inverse/dark surfaces', default: 'neutral/0', dark: 'neutral/950' },
     { name: 'intent/primary/base', desc: 'Primary intent filled', default: 'primary/700', dark: 'primary/600' },
+    { name: 'intent/primary/on-base', desc: 'Foreground on primary base', default: 'neutral/0', dark: 'neutral/0' },
     { name: 'intent/primary/subtle', desc: 'Primary subtle bg', default: 'primary/50', dark: 'primary/900' },
     { name: 'intent/primary/strong', desc: 'Primary strong', default: 'primary/800', dark: 'primary/500' },
     { name: 'intent/primary/text', desc: 'Primary text', default: 'primary/900', dark: 'primary/300' },
     { name: 'intent/primary/border', desc: 'Primary border', default: 'primary/200', dark: 'primary/600' },
     { name: 'intent/success/base', desc: 'Success filled', default: 'success/700', dark: 'success/500' },
+    { name: 'intent/success/on-base', desc: 'Foreground on success base', default: 'neutral/0', dark: 'neutral/950' },
     { name: 'intent/success/subtle', desc: 'Success subtle', default: 'success/50', dark: 'success/900' },
     { name: 'intent/success/strong', desc: 'Success strong', default: 'success/800', dark: 'success/400' },
     { name: 'intent/success/text', desc: 'Success text', default: 'success/900', dark: 'success/300' },
     { name: 'intent/success/border', desc: 'Success border', default: 'success/200', dark: 'success/600' },
     { name: 'intent/warning/base', desc: 'Warning filled', default: 'warning/700', dark: 'warning/500' },
+    { name: 'intent/warning/on-base', desc: 'Foreground on warning base', default: 'neutral/0', dark: 'neutral/950' },
     { name: 'intent/warning/subtle', desc: 'Warning subtle', default: 'warning/50', dark: 'warning/900' },
     { name: 'intent/warning/strong', desc: 'Warning strong', default: 'warning/800', dark: 'warning/400' },
     { name: 'intent/warning/text', desc: 'Warning text', default: 'warning/900', dark: 'warning/300' },
     { name: 'intent/warning/border', desc: 'Warning border', default: 'warning/200', dark: 'warning/600' },
     { name: 'intent/danger/base', desc: 'Danger filled', default: 'danger/600', dark: 'danger/600' },
+    { name: 'intent/danger/on-base', desc: 'Foreground on danger base', default: 'neutral/0', dark: 'neutral/0' },
     { name: 'intent/danger/subtle', desc: 'Danger subtle', default: 'danger/50', dark: 'danger/900' },
     { name: 'intent/danger/strong', desc: 'Danger strong', default: 'danger/700', dark: 'danger/500' },
     { name: 'intent/danger/text', desc: 'Danger text', default: 'danger/900', dark: 'danger/300' },
     { name: 'intent/danger/border', desc: 'Danger border', default: 'danger/200', dark: 'danger/600' },
-    { name: 'intent/info/base', desc: 'Info filled', default: 'info/600', dark: 'info/600' },
+    { name: 'intent/info/base', desc: 'Info filled', default: 'info/700', dark: 'info/600' },
+    { name: 'intent/info/on-base', desc: 'Foreground on info base', default: 'neutral/0', dark: 'neutral/0' },
     { name: 'intent/info/subtle', desc: 'Info subtle', default: 'info/50', dark: 'info/900' },
-    { name: 'intent/info/strong', desc: 'Info strong', default: 'info/700', dark: 'info/500' },
+    { name: 'intent/info/strong', desc: 'Info strong', default: 'info/800', dark: 'info/500' },
     { name: 'intent/info/text', desc: 'Info text', default: 'info/900', dark: 'info/300' },
     { name: 'intent/info/border', desc: 'Info border', default: 'info/200', dark: 'info/600' },
     { name: 'intent/neutral/base', desc: 'Neutral filled', default: 'neutral/800', dark: 'neutral/50' },
+    { name: 'intent/neutral/on-base', desc: 'Foreground on neutral base', default: 'neutral/0', dark: 'neutral/950' },
     { name: 'intent/neutral/subtle', desc: 'Neutral subtle', default: 'neutral/50', dark: 'neutral/800' },
     { name: 'intent/neutral/strong', desc: 'Neutral strong', default: 'neutral/900', dark: 'neutral/100' },
     { name: 'intent/neutral/text', desc: 'Neutral text', default: 'neutral/900', dark: 'neutral/200' },

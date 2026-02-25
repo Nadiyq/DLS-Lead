@@ -136,12 +136,12 @@ export const semantic = {
       inverse:  color.neutral[0],
     },
     intent: {
-      primary: { base: color.primary[700], subtle: color.primary[50], strong: color.primary[800], text: color.primary[900], border: color.primary[200] },
-      success: { base: color.success[700], subtle: color.success[50], strong: color.success[800], text: color.success[900], border: color.success[200] },
-      warning: { base: color.warning[700], subtle: color.warning[50], strong: color.warning[800], text: color.warning[900], border: color.warning[200] },
-      danger:  { base: color.danger[600], subtle: color.danger[50], strong: color.danger[700], text: color.danger[900], border: color.danger[200] },
-      info:    { base: color.info[600], subtle: color.info[50], strong: color.info[700], text: color.info[900], border: color.info[200] },
-      neutral: { base: color.neutral[800], subtle: color.neutral[50], strong: color.neutral[900], text: color.neutral[900], border: color.neutral[200] },
+      primary: { base: color.primary[700], onBase: color.neutral[0], subtle: color.primary[50], strong: color.primary[800], text: color.primary[900], border: color.primary[200] },
+      success: { base: color.success[700], onBase: color.neutral[0], subtle: color.success[50], strong: color.success[800], text: color.success[900], border: color.success[200] },
+      warning: { base: color.warning[700], onBase: color.neutral[0], subtle: color.warning[50], strong: color.warning[800], text: color.warning[900], border: color.warning[200] },
+      danger:  { base: color.danger[600], onBase: color.neutral[0], subtle: color.danger[50], strong: color.danger[700], text: color.danger[900], border: color.danger[200] },
+      info:    { base: color.info[700], onBase: color.neutral[0], subtle: color.info[50], strong: color.info[800], text: color.info[900], border: color.info[200] },
+      neutral: { base: color.neutral[800], onBase: color.neutral[0], subtle: color.neutral[50], strong: color.neutral[900], text: color.neutral[900], border: color.neutral[200] },
     },
     overlay: {
       scrim:   "rgba(0, 0, 0, 0.5)",
@@ -173,12 +173,12 @@ export const semantic = {
       inverse:  color.neutral[950],
     },
     intent: {
-      primary: { base: color.primary[600], subtle: color.primary[900], strong: color.primary[500], text: color.primary[300], border: color.primary[600] },
-      success: { base: color.success[500], subtle: color.success[900], strong: color.success[400], text: color.success[300], border: color.success[600] },
-      warning: { base: color.warning[500], subtle: color.warning[900], strong: color.warning[400], text: color.warning[300], border: color.warning[600] },
-      danger:  { base: color.danger[600], subtle: color.danger[900], strong: color.danger[500], text: color.danger[300], border: color.danger[600] },
-      info:    { base: color.info[600], subtle: color.info[900], strong: color.info[500], text: color.info[300], border: color.info[600] },
-      neutral: { base: color.neutral[50], subtle: color.neutral[800], strong: color.neutral[100], text: color.neutral[200], border: color.neutral[700] },
+      primary: { base: color.primary[600], onBase: color.neutral[0], subtle: color.primary[900], strong: color.primary[500], text: color.primary[300], border: color.primary[600] },
+      success: { base: color.success[500], onBase: color.neutral[950], subtle: color.success[900], strong: color.success[400], text: color.success[300], border: color.success[600] },
+      warning: { base: color.warning[500], onBase: color.neutral[950], subtle: color.warning[900], strong: color.warning[400], text: color.warning[300], border: color.warning[600] },
+      danger:  { base: color.danger[600], onBase: color.neutral[0], subtle: color.danger[900], strong: color.danger[500], text: color.danger[300], border: color.danger[600] },
+      info:    { base: color.info[600], onBase: color.neutral[0], subtle: color.info[900], strong: color.info[500], text: color.info[300], border: color.info[600] },
+      neutral: { base: color.neutral[50], onBase: color.neutral[950], subtle: color.neutral[800], strong: color.neutral[100], text: color.neutral[200], border: color.neutral[700] },
     },
     overlay: {
       scrim:   "rgba(0, 0, 0, 0.5)",
@@ -229,7 +229,7 @@ function getComponentTokens(theme: keyof typeof semantic) {
       primary: {
         // hover/pressed: oklch(from base calc(l - 0.05) c h) / calc(l - 0.10) in component stylesheets
         bg:     { base: s.intent.primary.base, disabled: s.surface.disabled },
-        fg:     { base: s.text.inverse, disabled: s.text.disabled },
+        fg:     { base: s.intent.primary.onBase, disabled: s.text.disabled },
         border: { base: s.intent.primary.base, disabled: s.border.disabled },
       },
       secondary: {

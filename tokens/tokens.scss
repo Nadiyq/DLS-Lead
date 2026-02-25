@@ -154,36 +154,42 @@ $dls-color-border-disabled: $dls-color-neutral-200;
 $dls-color-border-inverse: $dls-color-neutral-0;
 
 $dls-color-intent-primary-base: $dls-color-primary-700;
+$dls-color-intent-primary-on-base: $dls-color-neutral-0;
 $dls-color-intent-primary-subtle: $dls-color-primary-50;
 $dls-color-intent-primary-strong: $dls-color-primary-800;
 $dls-color-intent-primary-text: $dls-color-primary-900;
 $dls-color-intent-primary-border: $dls-color-primary-200;
 
 $dls-color-intent-success-base: $dls-color-success-700;
+$dls-color-intent-success-on-base: $dls-color-neutral-0;
 $dls-color-intent-success-subtle: $dls-color-success-50;
 $dls-color-intent-success-strong: $dls-color-success-800;
 $dls-color-intent-success-text: $dls-color-success-900;
 $dls-color-intent-success-border: $dls-color-success-200;
 
 $dls-color-intent-warning-base: $dls-color-warning-700;
+$dls-color-intent-warning-on-base: $dls-color-neutral-0;
 $dls-color-intent-warning-subtle: $dls-color-warning-50;
 $dls-color-intent-warning-strong: $dls-color-warning-800;
 $dls-color-intent-warning-text: $dls-color-warning-900;
 $dls-color-intent-warning-border: $dls-color-warning-200;
 
 $dls-color-intent-danger-base: $dls-color-danger-600;
+$dls-color-intent-danger-on-base: $dls-color-neutral-0;
 $dls-color-intent-danger-subtle: $dls-color-danger-50;
 $dls-color-intent-danger-strong: $dls-color-danger-700;
 $dls-color-intent-danger-text: $dls-color-danger-900;
 $dls-color-intent-danger-border: $dls-color-danger-200;
 
-$dls-color-intent-info-base: $dls-color-info-600;
+$dls-color-intent-info-base: $dls-color-info-700;
+$dls-color-intent-info-on-base: $dls-color-neutral-0;
 $dls-color-intent-info-subtle: $dls-color-info-50;
-$dls-color-intent-info-strong: $dls-color-info-700;
+$dls-color-intent-info-strong: $dls-color-info-800;
 $dls-color-intent-info-text: $dls-color-info-900;
 $dls-color-intent-info-border: $dls-color-info-200;
 
 $dls-color-intent-neutral-base: $dls-color-neutral-800;
+$dls-color-intent-neutral-on-base: $dls-color-neutral-0;
 $dls-color-intent-neutral-subtle: $dls-color-neutral-50;
 $dls-color-intent-neutral-strong: $dls-color-neutral-900;
 $dls-color-intent-neutral-text: $dls-color-neutral-900;
@@ -223,46 +229,52 @@ $dls-semantic-border: (
 
 $dls-semantic-intent: (
   primary: (
-    base:   $dls-color-intent-primary-base,
-    subtle: $dls-color-intent-primary-subtle,
-    strong: $dls-color-intent-primary-strong,
-    text:   $dls-color-intent-primary-text,
-    border: $dls-color-intent-primary-border,
+    base:    $dls-color-intent-primary-base,
+    on-base: $dls-color-intent-primary-on-base,
+    subtle:  $dls-color-intent-primary-subtle,
+    strong:  $dls-color-intent-primary-strong,
+    text:    $dls-color-intent-primary-text,
+    border:  $dls-color-intent-primary-border,
   ),
   success: (
-    base:   $dls-color-intent-success-base,
-    subtle: $dls-color-intent-success-subtle,
-    strong: $dls-color-intent-success-strong,
-    text:   $dls-color-intent-success-text,
-    border: $dls-color-intent-success-border,
+    base:    $dls-color-intent-success-base,
+    on-base: $dls-color-intent-success-on-base,
+    subtle:  $dls-color-intent-success-subtle,
+    strong:  $dls-color-intent-success-strong,
+    text:    $dls-color-intent-success-text,
+    border:  $dls-color-intent-success-border,
   ),
   warning: (
-    base:   $dls-color-intent-warning-base,
-    subtle: $dls-color-intent-warning-subtle,
-    strong: $dls-color-intent-warning-strong,
-    text:   $dls-color-intent-warning-text,
-    border: $dls-color-intent-warning-border,
+    base:    $dls-color-intent-warning-base,
+    on-base: $dls-color-intent-warning-on-base,
+    subtle:  $dls-color-intent-warning-subtle,
+    strong:  $dls-color-intent-warning-strong,
+    text:    $dls-color-intent-warning-text,
+    border:  $dls-color-intent-warning-border,
   ),
   danger: (
-    base:   $dls-color-intent-danger-base,
-    subtle: $dls-color-intent-danger-subtle,
-    strong: $dls-color-intent-danger-strong,
-    text:   $dls-color-intent-danger-text,
-    border: $dls-color-intent-danger-border,
+    base:    $dls-color-intent-danger-base,
+    on-base: $dls-color-intent-danger-on-base,
+    subtle:  $dls-color-intent-danger-subtle,
+    strong:  $dls-color-intent-danger-strong,
+    text:    $dls-color-intent-danger-text,
+    border:  $dls-color-intent-danger-border,
   ),
   info: (
-    base:   $dls-color-intent-info-base,
-    subtle: $dls-color-intent-info-subtle,
-    strong: $dls-color-intent-info-strong,
-    text:   $dls-color-intent-info-text,
-    border: $dls-color-intent-info-border,
+    base:    $dls-color-intent-info-base,
+    on-base: $dls-color-intent-info-on-base,
+    subtle:  $dls-color-intent-info-subtle,
+    strong:  $dls-color-intent-info-strong,
+    text:    $dls-color-intent-info-text,
+    border:  $dls-color-intent-info-border,
   ),
   neutral: (
-    base:   $dls-color-intent-neutral-base,
-    subtle: $dls-color-intent-neutral-subtle,
-    strong: $dls-color-intent-neutral-strong,
-    text:   $dls-color-intent-neutral-text,
-    border: $dls-color-intent-neutral-border,
+    base:    $dls-color-intent-neutral-base,
+    on-base: $dls-color-intent-neutral-on-base,
+    subtle:  $dls-color-intent-neutral-subtle,
+    strong:  $dls-color-intent-neutral-strong,
+    text:    $dls-color-intent-neutral-text,
+    border:  $dls-color-intent-neutral-border,
   ),
 );
 
@@ -298,7 +310,7 @@ $dls-component-button-primary-bg: (
   disabled: $dls-color-surface-disabled,
 );
 $dls-component-button-primary-fg: (
-  base:    $dls-color-text-inverse,
+  base:    $dls-color-intent-primary-on-base,
   disabled: $dls-color-text-disabled,
 );
 $dls-component-button-primary-border: (

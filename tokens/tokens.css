@@ -113,36 +113,42 @@
   --dls-color-border-inverse: var(--dls-color-neutral-0);
 
   --dls-color-intent-primary-base: var(--dls-color-primary-700);
+  --dls-color-intent-primary-on-base: var(--dls-color-neutral-0);
   --dls-color-intent-primary-subtle: var(--dls-color-primary-50);
   --dls-color-intent-primary-strong: var(--dls-color-primary-800);
   --dls-color-intent-primary-text: var(--dls-color-primary-900);
   --dls-color-intent-primary-border: var(--dls-color-primary-200);
 
   --dls-color-intent-success-base: var(--dls-color-success-700);
+  --dls-color-intent-success-on-base: var(--dls-color-neutral-0);
   --dls-color-intent-success-subtle: var(--dls-color-success-50);
   --dls-color-intent-success-strong: var(--dls-color-success-800);
   --dls-color-intent-success-text: var(--dls-color-success-900);
   --dls-color-intent-success-border: var(--dls-color-success-200);
 
   --dls-color-intent-warning-base: var(--dls-color-warning-700);
+  --dls-color-intent-warning-on-base: var(--dls-color-neutral-0);
   --dls-color-intent-warning-subtle: var(--dls-color-warning-50);
   --dls-color-intent-warning-strong: var(--dls-color-warning-800);
   --dls-color-intent-warning-text: var(--dls-color-warning-900);
   --dls-color-intent-warning-border: var(--dls-color-warning-200);
 
   --dls-color-intent-danger-base: var(--dls-color-danger-600);
+  --dls-color-intent-danger-on-base: var(--dls-color-neutral-0);
   --dls-color-intent-danger-subtle: var(--dls-color-danger-50);
   --dls-color-intent-danger-strong: var(--dls-color-danger-700);
   --dls-color-intent-danger-text: var(--dls-color-danger-900);
   --dls-color-intent-danger-border: var(--dls-color-danger-200);
 
-  --dls-color-intent-info-base: var(--dls-color-info-600);
+  --dls-color-intent-info-base: var(--dls-color-info-700);
+  --dls-color-intent-info-on-base: var(--dls-color-neutral-0);
   --dls-color-intent-info-subtle: var(--dls-color-info-50);
-  --dls-color-intent-info-strong: var(--dls-color-info-700);
+  --dls-color-intent-info-strong: var(--dls-color-info-800);
   --dls-color-intent-info-text: var(--dls-color-info-900);
   --dls-color-intent-info-border: var(--dls-color-info-200);
 
   --dls-color-intent-neutral-base: var(--dls-color-neutral-800);
+  --dls-color-intent-neutral-on-base: var(--dls-color-neutral-0);
   --dls-color-intent-neutral-subtle: var(--dls-color-neutral-50);
   --dls-color-intent-neutral-strong: var(--dls-color-neutral-900);
   --dls-color-intent-neutral-text: var(--dls-color-neutral-900);
@@ -180,7 +186,7 @@
   /* Button primary — hover/pressed bg via OKLCH: oklch(from var(--dls-color-component-button-primary-bg-base) calc(l - 0.05) c h) */
   --dls-color-component-button-primary-bg-base: var(--dls-color-intent-primary-base);
   --dls-color-component-button-primary-bg-disabled: var(--dls-color-surface-disabled);
-  --dls-color-component-button-primary-fg-base: var(--dls-color-text-inverse);
+  --dls-color-component-button-primary-fg-base: var(--dls-color-intent-primary-on-base);
   --dls-color-component-button-primary-fg-disabled: var(--dls-color-text-disabled);
   --dls-color-component-button-primary-border-base: var(--dls-color-intent-primary-base);
   --dls-color-component-button-primary-border-disabled: var(--dls-color-border-disabled);
@@ -446,20 +452,23 @@
 
   /* Intent primary */
   --dls-color-intent-primary-base: var(--dls-color-primary-600);
+  --dls-color-intent-primary-on-base: var(--dls-color-neutral-0);
   --dls-color-intent-primary-subtle: var(--dls-color-primary-900);
   --dls-color-intent-primary-strong: var(--dls-color-primary-500);
   --dls-color-intent-primary-text: var(--dls-color-primary-300);
   --dls-color-intent-primary-border: var(--dls-color-primary-600);
 
-  /* Intent success */
+  /* Intent success — success-500 is brighter; dark text for AA compliance */
   --dls-color-intent-success-base: var(--dls-color-success-500);
+  --dls-color-intent-success-on-base: var(--dls-color-neutral-950);
   --dls-color-intent-success-subtle: var(--dls-color-success-900);
   --dls-color-intent-success-strong: var(--dls-color-success-400);
   --dls-color-intent-success-text: var(--dls-color-success-300);
   --dls-color-intent-success-border: var(--dls-color-success-600);
 
-  /* Intent warning */
+  /* Intent warning — warning-500 is bright; dark text for AA compliance */
   --dls-color-intent-warning-base: var(--dls-color-warning-500);
+  --dls-color-intent-warning-on-base: var(--dls-color-neutral-950);
   --dls-color-intent-warning-subtle: var(--dls-color-warning-900);
   --dls-color-intent-warning-strong: var(--dls-color-warning-400);
   --dls-color-intent-warning-text: var(--dls-color-warning-300);
@@ -467,6 +476,7 @@
 
   /* Intent danger */
   --dls-color-intent-danger-base: var(--dls-color-danger-600);
+  --dls-color-intent-danger-on-base: var(--dls-color-neutral-0);
   --dls-color-intent-danger-subtle: var(--dls-color-danger-900);
   --dls-color-intent-danger-strong: var(--dls-color-danger-500);
   --dls-color-intent-danger-text: var(--dls-color-danger-300);
@@ -474,13 +484,15 @@
 
   /* Intent info */
   --dls-color-intent-info-base: var(--dls-color-info-600);
+  --dls-color-intent-info-on-base: var(--dls-color-neutral-0);
   --dls-color-intent-info-subtle: var(--dls-color-info-900);
   --dls-color-intent-info-strong: var(--dls-color-info-500);
   --dls-color-intent-info-text: var(--dls-color-info-300);
   --dls-color-intent-info-border: var(--dls-color-info-600);
 
-  /* Intent neutral */
+  /* Intent neutral — neutral-50 is near-white; dark text needed */
   --dls-color-intent-neutral-base: var(--dls-color-neutral-50);
+  --dls-color-intent-neutral-on-base: var(--dls-color-neutral-950);
   --dls-color-intent-neutral-subtle: var(--dls-color-neutral-800);
   --dls-color-intent-neutral-strong: var(--dls-color-neutral-100);
   --dls-color-intent-neutral-text: var(--dls-color-neutral-200);
