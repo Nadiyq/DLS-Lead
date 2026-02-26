@@ -193,6 +193,7 @@
 
   /* Button secondary — hover/pressed bg via OKLCH: oklch(from var(--dls-color-component-button-secondary-bg-base) calc(l - 0.05) c h) */
   --dls-color-component-button-secondary-bg-base: var(--dls-color-surface-subtle);
+  --dls-color-component-button-secondary-bg-focus: var(--dls-color-surface-base);
   --dls-color-component-button-secondary-bg-disabled: var(--dls-color-surface-disabled);
   --dls-color-component-button-secondary-fg-base: var(--dls-color-text-primary);
   --dls-color-component-button-secondary-fg-disabled: var(--dls-color-text-disabled);
@@ -203,6 +204,7 @@
 
   /* Button ghost — hover/pressed bg use var(--dls-state-hover-overlay) / var(--dls-state-pressed-overlay) */
   --dls-color-component-button-ghost-bg-base: transparent;
+  --dls-color-component-button-ghost-bg-focus: var(--dls-color-surface-base);
   --dls-color-component-button-ghost-bg-disabled: transparent;
   --dls-color-component-button-ghost-fg-base: var(--dls-color-text-primary);
   --dls-color-component-button-ghost-fg-disabled: var(--dls-color-text-disabled);
@@ -383,7 +385,7 @@
   --dls-radius-xl: 12px;
   --dls-radius-2xl: 16px;
   --dls-radius-full: 9999px;
-  --dls-radius-component-button: var(--dls-radius-s);
+  --dls-radius-component-button: var(--dls-radius-m);
   --dls-radius-component-card: var(--dls-radius-l);
   --dls-radius-component-modal: var(--dls-radius-xl);
   --dls-radius-component-input: var(--dls-radius-s);

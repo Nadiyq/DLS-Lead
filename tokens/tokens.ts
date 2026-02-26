@@ -233,14 +233,12 @@ function getComponentTokens(theme: keyof typeof semantic) {
         border: { base: s.intent.primary.base, disabled: s.border.disabled },
       },
       secondary: {
-        // hover/pressed: oklch(from base calc(l - 0.05) c h) / calc(l - 0.10) in component stylesheets
-        bg:     { base: s.surface.subtle, disabled: s.surface.disabled },
+        bg:     { base: s.surface.subtle, focus: s.surface.base, disabled: s.surface.disabled },
         fg:     { base: s.text.primary, disabled: s.text.disabled },
         border: { base: s.border.base, hover: s.border.strong, pressed: s.border.strong, disabled: s.border.disabled },
       },
       ghost: {
-        // hover/pressed: use state.overlay.hover/pressed in component stylesheets
-        bg:     { base: "transparent", disabled: "transparent" },
+        bg:     { base: "transparent", focus: s.surface.base, disabled: "transparent" },
         fg:     { base: s.text.primary, disabled: s.text.disabled },
       },
     },
@@ -378,7 +376,7 @@ export const radius = {
   "2xl": 16,
   full: 9999,
   component: {
-    button:   4,
+    button:   6,
     card:     8,
     modal:    12,
     input:    4,

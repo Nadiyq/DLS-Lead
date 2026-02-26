@@ -1,30 +1,279 @@
-.storybook-button {
-  display: inline-block;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* ==========================================================================
+   DLS Button — token-driven component styles
+   Variants: filled | outline | soft | dotted | ghost | link
+   Intents:  neutral | primary | info | success | warning | danger
+   Sizes:    m | s
+   ========================================================================== */
+
+.dls-button {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dls-spacing-1-5);
   cursor: pointer;
-  border: 0;
-  border-radius: 3em;
-  font-weight: 700;
-  line-height: 1;
-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  user-select: none;
+  position: relative;
+  font-family: var(--dls-font-family);
+  font-weight: var(--dls-font-weight-medium);
+  border: 1px solid transparent;
+  border-radius: var(--dls-radius-component-button);
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+
+  --_base: var(--dls-color-intent-neutral-base);
+  --_on-base: var(--dls-color-intent-neutral-on-base);
+  --_subtle: var(--dls-color-intent-neutral-subtle);
+  --_text: var(--dls-color-intent-neutral-text);
+  --_border: var(--dls-color-intent-neutral-border);
 }
-.storybook-button--primary {
-  background-color: #555ab9;
-  color: white;
+
+/* ---------------------------------------------------------------------------
+   Intent overrides
+   --------------------------------------------------------------------------- */
+
+.dls-button[data-intent="primary"] {
+  --_base: var(--dls-color-intent-primary-base);
+  --_on-base: var(--dls-color-intent-primary-on-base);
+  --_subtle: var(--dls-color-intent-primary-subtle);
+  --_text: var(--dls-color-intent-primary-text);
+  --_border: var(--dls-color-intent-primary-border);
 }
-.storybook-button--secondary {
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
-  background-color: transparent;
-  color: #333;
+.dls-button[data-intent="info"] {
+  --_base: var(--dls-color-intent-info-base);
+  --_on-base: var(--dls-color-intent-info-on-base);
+  --_subtle: var(--dls-color-intent-info-subtle);
+  --_text: var(--dls-color-intent-info-text);
+  --_border: var(--dls-color-intent-info-border);
 }
-.storybook-button--small {
-  padding: 10px 16px;
-  font-size: 12px;
+.dls-button[data-intent="success"] {
+  --_base: var(--dls-color-intent-success-base);
+  --_on-base: var(--dls-color-intent-success-on-base);
+  --_subtle: var(--dls-color-intent-success-subtle);
+  --_text: var(--dls-color-intent-success-text);
+  --_border: var(--dls-color-intent-success-border);
 }
-.storybook-button--medium {
-  padding: 11px 20px;
-  font-size: 14px;
+.dls-button[data-intent="warning"] {
+  --_base: var(--dls-color-intent-warning-base);
+  --_on-base: var(--dls-color-intent-warning-on-base);
+  --_subtle: var(--dls-color-intent-warning-subtle);
+  --_text: var(--dls-color-intent-warning-text);
+  --_border: var(--dls-color-intent-warning-border);
 }
-.storybook-button--large {
-  padding: 12px 24px;
-  font-size: 16px;
+.dls-button[data-intent="danger"] {
+  --_base: var(--dls-color-intent-danger-base);
+  --_on-base: var(--dls-color-intent-danger-on-base);
+  --_subtle: var(--dls-color-intent-danger-subtle);
+  --_text: var(--dls-color-intent-danger-text);
+  --_border: var(--dls-color-intent-danger-border);
+}
+
+/* ---------------------------------------------------------------------------
+   Sizes
+   --------------------------------------------------------------------------- */
+
+.dls-button[data-size="m"] {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
+  min-height: 32px;
+}
+.dls-button[data-size="s"] {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+  min-height: 24px;
+  gap: var(--dls-spacing-1);
+}
+
+/* Icon-only: square padding */
+.dls-button[data-icon-only][data-size="m"] {
+  padding: var(--dls-spacing-2);
+}
+.dls-button[data-icon-only][data-size="s"] {
+  padding: var(--dls-spacing-1-5);
+}
+
+/* Icon sizing */
+.dls-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.dls-button[data-size="m"] .dls-button__icon {
+  width: 16px;
+  height: 16px;
+}
+.dls-button[data-size="s"] .dls-button__icon {
+  width: 12px;
+  height: 12px;
+}
+.dls-button__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Filled
+   OKLCH L-shift for hover/pressed (code-side approach per token spec)
+   --------------------------------------------------------------------------- */
+
+.dls-button[data-variant="filled"] {
+  background: var(--_base);
+  color: var(--_on-base);
+  border-color: var(--_base);
+}
+.dls-button[data-variant="filled"]:hover:not(:disabled) {
+  background: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-hover)) c h);
+  border-color: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+.dls-button[data-variant="filled"]:active:not(:disabled) {
+  background: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-pressed)) c h);
+  border-color: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-pressed)) c h);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Outline
+   --------------------------------------------------------------------------- */
+
+.dls-button[data-variant="outline"] {
+  background: transparent;
+  color: var(--_text);
+  border-color: var(--_base);
+}
+.dls-button[data-variant="outline"]:hover:not(:disabled) {
+  background: var(--_subtle);
+}
+.dls-button[data-variant="outline"]:active:not(:disabled) {
+  background: oklch(from var(--_subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Soft
+   --------------------------------------------------------------------------- */
+
+.dls-button[data-variant="soft"] {
+  background: var(--_subtle);
+  color: var(--_text);
+  border-color: transparent;
+}
+.dls-button[data-variant="soft"]:hover:not(:disabled) {
+  background: oklch(from var(--_subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+.dls-button[data-variant="soft"]:active:not(:disabled) {
+  background: oklch(from var(--_subtle) calc(l + var(--dls-state-l-delta-pressed)) c h);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Dotted (outline + dashed border)
+   --------------------------------------------------------------------------- */
+
+.dls-button[data-variant="dotted"] {
+  background: transparent;
+  color: var(--_text);
+  border-color: var(--_base);
+  border-style: dashed;
+}
+.dls-button[data-variant="dotted"]:hover:not(:disabled) {
+  background: var(--_subtle);
+}
+.dls-button[data-variant="dotted"]:active:not(:disabled) {
+  background: oklch(from var(--_subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Ghost
+   Uses state overlays instead of OKLCH (transparent base has no L to shift)
+   --------------------------------------------------------------------------- */
+
+.dls-button[data-variant="ghost"] {
+  background: transparent;
+  color: var(--_text);
+  border-color: transparent;
+}
+.dls-button[data-variant="ghost"]:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+.dls-button[data-variant="ghost"]:active:not(:disabled) {
+  background: var(--dls-state-pressed-overlay);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Link
+   --------------------------------------------------------------------------- */
+
+.dls-button[data-variant="link"] {
+  background: transparent;
+  color: var(--_base);
+  border-color: transparent;
+  padding-inline: 0;
+  min-height: auto;
+  border-radius: var(--dls-radius-xs);
+}
+.dls-button[data-variant="link"]:hover:not(:disabled) {
+  text-decoration: underline;
+}
+.dls-button[data-variant="link"]:active:not(:disabled) {
+  text-decoration: underline;
+  color: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-pressed)) c h);
+}
+/* Neutral link uses text.primary instead of intent base */
+.dls-button[data-variant="link"][data-intent="neutral"],
+.dls-button[data-variant="link"]:not([data-intent]) {
+  color: var(--dls-color-text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Focus ring (keyboard only via :focus-visible)
+   Non-filled variants get surface.base bg to ensure contrast under the ring
+   --------------------------------------------------------------------------- */
+
+.dls-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-button[data-variant="outline"]:focus-visible:not(:disabled),
+.dls-button[data-variant="soft"]:focus-visible:not(:disabled),
+.dls-button[data-variant="dotted"]:focus-visible:not(:disabled),
+.dls-button[data-variant="ghost"]:focus-visible:not(:disabled),
+.dls-button[data-variant="link"]:focus-visible:not(:disabled) {
+  background: var(--dls-color-surface-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Disabled — override intent colors with disabled palette
+   --------------------------------------------------------------------------- */
+
+.dls-button:disabled {
+  cursor: not-allowed;
+}
+
+.dls-button[data-variant="filled"]:disabled {
+  background: var(--dls-color-surface-disabled);
+  color: var(--dls-color-text-disabled);
+  border-color: var(--dls-color-border-disabled);
+}
+
+.dls-button[data-variant="outline"]:disabled,
+.dls-button[data-variant="dotted"]:disabled {
+  background: transparent;
+  color: var(--dls-color-text-disabled);
+  border-color: var(--dls-color-border-disabled);
+}
+
+.dls-button[data-variant="soft"]:disabled {
+  background: var(--dls-color-surface-disabled);
+  color: var(--dls-color-text-disabled);
+}
+
+.dls-button[data-variant="ghost"]:disabled {
+  color: var(--dls-color-text-disabled);
+}
+
+.dls-button[data-variant="link"]:disabled {
+  color: var(--dls-color-text-disabled);
 }
