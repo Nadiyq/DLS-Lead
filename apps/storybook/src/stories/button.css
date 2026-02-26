@@ -137,6 +137,7 @@
 
 /* ---------------------------------------------------------------------------
    Variant: Outline
+   Hover/pressed use state overlays (Figma opacity simulation of OKLCH shift)
    --------------------------------------------------------------------------- */
 
 .dls-button[data-variant="outline"] {
@@ -145,10 +146,10 @@
   border-color: var(--_base);
 }
 .dls-button[data-variant="outline"]:hover:not(:disabled) {
-  background: var(--_subtle);
+  background: var(--dls-state-hover-overlay);
 }
 .dls-button[data-variant="outline"]:active:not(:disabled) {
-  background: oklch(from var(--_subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
+  background: var(--dls-state-pressed-overlay);
 }
 
 /* ---------------------------------------------------------------------------
@@ -178,15 +179,14 @@
   border-style: dashed;
 }
 .dls-button[data-variant="dotted"]:hover:not(:disabled) {
-  background: var(--_subtle);
+  background: var(--dls-state-hover-overlay);
 }
 .dls-button[data-variant="dotted"]:active:not(:disabled) {
-  background: oklch(from var(--_subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
+  background: var(--dls-state-pressed-overlay);
 }
 
 /* ---------------------------------------------------------------------------
    Variant: Ghost
-   Uses state overlays instead of OKLCH (transparent base has no L to shift)
    --------------------------------------------------------------------------- */
 
 .dls-button[data-variant="ghost"] {
@@ -215,10 +215,11 @@
 }
 .dls-button[data-variant="link"]:hover:not(:disabled) {
   text-decoration: underline;
+  background: var(--dls-state-hover-overlay);
 }
 .dls-button[data-variant="link"]:active:not(:disabled) {
   text-decoration: underline;
-  color: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-pressed)) c h);
+  background: var(--dls-state-pressed-overlay);
 }
 /* Neutral link uses text.primary instead of intent base */
 .dls-button[data-variant="link"][data-intent="neutral"],

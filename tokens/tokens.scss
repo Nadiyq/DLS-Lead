@@ -286,7 +286,8 @@ $dls-semantic-intent: (
 $dls-state-l-delta-hover: -0.05;
 $dls-state-l-delta-pressed: -0.10;
 // Opacity overlays — Figma-compatible approximation of OKLCH L-shift.
-// Apply as second fill layer in Figma. Dark mode: use rgba(255,255,255,.08) / rgba(255,255,255,.15)
+// Use for outline, dotted, ghost, and link backgrounds. Apply as second fill layer in Figma.
+// Dark mode: use rgba(255,255,255,.08) / rgba(255,255,255,.15)
 $dls-state-hover-overlay: rgba(0, 0, 0, 0.05);
 $dls-state-pressed-overlay: rgba(0, 0, 0, 0.10);
 $dls-state-disabled-opacity: 0.38;
@@ -318,7 +319,7 @@ $dls-component-button-primary-border: (
   disabled: $dls-color-border-disabled,
 );
 
-// Button secondary — hover/pressed bg via OKLCH in component stylesheets
+// Button secondary — hover/pressed bg via state overlays ($dls-state-hover-overlay / $dls-state-pressed-overlay)
 $dls-component-button-secondary-bg: (
   base:    $dls-color-surface-subtle,
   disabled: $dls-color-surface-disabled,

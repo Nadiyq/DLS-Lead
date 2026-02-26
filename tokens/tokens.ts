@@ -200,7 +200,7 @@ export const state = {
   },
   /** Figma-compatible opacity overlays approximating OKLCH L-shift.
    *  Applied as second fill layer on interactive components in Figma.
-   *  Also use in code for ghost/transparent-base backgrounds. */
+   *  Use in code for outline, dotted, ghost, and link backgrounds. */
   overlay: {
     hover:   { light: "rgba(0, 0, 0, 0.05)",  dark: "rgba(255, 255, 255, 0.08)" },
     pressed: { light: "rgba(0, 0, 0, 0.10)",  dark: "rgba(255, 255, 255, 0.15)" },
