@@ -155,7 +155,12 @@
   --dls-color-intent-neutral-border: var(--dls-color-neutral-200);
 
   --dls-color-overlay-scrim: rgba(0, 0, 0, 0.5);
-  --dls-color-overlay-backdrop: rgba(0, 0, 0, 0.3);
+  --dls-color-overlay-backdrop: rgba(255, 255, 255, 0.56);
+
+  /* Effect — backdrop-filter tokens (Figma GLASS effect; not expressible as Figma variables) */
+  --dls-effect-backdrop-blur: 8px;
+  --dls-effect-backdrop-saturate: 180%;
+  --dls-effect-backdrop-filter: blur(var(--dls-effect-backdrop-blur)) saturate(var(--dls-effect-backdrop-saturate));
 
   /* --------------------------------------------------------------------------
      Layer 3 — State abstraction (behavioral only)
@@ -349,30 +354,158 @@
   --dls-text-hero-font-size: 36px;
   --dls-text-hero-line-height: 46px;
 
-  /* Semantic typography (map to primitive scale + weight) */
-  --dls-text-heading-xl-font-size: var(--dls-text-2xl-font-size);
-  --dls-text-heading-xl-line-height: var(--dls-text-2xl-line-height);
-  --dls-text-heading-xl-font-weight: var(--dls-font-weight-semibold);
-  --dls-text-heading-l-font-size: var(--dls-text-xl-font-size);
-  --dls-text-heading-l-line-height: var(--dls-text-xl-line-height);
-  --dls-text-heading-l-font-weight: var(--dls-font-weight-semibold);
-  --dls-text-heading-m-font-size: var(--dls-text-l-font-size);
-  --dls-text-heading-m-line-height: var(--dls-text-l-line-height);
-  --dls-text-heading-m-font-weight: var(--dls-font-weight-medium);
-  --dls-text-body-l-font-size: var(--dls-text-l-font-size);
-  --dls-text-body-l-line-height: var(--dls-text-l-line-height);
-  --dls-text-body-m-font-size: var(--dls-text-m-font-size);
-  --dls-text-body-m-line-height: var(--dls-text-m-line-height);
-  --dls-text-body-s-font-size: var(--dls-text-s-font-size);
-  --dls-text-body-s-line-height: var(--dls-text-s-line-height);
-  --dls-text-label-m-font-size: var(--dls-text-m-font-size);
-  --dls-text-label-m-line-height: var(--dls-text-m-line-height);
-  --dls-text-label-m-font-weight: var(--dls-font-weight-medium);
-  --dls-text-label-s-font-size: var(--dls-text-s-font-size);
-  --dls-text-label-s-line-height: var(--dls-text-s-line-height);
-  --dls-text-label-s-font-weight: var(--dls-font-weight-medium);
-  --dls-text-caption-font-size: var(--dls-text-xs-font-size);
-  --dls-text-caption-line-height: var(--dls-text-xs-line-height);
+  /* Semantic typography — Headings */
+  --dls-text-heading-hero-font-size: var(--dls-text-hero-font-size);
+  --dls-text-heading-hero-line-height: var(--dls-text-hero-line-height);
+  --dls-text-heading-hero-font-weight: var(--dls-font-weight-bold);
+  --dls-text-heading-h1-font-size: var(--dls-text-3xl-font-size);
+  --dls-text-heading-h1-line-height: var(--dls-text-3xl-line-height);
+  --dls-text-heading-h1-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-heading-h2-font-size: var(--dls-text-2xl-font-size);
+  --dls-text-heading-h2-line-height: var(--dls-text-2xl-line-height);
+  --dls-text-heading-h2-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-heading-h3-font-size: var(--dls-text-xl-font-size);
+  --dls-text-heading-h3-line-height: var(--dls-text-xl-line-height);
+  --dls-text-heading-h3-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-heading-h4-font-size: var(--dls-text-l-font-size);
+  --dls-text-heading-h4-line-height: var(--dls-text-l-line-height);
+  --dls-text-heading-h4-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-heading-h5-font-size: var(--dls-text-m-font-size);
+  --dls-text-heading-h5-line-height: var(--dls-text-m-line-height);
+  --dls-text-heading-h5-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-heading-h6-font-size: var(--dls-text-s-font-size);
+  --dls-text-heading-h6-line-height: var(--dls-text-s-line-height);
+  --dls-text-heading-h6-font-weight: var(--dls-font-weight-bold);
+
+  /* Semantic typography — Paragraph (size × weight: light/medium/heavy) */
+  --dls-text-paragraph-xl-font-size: var(--dls-text-xl-font-size);
+  --dls-text-paragraph-xl-line-height: var(--dls-text-xl-line-height);
+  --dls-text-paragraph-xl-light-font-weight: var(--dls-font-weight-normal);
+  --dls-text-paragraph-xl-medium-font-weight: var(--dls-font-weight-medium);
+  --dls-text-paragraph-xl-heavy-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-paragraph-l-font-size: var(--dls-text-l-font-size);
+  --dls-text-paragraph-l-line-height: var(--dls-text-l-line-height);
+  --dls-text-paragraph-l-light-font-weight: var(--dls-font-weight-normal);
+  --dls-text-paragraph-l-medium-font-weight: var(--dls-font-weight-medium);
+  --dls-text-paragraph-l-heavy-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-paragraph-m-font-size: var(--dls-text-m-font-size);
+  --dls-text-paragraph-m-line-height: var(--dls-text-m-line-height);
+  --dls-text-paragraph-m-light-font-weight: var(--dls-font-weight-normal);
+  --dls-text-paragraph-m-medium-font-weight: var(--dls-font-weight-medium);
+  --dls-text-paragraph-m-heavy-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-paragraph-s-font-size: var(--dls-text-s-font-size);
+  --dls-text-paragraph-s-line-height: var(--dls-text-s-line-height);
+  --dls-text-paragraph-s-light-font-weight: var(--dls-font-weight-normal);
+  --dls-text-paragraph-s-medium-font-weight: var(--dls-font-weight-medium);
+  --dls-text-paragraph-s-heavy-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-paragraph-xs-font-size: var(--dls-text-xs-font-size);
+  --dls-text-paragraph-xs-line-height: var(--dls-text-xs-line-height);
+  --dls-text-paragraph-xs-letter-spacing: 0.2px;
+  --dls-text-paragraph-xs-light-font-weight: var(--dls-font-weight-normal);
+  --dls-text-paragraph-xs-medium-font-weight: var(--dls-font-weight-medium);
+  --dls-text-paragraph-xs-heavy-font-weight: var(--dls-font-weight-medium);
+
+  /* Semantic typography — Button */
+  --dls-text-button-l-font-size: var(--dls-text-l-font-size);
+  --dls-text-button-l-line-height: var(--dls-text-l-line-height);
+  --dls-text-button-l-font-weight: var(--dls-font-weight-medium);
+  --dls-text-button-m-font-size: var(--dls-text-m-font-size);
+  --dls-text-button-m-line-height: var(--dls-text-m-line-height);
+  --dls-text-button-m-font-weight: var(--dls-font-weight-medium);
+  --dls-text-button-s-font-size: var(--dls-text-s-font-size);
+  --dls-text-button-s-line-height: var(--dls-text-s-line-height);
+  --dls-text-button-s-font-weight: var(--dls-font-weight-medium);
+  --dls-text-button-xs-font-size: var(--dls-text-xs-font-size);
+  --dls-text-button-xs-line-height: var(--dls-text-xs-line-height);
+  --dls-text-button-xs-font-weight: var(--dls-font-weight-medium);
+  --dls-text-button-xs-letter-spacing: 0.5px;
+
+  /* Semantic typography — Link (size × weight: light/medium/heavy) */
+  --dls-text-link-l-font-size: var(--dls-text-l-font-size);
+  --dls-text-link-l-line-height: var(--dls-text-l-line-height);
+  --dls-text-link-l-light-font-weight: var(--dls-font-weight-normal);
+  --dls-text-link-l-medium-font-weight: var(--dls-font-weight-medium);
+  --dls-text-link-l-heavy-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-link-m-font-size: var(--dls-text-m-font-size);
+  --dls-text-link-m-line-height: var(--dls-text-m-line-height);
+  --dls-text-link-m-light-font-weight: var(--dls-font-weight-normal);
+  --dls-text-link-m-medium-font-weight: var(--dls-font-weight-medium);
+  --dls-text-link-m-heavy-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-link-s-font-size: var(--dls-text-s-font-size);
+  --dls-text-link-s-line-height: var(--dls-text-s-line-height);
+  --dls-text-link-s-light-font-weight: var(--dls-font-weight-normal);
+  --dls-text-link-s-medium-font-weight: var(--dls-font-weight-medium);
+  --dls-text-link-s-heavy-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-link-xs-font-size: var(--dls-text-xs-font-size);
+  --dls-text-link-xs-line-height: var(--dls-text-xs-line-height);
+  --dls-text-link-xs-letter-spacing: 0.5px;
+  --dls-text-link-xs-light-font-weight: var(--dls-font-weight-normal);
+  --dls-text-link-xs-medium-font-weight: var(--dls-font-weight-medium);
+  --dls-text-link-xs-heavy-font-weight: var(--dls-font-weight-semibold);
+
+  /* Semantic typography — Upper (uppercase labels, 1% letter-spacing) */
+  --dls-text-upper-l-font-size: var(--dls-text-l-font-size);
+  --dls-text-upper-l-line-height: var(--dls-text-l-line-height);
+  --dls-text-upper-l-font-weight: var(--dls-font-weight-medium);
+  --dls-text-upper-l-letter-spacing: 0.01em;
+  --dls-text-upper-m-font-size: var(--dls-text-m-font-size);
+  --dls-text-upper-m-line-height: var(--dls-text-m-line-height);
+  --dls-text-upper-m-font-weight: var(--dls-font-weight-medium);
+  --dls-text-upper-m-letter-spacing: 0.01em;
+  --dls-text-upper-s-font-size: var(--dls-text-s-font-size);
+  --dls-text-upper-s-line-height: var(--dls-text-s-line-height);
+  --dls-text-upper-s-font-weight: var(--dls-font-weight-medium);
+  --dls-text-upper-s-letter-spacing: 0.01em;
+  --dls-text-upper-xs-font-size: var(--dls-text-xs-font-size);
+  --dls-text-upper-xs-line-height: var(--dls-text-xs-line-height);
+  --dls-text-upper-xs-font-weight: var(--dls-font-weight-medium);
+  --dls-text-upper-xs-letter-spacing: 0.01em;
+
+  /* Semantic typography — Italic */
+  --dls-text-italic-l-font-size: var(--dls-text-l-font-size);
+  --dls-text-italic-l-line-height: var(--dls-text-l-line-height);
+  --dls-text-italic-l-font-weight: var(--dls-font-weight-normal);
+  --dls-text-italic-m-font-size: var(--dls-text-m-font-size);
+  --dls-text-italic-m-line-height: var(--dls-text-m-line-height);
+  --dls-text-italic-m-font-weight: var(--dls-font-weight-normal);
+  --dls-text-italic-s-font-size: var(--dls-text-s-font-size);
+  --dls-text-italic-s-line-height: var(--dls-text-s-line-height);
+  --dls-text-italic-s-font-weight: var(--dls-font-weight-normal);
+  --dls-text-italic-xs-font-size: var(--dls-text-xs-font-size);
+  --dls-text-italic-xs-line-height: var(--dls-text-xs-line-height);
+  --dls-text-italic-xs-font-weight: var(--dls-font-weight-normal);
+
+  /* Semantic typography — Avatar (line-height = font-size) */
+  --dls-text-avatar-2xl-font-size: 64px;
+  --dls-text-avatar-2xl-line-height: 64px;
+  --dls-text-avatar-2xl-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-avatar-xl-font-size: 40px;
+  --dls-text-avatar-xl-line-height: 40px;
+  --dls-text-avatar-xl-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-avatar-l-font-size: 30px;
+  --dls-text-avatar-l-line-height: 30px;
+  --dls-text-avatar-l-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-avatar-m-font-size: 20px;
+  --dls-text-avatar-m-line-height: 20px;
+  --dls-text-avatar-m-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-avatar-s-font-size: var(--dls-text-xl-font-size);
+  --dls-text-avatar-s-line-height: var(--dls-text-xl-font-size);
+  --dls-text-avatar-s-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-avatar-xs-font-size: var(--dls-text-m-font-size);
+  --dls-text-avatar-xs-line-height: var(--dls-text-m-font-size);
+  --dls-text-avatar-xs-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-avatar-2xs-font-size: var(--dls-text-s-font-size);
+  --dls-text-avatar-2xs-line-height: var(--dls-text-s-font-size);
+  --dls-text-avatar-2xs-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-avatar-3xs-font-size: var(--dls-text-xs-font-size);
+  --dls-text-avatar-3xs-line-height: var(--dls-text-xs-font-size);
+  --dls-text-avatar-3xs-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-avatar-4xs-font-size: 8px;
+  --dls-text-avatar-4xs-line-height: 10px;
+  --dls-text-avatar-4xs-font-weight: var(--dls-font-weight-semibold);
+  --dls-text-avatar-5xs-font-size: 6px;
+  --dls-text-avatar-5xs-line-height: 6px;
+  --dls-text-avatar-5xs-font-weight: var(--dls-font-weight-semibold);
 
   /* --------------------------------------------------------------------------
      Radius — Primitive and component
@@ -385,15 +518,38 @@
   --dls-radius-xl: 12px;
   --dls-radius-2xl: 16px;
   --dls-radius-full: 9999px;
-  --dls-radius-component-button: var(--dls-radius-m);
-  --dls-radius-component-card: var(--dls-radius-l);
-  --dls-radius-component-modal: var(--dls-radius-xl);
-  --dls-radius-component-input: var(--dls-radius-s);
+  --dls-radius-component-accordion: var(--dls-radius-l);
+  --dls-radius-component-alert: var(--dls-radius-l);
   --dls-radius-component-badge: var(--dls-radius-full);
-  --dls-radius-component-chip: var(--dls-radius-full);
-  --dls-radius-component-tooltip: var(--dls-radius-s);
+  --dls-radius-component-badge-number: var(--dls-radius-m);
+  --dls-radius-component-button: var(--dls-radius-m);
+  --dls-radius-component-calendar: var(--dls-radius-xl);
+  --dls-radius-component-calendar-day: var(--dls-radius-m);
+  --dls-radius-component-card: var(--dls-radius-xl);
+  --dls-radius-component-carousel-arrow: var(--dls-radius-full);
+  --dls-radius-component-carousel-item: var(--dls-radius-l);
+  --dls-radius-component-checkbox: var(--dls-radius-s);
+  --dls-radius-component-chip: var(--dls-radius-m);
+  --dls-radius-component-context-menu: var(--dls-radius-xl);
   --dls-radius-component-dropdown: var(--dls-radius-m);
-  --dls-radius-component-alert: var(--dls-radius-m);
+  --dls-radius-component-input: var(--dls-radius-m);
+  --dls-radius-component-input-toolbar: var(--dls-radius-m);
+  --dls-radius-component-item: var(--dls-radius-l);
+  --dls-radius-component-kbd: var(--dls-radius-m);
+  --dls-radius-component-list: var(--dls-radius-xl);
+  --dls-radius-component-list-item: var(--dls-radius-s);
+  --dls-radius-component-modal: var(--dls-radius-xl);
+  --dls-radius-component-otp-slot: var(--dls-radius-m);
+  --dls-radius-component-pagination: var(--dls-radius-m);
+  --dls-radius-component-radiobutton: var(--dls-radius-full);
+  --dls-radius-component-sidebar-item: var(--dls-radius-m);
+  --dls-radius-component-slider-item: var(--dls-radius-full);
+  --dls-radius-component-switcher: var(--dls-radius-full);
+  --dls-radius-component-tab: var(--dls-radius-m);
+  --dls-radius-component-tab-group: var(--dls-radius-l);
+  --dls-radius-component-table: var(--dls-radius-xl);
+  --dls-radius-component-toggle-box: var(--dls-radius-m);
+  --dls-radius-component-tooltip: var(--dls-radius-m);
 
   /* --------------------------------------------------------------------------
      Spacing (8pt grid)
@@ -499,6 +655,9 @@
   --dls-color-intent-neutral-strong: var(--dls-color-neutral-100);
   --dls-color-intent-neutral-text: var(--dls-color-neutral-200);
   --dls-color-intent-neutral-border: var(--dls-color-neutral-700);
+
+  /* Overlay — dark mode */
+  --dls-color-overlay-backdrop: rgba(0, 0, 0, 0.3);
 
   /* State overlays — dark mode: light overlays to brighten dark surfaces */
   --dls-state-hover-overlay: rgba(255, 255, 255, 0.08);

@@ -196,7 +196,12 @@ $dls-color-intent-neutral-text: $dls-color-neutral-900;
 $dls-color-intent-neutral-border: $dls-color-neutral-200;
 
 $dls-color-overlay-scrim: rgba(0, 0, 0, 0.5);
-$dls-color-overlay-backdrop: rgba(0, 0, 0, 0.3);
+$dls-color-overlay-backdrop: rgba(255, 255, 255, 0.56);
+
+// Effect — backdrop-filter tokens (Figma GLASS effect; not expressible as Figma variables)
+$dls-effect-backdrop-blur: 8px;
+$dls-effect-backdrop-saturate: 180%;
+$dls-effect-backdrop-filter: blur($dls-effect-backdrop-blur) saturate($dls-effect-backdrop-saturate);
 
 // ---------------------------------------------------------------------------
 // Layer 2 — Semantic maps (for theme switching: use map-get($dls-semantic-surface, base))
@@ -424,16 +429,75 @@ $dls-text-3xl-line-height: 40px;
 $dls-text-hero-font-size: 36px;
 $dls-text-hero-line-height: 46px;
 
-// Semantic typography (map to primitive + weight)
-$dls-text-heading-xl: (font-size: $dls-text-2xl-font-size, line-height: $dls-text-2xl-line-height, font-weight: $dls-font-weight-semibold);
-$dls-text-heading-l: (font-size: $dls-text-xl-font-size, line-height: $dls-text-xl-line-height, font-weight: $dls-font-weight-semibold);
-$dls-text-heading-m: (font-size: $dls-text-l-font-size, line-height: $dls-text-l-line-height, font-weight: $dls-font-weight-medium);
-$dls-text-body-l: (font-size: $dls-text-l-font-size, line-height: $dls-text-l-line-height, font-weight: $dls-font-weight-normal);
-$dls-text-body-m: (font-size: $dls-text-m-font-size, line-height: $dls-text-m-line-height, font-weight: $dls-font-weight-normal);
-$dls-text-body-s: (font-size: $dls-text-s-font-size, line-height: $dls-text-s-line-height, font-weight: $dls-font-weight-normal);
-$dls-text-label-m: (font-size: $dls-text-m-font-size, line-height: $dls-text-m-line-height, font-weight: $dls-font-weight-medium);
-$dls-text-label-s: (font-size: $dls-text-s-font-size, line-height: $dls-text-s-line-height, font-weight: $dls-font-weight-medium);
-$dls-text-caption: (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-normal);
+// Semantic typography — Headings
+$dls-text-heading-hero: (font-size: $dls-text-hero-font-size, line-height: $dls-text-hero-line-height, font-weight: $dls-font-weight-bold);
+$dls-text-heading-h1: (font-size: $dls-text-3xl-font-size, line-height: $dls-text-3xl-line-height, font-weight: $dls-font-weight-semibold);
+$dls-text-heading-h2: (font-size: $dls-text-2xl-font-size, line-height: $dls-text-2xl-line-height, font-weight: $dls-font-weight-semibold);
+$dls-text-heading-h3: (font-size: $dls-text-xl-font-size, line-height: $dls-text-xl-line-height, font-weight: $dls-font-weight-semibold);
+$dls-text-heading-h4: (font-size: $dls-text-l-font-size, line-height: $dls-text-l-line-height, font-weight: $dls-font-weight-semibold);
+$dls-text-heading-h5: (font-size: $dls-text-m-font-size, line-height: $dls-text-m-line-height, font-weight: $dls-font-weight-semibold);
+$dls-text-heading-h6: (font-size: $dls-text-s-font-size, line-height: $dls-text-s-line-height, font-weight: $dls-font-weight-bold);
+
+// Semantic typography — Paragraph (size × weight: light/medium/heavy)
+$dls-text-paragraph-xl-light:  (font-size: $dls-text-xl-font-size, line-height: $dls-text-xl-line-height, font-weight: $dls-font-weight-normal);
+$dls-text-paragraph-xl-medium: (font-size: $dls-text-xl-font-size, line-height: $dls-text-xl-line-height, font-weight: $dls-font-weight-medium);
+$dls-text-paragraph-xl-heavy:  (font-size: $dls-text-xl-font-size, line-height: $dls-text-xl-line-height, font-weight: $dls-font-weight-semibold);
+$dls-text-paragraph-l-light:   (font-size: $dls-text-l-font-size,  line-height: $dls-text-l-line-height,  font-weight: $dls-font-weight-normal);
+$dls-text-paragraph-l-medium:  (font-size: $dls-text-l-font-size,  line-height: $dls-text-l-line-height,  font-weight: $dls-font-weight-medium);
+$dls-text-paragraph-l-heavy:   (font-size: $dls-text-l-font-size,  line-height: $dls-text-l-line-height,  font-weight: $dls-font-weight-semibold);
+$dls-text-paragraph-m-light:   (font-size: $dls-text-m-font-size,  line-height: $dls-text-m-line-height,  font-weight: $dls-font-weight-normal);
+$dls-text-paragraph-m-medium:  (font-size: $dls-text-m-font-size,  line-height: $dls-text-m-line-height,  font-weight: $dls-font-weight-medium);
+$dls-text-paragraph-m-heavy:   (font-size: $dls-text-m-font-size,  line-height: $dls-text-m-line-height,  font-weight: $dls-font-weight-semibold);
+$dls-text-paragraph-s-light:   (font-size: $dls-text-s-font-size,  line-height: $dls-text-s-line-height,  font-weight: $dls-font-weight-normal);
+$dls-text-paragraph-s-medium:  (font-size: $dls-text-s-font-size,  line-height: $dls-text-s-line-height,  font-weight: $dls-font-weight-medium);
+$dls-text-paragraph-s-heavy:   (font-size: $dls-text-s-font-size,  line-height: $dls-text-s-line-height,  font-weight: $dls-font-weight-semibold);
+$dls-text-paragraph-xs-light:  (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-normal,  letter-spacing: 0.2px);
+$dls-text-paragraph-xs-medium: (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-medium, letter-spacing: 0.2px);
+$dls-text-paragraph-xs-heavy:  (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-medium, letter-spacing: 0.2px);
+
+// Semantic typography — Button
+$dls-text-button-l:  (font-size: $dls-text-l-font-size,  line-height: $dls-text-l-line-height,  font-weight: $dls-font-weight-medium);
+$dls-text-button-m:  (font-size: $dls-text-m-font-size,  line-height: $dls-text-m-line-height,  font-weight: $dls-font-weight-medium);
+$dls-text-button-s:  (font-size: $dls-text-s-font-size,  line-height: $dls-text-s-line-height,  font-weight: $dls-font-weight-medium);
+$dls-text-button-xs: (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-medium, letter-spacing: 0.5px);
+
+// Semantic typography — Link (size × weight: light/medium/heavy)
+$dls-text-link-l-light:   (font-size: $dls-text-l-font-size,  line-height: $dls-text-l-line-height,  font-weight: $dls-font-weight-normal);
+$dls-text-link-l-medium:  (font-size: $dls-text-l-font-size,  line-height: $dls-text-l-line-height,  font-weight: $dls-font-weight-medium);
+$dls-text-link-l-heavy:   (font-size: $dls-text-l-font-size,  line-height: $dls-text-l-line-height,  font-weight: $dls-font-weight-semibold);
+$dls-text-link-m-light:   (font-size: $dls-text-m-font-size,  line-height: $dls-text-m-line-height,  font-weight: $dls-font-weight-normal);
+$dls-text-link-m-medium:  (font-size: $dls-text-m-font-size,  line-height: $dls-text-m-line-height,  font-weight: $dls-font-weight-medium);
+$dls-text-link-m-heavy:   (font-size: $dls-text-m-font-size,  line-height: $dls-text-m-line-height,  font-weight: $dls-font-weight-semibold);
+$dls-text-link-s-light:   (font-size: $dls-text-s-font-size,  line-height: $dls-text-s-line-height,  font-weight: $dls-font-weight-normal);
+$dls-text-link-s-medium:  (font-size: $dls-text-s-font-size,  line-height: $dls-text-s-line-height,  font-weight: $dls-font-weight-medium);
+$dls-text-link-s-heavy:   (font-size: $dls-text-s-font-size,  line-height: $dls-text-s-line-height,  font-weight: $dls-font-weight-semibold);
+$dls-text-link-xs-light:  (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-normal,   letter-spacing: 0.5px);
+$dls-text-link-xs-medium: (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-medium,  letter-spacing: 0.5px);
+$dls-text-link-xs-heavy:  (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-semibold, letter-spacing: 0.5px);
+
+// Semantic typography — Upper (uppercase labels, 1% letter-spacing)
+$dls-text-upper-l:  (font-size: $dls-text-l-font-size,  line-height: $dls-text-l-line-height,  font-weight: $dls-font-weight-medium, letter-spacing: 0.01em, text-transform: uppercase);
+$dls-text-upper-m:  (font-size: $dls-text-m-font-size,  line-height: $dls-text-m-line-height,  font-weight: $dls-font-weight-medium, letter-spacing: 0.01em, text-transform: uppercase);
+$dls-text-upper-s:  (font-size: $dls-text-s-font-size,  line-height: $dls-text-s-line-height,  font-weight: $dls-font-weight-medium, letter-spacing: 0.01em, text-transform: uppercase);
+$dls-text-upper-xs: (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-medium, letter-spacing: 0.01em, text-transform: uppercase);
+
+// Semantic typography — Italic
+$dls-text-italic-l:  (font-size: $dls-text-l-font-size,  line-height: $dls-text-l-line-height,  font-weight: $dls-font-weight-normal, font-style: italic);
+$dls-text-italic-m:  (font-size: $dls-text-m-font-size,  line-height: $dls-text-m-line-height,  font-weight: $dls-font-weight-normal, font-style: italic);
+$dls-text-italic-s:  (font-size: $dls-text-s-font-size,  line-height: $dls-text-s-line-height,  font-weight: $dls-font-weight-normal, font-style: italic);
+$dls-text-italic-xs: (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-line-height, font-weight: $dls-font-weight-normal, font-style: italic);
+
+// Semantic typography — Avatar (line-height = font-size)
+$dls-text-avatar-2xl: (font-size: 64px, line-height: 64px, font-weight: $dls-font-weight-semibold);
+$dls-text-avatar-xl:  (font-size: 40px, line-height: 40px, font-weight: $dls-font-weight-semibold);
+$dls-text-avatar-l:   (font-size: 30px, line-height: 30px, font-weight: $dls-font-weight-semibold);
+$dls-text-avatar-m:   (font-size: 20px, line-height: 20px, font-weight: $dls-font-weight-semibold);
+$dls-text-avatar-s:   (font-size: $dls-text-xl-font-size, line-height: $dls-text-xl-font-size, font-weight: $dls-font-weight-semibold);
+$dls-text-avatar-xs:  (font-size: $dls-text-m-font-size,  line-height: $dls-text-m-font-size,  font-weight: $dls-font-weight-semibold);
+$dls-text-avatar-2xs: (font-size: $dls-text-s-font-size,  line-height: $dls-text-s-font-size,  font-weight: $dls-font-weight-semibold);
+$dls-text-avatar-3xs: (font-size: $dls-text-xs-font-size, line-height: $dls-text-xs-font-size, font-weight: $dls-font-weight-semibold);
+$dls-text-avatar-4xs: (font-size: 8px,  line-height: 10px, font-weight: $dls-font-weight-semibold);
+$dls-text-avatar-5xs: (font-size: 6px,  line-height: 6px,  font-weight: $dls-font-weight-semibold);
 
 // ---------------------------------------------------------------------------
 // Radius — Primitive and component
@@ -446,15 +510,38 @@ $dls-radius-l: 8px;
 $dls-radius-xl: 12px;
 $dls-radius-2xl: 16px;
 $dls-radius-full: 9999px;
-$dls-radius-component-button: $dls-radius-m;
-$dls-radius-component-card: $dls-radius-l;
-$dls-radius-component-modal: $dls-radius-xl;
-$dls-radius-component-input: $dls-radius-s;
+$dls-radius-component-accordion: $dls-radius-l;
+$dls-radius-component-alert: $dls-radius-l;
 $dls-radius-component-badge: $dls-radius-full;
-$dls-radius-component-chip: $dls-radius-full;
-$dls-radius-component-tooltip: $dls-radius-s;
+$dls-radius-component-badge-number: $dls-radius-m;
+$dls-radius-component-button: $dls-radius-m;
+$dls-radius-component-calendar: $dls-radius-xl;
+$dls-radius-component-calendar-day: $dls-radius-m;
+$dls-radius-component-card: $dls-radius-xl;
+$dls-radius-component-carousel-arrow: $dls-radius-full;
+$dls-radius-component-carousel-item: $dls-radius-l;
+$dls-radius-component-checkbox: $dls-radius-s;
+$dls-radius-component-chip: $dls-radius-m;
+$dls-radius-component-context-menu: $dls-radius-xl;
 $dls-radius-component-dropdown: $dls-radius-m;
-$dls-radius-component-alert: $dls-radius-m;
+$dls-radius-component-input: $dls-radius-m;
+$dls-radius-component-input-toolbar: $dls-radius-m;
+$dls-radius-component-item: $dls-radius-l;
+$dls-radius-component-kbd: $dls-radius-m;
+$dls-radius-component-list: $dls-radius-xl;
+$dls-radius-component-list-item: $dls-radius-s;
+$dls-radius-component-modal: $dls-radius-xl;
+$dls-radius-component-otp-slot: $dls-radius-m;
+$dls-radius-component-pagination: $dls-radius-m;
+$dls-radius-component-radiobutton: $dls-radius-full;
+$dls-radius-component-sidebar-item: $dls-radius-m;
+$dls-radius-component-slider-item: $dls-radius-full;
+$dls-radius-component-switcher: $dls-radius-full;
+$dls-radius-component-tab: $dls-radius-m;
+$dls-radius-component-tab-group: $dls-radius-l;
+$dls-radius-component-table: $dls-radius-xl;
+$dls-radius-component-toggle-box: $dls-radius-m;
+$dls-radius-component-tooltip: $dls-radius-m;
 
 // ---------------------------------------------------------------------------
 // Spacing (8pt grid)

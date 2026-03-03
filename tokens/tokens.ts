@@ -145,7 +145,7 @@ export const semantic = {
     },
     overlay: {
       scrim:   "rgba(0, 0, 0, 0.5)",
-      backdrop: "rgba(0, 0, 0, 0.3)",
+      backdrop: "rgba(255, 255, 255, 0.56)",
     },
   },
   dark: {
@@ -346,20 +346,102 @@ export const text = {
   "3xl": { fontSize: 32, lineHeight: 40 },
   hero: { fontSize: 36, lineHeight: 46 },
   heading: {
-    xl: { fontSize: 24, lineHeight: 32, fontWeight: font.weight.semibold },
-    l:  { fontSize: 18, lineHeight: 26, fontWeight: font.weight.semibold },
-    m:  { fontSize: 16, lineHeight: 24, fontWeight: font.weight.medium },
+    hero: { fontSize: 36, lineHeight: 46, fontWeight: font.weight.bold },
+    h1:   { fontSize: 32, lineHeight: 40, fontWeight: font.weight.semibold },
+    h2:   { fontSize: 24, lineHeight: 32, fontWeight: font.weight.semibold },
+    h3:   { fontSize: 18, lineHeight: 26, fontWeight: font.weight.semibold },
+    h4:   { fontSize: 16, lineHeight: 24, fontWeight: font.weight.semibold },
+    h5:   { fontSize: 14, lineHeight: 20, fontWeight: font.weight.semibold },
+    h6:   { fontSize: 12, lineHeight: 16, fontWeight: font.weight.bold },
   },
-  body: {
-    l: { fontSize: 16, lineHeight: 24, fontWeight: font.weight.normal },
-    m: { fontSize: 14, lineHeight: 20, fontWeight: font.weight.normal },
-    s: { fontSize: 12, lineHeight: 16, fontWeight: font.weight.normal },
+  paragraph: {
+    xl: {
+      fontSize: 18, lineHeight: 26,
+      light: { fontWeight: font.weight.normal },
+      medium: { fontWeight: font.weight.medium },
+      heavy: { fontWeight: font.weight.semibold },
+    },
+    l: {
+      fontSize: 16, lineHeight: 24,
+      light: { fontWeight: font.weight.normal },
+      medium: { fontWeight: font.weight.medium },
+      heavy: { fontWeight: font.weight.semibold },
+    },
+    m: {
+      fontSize: 14, lineHeight: 20,
+      light: { fontWeight: font.weight.normal },
+      medium: { fontWeight: font.weight.medium },
+      heavy: { fontWeight: font.weight.semibold },
+    },
+    s: {
+      fontSize: 12, lineHeight: 16,
+      light: { fontWeight: font.weight.normal },
+      medium: { fontWeight: font.weight.medium },
+      heavy: { fontWeight: font.weight.semibold },
+    },
+    xs: {
+      fontSize: 10, lineHeight: 14, letterSpacing: 0.2,
+      light: { fontWeight: font.weight.normal },
+      medium: { fontWeight: font.weight.medium },
+      heavy: { fontWeight: font.weight.medium },
+    },
   },
-  label: {
-    m: { fontSize: 14, lineHeight: 20, fontWeight: font.weight.medium },
-    s: { fontSize: 12, lineHeight: 16, fontWeight: font.weight.medium },
+  button: {
+    l:  { fontSize: 16, lineHeight: 24, fontWeight: font.weight.medium },
+    m:  { fontSize: 14, lineHeight: 20, fontWeight: font.weight.medium },
+    s:  { fontSize: 12, lineHeight: 16, fontWeight: font.weight.medium },
+    xs: { fontSize: 10, lineHeight: 14, fontWeight: font.weight.medium, letterSpacing: 0.5 },
   },
-  caption: { fontSize: 10, lineHeight: 14, fontWeight: font.weight.normal },
+  link: {
+    l: {
+      fontSize: 16, lineHeight: 24,
+      light: { fontWeight: font.weight.normal },
+      medium: { fontWeight: font.weight.medium },
+      heavy: { fontWeight: font.weight.semibold },
+    },
+    m: {
+      fontSize: 14, lineHeight: 20,
+      light: { fontWeight: font.weight.normal },
+      medium: { fontWeight: font.weight.medium },
+      heavy: { fontWeight: font.weight.semibold },
+    },
+    s: {
+      fontSize: 12, lineHeight: 16,
+      light: { fontWeight: font.weight.normal },
+      medium: { fontWeight: font.weight.medium },
+      heavy: { fontWeight: font.weight.semibold },
+    },
+    xs: {
+      fontSize: 10, lineHeight: 14, letterSpacing: 0.5,
+      light: { fontWeight: font.weight.normal },
+      medium: { fontWeight: font.weight.medium },
+      heavy: { fontWeight: font.weight.semibold },
+    },
+  },
+  upper: {
+    l:  { fontSize: 16, lineHeight: 24, fontWeight: font.weight.medium, letterSpacing: "0.01em", textTransform: "uppercase" },
+    m:  { fontSize: 14, lineHeight: 20, fontWeight: font.weight.medium, letterSpacing: "0.01em", textTransform: "uppercase" },
+    s:  { fontSize: 12, lineHeight: 16, fontWeight: font.weight.medium, letterSpacing: "0.01em", textTransform: "uppercase" },
+    xs: { fontSize: 10, lineHeight: 14, fontWeight: font.weight.medium, letterSpacing: "0.01em", textTransform: "uppercase" },
+  },
+  italic: {
+    l:  { fontSize: 16, lineHeight: 24, fontWeight: font.weight.normal, fontStyle: "italic" },
+    m:  { fontSize: 14, lineHeight: 20, fontWeight: font.weight.normal, fontStyle: "italic" },
+    s:  { fontSize: 12, lineHeight: 16, fontWeight: font.weight.normal, fontStyle: "italic" },
+    xs: { fontSize: 10, lineHeight: 14, fontWeight: font.weight.normal, fontStyle: "italic" },
+  },
+  avatar: {
+    "2xl": { fontSize: 64, lineHeight: 64, fontWeight: font.weight.semibold },
+    xl:    { fontSize: 40, lineHeight: 40, fontWeight: font.weight.semibold },
+    l:     { fontSize: 30, lineHeight: 30, fontWeight: font.weight.semibold },
+    m:     { fontSize: 20, lineHeight: 20, fontWeight: font.weight.semibold },
+    s:     { fontSize: 18, lineHeight: 18, fontWeight: font.weight.semibold },
+    xs:    { fontSize: 14, lineHeight: 14, fontWeight: font.weight.semibold },
+    "2xs": { fontSize: 12, lineHeight: 12, fontWeight: font.weight.semibold },
+    "3xs": { fontSize: 10, lineHeight: 10, fontWeight: font.weight.semibold },
+    "4xs": { fontSize: 8,  lineHeight: 10, fontWeight: font.weight.semibold },
+    "5xs": { fontSize: 6,  lineHeight: 6,  fontWeight: font.weight.semibold },
+  },
 } as const;
 
 // =============================================================================
@@ -376,15 +458,38 @@ export const radius = {
   "2xl": 16,
   full: 9999,
   component: {
-    button:   6,
-    card:     8,
-    modal:    12,
-    input:    4,
-    badge:    9999,
-    chip:     9999,
-    tooltip:  4,
-    dropdown: 6,
-    alert:    6,
+    accordion:      8,
+    alert:          8,
+    badge:          9999,
+    "badge-number": 6,
+    button:         6,
+    calendar:       12,
+    "calendar-day": 6,
+    card:           12,
+    "carousel-arrow": 9999,
+    "carousel-item":  8,
+    checkbox:       4,
+    chip:           6,
+    "context-menu": 12,
+    dropdown:       6,
+    input:          6,
+    "input-toolbar": 6,
+    item:           8,
+    kbd:            6,
+    list:           12,
+    "list-item":    4,
+    modal:          12,
+    "otp-slot":     6,
+    pagination:     6,
+    radiobutton:    9999,
+    "sidebar-item": 6,
+    "slider-item":  9999,
+    switcher:       9999,
+    tab:            6,
+    "tab-group":    8,
+    table:          12,
+    "toggle-box":   6,
+    tooltip:        6,
   },
 } as const;
 
@@ -405,4 +510,16 @@ export const iconStroke = {
   12: 1,
   16: 1.33,
   24: 2,
+} as const;
+
+// =============================================================================
+// Effect — backdrop-filter (Figma GLASS effect; not expressible as variables)
+// =============================================================================
+
+export const effect = {
+  backdrop: {
+    blur: 8,
+    saturate: 180,
+    filter: "blur(8px) saturate(180%)",
+  },
 } as const;
