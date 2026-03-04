@@ -245,6 +245,19 @@
   --dls-color-component-sidebar-item-fg-active: var(--dls-color-text-primary);
   --dls-color-component-sidebar-item-bg-active: var(--dls-color-surface-muted);
 
+  /* Avatar */
+  --dls-color-component-avatar-bg: var(--dls-color-surface-subtle);
+  --dls-color-component-avatar-border: var(--dls-color-border-subtle);
+  --dls-color-component-avatar-fg: var(--dls-color-text-primary);
+  --dls-color-component-avatar-icon-fg: var(--dls-color-text-secondary);
+  --dls-color-component-avatar-dot: var(--dls-color-success-500);
+  --dls-color-component-avatar-dot-border: var(--dls-color-surface-base);
+  --dls-color-component-avatar-stack-border: var(--dls-color-surface-base);
+  --dls-color-component-avatar-counter-bg: var(--dls-color-intent-primary-base);
+  --dls-color-component-avatar-counter-fg: var(--dls-color-intent-primary-on-base);
+  --dls-color-component-avatar-remove-btn-bg: var(--dls-color-surface-base);
+  --dls-color-component-avatar-remove-btn-fg: var(--dls-color-text-primary);
+
   /* Badge (per variant: bg, fg, border) */
   --dls-color-component-badge-neutral-bg: var(--dls-color-intent-neutral-subtle);
   --dls-color-component-badge-neutral-fg: var(--dls-color-intent-neutral-text);
@@ -299,6 +312,9 @@
   --dls-color-component-alert-neutral-bg: var(--dls-color-surface-muted);
   --dls-color-component-alert-neutral-fg: var(--dls-color-text-primary);
   --dls-color-component-alert-neutral-border: var(--dls-color-border-base);
+  --dls-color-component-alert-primary-bg: var(--dls-color-intent-primary-subtle);
+  --dls-color-component-alert-primary-fg: var(--dls-color-intent-primary-text);
+  --dls-color-component-alert-primary-border: var(--dls-color-intent-primary-border);
   --dls-color-component-alert-success-bg: var(--dls-color-intent-success-subtle);
   --dls-color-component-alert-success-fg: var(--dls-color-intent-success-text);
   --dls-color-component-alert-success-border: var(--dls-color-intent-success-border);
@@ -519,6 +535,11 @@
   --dls-radius-2xl: 16px;
   --dls-radius-full: 9999px;
   --dls-radius-component-accordion: var(--dls-radius-l);
+  --dls-radius-component-avatar-2xl: var(--dls-radius-2xl);
+  --dls-radius-component-avatar-xl: var(--dls-radius-xl);
+  --dls-radius-component-avatar-l: var(--dls-radius-l);
+  --dls-radius-component-avatar-m: var(--dls-radius-m);
+  --dls-radius-component-avatar-s: var(--dls-radius-s);
   --dls-radius-component-alert: var(--dls-radius-l);
   --dls-radius-component-badge: var(--dls-radius-full);
   --dls-radius-component-badge-number: var(--dls-radius-m);

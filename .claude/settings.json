@@ -2,9 +2,14 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "write|edit|create",
-        "command": "node .claude/hooks/lint-tokens.mjs \"$FILE_PATH\"",
-        "timeout": 5000
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/lint-tokens.mjs \"$CLAUDE_PROJECT_DIR\"",
+            "timeout": 10
+          }
+        ]
       }
     ]
   }

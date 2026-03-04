@@ -1,0 +1,280 @@
+/* ==========================================================================
+   DLS Avatar — token-driven avatar component
+   Sizes: 144 | 88 | 80 | 72 | 48 | 40 | 32 | 28 | 24 | 20 | 18
+   Content: image | initials | icon
+   Shape: square (rounded) | circle
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+.dls-avatar {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+  flex-shrink: 0;
+  font-family: var(--dls-font-family);
+  background: var(--dls-color-component-avatar-bg);
+  border: var(--_stroke) solid var(--dls-color-component-avatar-border);
+  border-radius: var(--_radius);
+
+  /* Internal sizing variables — set per data-size */
+  --_size: 48px;
+  --_radius: var(--dls-radius-component-avatar-xl);
+  --_stroke: 1px;
+  --_font-size: var(--dls-text-avatar-m-font-size, 20px);
+  --_line-height: var(--dls-text-avatar-m-line-height, 20px);
+  --_dot-size: 16px;
+  --_dot-stroke: 1px;
+  --_dot-offset: -2px;
+  --_icon-size: 28px;
+  --_remove-size: 16px;
+
+  width: var(--_size);
+  height: var(--_size);
+}
+
+/* Circle shape */
+.dls-avatar[data-circle] {
+  border-radius: var(--dls-radius-full);
+}
+
+/* ---------------------------------------------------------------------------
+   Size variants
+   --------------------------------------------------------------------------- */
+
+.dls-avatar[data-size="144"] {
+  --_size: 144px;
+  --_radius: var(--dls-radius-component-avatar-2xl);
+  --_stroke: 2px;
+  --_font-size: 64px;
+  --_line-height: 64px;
+  --_dot-size: 28px;
+  --_dot-stroke: 2px;
+  --_dot-offset: 4px;
+  --_icon-size: 80px;
+  --_remove-size: 24px;
+}
+
+.dls-avatar[data-size="88"] {
+  --_size: 88px;
+  --_radius: var(--dls-radius-component-avatar-2xl);
+  --_stroke: 2px;
+  --_font-size: 40px;
+  --_line-height: 40px;
+  --_dot-size: 24px;
+  --_dot-stroke: 2px;
+  --_dot-offset: 0px;
+  --_icon-size: 48px;
+  --_remove-size: 24px;
+}
+
+.dls-avatar[data-size="80"] {
+  --_size: 80px;
+  --_radius: var(--dls-radius-component-avatar-2xl);
+  --_stroke: 2px;
+  --_font-size: 30px;
+  --_line-height: 30px;
+  --_dot-size: 20px;
+  --_dot-stroke: 2px;
+  --_dot-offset: 0px;
+  --_icon-size: 44px;
+  --_remove-size: 24px;
+}
+
+.dls-avatar[data-size="72"] {
+  --_size: 72px;
+  --_radius: var(--dls-radius-component-avatar-xl);
+  --_stroke: 2px;
+  --_font-size: 30px;
+  --_line-height: 30px;
+  --_dot-size: 20px;
+  --_dot-stroke: 2px;
+  --_dot-offset: -2px;
+  --_icon-size: 40px;
+  --_remove-size: 24px;
+}
+
+.dls-avatar[data-size="48"] {
+  --_size: 48px;
+  --_radius: var(--dls-radius-component-avatar-xl);
+  --_stroke: 1px;
+  --_font-size: 20px;
+  --_line-height: 20px;
+  --_dot-size: 16px;
+  --_dot-stroke: 1px;
+  --_dot-offset: -2px;
+  --_icon-size: 28px;
+}
+
+.dls-avatar[data-size="40"] {
+  --_size: 40px;
+  --_radius: var(--dls-radius-component-avatar-l);
+  --_stroke: 1px;
+  --_font-size: 18px;
+  --_line-height: 18px;
+  --_dot-size: 12px;
+  --_dot-stroke: 1px;
+  --_dot-offset: -2px;
+  --_icon-size: 24px;
+}
+
+.dls-avatar[data-size="32"] {
+  --_size: 32px;
+  --_radius: var(--dls-radius-component-avatar-l);
+  --_stroke: 1px;
+  --_font-size: 14px;
+  --_line-height: 14px;
+  --_dot-size: 12px;
+  --_dot-stroke: 1px;
+  --_dot-offset: -2px;
+  --_icon-size: 16px;
+}
+
+.dls-avatar[data-size="28"] {
+  --_size: 28px;
+  --_radius: var(--dls-radius-component-avatar-m);
+  --_stroke: 1px;
+  --_font-size: 12px;
+  --_line-height: 12px;
+  --_dot-size: 12px;
+  --_dot-stroke: 1px;
+  --_dot-offset: -2px;
+  --_icon-size: 16px;
+}
+
+.dls-avatar[data-size="24"] {
+  --_size: 24px;
+  --_radius: var(--dls-radius-component-avatar-m);
+  --_stroke: 1px;
+  --_font-size: 10px;
+  --_line-height: 10px;
+  --_dot-size: 10px;
+  --_dot-stroke: 1px;
+  --_dot-offset: -2px;
+  --_icon-size: 12px;
+  --_remove-size: 12px;
+}
+
+.dls-avatar[data-size="20"] {
+  --_size: 20px;
+  --_radius: var(--dls-radius-component-avatar-s);
+  --_stroke: 1px;
+  --_font-size: 8px;
+  --_line-height: 10px;
+  --_dot-size: 8px;
+  --_dot-stroke: 1px;
+  --_dot-offset: -2px;
+  --_icon-size: 10px;
+  --_remove-size: 12px;
+}
+
+.dls-avatar[data-size="18"] {
+  --_size: 18px;
+  --_radius: var(--dls-radius-component-avatar-s);
+  --_stroke: 1px;
+  --_font-size: 8px;
+  --_line-height: 10px;
+  --_dot-size: 8px;
+  --_dot-stroke: 1px;
+  --_dot-offset: -2px;
+  --_icon-size: 10px;
+  --_remove-size: 12px;
+}
+
+/* ---------------------------------------------------------------------------
+   Initials text
+   --------------------------------------------------------------------------- */
+
+.dls-avatar__initials {
+  font-size: var(--_font-size);
+  line-height: var(--_line-height);
+  font-weight: var(--dls-font-weight-semibold);
+  color: var(--dls-color-component-avatar-fg);
+  text-align: center;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Icon (user placeholder)
+   --------------------------------------------------------------------------- */
+
+.dls-avatar__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+  color: var(--dls-color-component-avatar-icon-fg);
+}
+.dls-avatar__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Image
+   --------------------------------------------------------------------------- */
+
+.dls-avatar__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+   Status dot
+   --------------------------------------------------------------------------- */
+
+.dls-avatar__dot {
+  position: absolute;
+  top: var(--_dot-offset);
+  right: var(--_dot-offset);
+  width: var(--_dot-size);
+  height: var(--_dot-size);
+  border-radius: var(--dls-radius-full);
+  background: var(--dls-color-component-avatar-dot);
+  border: var(--_dot-stroke) solid var(--dls-color-component-avatar-dot-border);
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
+   Remove button (shown on hover when onRemove is provided)
+   --------------------------------------------------------------------------- */
+
+.dls-avatar__remove {
+  all: unset;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--_remove-size);
+  height: var(--_remove-size);
+  cursor: pointer;
+  border-radius: var(--dls-radius-full);
+}
+
+.dls-avatar:hover > .dls-avatar__remove,
+.dls-avatar:focus-within > .dls-avatar__remove {
+  display: inline-flex;
+}
+
+.dls-avatar__remove:focus-visible {
+  box-shadow: var(--dls-shadow-focus-ring);
+}
+
+.dls-avatar__remove svg {
+  width: 100%;
+  height: 100%;
+}

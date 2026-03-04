@@ -1,0 +1,165 @@
+/* ==========================================================================
+   DLS Alert Dialog — token-driven modal confirmation dialog
+   Intents: neutral | primary | info | success | warning | danger
+   Breakpoints: desktop (horizontal) | mobile (vertical, stacked)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Overlay (native <dialog> backdrop)
+   --------------------------------------------------------------------------- */
+
+.dls-alert-dialog::backdrop {
+  background: var(--dls-color-component-dialog-overlay);
+}
+
+/* ---------------------------------------------------------------------------
+   Panel
+   --------------------------------------------------------------------------- */
+
+.dls-alert-dialog {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-4);
+  padding: var(--dls-spacing-4);
+  font-family: var(--dls-font-family);
+  background: var(--dls-color-component-dialog-bg);
+  border: 1px solid var(--dls-color-component-dialog-border);
+  border-radius: var(--dls-radius-component-modal);
+  box-shadow: var(--dls-shadow-surface-lg);
+  width: 400px;
+  max-width: calc(100vw - 32px);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  --_icon-color: var(--dls-color-intent-neutral-text);
+  --_intent: neutral;
+}
+
+/* Closed state */
+.dls-alert-dialog:not([open]) {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Intent overrides (icon color)
+   --------------------------------------------------------------------------- */
+
+.dls-alert-dialog[data-intent="primary"] { --_icon-color: var(--dls-color-intent-primary-text); }
+.dls-alert-dialog[data-intent="info"]    { --_icon-color: var(--dls-color-intent-info-text); }
+.dls-alert-dialog[data-intent="success"] { --_icon-color: var(--dls-color-intent-success-text); }
+.dls-alert-dialog[data-intent="warning"] { --_icon-color: var(--dls-color-intent-warning-text); }
+.dls-alert-dialog[data-intent="danger"]  { --_icon-color: var(--dls-color-intent-danger-text); }
+
+/* ---------------------------------------------------------------------------
+   Content area — desktop: horizontal, mobile: vertical centered
+   --------------------------------------------------------------------------- */
+
+.dls-alert-dialog__content {
+  display: flex;
+  gap: var(--dls-spacing-3);
+}
+
+.dls-alert-dialog__icon {
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--_icon-color);
+  padding-top: 1px;
+}
+.dls-alert-dialog__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-alert-dialog__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.dls-alert-dialog__title {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-semibold);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-alert-dialog__description {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Actions — desktop: horizontal right-aligned, mobile: vertical stacked
+   --------------------------------------------------------------------------- */
+
+.dls-alert-dialog__actions {
+  display: flex;
+  gap: var(--dls-spacing-2);
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------------------------
+   Mobile breakpoint — vertical layout
+   --------------------------------------------------------------------------- */
+
+.dls-alert-dialog[data-breakpoint="mobile"] {
+  padding: var(--dls-spacing-6);
+}
+
+.dls-alert-dialog[data-breakpoint="mobile"] .dls-alert-dialog__content {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.dls-alert-dialog[data-breakpoint="mobile"] .dls-alert-dialog__icon {
+  padding-top: 0;
+}
+
+.dls-alert-dialog[data-breakpoint="mobile"] .dls-alert-dialog__text {
+  align-items: center;
+}
+
+.dls-alert-dialog[data-breakpoint="mobile"] .dls-alert-dialog__actions {
+  flex-direction: column-reverse;
+}
+.dls-alert-dialog[data-breakpoint="mobile"] .dls-alert-dialog__actions > * {
+  width: 100%;
+}
+
+/* Responsive auto-detect (when no explicit breakpoint set) */
+@media (max-width: 480px) {
+  .dls-alert-dialog:not([data-breakpoint]) {
+    padding: var(--dls-spacing-6);
+  }
+  .dls-alert-dialog:not([data-breakpoint]) .dls-alert-dialog__content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .dls-alert-dialog:not([data-breakpoint]) .dls-alert-dialog__icon {
+    padding-top: 0;
+  }
+  .dls-alert-dialog:not([data-breakpoint]) .dls-alert-dialog__text {
+    align-items: center;
+  }
+  .dls-alert-dialog:not([data-breakpoint]) .dls-alert-dialog__actions {
+    flex-direction: column-reverse;
+  }
+  .dls-alert-dialog:not([data-breakpoint]) .dls-alert-dialog__actions > * {
+    width: 100%;
+  }
+}

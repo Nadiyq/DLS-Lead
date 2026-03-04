@@ -1,0 +1,129 @@
+/* ==========================================================================
+   DLS Alert — token-driven component styles
+   Intents: neutral | primary | info | success | warning | danger
+   Sizes:   m | s
+   ========================================================================== */
+
+.dls-alert {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--dls-spacing-2);
+  font-family: var(--dls-font-family);
+  border: 1px solid;
+  border-radius: var(--dls-radius-component-alert);
+  padding: var(--dls-spacing-2) var(--dls-spacing-3);
+
+  --_bg: var(--dls-color-component-alert-neutral-bg);
+  --_fg: var(--dls-color-component-alert-neutral-fg);
+  --_border: var(--dls-color-component-alert-neutral-border);
+
+  background: var(--_bg);
+  color: var(--_fg);
+  border-color: var(--_border);
+}
+
+/* ---------------------------------------------------------------------------
+   Intent overrides
+   --------------------------------------------------------------------------- */
+
+.dls-alert[data-intent="primary"] {
+  --_bg: var(--dls-color-component-alert-primary-bg);
+  --_fg: var(--dls-color-component-alert-primary-fg);
+  --_border: var(--dls-color-component-alert-primary-border);
+}
+.dls-alert[data-intent="info"] {
+  --_bg: var(--dls-color-component-alert-info-bg);
+  --_fg: var(--dls-color-component-alert-info-fg);
+  --_border: var(--dls-color-component-alert-info-border);
+}
+.dls-alert[data-intent="success"] {
+  --_bg: var(--dls-color-component-alert-success-bg);
+  --_fg: var(--dls-color-component-alert-success-fg);
+  --_border: var(--dls-color-component-alert-success-border);
+}
+.dls-alert[data-intent="warning"] {
+  --_bg: var(--dls-color-component-alert-warning-bg);
+  --_fg: var(--dls-color-component-alert-warning-fg);
+  --_border: var(--dls-color-component-alert-warning-border);
+}
+.dls-alert[data-intent="danger"] {
+  --_bg: var(--dls-color-component-alert-danger-bg);
+  --_fg: var(--dls-color-component-alert-danger-fg);
+  --_border: var(--dls-color-component-alert-danger-border);
+}
+
+/* ---------------------------------------------------------------------------
+   Sizes
+   --------------------------------------------------------------------------- */
+
+.dls-alert[data-size="m"] .dls-alert__title {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+}
+.dls-alert[data-size="m"] .dls-alert__description {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+}
+.dls-alert[data-size="m"] .dls-alert__icon {
+  width: 24px;
+  height: 24px;
+  padding-top: var(--dls-spacing-0-5);
+  padding-bottom: var(--dls-spacing-0-5);
+}
+
+.dls-alert[data-size="s"] .dls-alert__title {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+}
+.dls-alert[data-size="s"] .dls-alert__description {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+}
+.dls-alert[data-size="s"] .dls-alert__icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------------------------------------------------------------------------
+   Internal structure
+   --------------------------------------------------------------------------- */
+
+.dls-alert__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.dls-alert__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-alert__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+}
+
+.dls-alert__title {
+  font-weight: var(--dls-font-weight-semibold);
+  color: var(--_fg);
+}
+
+.dls-alert__description {
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--_fg);
+}
+
+.dls-alert__action {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+  padding-top: var(--dls-spacing-1);
+  padding-bottom: var(--dls-spacing-1);
+}

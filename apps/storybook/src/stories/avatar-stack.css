@@ -1,0 +1,145 @@
+/* ==========================================================================
+   DLS Avatar Stack — overlapping avatar group with optional counter
+   Sizes: 88 | 80 | 72 | 48 | 40 | 32 | 28 | 24 | 20 | 18
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+.dls-avatar-stack {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--dls-font-family);
+
+  /* Internal sizing variables — set per data-size */
+  --_overlap: -16px;
+  --_stack-stroke: 1px;
+  --_counter-font-size: 14px;
+  --_counter-line-height: 14px;
+}
+
+/* Force circle + white ring on all avatar children */
+.dls-avatar-stack > .dls-avatar {
+  border-radius: var(--dls-radius-full);
+  border-color: var(--dls-color-component-avatar-stack-border);
+  border-width: var(--_stack-stroke);
+}
+
+/* Overlap via negative margin on all but the first child */
+.dls-avatar-stack > *:not(:first-child) {
+  margin-left: var(--_overlap);
+}
+
+/* ---------------------------------------------------------------------------
+   Size variants
+   --------------------------------------------------------------------------- */
+
+.dls-avatar-stack[data-size="88"] {
+  --_overlap: -30px;
+  --_stack-stroke: 2px;
+  --_counter-font-size: 30px;
+  --_counter-line-height: 30px;
+}
+
+.dls-avatar-stack[data-size="80"] {
+  --_overlap: -27px;
+  --_stack-stroke: 2px;
+  --_counter-font-size: 24px;
+  --_counter-line-height: 24px;
+}
+
+.dls-avatar-stack[data-size="72"] {
+  --_overlap: -24px;
+  --_stack-stroke: 2px;
+  --_counter-font-size: 20px;
+  --_counter-line-height: 20px;
+}
+
+.dls-avatar-stack[data-size="48"] {
+  --_overlap: -16px;
+  --_stack-stroke: 1px;
+  --_counter-font-size: 14px;
+  --_counter-line-height: 14px;
+}
+
+.dls-avatar-stack[data-size="40"] {
+  --_overlap: -13px;
+  --_stack-stroke: 1px;
+  --_counter-font-size: 12px;
+  --_counter-line-height: 12px;
+}
+
+.dls-avatar-stack[data-size="32"] {
+  --_overlap: -12px;
+  --_stack-stroke: 1px;
+  --_counter-font-size: 10px;
+  --_counter-line-height: 10px;
+}
+
+.dls-avatar-stack[data-size="28"] {
+  --_overlap: -10px;
+  --_stack-stroke: 1px;
+  --_counter-font-size: 10px;
+  --_counter-line-height: 10px;
+}
+
+.dls-avatar-stack[data-size="24"] {
+  --_overlap: -8px;
+  --_stack-stroke: 1px;
+  --_counter-font-size: 8px;
+  --_counter-line-height: 10px;
+}
+
+.dls-avatar-stack[data-size="20"] {
+  --_overlap: -7px;
+  --_stack-stroke: 1px;
+  --_counter-font-size: 6px;
+  --_counter-line-height: 6px;
+}
+
+.dls-avatar-stack[data-size="18"] {
+  --_overlap: -6px;
+  --_stack-stroke: 1px;
+  --_counter-font-size: 6px;
+  --_counter-line-height: 6px;
+}
+
+/* ---------------------------------------------------------------------------
+   Counter badge (+N)
+   --------------------------------------------------------------------------- */
+
+.dls-avatar-stack__counter {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--dls-radius-full);
+  background: var(--dls-color-component-avatar-counter-bg);
+  border: var(--_stack-stroke) solid var(--dls-color-component-avatar-stack-border);
+  color: var(--dls-color-component-avatar-counter-fg);
+  font-size: var(--_counter-font-size);
+  line-height: var(--_counter-line-height);
+  font-weight: var(--dls-font-weight-semibold);
+  text-transform: uppercase;
+  user-select: none;
+
+  /* Size matches the avatar size — inherited from parent */
+  width: var(--_size, 48px);
+  height: var(--_size, 48px);
+}
+
+/* Size inheritance for counter — mirrors avatar data-size values */
+.dls-avatar-stack[data-size="88"] .dls-avatar-stack__counter { width: 88px; height: 88px; }
+.dls-avatar-stack[data-size="80"] .dls-avatar-stack__counter { width: 80px; height: 80px; }
+.dls-avatar-stack[data-size="72"] .dls-avatar-stack__counter { width: 72px; height: 72px; }
+.dls-avatar-stack[data-size="48"] .dls-avatar-stack__counter { width: 48px; height: 48px; }
+.dls-avatar-stack[data-size="40"] .dls-avatar-stack__counter { width: 40px; height: 40px; }
+.dls-avatar-stack[data-size="32"] .dls-avatar-stack__counter { width: 32px; height: 32px; }
+.dls-avatar-stack[data-size="28"] .dls-avatar-stack__counter { width: 28px; height: 28px; }
+.dls-avatar-stack[data-size="24"] .dls-avatar-stack__counter { width: 24px; height: 24px; }
+.dls-avatar-stack[data-size="20"] .dls-avatar-stack__counter { width: 20px; height: 20px; }
+.dls-avatar-stack[data-size="18"] .dls-avatar-stack__counter { width: 18px; height: 18px; }

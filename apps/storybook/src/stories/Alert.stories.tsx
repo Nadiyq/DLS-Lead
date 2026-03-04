@@ -1,0 +1,227 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import React from 'react';
+import { Alert, InfoIcon, CheckCircleIcon, AlertTriangleIcon, XCircleIcon } from './Alert';
+import { Button } from './Button';
+import type { AlertIntent } from './Alert';
+
+const INTENTS: AlertIntent[] = ['neutral', 'primary', 'info', 'success', 'warning', 'danger'];
+
+const INTENT_ICONS: Record<AlertIntent, React.ReactNode> = {
+  neutral: <InfoIcon />,
+  primary: <InfoIcon />,
+  info: <InfoIcon />,
+  success: <CheckCircleIcon />,
+  warning: <AlertTriangleIcon />,
+  danger: <XCircleIcon />,
+};
+
+const meta = {
+  title: 'Components/Alert',
+  component: Alert,
+  parameters: { layout: 'centered' },
+  tags: ['autodocs'],
+  argTypes: {
+    intent: {
+      control: 'select',
+      options: INTENTS,
+    },
+    size: {
+      control: 'inline-radio',
+      options: ['m', 's'],
+    },
+    title: { control: 'text' },
+    description: { control: 'text' },
+  },
+  args: {
+    intent: 'neutral',
+    size: 'm',
+    title: 'Alert title',
+    description: 'This is alert description',
+    icon: <InfoIcon />,
+  },
+} satisfies Meta<typeof Alert>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+const Row = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+    <span style={{
+      width: 64,
+      fontSize: 12,
+      color: 'var(--dls-color-text-secondary)',
+      fontFamily: 'var(--dls-font-family)',
+      flexShrink: 0,
+      paddingTop: 10,
+    }}>
+      {label}
+    </span>
+    {children}
+  </div>
+);
+
+const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <h3 style={{
+      margin: 0,
+      fontSize: 16,
+      fontWeight: 600,
+      fontFamily: 'var(--dls-font-family)',
+      color: 'var(--dls-color-text-primary)',
+    }}>
+      {title}
+    </h3>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {children}
+    </div>
+  </div>
+);
+
+// ---------------------------------------------------------------------------
+// Playground
+// ---------------------------------------------------------------------------
+
+export const Playground: Story = {
+  args: {
+    icon: <InfoIcon />,
+    title: 'Alert title',
+    description: 'This is alert description',
+    action: <Button variant="filled" intent="neutral" size="s">Button</Button>,
+  },
+};
+
+// ---------------------------------------------------------------------------
+// All intents — Size M
+// ---------------------------------------------------------------------------
+
+export const AllIntents: Story = {
+  render: () => (
+    <Section title="All Intents (Size M)">
+      {INTENTS.map((intent) => (
+        <Row key={intent} label={intent}>
+          <Alert
+            intent={intent}
+            size="m"
+            icon={INTENT_ICONS[intent]}
+            title="Alert title"
+            description="This is alert description"
+            action={<Button variant="filled" intent={intent} size="s">Button</Button>}
+          />
+        </Row>
+      ))}
+    </Section>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// All intents — Size S
+// ---------------------------------------------------------------------------
+
+export const AllIntentsSmall: Story = {
+  render: () => (
+    <Section title="All Intents (Size S)">
+      {INTENTS.map((intent) => (
+        <Row key={intent} label={intent}>
+          <Alert
+            intent={intent}
+            size="s"
+            icon={INTENT_ICONS[intent]}
+            title="Alert title"
+            description="This is alert description"
+            action={<Button variant="filled" intent={intent} size="s">Button</Button>}
+          />
+        </Row>
+      ))}
+    </Section>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Without icon
+// ---------------------------------------------------------------------------
+
+export const WithoutIcon: Story = {
+  render: () => (
+    <Section title="Without Icon">
+      {INTENTS.map((intent) => (
+        <Row key={intent} label={intent}>
+          <Alert
+            intent={intent}
+            size="m"
+            title="Alert title"
+            description="This is alert description"
+          />
+        </Row>
+      ))}
+    </Section>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Without title
+// ---------------------------------------------------------------------------
+
+export const WithoutTitle: Story = {
+  render: () => (
+    <Section title="Without Title">
+      {INTENTS.map((intent) => (
+        <Row key={intent} label={intent}>
+          <Alert
+            intent={intent}
+            size="m"
+            icon={INTENT_ICONS[intent]}
+            description="This is alert description"
+          />
+        </Row>
+      ))}
+    </Section>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Without description
+// ---------------------------------------------------------------------------
+
+export const WithoutDescription: Story = {
+  render: () => (
+    <Section title="Without Description">
+      {INTENTS.map((intent) => (
+        <Row key={intent} label={intent}>
+          <Alert
+            intent={intent}
+            size="m"
+            icon={INTENT_ICONS[intent]}
+            title="Alert title"
+          />
+        </Row>
+      ))}
+    </Section>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// With action button
+// ---------------------------------------------------------------------------
+
+export const WithAction: Story = {
+  render: () => (
+    <Section title="With Action Button">
+      {INTENTS.map((intent) => (
+        <Row key={intent} label={intent}>
+          <Alert
+            intent={intent}
+            size="m"
+            icon={INTENT_ICONS[intent]}
+            title="Alert title"
+            description="This is alert description"
+            action={<Button variant="filled" intent={intent} size="s">Button</Button>}
+          />
+        </Row>
+      ))}
+    </Section>
+  ),
+};
