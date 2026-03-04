@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "write|edit|create",
+        "command": "node .claude/hooks/lint-tokens.mjs \"$FILE_PATH\"",
+        "timeout": 5000
+      }
+    ]
+  }
+}
