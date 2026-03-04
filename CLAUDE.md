@@ -1,6 +1,6 @@
 # DLS-Lead Design System
 
-> Token-driven infrastructure design system for SaaS dashboards.
+> Token-driven infrastructure design system for SaaS products.
 > Source of truth: `tokens/tokens.json` (DTCG-compliant).
 > Output formats: CSS (`tokens.css`), SCSS (`tokens.scss`), TypeScript (`tokens.ts`).
 
@@ -10,7 +10,7 @@
 
 ### 1.1 Purpose
 
-DLS-Lead provides a deterministic, token-driven component infrastructure for SaaS dashboard products. Every visual decision — color, spacing, typography, radius, shadow, state — is encoded as a design token. Components consume tokens; they never hardcode values.
+DLS-Lead provides a deterministic, token-driven component infrastructure for SaaS products. Every visual decision — color, spacing, typography, radius, shadow, state — is encoded as a design token. Components consume tokens; they never hardcode values.
 
 ### 1.2 Target Products
 
@@ -35,9 +35,7 @@ DLS-Lead/
 │   ├── tokens.css                   # Generated CSS custom properties (:root)
 │   ├── tokens.scss                  # Generated SCSS variables
 │   ├── tokens.ts                    # Generated TypeScript exports
-│   ├── figma-add-4layer-variables.js
-│   ├── figma-cleanup-4layer-variables.js
-│   └── figma-rebind-components-to-4layer.js
+│   └── figma-sync-4layer.js            # Figma variable sync (add / cleanup / rebind)
 ├── apps/
 │   └── storybook/                   # Component library (React + Vite)
 │       ├── src/stories/             # Components: Button, Accordion, Header, Page
@@ -644,7 +642,7 @@ text-transform: uppercase;
 
 5. **Add Storybook story** in `apps/storybook/src/stories/`.
 
-6. **Sync to Figma** using `figma-add-4layer-variables.js`.
+6. **Sync to Figma** using `figma-sync-4layer.js` → `addVariables()`.
 
 ### 8.2 Adding a New Intent
 
@@ -817,13 +815,13 @@ npm run storybook            # http://localhost:6006
 
 ## 13. Figma Scripts
 
-The `tokens/figma-*.js` files run inside the Figma console (or Figma plugin API) to sync the 4-layer variable structure:
+All Figma variable operations live in `tokens/figma-sync-4layer.js`. Run via Figma Console MCP (`figma_execute`) or paste into DevTools.
 
-| Script | Purpose |
+| Function | Purpose |
 |---|---|
-| `figma-add-4layer-variables.js` | Push tokens from JSON into Figma variables |
-| `figma-cleanup-4layer-variables.js` | Remove stale/orphaned Figma variables |
-| `figma-rebind-components-to-4layer.js` | Rebind Figma component fills/strokes to layer-4 variables |
+| `addVariables()` | Create 4-layer semantic variables aliased to primitives |
+| `cleanup()` | Remove deprecated names, verify/fix aliases, backfill missing vars |
+| `rebindComponents(currentPageOnly)` | Walk nodes and rebind fills/strokes/effects to 4-layer variables |
 
 ---
 
