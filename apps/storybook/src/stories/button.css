@@ -13,7 +13,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--dls-spacing-1-5);
+  gap: var(--dls-spacing-2);
   cursor: pointer;
   user-select: none;
   position: relative;
@@ -119,20 +119,27 @@
 /* ---------------------------------------------------------------------------
    Variant: Filled
    OKLCH L-shift for hover/pressed (code-side approach per token spec)
+   Primary & info use intent/strong for filled bg (darker shade per Figma spec)
    --------------------------------------------------------------------------- */
 
 .dls-button[data-variant="filled"] {
-  background: var(--_base);
+  background: var(--_filled-bg, var(--_base));
   color: var(--_on-base);
-  border-color: var(--_base);
+  border-color: var(--_filled-bg, var(--_base));
+}
+.dls-button[data-variant="filled"][data-intent="primary"] {
+  --_filled-bg: var(--dls-color-intent-primary-strong);
+}
+.dls-button[data-variant="filled"][data-intent="info"] {
+  --_filled-bg: var(--dls-color-intent-info-strong);
 }
 .dls-button[data-variant="filled"]:hover:not(:disabled) {
-  background: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-hover)) c h);
-  border-color: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-hover)) c h);
+  background: oklch(from var(--_filled-bg, var(--_base)) calc(l + var(--dls-state-l-delta-hover)) c h);
+  border-color: oklch(from var(--_filled-bg, var(--_base)) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
 .dls-button[data-variant="filled"]:active:not(:disabled) {
-  background: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-pressed)) c h);
-  border-color: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-pressed)) c h);
+  background: oklch(from var(--_filled-bg, var(--_base)) calc(l + var(--dls-state-l-delta-pressed)) c h);
+  border-color: oklch(from var(--_filled-bg, var(--_base)) calc(l + var(--dls-state-l-delta-pressed)) c h);
 }
 
 /* ---------------------------------------------------------------------------
@@ -159,7 +166,7 @@
 .dls-button[data-variant="soft"] {
   background: var(--_subtle);
   color: var(--_text);
-  border-color: transparent;
+  border-color: var(--dls-color-border-base);
 }
 .dls-button[data-variant="soft"]:hover:not(:disabled) {
   background: oklch(from var(--_subtle) calc(l + var(--dls-state-l-delta-hover)) c h);

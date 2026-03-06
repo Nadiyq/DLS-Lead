@@ -3,834 +3,915 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DLS Design Tokens</title>
-  <style>
-    /* ----- Reset & Base ----- */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
-    body {
-      font-family: "Inter", system-ui, -apple-system, sans-serif;
-      background: var(--dls-color-surface-muted, #F5F5F5);
-      color: var(--dls-color-text-primary, #181D27);
-      line-height: 1.5;
-    }
-    a { color: inherit; text-decoration: none; }
-
-    /* ----- Layout ----- */
-    .shell { display: flex; min-height: 100vh; }
-    .sidebar {
-      position: fixed; top: 0; left: 0; bottom: 0; width: 240px;
-      background: #181D27; color: #E9EAEB; padding: 24px 0;
-      overflow-y: auto; z-index: 10;
-      display: flex; flex-direction: column;
-    }
-    .sidebar-title { padding: 0 24px 20px; font-size: 14px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: #A4A7AE; }
-    .sidebar nav { flex: 1; }
-    .sidebar nav a {
-      display: block; padding: 8px 24px; font-size: 13px; font-weight: 500;
-      color: #A4A7AE; transition: color .15s, background .15s; border-left: 3px solid transparent;
-    }
-    .sidebar nav a:hover { color: #fff; background: rgba(255,255,255,.05); }
-    .sidebar nav a.active { color: #fff; border-left-color: #7F56D9; background: rgba(127,86,217,.12); }
-    .sidebar nav .nav-group { padding: 16px 24px 6px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #535862; }
-    .sidebar-footer { padding: 16px 24px; border-top: 1px solid #252B37; }
-
-    .main { margin-left: 240px; flex: 1; padding: 40px 48px 80px; max-width: 1200px; }
-
-    /* ----- Theme Toggle ----- */
-    .theme-toggle {
-      display: inline-flex; align-items: center; gap: 8px;
-      cursor: pointer; font-size: 13px; color: #A4A7AE;
-      background: none; border: none; padding: 8px 12px; border-radius: 8px;
-      transition: background .15s;
-    }
-    .theme-toggle:hover { background: rgba(255,255,255,.08); color: #fff; }
-    .theme-toggle svg { width: 16px; height: 16px; }
-
-    /* ----- Section ----- */
-    .section { margin-bottom: 56px; }
-    .section-title {
-      font-size: 28px; font-weight: 700; margin-bottom: 6px; color: #181D27;
-      scroll-margin-top: 32px;
-    }
-    .section-desc { font-size: 14px; color: #535862; margin-bottom: 24px; max-width: 680px; }
-
-    .subsection { margin-bottom: 32px; }
-    .subsection-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #252B37; }
-
-    /* ----- Color Swatch Grid ----- */
-    .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
-    .color-card {
-      border-radius: 12px; overflow: hidden; background: #fff;
-      box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.04);
-      transition: transform .15s, box-shadow .15s; cursor: pointer;
-    }
-    .color-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.1), 0 0 0 1px rgba(0,0,0,.06); }
-    .color-swatch { height: 72px; position: relative; }
-    .color-swatch.checker {
-      background-image: linear-gradient(45deg, #ddd 25%, transparent 25%),
-        linear-gradient(-45deg, #ddd 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #ddd 75%),
-        linear-gradient(-45deg, transparent 75%, #ddd 75%);
-      background-size: 12px 12px;
-      background-position: 0 0, 0 6px, 6px -6px, -6px 0;
-    }
-    .color-swatch .fill { position: absolute; inset: 0; }
-    .color-info { padding: 8px 10px; }
-    .color-name { font-size: 11px; font-weight: 600; color: #414651; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .color-hex { font-size: 11px; font-family: "SF Mono", "Fira Code", monospace; color: #A4A7AE; }
-
-    /* ----- Wide Swatch (for primitives) ----- */
-    .color-scale { display: flex; gap: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.04); margin-bottom: 16px; }
-    .color-scale-item {
-      flex: 1; min-width: 0; height: 64px; position: relative; cursor: pointer;
-      transition: flex .2s;
-    }
-    .color-scale-item:hover { flex: 2; }
-    .color-scale-label {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 4px 6px; font-size: 10px; font-family: "SF Mono", "Fira Code", monospace;
-      text-align: center; opacity: 0; transition: opacity .15s;
-      background: rgba(0,0,0,.45); color: #fff; backdrop-filter: blur(4px);
-    }
-    .color-scale-item:hover .color-scale-label { opacity: 1; }
-
-    /* ----- Semantic Token Row ----- */
-    .semantic-table { width: 100%; border-collapse: collapse; }
-    .semantic-table th {
-      text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: .04em; color: #A4A7AE; padding: 8px 12px; border-bottom: 2px solid #D5D7DA;
-    }
-    .semantic-table td { padding: 10px 12px; border-bottom: 1px solid #E9EAEB; font-size: 13px; vertical-align: middle; }
-    .semantic-table tr:hover td { background: #FAFAFA; }
-    .semantic-swatch {
-      width: 28px; height: 28px; border-radius: 6px; display: inline-block; vertical-align: middle;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); flex-shrink: 0;
-    }
-    .semantic-token { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; color: #252B37; }
-    .semantic-ref { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; color: #535862; }
-    .semantic-desc { font-size: 12px; color: #A4A7AE; }
-    .token-cell { display: flex; align-items: center; gap: 10px; }
-
-    /* ----- Generic Token Table ----- */
-    .token-table { width: 100%; border-collapse: collapse; }
-    .token-table th {
-      text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: .04em; color: #A4A7AE; padding: 8px 12px; border-bottom: 2px solid #D5D7DA;
-    }
-    .token-table td { padding: 10px 12px; border-bottom: 1px solid #E9EAEB; font-size: 13px; }
-    .token-table tr:hover td { background: #FAFAFA; }
-    .token-table .mono { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; color: #252B37; }
-    .token-table .css-var { font-family: "SF Mono", "Fira Code", monospace; font-size: 11px; color: #535862; }
-
-    /* ----- Spacing Preview ----- */
-    .spacing-bar { height: 20px; background: #7F56D9; border-radius: 4px; min-width: 2px; }
-
-    /* ----- Radius Preview ----- */
-    .radius-box { width: 48px; height: 48px; background: #7F56D9; }
-
-    /* ----- Text Preview ----- */
-    .text-preview { font-family: "Inter", sans-serif; color: #181D27; }
-
-    /* ----- Copied Toast ----- */
-    .toast {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
-      background: #181D27; color: #fff; padding: 10px 20px; border-radius: 8px;
-      font-size: 13px; font-weight: 500; pointer-events: none;
-      opacity: 0; transition: transform .25s ease, opacity .25s ease; z-index: 100;
-    }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-    /* ----- Dark mode ----- */
-    [data-theme="dark"] body { background: #0A0D12; color: #E9EAEB; }
-    [data-theme="dark"] .section-title { color: #E9EAEB; }
-    [data-theme="dark"] .section-desc { color: #A4A7AE; }
-    [data-theme="dark"] .subsection-title { color: #D5D7DA; }
-    [data-theme="dark"] .color-card { background: #252B37; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
-    [data-theme="dark"] .color-name { color: #D5D7DA; }
-    [data-theme="dark"] .color-hex { color: #A4A7AE; }
-    [data-theme="dark"] .semantic-table th { border-bottom-color: #414651; color: #535862; }
-    [data-theme="dark"] .semantic-table td { border-bottom-color: #252B37; }
-    [data-theme="dark"] .semantic-table tr:hover td { background: #181D27; }
-    [data-theme="dark"] .semantic-token { color: #E9EAEB; }
-    [data-theme="dark"] .token-table th { border-bottom-color: #414651; color: #535862; }
-    [data-theme="dark"] .token-table td { border-bottom-color: #252B37; }
-    [data-theme="dark"] .token-table tr:hover td { background: #181D27; }
-    [data-theme="dark"] .token-table .mono { color: #E9EAEB; }
-    [data-theme="dark"] .text-preview { color: #E9EAEB; }
-  </style>
+  <title>DLS Lead — Design System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="tokens/tokens.css" />
+  <style>
+/* ── Reset ────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:'JetBrains Mono',monospace;background:#EAEAEC;color:#1C1D1F;line-height:1.5}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+
+/* ── Shell ────────────────────────────────────────────── */
+.shell{display:flex;min-height:100vh;padding:40px}
+.sidebar{position:sticky;top:40px;width:260px;flex-shrink:0;display:flex;flex-direction:column;gap:24px;align-self:flex-start;overflow-y:auto;max-height:calc(100vh - 80px);z-index:20}
+.main{flex:1;min-width:0;padding:0 0 0 0;display:flex;flex-direction:column}
+.main-inner{padding:0 40px;display:flex;flex-direction:column;gap:24px}
+.hamburger{display:none;position:fixed;top:16px;left:16px;z-index:50;width:40px;height:40px;border:2px solid #1C1D1F;border-radius:8px;background:#EAEAEC;cursor:pointer;align-items:center;justify-content:center;padding:0}
+.hamburger svg{width:20px;height:20px}
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:15}
+
+/* ── Logo ─────────────────────────────────────────────── */
+.logo{font-size:0;display:flex;align-items:center;gap:6px;padding:0 0 0 0}
+.logo-dls{display:inline-flex;align-items:center;justify-content:center;background:#1C1D1F;color:#fff;font-size:14px;font-weight:800;padding:4px 8px;border-radius:6px;letter-spacing:0.5px}
+.logo-lead{font-size:20px;font-weight:400;color:#1C1D1F;font-style:italic}
+
+/* ── Sidebar Nav ──────────────────────────────────────── */
+.nav-item{display:flex;align-items:center;gap:8px;padding:8px 16px;font-size:16px;font-weight:700;cursor:pointer;border-left:3px solid #EAEAEC;transition:border-color .15s}
+.nav-item:hover{border-left-color:#A4A7AE}
+.nav-item.active{border-left-color:#1C1D1F}
+.nav-item .chevron{width:16px;height:16px;margin-left:auto;transition:transform .2s;flex-shrink:0}
+.nav-item .chevron.open{transform:rotate(180deg)}
+.nav-children{display:none;flex-direction:column}
+.nav-children.open{display:flex}
+.nav-child{display:block;padding:6px 16px 6px 32px;font-size:14px;font-weight:600;color:#1C1D1F;border-left:3px solid #EAEAEC;cursor:pointer;transition:border-color .15s}
+.nav-child:hover{border-left-color:#A4A7AE}
+.nav-child.active{border-left-color:#1C1D1F;background:#EAEAEC}
+.nav-child-component{padding:6px 16px 6px 40px;font-size:14px;font-weight:400;color:#1C1D1F;border-left:3px solid transparent;cursor:pointer}
+.nav-child-component:hover{background:rgba(0,0,0,.03)}
+.nav-child-component.active{border-left-color:#1C1D1F;background:rgba(0,0,0,.04);font-weight:600}
+
+/* ── Header Top Bar ───────────────────────────────────── */
+.header-top{display:flex;align-items:center;gap:12px}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:2px solid #1C1D1F;border-radius:8px;background:none;font-family:inherit;font-size:14px;font-weight:600;color:#1C1D1F;cursor:pointer;letter-spacing:0.28px;transition:background .15s}
+.btn-outline:hover{background:rgba(0,0,0,.04)}
+.btn-outline svg,.btn-outline img{width:16px;height:16px}
+.header-subtitle{flex:1;font-size:16px;font-weight:600;color:#666970}
+.header-btns{display:flex;gap:8px}
+
+/* ── Page Title ───────────────────────────────────────── */
+.page-title{font-size:60px;font-weight:800;line-height:72px;color:#1C1D1F}
+
+/* ── Tabs ─────────────────────────────────────────────── */
+.tabs{display:flex;gap:24px;height:34px;margin-bottom:16px}
+.tab{display:flex;gap:6px;align-items:center;padding:8px 0;font-size:14px;font-weight:600;letter-spacing:0.28px;color:#1C1D1F;border-bottom:3px solid #EAEAEC;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s}
+.tab:hover{border-bottom-color:#A4A7AE}
+.tab.active{color:#4300F6;border-bottom-color:#4300F6}
+.tab.active::before{content:'// ';color:#4300F6}
+
+/* ── Content Card ─────────────────────────────────────── */
+.card{background:#fff;border:4px solid #1C1D1F;border-radius:8px;padding:24px}
+.card-sm{background:#fff;border:4px solid #1C1D1F;border-radius:8px;padding:12px}
+
+/* ── Content layout ───────────────────────────────────── */
+.content-row{display:flex;gap:24px;align-items:flex-start}
+.content-main{flex:1;min-width:0}
+.content-aside{width:260px;flex-shrink:0}
+
+/* ── Doc sections ─────────────────────────────────────── */
+.doc-title{font-size:32px;font-weight:700;line-height:40px;margin-bottom:16px}
+.doc-subtitle{font-size:14px;font-weight:400;line-height:18px;color:#666970;margin-bottom:0}
+.doc-section-title{font-size:24px;font-weight:500;line-height:32px;margin:24px 0 16px}
+.doc-block-title{font-size:18px;font-weight:600;line-height:26px;margin-bottom:8px;color:#181D27}
+.doc-text{font-size:14px;font-weight:400;line-height:18px;color:#1C1D1F;white-space:pre-wrap}
+.doc-rule{font-size:12px;font-weight:600;line-height:16px;color:#666970;margin-top:8px}
+.doc-block+.doc-block{margin-top:16px}
+
+/* ── TOC sidebar ──────────────────────────────────────── */
+.toc-item{display:flex;align-items:center;padding:12px 12px 12px 16px;font-size:14px;font-weight:600;letter-spacing:0.28px;cursor:pointer;border-left:4px solid transparent;transition:background .15s}
+.toc-item:hover{background:#f5f5f5}
+.toc-item.active{background:#EAEAEC;border-left-color:#1C1D1F}
+
+/* ── Changelog ────────────────────────────────────────── */
+.changelog-entry{margin-bottom:24px}
+.changelog-date{font-size:24px;font-weight:500;line-height:32px;color:#181D27}
+.changelog-desc{font-size:14px;font-weight:400;line-height:18px;margin-top:8px}
+.changelog-sub{font-size:18px;font-weight:600;line-height:26px;margin-top:16px}
+.changelog-list{padding-left:24px;margin-top:8px}
+.changelog-list li{list-style:disc;font-size:14px;font-weight:400;line-height:18px;margin-bottom:4px}
+.code-block{background:#FAFAFA;border:1px solid #EAEAEC;border-radius:8px;overflow:hidden;margin-top:16px}
+.code-block-header{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid #EAEAEC;font-size:12px;font-weight:600;color:#1C1D1F}
+.code-block-header .file-icon{width:16px;height:16px;color:#666970}
+.code-block-header .filename{flex:1}
+.code-block-header .copy-btn{width:16px;height:16px;cursor:pointer;color:#666970}
+.code-block-body{padding:12px;font-size:12px;font-weight:600;line-height:16px;color:#666970}
+.code-block-body .line-del{color:#D60202}
+.code-block-body .line-add{color:#4E9C48}
+
+/* ── Additional colors 2-col layout ──────────────────── */
+.additional-pair{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:8px}
+@media(max-width:768px){.additional-pair{grid-template-columns:1fr}}
+
+/* ── Components grid ──────────────────────────────────── */
+.comp-grid{display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
+.comp-cell{padding:14px 8px;font-size:14px;font-weight:600;cursor:pointer;border:2px solid transparent;border-radius:0;transition:border-color .15s}
+.comp-cell:hover{background:#f5f5f5}
+.comp-cell.active{border:2px solid #1C1D1F;border-radius:8px}
+
+/* ── Alert preview ────────────────────────────────────── */
+.alert-preview{display:flex;flex-direction:column;gap:12px;padding:24px}
+.alert-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;font-family:'Inter',sans-serif;font-size:14px}
+.alert-row .alert-icon{width:20px;height:20px;flex-shrink:0}
+.alert-row .alert-content{flex:1}
+.alert-row .alert-title{font-weight:600;line-height:20px}
+.alert-row .alert-desc{font-weight:400;color:inherit;opacity:.8;line-height:20px}
+.alert-row .alert-btn{padding:6px 14px;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;border:none;cursor:pointer;color:#fff}
+
+/* ── Token tables (reused) ────────────────────────────── */
+.section-heading{font-size:28px;font-weight:700;margin-bottom:6px;color:#1C1D1F}
+.section-desc{font-size:14px;color:#666970;margin-bottom:24px;max-width:680px}
+.subsection{margin-bottom:32px}
+.subsection-title{font-size:16px;font-weight:600;margin-bottom:12px;color:#252B37}
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:2px}
+.color-card{overflow:hidden;background:#fff;border:1px solid #D5D7DA;cursor:pointer;transition:transform .15s}
+.color-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.color-swatch{height:64px;position:relative}
+.color-swatch.checker{background-image:linear-gradient(45deg,#ddd 25%,transparent 25%),linear-gradient(-45deg,#ddd 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ddd 75%),linear-gradient(-45deg,transparent 75%,#ddd 75%);background-size:12px 12px;background-position:0 0,0 6px,6px -6px,-6px 0}
+.color-swatch .fill{position:absolute;inset:0}
+.color-info{padding:8px}
+.color-name{font-size:11px;font-weight:600;color:#414651;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.color-hex{font-size:11px;color:#A4A7AE}
+.token-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #D5D7DA}
+.token-table th{text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#A4A7AE;padding:8px 12px;border-bottom:2px solid #D5D7DA}
+.token-table td{padding:10px 12px;border-bottom:1px solid #E9EAEB;font-size:13px;background:#fff}
+.token-table tr:hover td{background:#FAFAFA}
+.token-table .mono{font-size:12px;color:#252B37}
+.token-table .css-var{font-size:11px;color:#535862}
+.token-table .ref{font-size:12px;color:#535862}
+.token-table .desc{font-size:12px;color:#A4A7AE}
+.token-cell{display:flex;align-items:center;gap:10px}
+.swatch{width:28px;height:28px;border-radius:6px;display:inline-block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);flex-shrink:0}
+.spacing-bar{height:20px;background:#7F56D9;border-radius:4px;min-width:2px}
+.radius-box{width:48px;height:48px;background:#7F56D9}
+
+/* ── Footer ───────────────────────────────────────────── */
+.footer{display:flex;gap:40px;align-items:flex-start;padding-top:24px}
+.footer-links{display:flex;flex-direction:column;gap:12px;font-size:14px;font-weight:600;letter-spacing:0.28px;width:130px}
+.footer-links a{cursor:pointer}
+.footer-links a:hover{text-decoration:underline}
+.footer-info{flex:1;font-size:14px;font-weight:400;color:#666970;line-height:18px}
+.footer-social{display:flex;gap:8px;align-items:center}
+.social-icon{width:40px;height:40px;border-radius:9999px;background:#D5D7DA;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s}
+.social-icon:hover{background:#A4A7AE}
+.social-icon svg{width:20px;height:20px}
+
+/* ── Toast ────────────────────────────────────────────── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1C1D1F;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;pointer-events:none;opacity:0;transition:transform .25s ease,opacity .25s ease;z-index:100}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── Dark mode ────────────────────────────────────────── */
+[data-theme="dark"] body{background:#181D27;color:#E9EAEB}
+[data-theme="dark"] .shell{background:#181D27}
+[data-theme="dark"] .card,[data-theme="dark"] .card-sm{background:#252B37;border-color:#535862}
+[data-theme="dark"] .nav-item{border-left-color:#252B37}
+[data-theme="dark"] .nav-item.active{border-left-color:#E9EAEB}
+[data-theme="dark"] .nav-child{border-left-color:#252B37;color:#E9EAEB}
+[data-theme="dark"] .nav-child.active{border-left-color:#E9EAEB;background:#252B37}
+[data-theme="dark"] .tab{color:#E9EAEB;border-bottom-color:#252B37}
+[data-theme="dark"] .page-title{color:#E9EAEB}
+[data-theme="dark"] .section-heading{color:#E9EAEB}
+[data-theme="dark"] .subsection-title{color:#D5D7DA}
+[data-theme="dark"] .color-card{background:#252B37;border-color:#414651}
+[data-theme="dark"] .color-name{color:#D5D7DA}
+[data-theme="dark"] .token-table{background:#252B37;border-color:#414651}
+[data-theme="dark"] .token-table th{border-bottom-color:#414651;color:#535862}
+[data-theme="dark"] .token-table td{border-bottom-color:#252B37;background:#252B37}
+[data-theme="dark"] .token-table tr:hover td{background:#181D27}
+[data-theme="dark"] .token-table .mono{color:#E9EAEB}
+[data-theme="dark"] .doc-title,.doc-block-title{color:#E9EAEB}
+[data-theme="dark"] .toc-item.active{background:#414651}
+[data-theme="dark"] .comp-cell:hover{background:#252B37}
+[data-theme="dark"] .code-block{background:#252B37;border-color:#414651}
+[data-theme="dark"] .code-block-header{border-bottom-color:#414651;color:#E9EAEB}
+[data-theme="dark"] .hamburger{background:#252B37;border-color:#E9EAEB;color:#E9EAEB}
+[data-theme="dark"] .sidebar-backdrop{background:rgba(0,0,0,.6)}
+
+/* ── Tablet (≤1024px) ─────────────────────────────────── */
+@media(max-width:1024px){
+  .shell{padding:24px}
+  .main-inner{padding:0 24px}
+  .page-title{font-size:42px;line-height:52px}
+  .content-aside{width:200px}
+  .header-subtitle{display:none}
+  .comp-grid{grid-template-columns:repeat(3,1fr)}
+  .token-table{font-size:12px}
+  .token-table td,.token-table th{padding:8px}
+}
+
+/* ── Mobile (≤768px) ──────────────────────────────────── */
+@media(max-width:768px){
+  .shell{flex-direction:column;padding:0}
+  .hamburger{display:flex}
+  .sidebar{position:fixed;top:0;left:0;bottom:0;width:280px;background:#EAEAEC;padding:60px 16px 24px;z-index:30;transform:translateX(-100%);transition:transform .25s ease;max-height:100vh;top:0;border-radius:0}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-backdrop.open{display:block}
+  .main{padding-top:56px}
+  .main-inner{padding:0 16px}
+  .page-title{font-size:32px;line-height:40px}
+  .header-top{flex-wrap:wrap;gap:8px}
+  .header-btns{flex-wrap:wrap;gap:6px}
+  .btn-outline{padding:8px 10px;font-size:12px}
+  .header-subtitle{display:none}
+  .tabs{gap:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tab{font-size:13px}
+  .card{padding:16px;border-width:3px}
+  .card-sm{padding:10px;border-width:3px}
+  .content-row{flex-direction:column}
+  .content-aside{width:100%}
+  .color-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:1px}
+  .color-swatch{height:52px}
+  .color-info{padding:6px}
+  .color-name{font-size:10px}
+  .color-hex{font-size:10px}
+  .comp-grid{grid-template-columns:repeat(2,1fr)}
+  .comp-cell{padding:10px 6px;font-size:13px}
+  .token-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .token-table thead,.token-table tbody,.token-table tr{display:table;width:100%;table-layout:auto}
+  .token-table td,.token-table th{padding:6px 8px;font-size:11px;white-space:nowrap}
+  .footer{flex-direction:column;gap:24px}
+  .footer-links{flex-direction:row;flex-wrap:wrap;gap:8px 16px;width:100%}
+  .footer-social{order:-1}
+  .doc-title{font-size:24px;line-height:32px}
+  .doc-section-title{font-size:20px}
+  .doc-block-title{font-size:16px}
+  .section-heading{font-size:22px}
+  .alert-row{flex-wrap:wrap;gap:8px}
+  .alert-row .alert-btn{width:100%}
+}
+
+/* ── Small mobile (≤480px) ────────────────────────────── */
+@media(max-width:480px){
+  .page-title{font-size:26px;line-height:34px}
+  .color-grid{grid-template-columns:repeat(auto-fill,minmax(60px,1fr))}
+  .color-swatch{height:44px}
+  .btn-outline span{display:none}
+  .comp-grid{grid-template-columns:repeat(2,1fr)}
+}
+  </style>
+</head>
 <body>
 
-<div class="shell">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-title">DLS Tokens</div>
-    <nav>
-      <div class="nav-group">Color</div>
-      <a href="#primitives-base">Primitives — Base</a>
-      <a href="#primitives-additional">Primitives — Additional</a>
-      <a href="#primitives-opacity">Primitives — Opacity</a>
-      <a href="#semantic-colors">Semantic Colors</a>
-      <a href="#component-tokens">Component Tokens</a>
-      <a href="#shadow-tokens">Shadow Tokens</a>
-      <div class="nav-group">Typography</div>
-      <a href="#font">Font</a>
-      <a href="#text">Text Scale</a>
-      <div class="nav-group">Layout</div>
-      <a href="#border-radius">Border Radius</a>
-      <a href="#spacing">Spacing</a>
-      <div class="nav-group">Icons</div>
-      <a href="#icon-stroke">Icon Stroke</a>
-    </nav>
-    <div class="sidebar-footer">
-      <button class="theme-toggle" id="themeToggle">
-        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        <span id="themeLabel">Dark mode</span>
-      </button>
-    </div>
-  </aside>
+<button class="hamburger" id="hamburger" aria-label="Menu">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <!-- Main Content -->
-  <main class="main" id="content">
-    <p style="color:#98a8ba;font-size:13px;">Loading tokens...</p>
+<div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main" id="main">
+    <p style="color:#666970;font-size:14px;padding:40px">Loading...</p>
   </main>
 </div>
 
 <div class="toast" id="toast">Copied!</div>
 
 <script>
-const $ = (s, p = document) => p.querySelector(s);
-const $$ = (s, p = document) => [...p.querySelectorAll(s)];
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
 
-/* ---- Theme toggle ---- */
-const toggle = $("#themeToggle");
-const label = $("#themeLabel");
-const icon = $("#themeIcon");
-function setTheme(t) {
-  document.documentElement.dataset.theme = t;
-  label.textContent = t === "light" ? "Dark mode" : "Light mode";
-  icon.innerHTML = t === "light"
-    ? '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
-    : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-}
-toggle.addEventListener("click", () => setTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light"));
+/* ═══════ Icons (inline SVG) ══════════════════════════════ */
+const ICO={
+  sun:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>',
+  moon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+  chev:'<svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>',
+  github:'<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>',
+  figma:'<svg viewBox="0 0 38 57" width="16" height="16" fill="currentColor"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>',
+  storybook:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1" width="12" height="14" rx="2"/><path d="M5.5 5h5M5.5 8h5M5.5 11h3"/></svg>',
+  linkedin:'<svg viewBox="0 0 20 20" fill="currentColor"><path d="M17.04 17.043h-2.962v-4.64c0-1.107-.023-2.531-1.544-2.531-1.544 0-1.78 1.204-1.78 2.449v4.722H7.793V7.5h2.844v1.3h.039c.397-.75 1.364-1.54 2.808-1.54 3.001 0 3.556 1.974 3.556 4.545v5.238zM4.447 6.194a1.72 1.72 0 11-.001-3.44 1.72 1.72 0 010 3.44zM5.93 17.043H2.963V7.5H5.93v9.543zM18.522 0H1.476C.66 0 0 .645 0 1.44v17.12C0 19.355.66 20 1.476 20h17.042c.815 0 1.482-.645 1.482-1.44V1.44C20 .645 19.333 0 18.518 0h.004z"/></svg>',
+  instagram:'<svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.802c2.67 0 2.987.01 4.042.058 2.71.124 3.975 1.41 4.099 4.099.048 1.054.057 1.37.057 4.04 0 2.672-.01 2.988-.057 4.042-.124 2.687-1.387 3.975-4.1 4.099-1.054.048-1.37.058-4.041.058-2.67 0-2.987-.01-4.04-.058-2.718-.124-3.977-1.416-4.1-4.1-.048-1.054-.058-1.37-.058-4.041 0-2.67.01-2.986.058-4.04.124-2.69 1.387-3.977 4.1-4.1C7.013 1.812 7.33 1.802 10 1.802zM10 0C7.284 0 6.944.012 5.878.06 2.246.227.228 2.242.06 5.877.012 6.944 0 7.284 0 10s.012 3.057.06 4.123c.167 3.632 2.182 5.65 5.817 5.817C6.944 19.988 7.284 20 10 20s3.057-.012 4.123-.06c3.629-.167 5.652-2.182 5.816-5.817.05-1.066.061-1.407.061-4.123s-.012-3.056-.06-4.122C19.777 2.249 17.76.228 14.124.06 13.057.012 12.716 0 10 0zm0 4.865a5.135 5.135 0 100 10.27 5.135 5.135 0 000-10.27zm0 8.468a3.333 3.333 0 110-6.666 3.333 3.333 0 010 6.666zm5.338-9.87a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4z"/></svg>',
+  file:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+  copy:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+  info:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/><line x1="10" y1="9" x2="10" y2="14"/><circle cx="10" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>',
+  check:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/><path d="M7 10l2 2 4-4"/></svg>',
+  warn:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2L1 18h18L10 2z"/><line x1="10" y1="8" x2="10" y2="12"/><circle cx="10" cy="15" r=".5" fill="currentColor" stroke="none"/></svg>',
+  danger:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/><path d="M13 7l-6 6M7 7l6 6"/></svg>',
+};
 
-/* ---- Copy toast ---- */
-function copyToast(text) {
-  navigator.clipboard.writeText(text);
-  const t = $("#toast");
-  t.textContent = `Copied: ${text}`;
-  t.classList.add("show");
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove("show"), 1800);
-}
+/* ═══════ State ═══════════════════════════════════════════ */
+let tokens=null;
+let primitiveMap={};
+let semanticRefMap={};
+const COMPONENTS=['Accordion','Alert','Alert Dialog','Avatar','Badge','Breadcrumbs','Button','Button Group','Calendar','Carousel','Chart','Checkbox','Chips','Comment','Context Menu','Dialog','Empty','Fields','Input','Item','Kbd','List','Pagination','Progress Bar','Radiobutton','Resizable','Scroll','Separator','Slider','Spinner','Switcher','Skeleton','Table','Tabs','Tooltips'];
 
-/* ---- Helpers ---- */
-function hexOrValue(v) { return v; }
-function contrastText(hex) {
-  if (!hex || hex.startsWith("rgba")) return "#000";
-  const c = hex.replace("#", "");
-  const r = parseInt(c.substring(0, 2), 16);
-  const g = parseInt(c.substring(2, 4), 16);
-  const b = parseInt(c.substring(4, 6), 16);
-  return (r * 0.299 + g * 0.587 + b * 0.114) > 150 ? "#181D27" : "#FFFFFF";
-}
-function isRgba(v) { return v && v.startsWith("rgba"); }
-function h(tag, attrs = {}, ...children) {
-  const el = document.createElement(tag);
-  for (const [k, v] of Object.entries(attrs)) {
-    if (k === "style" && typeof v === "object") Object.assign(el.style, v);
-    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
-    else el.setAttribute(k, v);
+/* ═══════ Utils ═══════════════════════════════════════════ */
+function h(tag,attrs={},...ch){
+  const el=document.createElement(tag);
+  for(const[k,v]of Object.entries(attrs)){
+    if(k==='style'&&typeof v==='object')Object.assign(el.style,v);
+    else if(k.startsWith('on'))el.addEventListener(k.slice(2),v);
+    else if(k==='html'){el.innerHTML=v}
+    else el.setAttribute(k,v);
   }
-  for (const c of children) {
-    if (typeof c === "string") el.appendChild(document.createTextNode(c));
-    else if (c) el.appendChild(c);
+  for(const c of ch){
+    if(typeof c==='string')el.appendChild(document.createTextNode(c));
+    else if(c)el.appendChild(c);
   }
   return el;
 }
-
-/* ---- Resolve primitive and semantic refs ---- */
-let primitiveMap = {};
-let semanticRefMap = {};
-const PRIMITIVE_KEYS = ["neutral", "primary", "info", "success", "warning", "danger", "additional", "opacity"];
-
-function buildPrimitiveMap(colorObj) {
-  function walk(obj, prefix) {
-    for (const [k, v] of Object.entries(obj)) {
-      if (k.startsWith("$")) continue;
-      if (!PRIMITIVE_KEYS.includes(prefix.split(".")[0]) && prefix) return;
-      if (v && v.$value !== undefined && typeof v.$value === "string" && (v.$value.startsWith("#") || v.$value.startsWith("rgba"))) {
-        primitiveMap[prefix + k] = v.$value;
-      } else if (typeof v === "object" && v !== null && !v.$value) {
-        walk(v, prefix + k + ".");
-      }
-    }
-  }
-  for (const key of PRIMITIVE_KEYS) {
-    if (colorObj[key]) walk(colorObj[key], key + ".");
-  }
+function copyToast(text){
+  navigator.clipboard.writeText(text);
+  const t=$('#toast');t.textContent=`Copied: ${text}`;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1800);
 }
-
-function buildSemanticRefMap(colorObj) {
-  function walk(obj, prefix) {
-    for (const [k, v] of Object.entries(obj)) {
-      if (k.startsWith("$")) continue;
-      const path = prefix ? prefix + "." + k : k;
-      if (v && v.$value && typeof v.$value === "string") {
-        semanticRefMap[path] = v.$value;
-      } else if (typeof v === "object" && v !== null && !Array.isArray(v) && !v.$type) {
-        walk(v, path);
-      }
-    }
-  }
-  for (const key of ["surface", "text", "border", "intent", "overlay"]) {
-    if (colorObj[key]) walk(colorObj[key], key);
-  }
-  if (colorObj.component) walk(colorObj.component, "component");
-}
-
-function resolveRef(val) {
-  if (!val || typeof val !== "string") return val;
-  const colorM = val.match(/^\{color\.(.+)\}$/);
-  if (colorM) {
-    const key = colorM[1];
-    if (primitiveMap[key]) return primitiveMap[key];
-    if (semanticRefMap[key]) return resolveRef(semanticRefMap[key]);
-    return val;
-  }
-  const stateM = val.match(/^\{state\.(.+)\}$/);
-  if (stateM && semanticRefMap["state." + stateM[1]]) return resolveRef(semanticRefMap["state." + stateM[1]]);
+function resolveRef(val){
+  if(!val||typeof val!=='string')return val;
+  const cm=val.match(/^\{color\.(.+)\}$/);
+  if(cm){const k=cm[1];if(primitiveMap[k])return primitiveMap[k];if(semanticRefMap[k])return resolveRef(semanticRefMap[k]);return val;}
+  const sm=val.match(/^\{state\.(.+)\}$/);
+  if(sm&&semanticRefMap['state.'+sm[1]])return resolveRef(semanticRefMap['state.'+sm[1]]);
   return val;
 }
+function isRgba(v){return v&&v.startsWith('rgba')}
 
-/* ---- Render ---- */
-async function render() {
-  const res = await fetch("/tokens/tokens.json");
-  const tokens = await res.json();
-  const main = $("#content");
-  main.innerHTML = "";
+/* ═══════ Theme ═══════════════════════════════════════════ */
+function getTheme(){return document.documentElement.dataset.theme||'light'}
+function setTheme(t){document.documentElement.dataset.theme=t;renderSidebar();renderPage()}
+function toggleTheme(){setTheme(getTheme()==='light'?'dark':'light')}
 
-  buildPrimitiveMap(tokens.color);
-  buildSemanticRefMap(tokens.color);
-  if (tokens.state) {
-    function walkState(obj, prefix) {
-      for (const [k, v] of Object.entries(obj)) {
-        if (k.startsWith("$")) continue;
-        const path = prefix ? prefix + "." + k : k;
-        if (v && v.$value !== undefined && typeof v.$value === "string") semanticRefMap["state." + path] = v.$value;
-        else if (typeof v === "object" && v !== null && !v.$type) walkState(v, path);
-      }
-    }
-    walkState(tokens.state, "");
-  }
+/* ═══════ Mobile sidebar ══════════════════════════════════ */
+function openSidebar(){$('#sidebar').classList.add('open');$('#sidebarBackdrop').classList.add('open')}
+function closeSidebar(){$('#sidebar').classList.remove('open');$('#sidebarBackdrop').classList.remove('open')}
+$('#hamburger').addEventListener('click',()=>{const sb=$('#sidebar');sb.classList.contains('open')?closeSidebar():openSidebar()});
+$('#sidebarBackdrop').addEventListener('click',closeSidebar);
 
-  /* ========== PRIMITIVES BASE ========== */
-  const baseSection = h("div", { class: "section", id: "primitives-base" },
-    h("h2", { class: "section-title" }, "Color Primitives — Base"),
-    h("p", { class: "section-desc" }, "The base palette of raw color values. Not tied to any UI meaning — they form the foundation for semantic colors and themes."),
-  );
-  const baseScales = ["neutral", "primary", "info", "success", "warning", "danger"];
-  for (const name of baseScales) {
-    const scale = tokens.color[name];
-    if (!scale) continue;
-    const sub = h("div", { class: "subsection" },
-      h("h3", { class: "subsection-title" }, name.charAt(0).toUpperCase() + name.slice(1)),
-    );
-    const grid = h("div", { class: "color-grid" });
-    for (const [step, def] of Object.entries(scale)) {
-      if (step.startsWith("$")) continue;
-      const hex = def && def.$value;
-      if (!hex || typeof hex !== "string") continue;
-      grid.appendChild(h("div", { class: "color-card", onclick: () => copyToast(hex) },
-        h("div", { class: "color-swatch", style: { background: hex } }),
-        h("div", { class: "color-info" },
-          h("div", { class: "color-name" }, `${name}.${step}`),
-          h("div", { class: "color-hex" }, hex),
-        ),
-      ));
-    }
-    sub.appendChild(grid);
-    baseSection.appendChild(sub);
-  }
-  main.appendChild(baseSection);
+/* ═══════ Router ══════════════════════════════════════════ */
+function getRoute(){return location.hash.slice(1)||'documentation'}
+function navigate(route){location.hash=route;closeSidebar()}
+window.addEventListener('hashchange',()=>{renderSidebar();renderPage()});
 
-  /* ========== PRIMITIVES ADDITIONAL ========== */
-  const addSection = h("div", { class: "section", id: "primitives-additional" },
-    h("h2", { class: "section-title" }, "Color Primitives — Additional"),
-    h("p", { class: "section-desc" }, "Supporting colors used directly in the UI to emphasize specific meanings, states, or categories not covered by core brand colors."),
-  );
-  const additional = tokens.color.additional;
-  for (const [name, scale] of Object.entries(additional)) {
-    if (name.startsWith("$")) continue;
-    const sub = h("div", { class: "subsection" },
-      h("h3", { class: "subsection-title" }, name.charAt(0).toUpperCase() + name.slice(1)),
-    );
-    const grid = h("div", { class: "color-grid" });
-    for (const [step, def] of Object.entries(scale)) {
-      if (step.startsWith("$")) continue;
-      const hex = def.$value;
-      grid.appendChild(h("div", { class: "color-card", onclick: () => copyToast(hex) },
-        h("div", { class: "color-swatch", style: { background: hex } }),
-        h("div", { class: "color-info" },
-          h("div", { class: "color-name" }, `${name}.${step}`),
-          h("div", { class: "color-hex" }, hex),
-        ),
-      ));
-    }
-    sub.appendChild(grid);
-    addSection.appendChild(sub);
-  }
-  main.appendChild(addSection);
-
-  /* ========== PRIMITIVES OPACITY ========== */
-  const opacitySection = h("div", { class: "section", id: "primitives-opacity" },
-    h("h2", { class: "section-title" }, "Color Primitives — Opacity"),
-    h("p", { class: "section-desc" }, "Light and dark overlay colors based on white and black, using fixed opacity steps. Use for overlays, hover/pressed states, scrims, and subtle UI layers."),
-  );
-  for (const [name, scale] of Object.entries(tokens.color.opacity)) {
-    if (name.startsWith("$") || (name !== "light" && name !== "dark")) continue;
-    const sub = h("div", { class: "subsection" },
-      h("h3", { class: "subsection-title" }, name.charAt(0).toUpperCase() + name.slice(1) + (name === "light" ? " (white-based)" : " (black-based)")),
-    );
-    const grid = h("div", { class: "color-grid" });
-    for (const [step, def] of Object.entries(scale)) {
-      if (step.startsWith("$")) continue;
-      const val = def.$value;
-      if (typeof val !== "string") continue;
-      grid.appendChild(h("div", { class: "color-card", onclick: () => copyToast(val) },
-        h("div", { class: "color-swatch checker" },
-          h("div", { class: "fill", style: { background: val } }),
-        ),
-        h("div", { class: "color-info" },
-          h("div", { class: "color-name" }, "opacity." + name + "." + step),
-          h("div", { class: "color-hex" }, val),
-        ),
-      ));
-    }
-    sub.appendChild(grid);
-    opacitySection.appendChild(sub);
-  }
-  main.appendChild(opacitySection);
-
-  /* ========== SEMANTIC COLORS (Layer 2: surface, text, border, intent, overlay) ========== */
-  const semSection = h("div", { class: "section", id: "semantic-colors" },
-    h("h2", { class: "section-title" }, "Semantic Colors"),
-    h("p", { class: "section-desc" }, "Layer 2 — System semantics map primitives to UI roles (surface, text, border, intent, overlay). Use these or component tokens in components; they support theming and accessible contrast."),
-  );
-  const semanticGroups = [
-    { name: "Surface", path: "surface", obj: tokens.color.surface },
-    { name: "Text", path: "text", obj: tokens.color.text },
-    { name: "Border", path: "border", obj: tokens.color.border },
-    { name: "Overlay", path: "overlay", obj: tokens.color.overlay },
-  ];
-  if (tokens.color.intent) {
-    for (const [intentName, intentObj] of Object.entries(tokens.color.intent)) {
-      if (intentName.startsWith("$")) continue;
-      semanticGroups.push({ name: "Intent — " + intentName.charAt(0).toUpperCase() + intentName.slice(1), path: "intent." + intentName, obj: intentObj });
-    }
-  }
-  for (const group of semanticGroups) {
-    if (!group.obj) continue;
-    const sub = h("div", { class: "subsection" },
-      h("h3", { class: "subsection-title" }, group.name),
-    );
-    const table = h("table", { class: "semantic-table" });
-    table.appendChild(h("thead", {},
-      h("tr", {},
-        h("th", {}, ""),
-        h("th", {}, "Token"),
-        h("th", {}, "Reference"),
-        h("th", {}, "Resolved"),
-        h("th", {}, "CSS Variable"),
-        h("th", {}, "Description"),
-      ),
-    ));
-    const tbody = h("tbody");
-    function addRows(obj, pathPrefix) {
-      for (const [name, def] of Object.entries(obj)) {
-        if (name.startsWith("$")) continue;
-        const tokenPath = pathPrefix ? pathPrefix + "." + name : name;
-        const ref = def.$value || "";
-        const resolved = typeof ref === "string" ? resolveRef(ref) : ref;
-        const cssName = tokenPath.replace(/\./g, "-");
-        const cssVar = `var(--dls-color-${cssName})`;
-        const row = h("tr", { onclick: () => copyToast(cssVar), style: { cursor: "pointer" } },
-          h("td", {}, h("span", { class: "semantic-swatch", style: { background: resolved } })),
-          h("td", { class: "semantic-token" }, "color." + tokenPath),
-          h("td", { class: "semantic-ref" }, String(ref).replace(/[{}]/g, "")),
-          h("td", { class: "semantic-ref" }, resolved),
-          h("td", { class: "semantic-ref" }, cssVar),
-          h("td", { class: "semantic-desc" }, def.$description || ""),
-        );
-        tbody.appendChild(row);
-      }
-    }
-    addRows(group.obj, group.path);
-    table.appendChild(tbody);
-    sub.appendChild(table);
-    semSection.appendChild(sub);
-  }
-  main.appendChild(semSection);
-
-  /* ========== COMPONENT TOKENS (Layer 4) ========== */
-  function collectComponentLeaves(obj, pathPrefix, out) {
-    for (const [name, def] of Object.entries(obj)) {
-      if (name.startsWith("$")) continue;
-      const path = pathPrefix ? pathPrefix + "." + name : name;
-      if (def && def.$value !== undefined && typeof def.$value === "string") {
-        out.push({ path, ref: def.$value, description: def.$description || "" });
-      } else if (typeof def === "object" && def !== null && !def.$type) {
-        collectComponentLeaves(def, path, out);
-      }
-    }
-  }
-  const compSection = h("div", { class: "section", id: "component-tokens" },
-    h("h2", { class: "section-title" }, "Component Tokens"),
-    h("p", { class: "section-desc" }, "Layer 4 — Override-safe tokens per component and variant. Use only these (or other component tokens) in UI components; they map to system semantics and inherit theme."),
-  );
-  if (tokens.color.component) {
-    const leaves = [];
-    collectComponentLeaves(tokens.color.component, "component", leaves);
-    const byComponent = {};
-    for (const item of leaves) {
-      const top = item.path.split(".")[1];
-      if (!byComponent[top]) byComponent[top] = [];
-      byComponent[top].push(item);
-    }
-    const compOrder = ["button", "badge", "chip", "tab", "input", "table", "pagination", "alert", "dialog", "dropdown", "sidebar"];
-    for (const compName of compOrder) {
-      const items = byComponent[compName];
-      if (!items || items.length === 0) continue;
-      const sub = h("div", { class: "subsection" },
-        h("h3", { class: "subsection-title" }, compName.charAt(0).toUpperCase() + compName.slice(1)),
-      );
-      const table = h("table", { class: "semantic-table" });
-      table.appendChild(h("thead", {},
-        h("tr", {},
-          h("th", {}, ""),
-          h("th", {}, "Token"),
-          h("th", {}, "Reference"),
-          h("th", {}, "Resolved"),
-          h("th", {}, "CSS Variable"),
-          h("th", {}, "Description"),
-        ),
-      ));
-      const tbody = h("tbody");
-      for (const item of items) {
-        const fullPath = "color." + item.path;
-        const resolved = resolveRef(item.ref);
-        const cssName = item.path.replace(/\./g, "-");
-        const cssVar = "var(--dls-color-" + cssName + ")";
-        tbody.appendChild(h("tr", { onclick: () => copyToast(cssVar), style: { cursor: "pointer" } },
-          h("td", {}, h("span", { class: "semantic-swatch", style: { background: resolved } })),
-          h("td", { class: "semantic-token" }, fullPath),
-          h("td", { class: "semantic-ref" }, item.ref.replace(/[{}]/g, "")),
-          h("td", { class: "semantic-ref" }, resolved),
-          h("td", { class: "semantic-ref" }, cssVar),
-          h("td", { class: "semantic-desc" }, item.description),
-        ));
-      }
-      table.appendChild(tbody);
-      sub.appendChild(table);
-      compSection.appendChild(sub);
-    }
-  }
-  main.appendChild(compSection);
-
-  /* ========== SHADOW TOKENS ========== */
-  const shadowSection = h("div", { class: "section", id: "shadow-tokens" },
-    h("h2", { class: "section-title" }, "Shadow Tokens"),
-    h("p", { class: "section-desc" }, "Semantic shadows for components. Use only shadow.surface, shadow.overlay, and shadow.focus.ring in components — do not reference shadow.raw or primitives directly."),
-  );
-  if (tokens.shadow) {
-    const shadowTable = h("table", { class: "token-table" });
-    shadowTable.appendChild(h("thead", {},
-      h("tr", {},
-        h("th", {}, "Token"),
-        h("th", {}, "Reference / Value"),
-        h("th", {}, "CSS Variable"),
-      ),
-    ));
-    const shadowBody = h("tbody");
-    const shadowSemantic = [
-      { path: "shadow.surface.sm", val: tokens.shadow.surface?.sm?.$value, css: "var(--dls-shadow-surface-sm)" },
-      { path: "shadow.surface.md", val: tokens.shadow.surface?.md?.$value, css: "var(--dls-shadow-surface-md)" },
-      { path: "shadow.surface.lg", val: tokens.shadow.surface?.lg?.$value, css: "var(--dls-shadow-surface-lg)" },
-      { path: "shadow.overlay", val: tokens.shadow.overlay?.$value, css: "var(--dls-shadow-overlay)" },
-      { path: "shadow.focus.ring", val: tokens.shadow.focus?.ring?.$value, css: "var(--dls-shadow-focus-ring)" },
-    ];
-    for (const row of shadowSemantic) {
-      if (!row.val) continue;
-      shadowBody.appendChild(h("tr", { onclick: () => copyToast(row.css), style: { cursor: "pointer" } },
-        h("td", { class: "mono" }, row.path),
-        h("td", { class: "semantic-ref" }, String(row.val).replace(/[{}]/g, "")),
-        h("td", { class: "css-var" }, row.css),
-      ));
-    }
-    shadowTable.appendChild(shadowBody);
-    shadowSection.appendChild(shadowTable);
-  }
-  main.appendChild(shadowSection);
-
-  /* ========== FONT ========== */
-  const fontSection = h("div", { class: "section", id: "font" },
-    h("h2", { class: "section-title" }, "Font"),
-    h("p", { class: "section-desc" }, "Core font settings used across the UI, including font family and font weight."),
-  );
-  const fontTable = h("table", { class: "token-table" });
-  fontTable.appendChild(h("thead", {},
-    h("tr", {},
-      h("th", {}, "Token"),
-      h("th", {}, "Value"),
-      h("th", {}, "CSS Variable"),
-      h("th", {}, "Preview"),
-    ),
-  ));
-  const fontBody = h("tbody");
-  // Family
-  fontBody.appendChild(h("tr", { onclick: () => copyToast("var(--dls-font-family)"), style: { cursor: "pointer" } },
-    h("td", { class: "mono" }, "font.family"),
-    h("td", {}, tokens.font.family.$value),
-    h("td", { class: "css-var" }, "var(--dls-font-family)"),
-    h("td", {}, h("span", { style: { fontFamily: `"${tokens.font.family.$value}", sans-serif`, fontSize: "16px" } }, "The quick brown fox")),
-  ));
-  // Weights
-  for (const [name, def] of Object.entries(tokens.font.weight)) {
-    fontBody.appendChild(h("tr", { onclick: () => copyToast(`var(--dls-font-weight-${name})`), style: { cursor: "pointer" } },
-      h("td", { class: "mono" }, `font.weight.${name}`),
-      h("td", {}, String(def.$value)),
-      h("td", { class: "css-var" }, `var(--dls-font-weight-${name})`),
-      h("td", {}, h("span", { style: { fontWeight: String(def.$value), fontSize: "16px" } }, `Weight ${def.$value}`)),
-    ));
-  }
-  fontTable.appendChild(fontBody);
-  fontSection.appendChild(fontTable);
-  main.appendChild(fontSection);
-
-  /* ========== TEXT SCALE ========== */
-  const textSection = h("div", { class: "section", id: "text" },
-    h("h2", { class: "section-title" }, "Text Scale"),
-    h("p", { class: "section-desc" }, "Font sizing system across the UI, including font size and line height."),
-  );
-  const textTable = h("table", { class: "token-table" });
-  textTable.appendChild(h("thead", {},
-    h("tr", {},
-      h("th", {}, "Scale"),
-      h("th", {}, "Font Size"),
-      h("th", {}, "Line Height"),
-      h("th", {}, "Preview"),
-    ),
-  ));
-  const textBody = h("tbody");
-  const textScaleKeys = ["xs", "s", "m", "l", "xl", "2xl", "3xl", "hero"];
-  for (const name of textScaleKeys) {
-    const def = tokens.text[name];
-    if (!def) continue;
-    const fs = def.fontSize?.$value || def["font-size"]?.$value;
-    const lh = def.lineHeight?.$value || def["line-height"]?.$value;
-    if (!fs || !lh) continue;
-    textBody.appendChild(h("tr", {},
-      h("td", { class: "mono" }, "text." + name),
-      h("td", {}, fs),
-      h("td", {}, lh),
-      h("td", {}, h("span", { class: "text-preview", style: { fontSize: fs, lineHeight: lh } }, "The quick brown fox — " + name)),
-    ));
-  }
-  textTable.appendChild(textBody);
-  textSection.appendChild(textTable);
-  /* Semantic typography */
-  if (tokens.text.heading || tokens.text.body || tokens.text.label || tokens.text.caption) {
-    const semTypoSub = h("div", { class: "subsection" },
-      h("h3", { class: "subsection-title" }, "Semantic Typography"),
-      h("p", { class: "section-desc", style: { marginBottom: "12px" } }, "Semantic text roles map to primitive size + font weight. Use in components instead of raw scale."),
-    );
-    const semTypoTable = h("table", { class: "token-table" });
-    semTypoTable.appendChild(h("thead", {},
-      h("tr", {},
-        h("th", {}, "Token"),
-        h("th", {}, "Maps to"),
-        h("th", {}, "CSS Variables"),
-      ),
-    ));
-    const semTypoBody = h("tbody");
-    const semTypoRows = [
-      { path: "text.heading.xl", maps: "text.2xl + font.weight.semibold", vars: "--dls-text-heading-xl-*" },
-      { path: "text.heading.l", maps: "text.xl + font.weight.semibold", vars: "--dls-text-heading-l-*" },
-      { path: "text.heading.m", maps: "text.l + font.weight.medium", vars: "--dls-text-heading-m-*" },
-      { path: "text.body.l", maps: "text.l + font.weight.normal", vars: "--dls-text-body-l-*" },
-      { path: "text.body.m", maps: "text.m + font.weight.normal", vars: "--dls-text-body-m-*" },
-      { path: "text.body.s", maps: "text.s + font.weight.normal", vars: "--dls-text-body-s-*" },
-      { path: "text.label.m", maps: "text.m + font.weight.medium", vars: "--dls-text-label-m-*" },
-      { path: "text.label.s", maps: "text.s + font.weight.medium", vars: "--dls-text-label-s-*" },
-      { path: "text.caption", maps: "text.xs + font.weight.normal", vars: "--dls-text-caption-*" },
-    ];
-    for (const row of semTypoRows) {
-      semTypoBody.appendChild(h("tr", {},
-        h("td", { class: "mono" }, row.path),
-        h("td", {}, row.maps),
-        h("td", { class: "css-var" }, row.vars),
-      ));
-    }
-    semTypoTable.appendChild(semTypoBody);
-    semTypoSub.appendChild(semTypoTable);
-    textSection.appendChild(semTypoSub);
-  }
-  main.appendChild(textSection);
-
-  /* ========== BORDER RADIUS ========== */
-  const brSection = h("div", { class: "section", id: "border-radius" },
-    h("h2", { class: "section-title" }, "Border Radius"),
-    h("p", { class: "section-desc" }, "Corner rounding used across components (inputs, buttons, cards, modals, etc.)."),
-  );
-  const brTable = h("table", { class: "token-table" });
-  brTable.appendChild(h("thead", {},
-    h("tr", {},
-      h("th", {}, "Token"),
-      h("th", {}, "Value"),
-      h("th", {}, "CSS Variable"),
-      h("th", {}, "Preview"),
-    ),
-  ));
-  const brBody = h("tbody");
-  const radiusObj = tokens.radius || tokens["border-radius"];
-  if (radiusObj) {
-    for (const [name, def] of Object.entries(radiusObj)) {
-      if (name.startsWith("$")) continue;
-      if (name === "component") {
-        for (const [compName, compDef] of Object.entries(def)) {
-          if (compName.startsWith("$")) continue;
-          const val = compDef.$value;
-          if (!val) continue;
-          const cssName = "component-" + compName;
-          brBody.appendChild(h("tr", { onclick: () => copyToast("var(--dls-radius-" + cssName + ")"), style: { cursor: "pointer" } },
-            h("td", { class: "mono" }, "radius.component." + compName),
-            h("td", {}, val),
-            h("td", { class: "css-var" }, "var(--dls-radius-" + cssName + ")"),
-            h("td", {}, h("div", { class: "radius-box", style: { borderRadius: val } })),
-          ));
-        }
-        continue;
-      }
-      const val = def.$value;
-      if (!val) continue;
-      const cssName = name.replace(".", "-");
-      brBody.appendChild(h("tr", { onclick: () => copyToast("var(--dls-radius-" + cssName + ")"), style: { cursor: "pointer" } },
-        h("td", { class: "mono" }, "radius." + name),
-        h("td", {}, val),
-        h("td", { class: "css-var" }, "var(--dls-radius-" + cssName + ")"),
-        h("td", {}, h("div", { class: "radius-box", style: { borderRadius: val } })),
-      ));
-    }
-  }
-  brTable.appendChild(brBody);
-  brSection.appendChild(brTable);
-  main.appendChild(brSection);
-
-  /* ========== SPACING ========== */
-  const spSection = h("div", { class: "section", id: "spacing" },
-    h("h2", { class: "section-title" }, "Spacing"),
-    h("p", { class: "section-desc" }, "Consistent padding, margins, and gaps used across the UI."),
-  );
-  const spTable = h("table", { class: "token-table" });
-  spTable.appendChild(h("thead", {},
-    h("tr", {},
-      h("th", {}, "Token"),
-      h("th", {}, "Value"),
-      h("th", {}, "CSS Variable"),
-      h("th", { style: { width: "50%" } }, "Preview"),
-    ),
-  ));
-  const spBody = h("tbody");
-  for (const [name, def] of Object.entries(tokens.spacing)) {
-    if (name.startsWith("$")) continue;
-    const val = def.$value;
-    const cssName = name.replace(".", "-");
-    spBody.appendChild(h("tr", { onclick: () => copyToast(`var(--dls-spacing-${cssName})`), style: { cursor: "pointer" } },
-      h("td", { class: "mono" }, `space.${name}`),
-      h("td", {}, val),
-      h("td", { class: "css-var" }, `var(--dls-spacing-${cssName})`),
-      h("td", {}, h("div", { class: "spacing-bar", style: { width: val === "0px" ? "2px" : val } })),
-    ));
-  }
-  spTable.appendChild(spBody);
-  spSection.appendChild(spTable);
-  main.appendChild(spSection);
-
-  /* ========== ICON STROKE ========== */
-  const icSection = h("div", { class: "section", id: "icon-stroke" },
-    h("h2", { class: "section-title" }, "Icon Stroke"),
-    h("p", { class: "section-desc" }, "Standard border (stroke) weight used for icons. Tokens icon.stroke-12, icon.stroke-16, and icon.stroke-24 reflect the icon sizes used in this design system."),
-  );
-  const icTable = h("table", { class: "token-table" });
-  icTable.appendChild(h("thead", {},
-    h("tr", {},
-      h("th", {}, "Token"),
-      h("th", {}, "Stroke Weight"),
-      h("th", {}, "CSS Variable"),
-      h("th", {}, "Preview"),
-    ),
-  ));
-  const icBody = h("tbody");
-  for (const [name, def] of Object.entries(tokens.icon)) {
-    if (name.startsWith("$")) continue;
-    const val = def.$value;
-    const size = parseInt(name.replace("stroke-", ""));
-    icBody.appendChild(h("tr", { onclick: () => copyToast(`var(--dls-icon-${name})`), style: { cursor: "pointer" } },
-      h("td", { class: "mono" }, `icon.${name}`),
-      h("td", {}, String(val)),
-      h("td", { class: "css-var" }, `var(--dls-icon-${name})`),
-      h("td", {}, (() => {
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("width", size);
-        svg.setAttribute("height", size);
-        svg.setAttribute("viewBox", `0 0 ${size} ${size}`);
-        svg.setAttribute("fill", "none");
-        svg.setAttribute("stroke", "currentColor");
-        svg.setAttribute("stroke-width", val);
-        svg.setAttribute("stroke-linecap", "round");
-        svg.setAttribute("stroke-linejoin", "round");
-        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        circle.setAttribute("cx", size / 2);
-        circle.setAttribute("cy", size / 2);
-        circle.setAttribute("r", size / 2 - val - 1);
-        const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        line1.setAttribute("x1", size * 0.35); line1.setAttribute("y1", size * 0.35);
-        line1.setAttribute("x2", size * 0.65); line1.setAttribute("y2", size * 0.65);
-        const line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        line2.setAttribute("x1", size * 0.65); line2.setAttribute("y1", size * 0.35);
-        line2.setAttribute("x2", size * 0.35); line2.setAttribute("y2", size * 0.65);
-        svg.appendChild(circle);
-        svg.appendChild(line1);
-        svg.appendChild(line2);
-        return svg;
-      })()),
-    ));
-  }
-  icTable.appendChild(icBody);
-  icSection.appendChild(icTable);
-  main.appendChild(icSection);
-
-  /* ---- Sidebar active state ---- */
-  const sections = $$(".section[id]");
-  const navLinks = $$(".sidebar nav a[href]");
-  const observer = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (e.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove("active"));
-        const link = $(`.sidebar nav a[href="#${e.target.id}"]`);
-        if (link) link.classList.add("active");
-      }
-    }
-  }, { rootMargin: "-20% 0px -60% 0px" });
-  sections.forEach(s => observer.observe(s));
+/* ═══════ Build token maps ════════════════════════════════ */
+const PRIM_KEYS=['neutral','primary','info','success','warning','danger','additional','opacity'];
+function buildMaps(t){
+  primitiveMap={};semanticRefMap={};
+  function walkP(obj,pre){for(const[k,v]of Object.entries(obj)){if(k.startsWith('$'))continue;if(!PRIM_KEYS.includes(pre.split('.')[0])&&pre)return;if(v&&v.$value!==undefined&&typeof v.$value==='string'&&(v.$value.startsWith('#')||v.$value.startsWith('rgba'))){primitiveMap[pre+k]=v.$value}else if(typeof v==='object'&&v!==null&&!v.$value){walkP(v,pre+k+'.')}}}
+  for(const k of PRIM_KEYS)if(t.color[k])walkP(t.color[k],k+'.');
+  function walkS(obj,pre){for(const[k,v]of Object.entries(obj)){if(k.startsWith('$'))continue;const p=pre?pre+'.'+k:k;if(v&&v.$value&&typeof v.$value==='string'){semanticRefMap[p]=v.$value}else if(typeof v==='object'&&v!==null&&!Array.isArray(v)&&!v.$type){walkS(v,p)}}}
+  for(const k of['surface','text','border','intent','overlay'])if(t.color[k])walkS(t.color[k],k);
+  if(t.color.component)walkS(t.color.component,'component');
+  if(t.state){(function ws(obj,pre){for(const[k,v]of Object.entries(obj)){if(k.startsWith('$'))continue;const p=pre?pre+'.'+k:k;if(v&&v.$value!==undefined&&typeof v.$value==='string')semanticRefMap['state.'+p]=v.$value;else if(typeof v==='object'&&v!==null&&!v.$type)ws(v,p)}})(t.state,'')}
 }
 
-render();
+/* ═══════ Sidebar ═════════════════════════════════════════ */
+function renderSidebar(){
+  const sb=$('#sidebar');const route=getRoute();sb.innerHTML='';
+  // Logo
+  sb.appendChild(h('a',{href:'#documentation',class:'logo',style:{textDecoration:'none'}},
+    h('span',{class:'logo-dls'},'DLS'),h('span',{class:'logo-lead'},'Lead')
+  ));
+  // Nav
+  const nav=h('nav');
+  // Documentation
+  nav.appendChild(h('div',{class:'nav-item'+(route.startsWith('documentation')||route.startsWith('changelog')?' active':''),onclick:()=>navigate('documentation')},'Documentation'));
+  // Tokens
+  const tokensOpen=route.startsWith('tokens');
+  const tokensItem=h('div',{class:'nav-item'+(tokensOpen?' active':'')});
+  tokensItem.appendChild(document.createTextNode('Tokens'));
+  tokensItem.innerHTML+='<svg class="chevron'+(tokensOpen?' open':'')+'" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>';
+  tokensItem.onclick=()=>{if(tokensOpen)navigate('documentation');else navigate('tokens/color')};
+  nav.appendChild(tokensItem);
+  const tokensCh=h('div',{class:'nav-children'+(tokensOpen?' open':'')});
+  for(const[label,hash]of[['Color','tokens/color'],['Shadows','tokens/shadow'],['Typography','tokens/typography'],['Layout','tokens/layout'],['Space','tokens/space']]){
+    tokensCh.appendChild(h('div',{class:'nav-child'+(route.startsWith(hash)?' active':''),onclick:()=>navigate(hash)},label));
+  }
+  nav.appendChild(tokensCh);
+  // Components
+  const compsOpen=route.startsWith('components');
+  const compsItem=h('div',{class:'nav-item'+(compsOpen?' active':'')});
+  compsItem.appendChild(document.createTextNode('Components'));
+  compsItem.innerHTML+='<svg class="chevron'+(compsOpen?' open':'')+'" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>';
+  compsItem.onclick=()=>{if(compsOpen)navigate('documentation');else navigate('components')};
+  nav.appendChild(compsItem);
+  const compsCh=h('div',{class:'nav-children'+(compsOpen?' open':'')});
+  for(const c of COMPONENTS){
+    const slug=c.toLowerCase().replace(/\s+/g,'-');
+    compsCh.appendChild(h('div',{class:'nav-child-component'+(route==='components/'+slug?' active':''),onclick:()=>navigate('components/'+slug)},c));
+  }
+  nav.appendChild(compsCh);
+  // Layout
+  const layoutOpen=route.startsWith('layout/');
+  const layoutItem=h('div',{class:'nav-item'+(layoutOpen?' active':'')});
+  layoutItem.appendChild(document.createTextNode('Layout'));
+  layoutItem.innerHTML+='<svg class="chevron'+(layoutOpen?' open':'')+'" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>';
+  layoutItem.onclick=()=>{if(layoutOpen)navigate('documentation');else navigate('layout/grids')};
+  nav.appendChild(layoutItem);
+  const layoutCh=h('div',{class:'nav-children'+(layoutOpen?' open':'')});
+  for(const[label,hash]of[['Grids','layout/grids'],['Parts','layout/parts']]){
+    layoutCh.appendChild(h('div',{class:'nav-child'+(route===hash?' active':''),onclick:()=>navigate(hash)},label));
+  }
+  nav.appendChild(layoutCh);
+  // Utility
+  const utilOpen=route.startsWith('utility/');
+  const utilItem=h('div',{class:'nav-item'+(utilOpen?' active':'')});
+  utilItem.appendChild(document.createTextNode('Utility'));
+  utilItem.innerHTML+='<svg class="chevron'+(utilOpen?' open':'')+'" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>';
+  utilItem.onclick=()=>{if(utilOpen)navigate('documentation');else navigate('utility/alerts')};
+  nav.appendChild(utilItem);
+  const utilCh=h('div',{class:'nav-children'+(utilOpen?' open':'')});
+  for(const[label,hash]of[['Alerts','utility/alerts'],['Parts','utility/parts']]){
+    utilCh.appendChild(h('div',{class:'nav-child'+(route===hash?' active':''),onclick:()=>navigate(hash)},label));
+  }
+  nav.appendChild(utilCh);
+  sb.appendChild(nav);
+}
+
+/* ═══════ Header ══════════════════════════════════════════ */
+function mkHeader(){
+  const theme=getTheme();
+  const bar=h('div',{class:'header-top'});
+  const themeBtn=h('button',{class:'btn-outline',onclick:toggleTheme,html:(theme==='light'?ICO.sun:ICO.moon)+'<span>'+(theme==='light'?'Light':'Dark')+'</span>'});
+  bar.appendChild(themeBtn);
+  bar.appendChild(h('span',{class:'header-subtitle'},'4-Layer DTCG-Compliant System'));
+  const btns=h('div',{class:'header-btns'});
+  btns.appendChild(h('a',{class:'btn-outline',href:'http://localhost:6006',target:'_blank',html:ICO.storybook+' Storybook'}));
+  btns.appendChild(h('a',{class:'btn-outline',href:'#',html:ICO.github+' Github'}));
+  btns.appendChild(h('a',{class:'btn-outline',href:'https://www.figma.com/design/YYDlN0lwscyIzk4PVHlSUI',target:'_blank',html:ICO.figma+' Figma'}));
+  bar.appendChild(btns);
+  return bar;
+}
+
+/* ═══════ Footer ══════════════════════════════════════════ */
+function mkFooter(){
+  const f=h('div',{class:'footer'});
+  const links=h('div',{class:'footer-links'});
+  for(const[label,hash]of[['Documentation','documentation'],['Tokens','tokens/color'],['Components','components'],['Layout',''],['Utility','']]){
+    links.appendChild(h('a',{onclick:()=>hash&&navigate(hash)},label));
+  }
+  const logoF=h('div',{style:{marginTop:'24px'}});
+  logoF.appendChild(h('span',{class:'logo-dls',style:{fontSize:'12px',padding:'3px 6px'}},'DLS'));
+  logoF.appendChild(h('span',{class:'logo-lead',style:{fontSize:'16px',marginLeft:'4px'}},'Lead'));
+  links.appendChild(logoF);
+  f.appendChild(links);
+  f.appendChild(h('div',{class:'footer-info',html:'Have questions? Email me<br>at nadiyqabrosimova@gmail.com<br><br>React Components version ^1.102.0<br>Last updated 04 March 2026<br>Copyright &copy; 2026 IBM'}));
+  const social=h('div',{class:'footer-social'});
+  social.appendChild(h('a',{class:'social-icon',href:'#',html:ICO.linkedin}));
+  social.appendChild(h('a',{class:'social-icon',href:'#',html:ICO.instagram}));
+  f.appendChild(social);
+  return f;
+}
+
+/* ═══════ Shared tab builder ══════════════════════════════ */
+function mkTabs(items,active){
+  const t=h('div',{class:'tabs'});
+  for(const[label,hash]of items){
+    t.appendChild(h('div',{class:'tab'+(hash===active?' active':''),onclick:()=>navigate(hash)},label));
+  }
+  return t;
+}
+
+/* ═══════ Page: Documentation ═════════════════════════════ */
+function renderDocumentation(){
+  const m=$('#main');m.innerHTML='';
+  const inner=h('div',{class:'main-inner'});
+  inner.appendChild(mkHeader());
+  inner.appendChild(h('h1',{class:'page-title'},'Documentation'));
+  inner.appendChild(mkTabs([['Changelog','changelog'],['Technical documentation','documentation']],'documentation'));
+
+  const row=h('div',{class:'content-row'});
+  const card=h('div',{class:'card content-main'});
+
+  card.appendChild(h('div',{class:'doc-title'},'Token Architecture'));
+  card.appendChild(h('div',{class:'doc-subtitle'},'DLS-Lead uses a 4-layer DTCG-compliant token system. Every visual decision is encoded as a design token. Components consume tokens \u2014 they never hardcode values.'));
+
+  // 4-Layer Model
+  card.appendChild(h('div',{class:'doc-section-title'},'4-Layer Model'));
+
+  const layers=[
+    {title:'Layer 1 \u2014 Primitives',text:'Raw values: hex colors, pixel dimensions, font weights, numeric scales.\n\nExamples:\ncolor.neutral.700 \u2192 #414651\nradius.m \u2192 6px\nspacing.4 \u2192 16px\ntext.m.fontSize \u2192 14px',rule:'Rule: NEVER referenced directly by components.'},
+    {title:'Layer 2 \u2014 System Semantics',text:'UI roles mapped from primitives. Define meaning, not appearance.\n\nExamples:\ncolor.surface.base \u2192 {color.neutral.0}\ncolor.text.primary \u2192 {color.neutral.900}\ncolor.intent.primary.base \u2192 {color.primary.700}\ncolor.border.focus \u2192 {color.neutral.700}',rule:'Used by components when no Layer 4 token exists.'},
+    {title:'Layer 3 \u2014 State Abstraction',text:'Behavioral modifiers independent of brand color.\n\nCode: OKLCH lightness shift\nstate.lDelta.hover \u2192 -0.05\nstate.lDelta.pressed \u2192 -0.10\n\nFigma: opacity overlays\nstate.overlay.hover.light \u2192 rgba(0,0,0,0.05)\nstate.overlay.pressed.light \u2192 rgba(0,0,0,0.10)\n\nstate.disabled.opacity \u2192 0.38\nstate.focus.ring.color \u2192 {color.info.300}'},
+    {title:'Layer 4 \u2014 Component Tokens',text:'Override-safe, per-component values. Primary source for all component CSS.\n\nExamples:\ncolor.component.button.primary.bg.base\ncolor.component.badge.danger.fg\nradius.component.card \u2192 {radius.xl} (12px)\nradius.component.button \u2192 {radius.m} (6px)',rule:'Components MUST use Layer 4 tokens first.'},
+  ];
+  for(const l of layers){
+    const blk=h('div',{class:'doc-block'});
+    blk.appendChild(h('div',{class:'doc-block-title'},l.title));
+    blk.appendChild(h('div',{class:'doc-text'},l.text));
+    if(l.rule)blk.appendChild(h('div',{class:'doc-rule'},l.rule));
+    card.appendChild(blk);
+  }
+
+  card.appendChild(h('div',{class:'doc-section-title'},'Dependency Rules'));
+  const rules=[
+    {title:'Reference Direction',text:'References flow downward only:\n\nLayer 4 \u2192 can reference Layers 3, 2, 1\nLayer 3 \u2192 can reference Layers 2, 1\nLayer 2 \u2192 can reference Layer 1 only\nLayer 1 \u2192 raw values only, no references\n\nA lower layer MUST NOT reference a higher layer.'},
+    {title:'Component Lookup Order',text:'1. Check: does --dls-color-component-{name}-{property}-{state} exist? \u2192 Use it.\n2. Check: does --dls-color-{semantic}-{role} exist? \u2192 Use it.\n3. No match? \u2192 Request a new token. Do NOT hardcode.',rule:'This order is mandatory for both human developers and AI agents.'},
+    {title:'Anti-Patterns',text:'\u2717 Using #hex or rgb() values in component CSS\n\u2717 Referencing color.neutral.700 (primitive) in a component\n\u2717 Referencing color.intent.primary.base when color.component.button.primary.bg.base exists\n\u2717 Hardcoding state shift values instead of using state.lDelta tokens\n\u2717 Layer 4 token referencing another Layer 4 token'},
+  ];
+  for(const r of rules){
+    const blk=h('div',{class:'doc-block'});
+    blk.appendChild(h('div',{class:'doc-block-title'},r.title));
+    blk.appendChild(h('div',{class:'doc-text'},r.text));
+    if(r.rule)blk.appendChild(h('div',{class:'doc-rule'},r.rule));
+    card.appendChild(blk);
+  }
+  row.appendChild(card);
+
+  // Right sidebar TOC
+  const aside=h('div',{class:'card-sm content-aside'});
+  const tocItems=['Token architecture','Naming & Components','States & Theming','Typography & Extension','Governance & AI'];
+  for(let i=0;i<tocItems.length;i++){
+    aside.appendChild(h('div',{class:'toc-item'+(i===0?' active':'')},tocItems[i]));
+  }
+  row.appendChild(aside);
+  inner.appendChild(row);
+  inner.appendChild(mkFooter());
+  m.appendChild(inner);
+}
+
+/* ═══════ Page: Changelog ═════════════════════════════════ */
+function renderChangelog(){
+  const m=$('#main');m.innerHTML='';
+  const inner=h('div',{class:'main-inner'});
+  inner.appendChild(mkHeader());
+  inner.appendChild(h('h1',{class:'page-title'},'Documentation'));
+  inner.appendChild(mkTabs([['Changelog','changelog'],['Technical documentation','documentation']],'changelog'));
+  const row=h('div',{class:'content-row'});
+  const card=h('div',{class:'card content-main'});
+  card.appendChild(h('div',{class:'doc-title'},'Changelog'));
+  card.appendChild(h('div',{class:'doc-subtitle'},'Latest updates and announcements.'));
+  const entries=[
+    {date:'February 2026 \u2014 Bug fixes',desc:'Component token alignment and dark mode improvements.',changes:['Full Base UI docs \u2014 Every component now has dedicated documentation.','Rebuilt examples \u2014 All component examples rebuilt for both Radix and Base UI.','Side-by-side comparison \u2014 Docs make it easy to compare across libraries.'],file:'components/ui/dialog.tsx',del:'- import * as DialogPrimitive from "@radix-ui/react-dialog"',add:'+ import { Dialog as DialogPrimitive } from "radix-ui"'},
+    {date:'January 2026 \u2014 Bug fixes',desc:'Initial 4-layer token system release.',changes:['4-layer token architecture implemented.','All color primitives, semantics, and component tokens defined.','Figma variable sync scripts consolidated.'],file:'tokens/tokens.json',del:'- "button": { "bg": "#6941C6" }',add:'+ "button": { "bg": { "$value": "{color.intent.primary.base}" } }'},
+  ];
+  for(const e of entries){
+    const entry=h('div',{class:'changelog-entry'});
+    entry.appendChild(h('div',{class:'changelog-date'},e.date));
+    entry.appendChild(h('div',{class:'changelog-desc'},e.desc));
+    entry.appendChild(h('div',{class:'changelog-sub'},"What\u2019s Changed"));
+    const ul=h('ul',{class:'changelog-list'});
+    for(const c of e.changes)ul.appendChild(h('li',{},c));
+    entry.appendChild(ul);
+    const cb=h('div',{class:'code-block'});
+    cb.appendChild(h('div',{class:'code-block-header',html:ICO.file+'<span class="filename">'+e.file+'</span><span class="copy-btn" style="cursor:pointer">'+ICO.copy+'</span>'}));
+    cb.appendChild(h('div',{class:'code-block-body',html:'<div class="line-del">'+e.del+'</div><div class="line-add">'+e.add+'</div>'}));
+    entry.appendChild(cb);
+    card.appendChild(entry);
+  }
+  row.appendChild(card);
+  const aside=h('div',{class:'card-sm content-aside'});
+  for(const[label,i]of[['February 2026',0],['January 2026',1],['December 2025',2],['November 2025',3]]){
+    aside.appendChild(h('div',{class:'toc-item'+(i===0?' active':'')},label));
+  }
+  const more=h('div',{class:'toc-item',style:{display:'flex',gap:'8px',alignItems:'center'}});
+  more.textContent='More updates';
+  more.innerHTML+='<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>';
+  aside.appendChild(more);
+  row.appendChild(aside);
+  inner.appendChild(row);
+  inner.appendChild(mkFooter());
+  m.appendChild(inner);
+}
+
+/* ═══════ Page: Components Index ══════════════════════════ */
+function renderComponentsIndex(){
+  const m=$('#main');m.innerHTML='';const route=getRoute();
+  const inner=h('div',{class:'main-inner'});
+  inner.appendChild(mkHeader());
+  inner.appendChild(h('h1',{class:'page-title'},'Components'));
+  const card=h('div',{class:'card',style:{marginTop:'24px'}});
+  const grid=h('div',{class:'comp-grid'});
+  for(const c of COMPONENTS){
+    const slug=c.toLowerCase().replace(/\s+/g,'-');
+    grid.appendChild(h('div',{class:'comp-cell'+(route==='components/'+slug?' active':''),onclick:()=>navigate('components/'+slug)},c));
+  }
+  card.appendChild(grid);
+  inner.appendChild(card);
+  inner.appendChild(mkFooter());
+  m.appendChild(inner);
+}
+
+/* ═══════ Page: Component Detail (Alert) ══════════════════ */
+function renderComponentDetail(slug){
+  const name=COMPONENTS.find(c=>c.toLowerCase().replace(/\s+/g,'-')===slug)||slug;
+  const m=$('#main');m.innerHTML='';
+  const inner=h('div',{class:'main-inner'});
+  inner.appendChild(mkHeader());
+  inner.appendChild(h('h1',{class:'page-title'},'Components. '+name));
+  const card=h('div',{class:'card',style:{marginTop:'24px'}});
+
+  if(slug==='alert'){
+    card.appendChild(h('h2',{style:{fontSize:'32px',fontWeight:700,lineHeight:'40px',marginBottom:'8px'}},'Alert'));
+    card.appendChild(h('p',{style:{fontSize:'14px',color:'#666970',marginBottom:'24px'}},'Displays important messages to inform users about system status, required actions, or critical feedback.'));
+    const preview=h('div',{class:'alert-preview',style:{background:'#fff',border:'1px solid #E9EAEB',borderRadius:'8px'}});
+    const intents=[
+      {name:'neutral',bg:'#F5F5F5',fg:'#1C1D1F',btnBg:'#1C1D1F',icon:ICO.info},
+      {name:'primary',bg:'#F9F5FF',fg:'#6941C6',btnBg:'#6941C6',icon:ICO.info},
+      {name:'info',bg:'#EFF8FF',fg:'#175CD3',btnBg:'#175CD3',icon:ICO.info},
+      {name:'success',bg:'#ECFDF3',fg:'#067647',btnBg:'#067647',icon:ICO.check},
+      {name:'warning',bg:'#FFFAEB',fg:'#B54708',btnBg:'#B54708',icon:ICO.warn},
+      {name:'danger',bg:'#FEF3F2',fg:'#B42318',btnBg:'#B42318',icon:ICO.danger},
+    ];
+    for(const intent of intents){
+      const row=h('div',{class:'alert-row',style:{background:intent.bg,color:intent.fg}});
+      row.innerHTML='<span class="alert-icon">'+intent.icon+'</span>';
+      row.appendChild(h('div',{class:'alert-content'},
+        h('div',{class:'alert-title'},'Alert title'),
+        h('div',{class:'alert-desc'},'This is alert description'),
+      ));
+      row.appendChild(h('button',{class:'alert-btn',style:{background:intent.btnBg}},'Button'));
+      preview.appendChild(row);
+    }
+    card.appendChild(preview);
+    // Code example
+    const cb=h('div',{class:'code-block',style:{marginTop:'24px'}});
+    cb.appendChild(h('div',{class:'code-block-header',html:ICO.file+'<span class="filename">Alert</span><span class="copy-btn">'+ICO.copy+'</span>'}));
+    const code=`import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { CheckCircle2Icon, InfoIcon } from "lucide-react"
+
+export function AlertDemo() {
+  return (
+    <div className="grid w-full max-w-md items-start gap-4">
+      <Alert>
+        <CheckCircle2Icon />
+        <AlertTitle>Payment successful</AlertTitle>
+        <AlertDescription>
+          Your payment of $99.99 has been processed.
+        </AlertDescription>
+      </Alert>
+      <Alert>
+        <InfoIcon />
+        <AlertTitle>New feature available</AlertTitle>
+        <AlertDescription>
+          We&apos;ve added dark mode support.
+        </AlertDescription>
+      </Alert>
+    </div>
+  )
+}`;
+    cb.appendChild(h('pre',{class:'code-block-body',style:{whiteSpace:'pre-wrap',fontSize:'12px',lineHeight:'18px',color:'#666970'}},code));
+    card.appendChild(cb);
+  } else {
+    card.appendChild(h('h2',{style:{fontSize:'32px',fontWeight:700,lineHeight:'40px',marginBottom:'8px'}},name));
+    card.appendChild(h('p',{style:{fontSize:'14px',color:'#666970'}},'Component documentation coming soon.'));
+  }
+  inner.appendChild(card);
+  inner.appendChild(mkFooter());
+  m.appendChild(inner);
+}
+
+/* ═══════ Token Pages ═════════════════════════════════════ */
+function renderTokensColor(){
+  const route=getRoute();const tab=route.includes('/semantics')?'semantics':route.includes('/components')?'components':'primitives';
+  const m=$('#main');m.innerHTML='';
+  const inner=h('div',{class:'main-inner'});
+  inner.appendChild(mkHeader());
+  inner.appendChild(h('h1',{class:'page-title'},'Tokens. Color'));
+  inner.appendChild(mkTabs([['Primitives','tokens/color'],['Semantics','tokens/color/semantics'],['Components','tokens/color/components']],'tokens/color'+(tab==='primitives'?'':'/'+tab)));
+  const card=h('div',{style:{marginTop:'16px'}});
+
+  if(tab==='primitives'){
+    card.appendChild(h('div',{class:'section-heading'},'Primitives. Base'));
+    card.appendChild(h('p',{class:'section-desc'},'The base palette of raw color values. Not tied to any UI meaning \u2014 they form the foundation for semantic colors and themes.'));
+    for(const name of['neutral','primary','info','success','warning','danger']){
+      const scale=tokens.color[name];if(!scale)continue;
+      const sub=h('div',{class:'subsection'});
+      sub.appendChild(h('h3',{class:'subsection-title'},name[0].toUpperCase()+name.slice(1)));
+      const grid=h('div',{class:'color-grid'});
+      for(const[step,def]of Object.entries(scale)){
+        if(step.startsWith('$'))continue;const hex=def&&def.$value;if(!hex||typeof hex!=='string')continue;
+        grid.appendChild(h('div',{class:'color-card',onclick:()=>copyToast(hex)},
+          h('div',{class:'color-swatch',style:{background:hex}}),
+          h('div',{class:'color-info'},h('div',{class:'color-name'},name+'.'+step),h('div',{class:'color-hex'},hex))
+        ));
+      }
+      sub.appendChild(grid);card.appendChild(sub);
+    }
+    // Additional
+    card.appendChild(h('div',{class:'section-heading',style:{marginTop:'32px'}},'Primitives. Additional'));
+    card.appendChild(h('p',{class:'section-desc'},'Supporting colors and accents to use in UI to emphasize specific meanings, states, or categories not covered by core brand colors.'));
+    const addEntries=Object.entries(tokens.color.additional||{}).filter(([n])=>!n.startsWith('$'));
+    for(let i=0;i<addEntries.length;i+=2){
+      const pair=h('div',{class:'additional-pair'});
+      for(let j=i;j<Math.min(i+2,addEntries.length);j++){
+        const[name,scale]=addEntries[j];
+        const sub=h('div',{class:'subsection',style:{marginBottom:'0'}});sub.appendChild(h('h3',{class:'subsection-title'},name[0].toUpperCase()+name.slice(1)));
+        const grid=h('div',{class:'color-grid'});
+        for(const[step,def]of Object.entries(scale)){if(step.startsWith('$'))continue;const hex=def.$value;grid.appendChild(h('div',{class:'color-card',onclick:()=>copyToast(hex)},h('div',{class:'color-swatch',style:{background:hex}}),h('div',{class:'color-info'},h('div',{class:'color-name'},name+'.'+step),h('div',{class:'color-hex'},hex))));}
+        sub.appendChild(grid);pair.appendChild(sub);
+      }
+      card.appendChild(pair);
+    }
+    // Opacity
+    card.appendChild(h('div',{class:'section-heading',style:{marginTop:'32px'}},'Primitives. Opacity'));
+    card.appendChild(h('p',{class:'section-desc'},'Layered opacity stops for light and dark bases, using fixed opacity steps. Use for overlays, semi-transparent states, scrims, and subtle UI layers.'));
+    for(const[name,scale]of Object.entries(tokens.color.opacity||{})){
+      if(name.startsWith('$')||(name!=='light'&&name!=='dark'))continue;
+      const sub=h('div',{class:'subsection'});sub.appendChild(h('h3',{class:'subsection-title'},name[0].toUpperCase()+name.slice(1)));
+      const grid=h('div',{class:'color-grid'});
+      for(const[step,def]of Object.entries(scale)){if(step.startsWith('$'))continue;const val=def.$value;if(typeof val!=='string')continue;grid.appendChild(h('div',{class:'color-card',onclick:()=>copyToast(val)},h('div',{class:'color-swatch checker'},h('div',{class:'fill',style:{background:val}})),h('div',{class:'color-info'},h('div',{class:'color-name'},'opacity.'+name+'.'+step),h('div',{class:'color-hex'},val))));}
+      sub.appendChild(grid);card.appendChild(sub);
+    }
+  } else if(tab==='semantics'){
+    card.appendChild(h('div',{class:'section-heading'},'Semantic Colors'));
+    card.appendChild(h('p',{class:'section-desc'},'Layer 2 \u2014 System semantics map primitives to UI roles.'));
+    const groups=[{name:'Surface',path:'surface',obj:tokens.color.surface},{name:'Text',path:'text',obj:tokens.color.text},{name:'Border',path:'border',obj:tokens.color.border},{name:'Overlay',path:'overlay',obj:tokens.color.overlay}];
+    if(tokens.color.intent)for(const[n,o]of Object.entries(tokens.color.intent)){if(!n.startsWith('$'))groups.push({name:'Intent \u2014 '+n[0].toUpperCase()+n.slice(1),path:'intent.'+n,obj:o})}
+    for(const g of groups){
+      if(!g.obj)continue;const sub=h('div',{class:'subsection'});sub.appendChild(h('h3',{class:'subsection-title'},g.name));
+      const table=h('table',{class:'token-table'});
+      table.appendChild(h('thead',{},h('tr',{},h('th',{},''),h('th',{},'Token'),h('th',{},'Reference'),h('th',{},'Resolved'),h('th',{},'CSS Variable'))));
+      const tbody=h('tbody');
+      for(const[name,def]of Object.entries(g.obj)){
+        if(name.startsWith('$'))continue;const tp=g.path+'.'+name;const ref=def.$value||'';const resolved=typeof ref==='string'?resolveRef(ref):ref;const cssVar='var(--dls-color-'+tp.replace(/\./g,'-')+')';
+        tbody.appendChild(h('tr',{onclick:()=>copyToast(cssVar),style:{cursor:'pointer'}},h('td',{},h('span',{class:'swatch',style:{background:resolved}})),h('td',{class:'mono'},'color.'+tp),h('td',{class:'ref'},String(ref).replace(/[{}]/g,'')),h('td',{class:'ref'},resolved),h('td',{class:'css-var'},cssVar)));
+      }
+      table.appendChild(tbody);sub.appendChild(table);card.appendChild(sub);
+    }
+  } else {
+    card.appendChild(h('div',{class:'section-heading'},'Component Tokens'));
+    card.appendChild(h('p',{class:'section-desc'},'Layer 4 \u2014 Override-safe tokens per component.'));
+    if(tokens.color.component){
+      const leaves=[];
+      (function cl(obj,p){for(const[k,v]of Object.entries(obj)){if(k.startsWith('$'))continue;const fp=p?p+'.'+k:k;if(v&&v.$value!==undefined&&typeof v.$value==='string')leaves.push({path:fp,ref:v.$value,desc:v.$description||''});else if(typeof v==='object'&&v!==null&&!v.$type)cl(v,fp)}})(tokens.color.component,'component');
+      const byComp={};for(const i of leaves){const t=i.path.split('.')[1];if(!byComp[t])byComp[t]=[];byComp[t].push(i)}
+      for(const cn of Object.keys(byComp).sort()){
+        const items=byComp[cn];const sub=h('div',{class:'subsection'});sub.appendChild(h('h3',{class:'subsection-title'},cn[0].toUpperCase()+cn.slice(1)));
+        const table=h('table',{class:'token-table'});
+        table.appendChild(h('thead',{},h('tr',{},h('th',{},''),h('th',{},'Token'),h('th',{},'Reference'),h('th',{},'Resolved'),h('th',{},'CSS Variable'))));
+        const tbody=h('tbody');
+        for(const i of items){const resolved=resolveRef(i.ref);const cssVar='var(--dls-color-'+i.path.replace(/\./g,'-')+')';
+          tbody.appendChild(h('tr',{onclick:()=>copyToast(cssVar),style:{cursor:'pointer'}},h('td',{},h('span',{class:'swatch',style:{background:resolved}})),h('td',{class:'mono'},'color.'+i.path),h('td',{class:'ref'},i.ref.replace(/[{}]/g,'')),h('td',{class:'ref'},resolved),h('td',{class:'css-var'},cssVar)));}
+        table.appendChild(tbody);sub.appendChild(table);card.appendChild(sub);
+      }
+    }
+  }
+  inner.appendChild(card);inner.appendChild(mkFooter());m.appendChild(inner);
+}
+
+function renderTokensShadow(){
+  const m=$('#main');m.innerHTML='';
+  const inner=h('div',{class:'main-inner'});
+  inner.appendChild(mkHeader());
+  inner.appendChild(h('h1',{class:'page-title'},'Tokens. Shadow'));
+  const card=h('div',{style:{marginTop:'16px'}});
+  card.appendChild(h('div',{class:'section-heading'},'Shadow'));
+  card.appendChild(h('p',{class:'section-desc'},'Semantic shadows for components.'));
+  if(tokens.shadow){
+    const table=h('table',{class:'token-table'});
+    table.appendChild(h('thead',{},h('tr',{},h('th',{},'Token'),h('th',{},'Value'),h('th',{},'CSS Variable'))));
+    const tbody=h('tbody');
+    const rows=[
+      {p:'shadow.surface.sm',v:tokens.shadow.surface?.sm?.$value,c:'var(--dls-shadow-surface-sm)'},
+      {p:'shadow.surface.md',v:tokens.shadow.surface?.md?.$value,c:'var(--dls-shadow-surface-md)'},
+      {p:'shadow.surface.lg',v:tokens.shadow.surface?.lg?.$value,c:'var(--dls-shadow-surface-lg)'},
+      {p:'shadow.overlay',v:tokens.shadow.overlay?.$value,c:'var(--dls-shadow-overlay)'},
+      {p:'shadow.focus.ring',v:tokens.shadow.focus?.ring?.$value,c:'var(--dls-shadow-focus-ring)'},
+    ];
+    for(const r of rows){if(!r.v)continue;tbody.appendChild(h('tr',{onclick:()=>copyToast(r.c),style:{cursor:'pointer'}},h('td',{class:'mono'},r.p),h('td',{class:'ref'},String(r.v).replace(/[{}]/g,'')),h('td',{class:'css-var'},r.c)))}
+    table.appendChild(tbody);card.appendChild(table);
+  }
+  inner.appendChild(card);inner.appendChild(mkFooter());m.appendChild(inner);
+}
+
+function renderTokensTypography(){
+  const route=getRoute();const tab=route.includes('/semantics')?'semantics':'primitives';
+  const m=$('#main');m.innerHTML='';
+  const inner=h('div',{class:'main-inner'});
+  inner.appendChild(mkHeader());
+  inner.appendChild(h('h1',{class:'page-title'},'Tokens. Typography'));
+  inner.appendChild(mkTabs([['Primitives','tokens/typography'],['Semantics','tokens/typography/semantics']],'tokens/typography'+(tab==='primitives'?'':'/semantics')));
+  const card=h('div',{style:{marginTop:'16px'}});
+
+  if(tab==='primitives'){
+    card.appendChild(h('div',{class:'section-heading'},'Typography'));
+    // Font
+    const fontTable=h('table',{class:'token-table'});
+    fontTable.appendChild(h('thead',{},h('tr',{},h('th',{},'Token'),h('th',{},'Value'),h('th',{},'CSS Variable'),h('th',{},'Preview'))));
+    const fontBody=h('tbody');
+    fontBody.appendChild(h('tr',{onclick:()=>copyToast('var(--dls-font-family)'),style:{cursor:'pointer'}},h('td',{class:'mono'},'font.family'),h('td',{},tokens.font.family.$value),h('td',{class:'css-var'},'var(--dls-font-family)'),h('td',{},h('span',{style:{fontFamily:'"'+tokens.font.family.$value+'",sans-serif',fontSize:'16px'}},'The quick brown fox'))));
+    for(const[name,def]of Object.entries(tokens.font.weight)){
+      fontBody.appendChild(h('tr',{onclick:()=>copyToast('var(--dls-font-weight-'+name+')'),style:{cursor:'pointer'}},h('td',{class:'mono'},'font.weight.'+name),h('td',{},String(def.$value)),h('td',{class:'css-var'},'var(--dls-font-weight-'+name+')'),h('td',{},h('span',{style:{fontWeight:String(def.$value),fontSize:'16px'}},'Weight '+def.$value))));
+    }
+    fontTable.appendChild(fontBody);card.appendChild(fontTable);
+    // Text scale
+    card.appendChild(h('div',{class:'section-heading',style:{marginTop:'32px'}},'Text Scale'));
+    const textTable=h('table',{class:'token-table'});
+    textTable.appendChild(h('thead',{},h('tr',{},h('th',{},'Scale'),h('th',{},'Font Size'),h('th',{},'Line Height'),h('th',{},'Preview'))));
+    const textBody=h('tbody');
+    for(const name of['xs','s','m','l','xl','2xl','3xl','hero']){
+      const def=tokens.text[name];if(!def)continue;
+      const fs=def.fontSize?.$value||def['font-size']?.$value;const lh=def.lineHeight?.$value||def['line-height']?.$value;
+      if(!fs||!lh)continue;
+      textBody.appendChild(h('tr',{},h('td',{class:'mono'},'text.'+name),h('td',{},fs),h('td',{},lh),h('td',{},h('span',{style:{fontSize:fs,lineHeight:lh,fontFamily:'"Inter",sans-serif'}},'The quick brown fox \u2014 '+name))));
+    }
+    textTable.appendChild(textBody);card.appendChild(textTable);
+  } else {
+    card.appendChild(h('div',{class:'section-heading'},'Semantic Text'));
+    card.appendChild(h('p',{class:'section-desc'},'Semantic text roles map to primitive size + font weight.'));
+    const semTable=h('table',{class:'token-table'});
+    semTable.appendChild(h('thead',{},h('tr',{},h('th',{},'Token'),h('th',{},'Maps to'),h('th',{},'CSS Variables'))));
+    const semBody=h('tbody');
+    const semRows=[
+      {p:'text.heading.hero',m:'36px/46px, weight 800',v:'--dls-text-heading-hero-*'},
+      {p:'text.heading.h1',m:'32px/40px, weight 600',v:'--dls-text-heading-h1-*'},
+      {p:'text.heading.h2',m:'24px/32px, weight 600',v:'--dls-text-heading-h2-*'},
+      {p:'text.heading.h3',m:'18px/26px, weight 600',v:'--dls-text-heading-h3-*'},
+      {p:'text.heading.h4',m:'16px/24px, weight 600',v:'--dls-text-heading-h4-*'},
+      {p:'text.heading.h5',m:'14px/20px, weight 600',v:'--dls-text-heading-h5-*'},
+      {p:'text.heading.h6',m:'12px/16px, weight 800',v:'--dls-text-heading-h6-*'},
+      {p:'text.paragraph.m.light',m:'14px/20px, weight 400',v:'--dls-text-paragraph-m-*'},
+      {p:'text.paragraph.m.medium',m:'14px/20px, weight 500',v:'--dls-text-paragraph-m-*'},
+      {p:'text.paragraph.m.heavy',m:'14px/20px, weight 600',v:'--dls-text-paragraph-m-*'},
+      {p:'text.button.m',m:'14px/20px, weight 500',v:'--dls-text-button-m-*'},
+      {p:'text.upper.m',m:'14px/20px, weight 500, uppercase',v:'--dls-text-upper-m-*'},
+    ];
+    for(const r of semRows){semBody.appendChild(h('tr',{},h('td',{class:'mono'},r.p),h('td',{},r.m),h('td',{class:'css-var'},r.v)))}
+    semTable.appendChild(semBody);card.appendChild(semTable);
+  }
+  inner.appendChild(card);inner.appendChild(mkFooter());m.appendChild(inner);
+}
+
+function renderTokensLayout(){
+  const route=getRoute();const tab=route.includes('/semantics')?'semantics':'primitives';
+  const m=$('#main');m.innerHTML='';
+  const inner=h('div',{class:'main-inner'});
+  inner.appendChild(mkHeader());
+  inner.appendChild(h('h1',{class:'page-title'},'Tokens. Layout'));
+  inner.appendChild(mkTabs([['Primitives','tokens/layout'],['Semantics','tokens/layout/semantics']],'tokens/layout'+(tab==='primitives'?'':'/semantics')));
+  const card=h('div',{style:{marginTop:'16px'}});
+
+  if(tab==='primitives'){
+    // Border Radius
+    card.appendChild(h('div',{class:'section-heading'},'Primitives. Border Radius'));
+    const radiusObj=tokens.radius||tokens['border-radius'];
+    if(radiusObj){
+      const brTable=h('table',{class:'token-table'});
+      brTable.appendChild(h('thead',{},h('tr',{},h('th',{},'Token'),h('th',{},'Value'),h('th',{},'CSS Variable'),h('th',{},'Preview'))));
+      const brBody=h('tbody');
+      for(const[name,def]of Object.entries(radiusObj)){
+        if(name.startsWith('$')||name==='component')continue;const val=def.$value;if(!val)continue;
+        brBody.appendChild(h('tr',{onclick:()=>copyToast('var(--dls-radius-'+name+')'),style:{cursor:'pointer'}},h('td',{class:'mono'},'radius.'+name),h('td',{},val),h('td',{class:'css-var'},'var(--dls-radius-'+name+')'),h('td',{},h('div',{class:'radius-box',style:{borderRadius:val}}))));
+      }
+      brTable.appendChild(brBody);card.appendChild(brTable);
+    }
+    // Spacing
+    card.appendChild(h('div',{class:'section-heading',style:{marginTop:'32px'}},'Primitives. Spacing'));
+    const spTable=h('table',{class:'token-table'});
+    spTable.appendChild(h('thead',{},h('tr',{},h('th',{},'Token'),h('th',{},'Value'),h('th',{},'CSS Variable'),h('th',{style:{width:'50%'}},'Preview'))));
+    const spBody=h('tbody');
+    for(const[name,def]of Object.entries(tokens.spacing||{})){
+      if(name.startsWith('$'))continue;const val=def.$value;const cssName=name.replace('.','-');
+      spBody.appendChild(h('tr',{onclick:()=>copyToast('var(--dls-spacing-'+cssName+')'),style:{cursor:'pointer'}},h('td',{class:'mono'},'spacing.'+name),h('td',{},val),h('td',{class:'css-var'},'var(--dls-spacing-'+cssName+')'),h('td',{},h('div',{class:'spacing-bar',style:{width:val==='0px'?'2px':val}}))));
+    }
+    spTable.appendChild(spBody);card.appendChild(spTable);
+  } else {
+    // Component Radii
+    card.appendChild(h('div',{class:'section-heading'},'Semantic. Border Radius'));
+    card.appendChild(h('p',{class:'section-desc'},'Component-specific border radius tokens.'));
+    const radiusObj=tokens.radius||tokens['border-radius'];
+    if(radiusObj&&radiusObj.component){
+      const table=h('table',{class:'token-table'});
+      table.appendChild(h('thead',{},h('tr',{},h('th',{},'Token'),h('th',{},'Value'),h('th',{},'CSS Variable'),h('th',{},'Preview'))));
+      const tbody=h('tbody');
+      for(const[name,def]of Object.entries(radiusObj.component)){
+        if(name.startsWith('$'))continue;const val=def.$value;if(!val)continue;
+        tbody.appendChild(h('tr',{onclick:()=>copyToast('var(--dls-radius-component-'+name+')'),style:{cursor:'pointer'}},h('td',{class:'mono'},'radius.component.'+name),h('td',{},val),h('td',{class:'css-var'},'var(--dls-radius-component-'+name+')'),h('td',{},h('div',{class:'radius-box',style:{borderRadius:val}}))));
+      }
+      table.appendChild(tbody);card.appendChild(table);
+    }
+  }
+  inner.appendChild(card);inner.appendChild(mkFooter());m.appendChild(inner);
+}
+
+/* ═══════ Router dispatch ═════════════════════════════════ */
+function renderPage(){
+  const route=getRoute();
+  if(route.startsWith('changelog'))renderChangelog();
+  else if(route.startsWith('documentation'))renderDocumentation();
+  else if(route==='components')renderComponentsIndex();
+  else if(route.startsWith('components/'))renderComponentDetail(route.split('/')[1]);
+  else if(route.startsWith('tokens/color'))renderTokensColor();
+  else if(route.startsWith('tokens/shadow'))renderTokensShadow();
+  else if(route.startsWith('tokens/typography'))renderTokensTypography();
+  else if(route.startsWith('tokens/layout')||route.startsWith('tokens/space'))renderTokensLayout();
+  else renderDocumentation();
+  window.scrollTo(0,0);
+}
+
+/* ═══════ Init ════════════════════════════════════════════ */
+async function init(){
+  const res=await fetch('/tokens/tokens.json');
+  tokens=await res.json();
+  buildMaps(tokens);
+  renderSidebar();
+  renderPage();
+}
+init();
+</script>
+
+<!-- Agentation Toolbar -->
+<script type="importmap">
+{"imports":{"react":"https://esm.sh/react@18","react/":"https://esm.sh/react@18/","react-dom":"https://esm.sh/react-dom@18?external=react","react-dom/":"https://esm.sh/react-dom@18&external=react/"}}
+</script>
+<div id="agentation-root"></div>
+<script type="module">
+import { createElement } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Agentation } from './node_modules/agentation/dist/index.mjs';
+const root = createRoot(document.getElementById('agentation-root'));
+root.render(createElement(Agentation, { endpoint: 'http://localhost:4747' }));
 </script>
 </body>
 </html>
