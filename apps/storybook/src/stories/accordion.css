@@ -28,11 +28,7 @@
   width: 100%;
 }
 
-/* Border on the outer container when open */
-.dls-accordion-item[data-open] {
-  border: 1px solid var(--dls-color-component-accordion-border);
-  border-radius: var(--dls-radius-component-accordion);
-}
+/* No wrapping border when open — each sub-section carries its own bottom border */
 
 /* ---------------------------------------------------------------------------
    Trigger (clickable header)
@@ -53,14 +49,10 @@
   font-weight: var(--dls-font-weight-medium);
   color: var(--dls-color-component-accordion-title-fg);
   border-bottom: 1px solid var(--dls-color-component-accordion-border);
-  border-radius: var(--dls-radius-component-accordion);
   transition: background-color 150ms ease;
 }
 
-/* When open, no bottom border on trigger (outer container has border) */
-.dls-accordion-item[data-open] .dls-accordion-item__trigger {
-  border-bottom: none;
-}
+/* When open, trigger keeps its bottom border as a divider between title and content */
 
 /* Hover */
 .dls-accordion-item__trigger:hover:not(:disabled) {
@@ -127,4 +119,5 @@
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: var(--dls-color-component-accordion-content-fg);
+  border-bottom: 1px solid var(--dls-color-component-accordion-border);
 }

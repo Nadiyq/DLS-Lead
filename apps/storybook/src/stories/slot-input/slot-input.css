@@ -1,0 +1,210 @@
+/* ==========================================================================
+   DLS Slot Input — flexible input with configurable leading/trailing slots
+   States: normal | filled | focused | disabled | error
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Wrapper (vertical stack: label -> field -> hint/error)
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  font-family: var(--dls-font-family);
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Label
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-slot-input__label[data-disabled] {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Field (the bordered box)
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__field {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  width: 100%;
+  min-height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
+  background: var(--dls-color-component-input-bg-base);
+  border: 1px solid var(--dls-color-component-input-border-base);
+  border-radius: var(--dls-radius-component-input);
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   State: Hover
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__field:hover:not([data-disabled]):not([data-error]) {
+  border-color: var(--dls-color-component-input-border-hover);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Focus
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__field:focus-within:not([data-disabled]) {
+  border-color: var(--dls-color-component-input-border-focus);
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__field[data-disabled] {
+  background: var(--dls-color-component-input-bg-disabled);
+  border-color: var(--dls-color-component-input-border-disabled);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   State: Error
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__field[data-error] {
+  background: var(--dls-color-intent-danger-subtle);
+  border-color: var(--dls-color-intent-danger-border);
+}
+
+/* ---------------------------------------------------------------------------
+   Slot (leading / trailing content areas)
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Icon (leading / trailing)
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-slot-input__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-slot-input__field[data-disabled] .dls-slot-input__icon {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Native input
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__input {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-component-input-fg-base);
+}
+
+.dls-slot-input__input::placeholder {
+  color: var(--dls-color-component-input-fg-placeholder);
+}
+
+.dls-slot-input__input:disabled {
+  color: var(--dls-color-component-input-fg-disabled);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Clear button
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__clear {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  color: var(--dls-color-text-secondary);
+  border-radius: var(--dls-radius-component-input);
+}
+
+.dls-slot-input__clear:hover:not(:disabled) {
+  color: var(--dls-color-text-primary);
+}
+
+.dls-slot-input__clear:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-slot-input__clear svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Hint / Error message
+   --------------------------------------------------------------------------- */
+
+.dls-slot-input__hint {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1-5);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-slot-input__hint[data-error] {
+  color: var(--dls-color-intent-danger-text);
+}
+
+.dls-slot-input__hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.dls-slot-input__hint-icon svg {
+  width: 100%;
+  height: 100%;
+}

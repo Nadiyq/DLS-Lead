@@ -9,7 +9,11 @@
       "Bash(npx storybook:*)",
       "Bash(npx tsc:*)",
       "mcp__figma-console__figma_search_components",
-      "mcp__figma-console__figma_get_component_details"
+      "mcp__figma-console__figma_get_component_details",
+      "mcp__figma-console__figma_execute",
+      "mcp__figma-console__figma_capture_screenshot",
+      "Bash(node:*)",
+      "mcp__figma-console__figma_take_screenshot"
     ]
   },
   "enableAllProjectMcpServers": true,

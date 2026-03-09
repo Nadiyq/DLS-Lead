@@ -1,0 +1,156 @@
+/* ==========================================================================
+   DLS Calendar Periods — preset periods + date range picker
+   Layout: sidebar (period list) + right (two stacked month calendars)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-periods {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-calendar);
+  font-family: var(--dls-font-family);
+  box-shadow: 0 4px 12px var(--dls-color-overlay-scrim);
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Left sidebar — period options
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-periods__sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  flex-shrink: 0;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-1);
+  border-right: 1px solid var(--dls-color-border-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+   Period option item
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-periods__option {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+  border-radius: var(--dls-radius-component-list-item);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-intent-neutral-text);
+  cursor: pointer;
+  background: var(--dls-color-surface-base);
+}
+
+.dls-calendar-periods__option:hover:not(:disabled):not([data-selected]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-calendar-periods__option[data-selected] {
+  background: var(--dls-color-intent-info-subtle);
+  color: var(--dls-color-intent-info-text);
+}
+
+.dls-calendar-periods__option:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+  position: relative;
+}
+
+/* ---------------------------------------------------------------------------
+   Right panel — calendars + footer
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-periods__right {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: var(--dls-spacing-3);
+  gap: var(--dls-spacing-3);
+}
+
+/* ---------------------------------------------------------------------------
+   Dates area — shared weekday header + two month grids
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-periods__dates {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+}
+
+/* Shared weekday header */
+.dls-calendar-periods__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.dls-calendar-periods__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}
+
+/* Month section */
+.dls-calendar-periods__month {
+  display: flex;
+  flex-direction: column;
+}
+
+.dls-calendar-periods__month-header {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  margin-bottom: var(--dls-spacing-1);
+}
+
+.dls-calendar-periods__month-title {
+  flex: 1;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-calendar-periods__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* ---------------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-periods__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+}
+
+.dls-calendar-periods__separator {
+  height: 1px;
+  background: var(--dls-color-border-subtle);
+}
+
+.dls-calendar-periods__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--dls-spacing-2);
+}

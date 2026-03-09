@@ -1,0 +1,162 @@
+/* ==========================================================================
+   DLS Search Field — token-driven search input with icon and clear button
+   States: normal | filled | focused | disabled
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Wrapper
+   --------------------------------------------------------------------------- */
+
+.dls-search-field {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  font-family: var(--dls-font-family);
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Label
+   --------------------------------------------------------------------------- */
+
+.dls-search-field__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-search-field__label[data-disabled] {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Bordered container
+   --------------------------------------------------------------------------- */
+
+.dls-search-field__box {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  width: 100%;
+  min-height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
+  background: var(--dls-color-component-input-bg-base);
+  border: 1px solid var(--dls-color-component-input-border-base);
+  border-radius: var(--dls-radius-component-input);
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Search icon
+   --------------------------------------------------------------------------- */
+
+.dls-search-field__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+.dls-search-field__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   The actual <input> element
+   --------------------------------------------------------------------------- */
+
+.dls-search-field__input {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-component-input-fg-base);
+}
+
+.dls-search-field__input::placeholder {
+  color: var(--dls-color-component-input-fg-placeholder);
+}
+
+.dls-search-field__input:focus-visible {
+  outline: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Clear button
+   --------------------------------------------------------------------------- */
+
+.dls-search-field__clear {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  color: var(--dls-color-text-secondary);
+  border-radius: var(--dls-radius-component-input);
+}
+
+.dls-search-field__clear:hover:not(:disabled) {
+  color: var(--dls-color-text-primary);
+}
+
+.dls-search-field__clear:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-search-field__clear svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   State: Hover
+   --------------------------------------------------------------------------- */
+
+.dls-search-field__box:hover:not([data-disabled]) {
+  border-color: var(--dls-color-component-input-border-hover);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Focus-within
+   --------------------------------------------------------------------------- */
+
+.dls-search-field__box:focus-within:not([data-disabled]) {
+  border-color: var(--dls-color-component-input-border-focus);
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-search-field__box[data-disabled] {
+  background: var(--dls-color-component-input-bg-disabled);
+  border-color: var(--dls-color-component-input-border-disabled);
+  cursor: not-allowed;
+}
+
+.dls-search-field__box[data-disabled] .dls-search-field__input {
+  color: var(--dls-color-component-input-fg-disabled);
+  cursor: not-allowed;
+}
+
+.dls-search-field__box[data-disabled] .dls-search-field__icon {
+  color: var(--dls-color-text-disabled);
+}

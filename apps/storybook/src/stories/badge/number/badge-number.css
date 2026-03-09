@@ -1,0 +1,127 @@
+/* ==========================================================================
+   DLS Badge Number — compact numeric indicator (notification counts, etc.)
+   Variants: filled | soft | outline
+   Intents:  neutral | primary | info | success | warning | danger
+   Sizes:    m | s | xs
+   ========================================================================== */
+
+.dls-badge-number {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--dls-font-family);
+  font-weight: var(--dls-font-weight-medium);
+  border-radius: var(--dls-radius-component-badge-number);
+  white-space: nowrap;
+  user-select: none;
+  border: 1px solid transparent;
+  font-variant-numeric: tabular-nums;
+
+  --_bg: var(--dls-color-component-badge-neutral-bg);
+  --_fg: var(--dls-color-component-badge-neutral-fg);
+  --_border: var(--dls-color-component-badge-neutral-border);
+  --_base: var(--dls-color-intent-neutral-base);
+  --_on-base: var(--dls-color-intent-neutral-on-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Intent overrides
+   --------------------------------------------------------------------------- */
+
+.dls-badge-number[data-intent="primary"] {
+  --_bg: var(--dls-color-component-badge-primary-bg);
+  --_fg: var(--dls-color-component-badge-primary-fg);
+  --_border: var(--dls-color-component-badge-primary-border);
+  --_base: var(--dls-color-intent-primary-base);
+  --_on-base: var(--dls-color-intent-primary-on-base);
+}
+.dls-badge-number[data-intent="info"] {
+  --_bg: var(--dls-color-component-badge-info-bg);
+  --_fg: var(--dls-color-component-badge-info-fg);
+  --_border: var(--dls-color-component-badge-info-border);
+  --_base: var(--dls-color-intent-info-base);
+  --_on-base: var(--dls-color-intent-info-on-base);
+}
+.dls-badge-number[data-intent="success"] {
+  --_bg: var(--dls-color-component-badge-success-bg);
+  --_fg: var(--dls-color-component-badge-success-fg);
+  --_border: var(--dls-color-component-badge-success-border);
+  --_base: var(--dls-color-intent-success-base);
+  --_on-base: var(--dls-color-intent-success-on-base);
+}
+.dls-badge-number[data-intent="warning"] {
+  --_bg: var(--dls-color-component-badge-warning-bg);
+  --_fg: var(--dls-color-component-badge-warning-fg);
+  --_border: var(--dls-color-component-badge-warning-border);
+  --_base: var(--dls-color-intent-warning-base);
+  --_on-base: var(--dls-color-intent-warning-on-base);
+}
+.dls-badge-number[data-intent="danger"] {
+  --_bg: var(--dls-color-component-badge-danger-bg);
+  --_fg: var(--dls-color-component-badge-danger-fg);
+  --_border: var(--dls-color-component-badge-danger-border);
+  --_base: var(--dls-color-intent-danger-base);
+  --_on-base: var(--dls-color-intent-danger-on-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Sizes
+   --------------------------------------------------------------------------- */
+
+.dls-badge-number[data-size="m"] {
+  min-width: 24px;
+  height: 24px;
+  padding: var(--dls-spacing-0-5) var(--dls-spacing-1-5);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+}
+.dls-badge-number[data-size="s"] {
+  min-width: 20px;
+  height: 20px;
+  padding: var(--dls-spacing-0-5) var(--dls-spacing-1);
+  font-size: var(--dls-text-xs-font-size);
+  line-height: var(--dls-text-xs-line-height);
+}
+.dls-badge-number[data-size="xs"] {
+  min-width: 16px;
+  height: 16px;
+  padding: 0 var(--dls-spacing-0-5);
+  font-size: var(--dls-text-xs-font-size);
+  line-height: var(--dls-text-xs-line-height);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Filled
+   --------------------------------------------------------------------------- */
+
+.dls-badge-number[data-variant="filled"] {
+  background: var(--_base);
+  color: var(--_on-base);
+  border-color: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Soft
+   --------------------------------------------------------------------------- */
+
+.dls-badge-number[data-variant="soft"] {
+  background: var(--_bg);
+  color: var(--_fg);
+  border-color: var(--_border);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Outline
+   --------------------------------------------------------------------------- */
+
+.dls-badge-number[data-variant="outline"] {
+  background: transparent;
+  color: var(--_fg);
+  border-color: var(--_fg);
+}
+.dls-badge-number[data-variant="outline"][data-intent="neutral"],
+.dls-badge-number[data-variant="outline"]:not([data-intent]) {
+  border-color: var(--dls-color-border-base);
+}

@@ -1,0 +1,149 @@
+/* ==========================================================================
+   DLS Button Input Group — combined button + input in shared container
+   Sizes: m | s
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-button-input-group {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: stretch;
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-base);
+  border-radius: var(--dls-radius-component-input);
+  overflow: hidden;
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Sizes
+   --------------------------------------------------------------------------- */
+
+.dls-button-input-group,
+.dls-button-input-group[data-size="m"] {
+  height: 32px;
+}
+
+.dls-button-input-group[data-size="s"] {
+  height: 24px;
+}
+
+/* ---------------------------------------------------------------------------
+   Child resets — strip individual borders/radii from children
+   --------------------------------------------------------------------------- */
+
+.dls-button-input-group > * {
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Button segment
+   --------------------------------------------------------------------------- */
+
+.dls-button-input-group__button {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0 var(--dls-spacing-3);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+  background: var(--dls-color-surface-subtle);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.dls-button-input-group[data-size="s"] .dls-button-input-group__button {
+  padding: 0 var(--dls-spacing-2);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+}
+
+.dls-button-input-group__button:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-button-input-group__button:active:not(:disabled) {
+  background: var(--dls-state-pressed-overlay);
+}
+
+.dls-button-input-group__button:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--dls-state-focus-ring-color) !important;
+  z-index: 1;
+  position: relative;
+}
+
+.dls-button-input-group__button:disabled {
+  color: var(--dls-color-text-disabled);
+  background: var(--dls-color-surface-disabled);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Divider between button and input
+   --------------------------------------------------------------------------- */
+
+.dls-button-input-group__divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--dls-color-border-base);
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Input segment
+   --------------------------------------------------------------------------- */
+
+.dls-button-input-group__input {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  padding: 0 var(--dls-spacing-3);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-component-input-fg-base);
+  background: transparent;
+}
+
+.dls-button-input-group[data-size="s"] .dls-button-input-group__input {
+  padding: 0 var(--dls-spacing-2);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+}
+
+.dls-button-input-group__input::placeholder {
+  color: var(--dls-color-component-input-fg-placeholder);
+}
+
+.dls-button-input-group__input:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--dls-state-focus-ring-color) !important;
+  z-index: 1;
+  position: relative;
+}
+
+.dls-button-input-group__input:disabled {
+  color: var(--dls-color-component-input-fg-disabled);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Disabled container
+   --------------------------------------------------------------------------- */
+
+.dls-button-input-group[data-disabled] {
+  border-color: var(--dls-color-border-disabled);
+}

@@ -1,0 +1,164 @@
+/* ==========================================================================
+   DLS Dialog — modal panel with title, slot content, and action buttons
+   Breakpoints: desktop | mobile
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Overlay (native <dialog> backdrop)
+   --------------------------------------------------------------------------- */
+
+.dls-dialog::backdrop {
+  background: var(--dls-color-component-dialog-overlay);
+}
+
+/* ---------------------------------------------------------------------------
+   Panel
+   --------------------------------------------------------------------------- */
+
+.dls-dialog {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-4);
+  padding: var(--dls-spacing-4);
+  font-family: var(--dls-font-family);
+
+  background: var(--dls-color-component-dialog-bg);
+  border: 1px solid var(--dls-color-component-dialog-border);
+  border-radius: var(--dls-radius-component-modal);
+  box-shadow: var(--dls-shadow-surface-lg);
+
+  width: 400px;
+  max-width: calc(100vw - 32px);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Closed state */
+.dls-dialog:not([open]) {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Top bar — title + close (desktop layout)
+   --------------------------------------------------------------------------- */
+
+.dls-dialog__top {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--dls-spacing-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Title block — title + description
+   --------------------------------------------------------------------------- */
+
+.dls-dialog__title-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.dls-dialog__title {
+  font-size: var(--dls-text-xl-font-size);
+  line-height: var(--dls-text-xl-line-height);
+  font-weight: var(--dls-font-weight-semibold);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-dialog__description {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Close button
+   --------------------------------------------------------------------------- */
+
+.dls-dialog__close {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--dls-radius-component-button);
+  color: var(--dls-color-text-primary);
+  cursor: pointer;
+}
+
+.dls-dialog__close:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-dialog__close:active:not(:disabled) {
+  background: var(--dls-state-pressed-overlay);
+}
+
+.dls-dialog__close:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-dialog__close svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------------------------------------------------------------------------
+   Slot content
+   --------------------------------------------------------------------------- */
+
+.dls-dialog__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+}
+
+/* ---------------------------------------------------------------------------
+   Actions — desktop: horizontal right-aligned, mobile: vertical stacked
+   --------------------------------------------------------------------------- */
+
+.dls-dialog__actions {
+  display: flex;
+  gap: var(--dls-spacing-2);
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------------------------
+   Mobile breakpoint — vertical stacked layout
+   --------------------------------------------------------------------------- */
+
+.dls-dialog[data-breakpoint="mobile"] {
+  padding: var(--dls-spacing-6);
+}
+
+.dls-dialog[data-breakpoint="mobile"] .dls-dialog__actions {
+  flex-direction: column-reverse;
+}
+
+.dls-dialog[data-breakpoint="mobile"] .dls-dialog__actions > * {
+  width: 100%;
+}
+
+/* Responsive auto-detect (when no explicit breakpoint set) */
+@media (max-width: 480px) {
+  .dls-dialog:not([data-breakpoint]) {
+    padding: var(--dls-spacing-6);
+  }
+  .dls-dialog:not([data-breakpoint]) .dls-dialog__actions {
+    flex-direction: column-reverse;
+  }
+  .dls-dialog:not([data-breakpoint]) .dls-dialog__actions > * {
+    width: 100%;
+  }
+}

@@ -1,0 +1,72 @@
+/* ==========================================================================
+   DLS Carousel — slide container with arrows and pagination
+   Orientation: horizontal (default) | vertical
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Root
+   --------------------------------------------------------------------------- */
+
+.dls-carousel {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dls-spacing-3);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Content — viewport + arrows
+   --------------------------------------------------------------------------- */
+
+.dls-carousel__content {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-3);
+  position: relative;
+}
+
+/* Vertical layout */
+.dls-carousel[data-orientation="vertical"] .dls-carousel__content {
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------------------
+   Viewport — clips overflow, shows visible slides
+   --------------------------------------------------------------------------- */
+
+.dls-carousel__viewport {
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+/* Track — slides in a row/column */
+.dls-carousel__track {
+  display: flex;
+  gap: var(--dls-spacing-3);
+  transition: transform 300ms ease;
+}
+
+.dls-carousel[data-orientation="vertical"] .dls-carousel__track {
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------------------
+   Pagination
+   --------------------------------------------------------------------------- */
+
+.dls-carousel__pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-carousel__slide-label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}

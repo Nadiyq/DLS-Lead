@@ -214,11 +214,8 @@
 
 .dls-button[data-variant="link"] {
   background: transparent;
-  color: var(--_base);
+  color: var(--_text);
   border-color: transparent;
-  padding-inline: 0;
-  min-height: auto;
-  border-radius: var(--dls-radius-xs);
 }
 .dls-button[data-variant="link"]:hover:not(:disabled) {
   text-decoration: underline;
@@ -227,11 +224,6 @@
 .dls-button[data-variant="link"]:active:not(:disabled) {
   text-decoration: underline;
   background: var(--dls-state-pressed-overlay);
-}
-/* Neutral link uses text.primary instead of intent base */
-.dls-button[data-variant="link"][data-intent="neutral"],
-.dls-button[data-variant="link"]:not([data-intent]) {
-  color: var(--dls-color-text-primary);
 }
 
 /* ---------------------------------------------------------------------------
@@ -263,7 +255,7 @@
 .dls-button[data-variant="filled"]:disabled {
   background: var(--dls-color-surface-disabled);
   color: var(--dls-color-text-disabled);
-  border-color: var(--dls-color-border-disabled);
+  border-color: transparent;
 }
 
 .dls-button[data-variant="outline"]:disabled,

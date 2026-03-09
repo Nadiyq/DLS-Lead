@@ -64,9 +64,9 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
             aria-label="Remove"
             type="button"
           >
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="12" cy="12" r="8" fill="var(--dls-color-component-avatar-remove-btn-bg)" />
-              <path d="M8 8L16 16M16 8L8 16" stroke="var(--dls-color-component-avatar-remove-btn-fg)" strokeWidth="2" strokeLinecap="square" />
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="6" fill="var(--dls-color-component-avatar-remove-btn-bg)" />
+              <path d="M5.5 5.5L10.5 10.5M10.5 5.5L5.5 10.5" stroke="var(--dls-color-component-avatar-remove-btn-fg)" strokeWidth="1.33" strokeLinecap="round" />
             </svg>
           </button>
         )}

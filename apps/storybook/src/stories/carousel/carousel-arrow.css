@@ -1,0 +1,76 @@
+/* ==========================================================================
+   DLS Carousel Arrow — circular navigation button
+   Directions: left | right | up | down
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+.dls-carousel-arrow {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  width: 32px;
+  height: 32px;
+  border-radius: var(--dls-radius-component-carousel-arrow);
+  padding: var(--dls-spacing-2);
+
+  background: var(--dls-color-intent-neutral-subtle);
+  color: var(--dls-color-intent-neutral-text);
+  border: 1px solid var(--dls-color-border-base);
+  box-shadow: var(--dls-shadow-surface-sm);
+}
+
+/* Icon sizing */
+.dls-carousel-arrow svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Direction — rotate the icon via CSS
+   --------------------------------------------------------------------------- */
+
+.dls-carousel-arrow[data-direction="left"] svg {
+  transform: rotate(180deg);
+}
+
+.dls-carousel-arrow[data-direction="up"] svg {
+  transform: rotate(-90deg);
+}
+
+.dls-carousel-arrow[data-direction="down"] svg {
+  transform: rotate(90deg);
+}
+
+/* ---------------------------------------------------------------------------
+   States
+   --------------------------------------------------------------------------- */
+
+.dls-carousel-arrow:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-carousel-arrow:active:not(:disabled) {
+  background: var(--dls-state-pressed-overlay);
+}
+
+.dls-carousel-arrow:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-carousel-arrow:disabled {
+  background: var(--dls-color-surface-disabled);
+  color: var(--dls-color-text-disabled);
+  border-color: var(--dls-color-border-disabled);
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}

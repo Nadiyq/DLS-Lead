@@ -1,0 +1,48 @@
+/* ==========================================================================
+   DLS Carousel Dots — pagination indicator
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-carousel-dots {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Dot
+   --------------------------------------------------------------------------- */
+
+.dls-carousel-dot {
+  all: unset;
+  box-sizing: border-box;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--dls-radius-component-carousel-dot);
+  background: var(--dls-color-intent-neutral-base);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 150ms ease;
+}
+
+/* Current / active dot */
+.dls-carousel-dot[data-current] {
+  background: var(--dls-color-intent-info-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Dot states
+   --------------------------------------------------------------------------- */
+
+.dls-carousel-dot:hover:not([data-current]):not(:disabled) {
+  background: var(--dls-color-intent-neutral-text);
+}
+
+.dls-carousel-dot:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}

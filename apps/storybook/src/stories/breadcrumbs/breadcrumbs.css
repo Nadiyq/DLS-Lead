@@ -1,0 +1,139 @@
+/* ==========================================================================
+   DLS Breadcrumbs — token-driven navigation breadcrumb trail
+   Item types: regular | current | more | dropdown
+   States:     normal | hover | focus
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Nav container (ordered list)
+   --------------------------------------------------------------------------- */
+
+.dls-breadcrumbs {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  font-family: var(--dls-font-family);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dls-breadcrumbs__item {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------------------------
+   Separator (chevron icon between items)
+   --------------------------------------------------------------------------- */
+
+.dls-breadcrumbs__separator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+.dls-breadcrumbs__separator svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Breadcrumb link (regular, dropdown)
+   --------------------------------------------------------------------------- */
+
+.dls-breadcrumbs__link {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+  cursor: pointer;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-placeholder);
+  border-radius: var(--dls-radius-component-breadcrumb);
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.dls-breadcrumbs__link:hover:not(:disabled) {
+  color: var(--dls-color-text-secondary);
+  font-weight: var(--dls-font-weight-medium);
+}
+
+.dls-breadcrumbs__link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  background: var(--dls-color-surface-base);
+  color: var(--dls-color-text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Current page (non-interactive)
+   --------------------------------------------------------------------------- */
+
+.dls-breadcrumbs__current {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+  border-radius: var(--dls-radius-component-breadcrumb);
+}
+
+/* ---------------------------------------------------------------------------
+   More button (ellipsis)
+   --------------------------------------------------------------------------- */
+
+.dls-breadcrumbs__more {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-placeholder);
+  border-radius: var(--dls-radius-component-breadcrumb);
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.dls-breadcrumbs__more:hover:not(:disabled) {
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-breadcrumbs__more:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  background: var(--dls-color-surface-base);
+  color: var(--dls-color-text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Dropdown chevron icon
+   --------------------------------------------------------------------------- */
+
+.dls-breadcrumbs__dropdown-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+.dls-breadcrumbs__dropdown-icon svg {
+  width: 100%;
+  height: 100%;
+}

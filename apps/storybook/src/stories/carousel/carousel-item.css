@@ -1,0 +1,25 @@
+/* ==========================================================================
+   DLS Carousel Item — rounded content container for carousel slides
+   ========================================================================== */
+
+.dls-carousel-item {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+
+  border-radius: var(--dls-radius-component-carousel-item);
+}
+
+/* Image / media child fills the item */
+.dls-carousel-item > img,
+.dls-carousel-item > video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}

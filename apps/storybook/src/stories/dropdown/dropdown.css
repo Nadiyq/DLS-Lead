@@ -1,0 +1,346 @@
+/* ==========================================================================
+   DLS Dropdown — token-driven select / autocomplete field
+   States: normal | filled | focused | disabled | error
+   Types:  text | avatar | icon (via leading content slot)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Outer wrapper (vertical: label → field → hint/error)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  font-family: var(--dls-font-family);
+  width: 100%;
+  position: relative;
+}
+
+/* ---------------------------------------------------------------------------
+   Label
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-dropdown__label[data-disabled] {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Trigger (the bordered box)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__trigger {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  width: 100%;
+  min-height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
+  background: var(--dls-color-component-input-bg-base);
+  border: 1px solid var(--dls-color-component-input-border-base);
+  border-radius: var(--dls-radius-component-input);
+  cursor: pointer;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+/* Avatar type: tighter left padding */
+.dls-dropdown__trigger[data-has-leading] {
+  padding-left: var(--dls-spacing-1-5);
+}
+
+/* ---------------------------------------------------------------------------
+   Leading content (avatar or icon)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__leading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dls-dropdown__leading-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+.dls-dropdown__leading-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-dropdown__leading-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--dls-radius-component-avatar-s);
+  overflow: hidden;
+  background: var(--dls-color-surface-subtle);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--dls-text-xs-font-size);
+  font-weight: var(--dls-font-weight-semibold);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-dropdown__leading-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------------------------------------------------------------------------
+   Value / placeholder text
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-component-input-fg-base);
+}
+
+.dls-dropdown__value[data-placeholder] {
+  color: var(--dls-color-component-input-fg-placeholder);
+}
+
+/* ---------------------------------------------------------------------------
+   Autocomplete input (replaces value text when typing)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__input {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-component-input-fg-base);
+}
+
+.dls-dropdown__input::placeholder {
+  color: var(--dls-color-component-input-fg-placeholder);
+}
+
+.dls-dropdown__input:focus-visible {
+  outline: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Clear button
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__clear {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  color: var(--dls-color-text-secondary);
+  border-radius: var(--dls-radius-component-input);
+}
+
+.dls-dropdown__clear:hover:not(:disabled) {
+  color: var(--dls-color-text-primary);
+}
+
+.dls-dropdown__clear:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-dropdown__clear svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Chevron icon
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+  transition: transform 150ms ease;
+}
+
+.dls-dropdown__chevron svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-dropdown[data-open] .dls-dropdown__chevron {
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Hover
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__trigger:hover:not(:disabled):not([data-error]) {
+  border-color: var(--dls-color-component-input-border-hover);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Focus / Open
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__trigger:focus-visible,
+.dls-dropdown[data-open] .dls-dropdown__trigger {
+  outline: none;
+  border-color: var(--dls-color-component-input-border-focus);
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* Also respond to focus-within for autocomplete mode */
+.dls-dropdown__trigger:focus-within:not(:disabled) {
+  border-color: var(--dls-color-component-input-border-focus);
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__trigger:disabled {
+  background: var(--dls-color-component-input-bg-disabled);
+  border-color: var(--dls-color-component-input-border-disabled);
+  cursor: not-allowed;
+}
+
+.dls-dropdown__trigger:disabled .dls-dropdown__value {
+  color: var(--dls-color-component-input-fg-disabled);
+}
+
+.dls-dropdown__trigger:disabled .dls-dropdown__chevron,
+.dls-dropdown__trigger:disabled .dls-dropdown__leading-icon {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Error
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__trigger[data-error] {
+  background: var(--dls-color-intent-danger-subtle);
+  border-color: var(--dls-color-intent-danger-border);
+}
+
+/* ---------------------------------------------------------------------------
+   Listbox (dropdown menu)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__listbox {
+  all: unset;
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  margin-top: var(--dls-spacing-1);
+  padding: var(--dls-spacing-1);
+  background: var(--dls-color-component-dropdown-bg);
+  border: 1px solid var(--dls-color-component-dropdown-border);
+  border-radius: var(--dls-radius-component-dropdown);
+  box-shadow: var(--dls-shadow-overlay);
+  max-height: 240px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.dls-dropdown[data-open] .dls-dropdown__listbox {
+  display: block;
+}
+
+/* ---------------------------------------------------------------------------
+   Listbox item
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__option {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  width: 100%;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-component-dropdown-item-fg);
+  border-radius: var(--dls-radius-component-dropdown);
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.dls-dropdown__option:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-dropdown__option[data-selected] {
+  font-weight: var(--dls-font-weight-medium);
+}
+
+.dls-dropdown__option[data-highlighted] {
+  background: var(--dls-state-hover-overlay);
+}
+
+/* ---------------------------------------------------------------------------
+   Hint / Error message
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown__hint {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1-5);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-dropdown__hint[data-error] {
+  color: var(--dls-color-intent-danger-text);
+}
+
+.dls-dropdown__hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+.dls-dropdown__hint-icon svg {
+  width: 100%;
+  height: 100%;
+}

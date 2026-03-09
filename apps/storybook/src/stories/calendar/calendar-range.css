@@ -1,0 +1,166 @@
+/* ==========================================================================
+   DLS Calendar Range — two-month date range picker
+   Layouts: horizontal (side-by-side) | vertical (stacked)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-range {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: var(--dls-spacing-3);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-calendar);
+  font-family: var(--dls-font-family);
+  box-shadow: 0 4px 12px var(--dls-color-overlay-scrim);
+  gap: var(--dls-spacing-3);
+}
+
+/* ---------------------------------------------------------------------------
+   Month panels wrapper
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-range__panels {
+  display: flex;
+  gap: var(--dls-spacing-4);
+}
+
+/* Horizontal (default): side by side */
+.dls-calendar-range[data-layout="horizontal"] .dls-calendar-range__panels {
+  flex-direction: row;
+}
+
+/* Vertical: stacked */
+.dls-calendar-range[data-layout="vertical"] .dls-calendar-range__panels {
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------------------
+   Single month panel
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-range__month {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-2);
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Header — nav + month title
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-range__header {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.dls-calendar-range__nav {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--dls-radius-component-button);
+  color: var(--dls-color-text-primary);
+  cursor: pointer;
+}
+
+.dls-calendar-range__nav:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-calendar-range__nav:active:not(:disabled) {
+  background: var(--dls-state-pressed-overlay);
+}
+
+.dls-calendar-range__nav:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+  position: relative;
+}
+
+.dls-calendar-range__nav:disabled {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.dls-calendar-range__nav svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Invisible spacer to balance layout when arrow is hidden */
+.dls-calendar-range__nav[data-hidden] {
+  visibility: hidden;
+}
+
+.dls-calendar-range__month-title {
+  flex: 1;
+  text-align: center;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Weekday header row
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-range__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.dls-calendar-range__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Date grid
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-range__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* ---------------------------------------------------------------------------
+   Footer — separator + actions
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-range__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+}
+
+.dls-calendar-range__separator {
+  height: 1px;
+  background: var(--dls-color-border-subtle);
+}
+
+.dls-calendar-range__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--dls-spacing-2);
+}

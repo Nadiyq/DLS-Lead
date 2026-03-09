@@ -1,0 +1,112 @@
+/* ==========================================================================
+   DLS Card — container with header, content, and footer sections
+   Types: regular | outline | muted
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-card {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-4);
+  padding: var(--dls-spacing-4);
+  border-radius: var(--dls-radius-component-card);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Type: regular (no background, no border)
+   --------------------------------------------------------------------------- */
+
+.dls-card,
+.dls-card[data-type="regular"] {
+  background: transparent;
+  border: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Type: outline (border only)
+   --------------------------------------------------------------------------- */
+
+.dls-card[data-type="outline"] {
+  border: 1px solid var(--dls-color-border-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Type: muted (filled background + subtle border)
+   --------------------------------------------------------------------------- */
+
+.dls-card[data-type="muted"] {
+  background: var(--dls-color-surface-muted);
+  border: 1px solid var(--dls-color-border-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+   Header
+   --------------------------------------------------------------------------- */
+
+.dls-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-height: 24px;
+}
+
+.dls-card__header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-primary);
+  margin-right: var(--dls-spacing-2);
+}
+
+.dls-card__header-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-card__header-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Content area (title + description)
+   --------------------------------------------------------------------------- */
+
+.dls-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+}
+
+.dls-card__title {
+  font-size: var(--dls-text-xl-font-size);
+  line-height: var(--dls-text-xl-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-card__description {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------------- */
+
+.dls-card__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+}

@@ -1,0 +1,60 @@
+/* ==========================================================================
+   DLS Checkmark — circular icon indicator with check icon
+   Sizes: M (32px) | S (24px) | XS (16px)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+.dls-checkmark {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  background: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+  border-radius: var(--dls-radius-component-checkmark);
+}
+
+/* ---------------------------------------------------------------------------
+   Sizes
+   --------------------------------------------------------------------------- */
+
+/* M — 32×32, icon 24 */
+.dls-checkmark,
+.dls-checkmark[data-size="m"] {
+  width: 32px;
+  height: 32px;
+}
+
+.dls-checkmark[data-size="m"] svg,
+.dls-checkmark:not([data-size]) svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* S — 24×24, icon 16 */
+.dls-checkmark[data-size="s"] {
+  width: 24px;
+  height: 24px;
+}
+
+.dls-checkmark[data-size="s"] svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* XS — 16×16, icon 12 */
+.dls-checkmark[data-size="xs"] {
+  width: 16px;
+  height: 16px;
+}
+
+.dls-checkmark[data-size="xs"] svg {
+  width: 12px;
+  height: 12px;
+}

@@ -1,0 +1,127 @@
+/* ==========================================================================
+   DLS Calendar — date/month/year picker panel
+   Views: date | month | year
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-calendar {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 276px;
+  padding: var(--dls-spacing-3);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-calendar);
+  font-family: var(--dls-font-family);
+  box-shadow: 0 4px 12px var(--dls-color-overlay-scrim);
+}
+
+/* ---------------------------------------------------------------------------
+   Header — prev arrow, title, next arrow
+   --------------------------------------------------------------------------- */
+
+.dls-calendar__header {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 32px;
+  margin-bottom: var(--dls-spacing-2);
+}
+
+.dls-calendar__nav {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--dls-radius-component-button);
+  color: var(--dls-color-text-primary);
+  cursor: pointer;
+}
+
+.dls-calendar__nav:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-calendar__nav:active:not(:disabled) {
+  background: var(--dls-state-pressed-overlay);
+}
+
+.dls-calendar__nav:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+  position: relative;
+}
+
+.dls-calendar__nav:disabled {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.dls-calendar__nav svg {
+  width: 16px;
+  height: 16px;
+}
+
+.dls-calendar__title {
+  flex: 1;
+  text-align: center;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--dls-radius-component-button);
+  padding: var(--dls-spacing-1) 0;
+}
+
+.dls-calendar__title:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+/* ---------------------------------------------------------------------------
+   Weekday header row (date view)
+   --------------------------------------------------------------------------- */
+
+.dls-calendar__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.dls-calendar__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Grids — date (7 col), month (3 col), year (4 col)
+   --------------------------------------------------------------------------- */
+
+.dls-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.dls-calendar__grid--months {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.dls-calendar__grid--years {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}

@@ -1,0 +1,231 @@
+/* ==========================================================================
+   DLS Date Input — token-driven date picker trigger field
+   States: normal | filled | focused | disabled | error
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Wrapper (vertical stack: label -> field -> hint/error)
+   --------------------------------------------------------------------------- */
+
+.dls-date-input {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  font-family: var(--dls-font-family);
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Label
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-date-input__label[data-disabled] {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Trigger (the bordered box)
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__trigger {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  width: 100%;
+  min-height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
+  background: var(--dls-color-component-input-bg-base);
+  border: 1px solid var(--dls-color-component-input-border-base);
+  border-radius: var(--dls-radius-component-input);
+  cursor: pointer;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Content (calendar icon + text)
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__content {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Leading calendar icon
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__calendar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-date-input__calendar-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Value / placeholder text
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-component-input-fg-base);
+}
+
+.dls-date-input__value[data-placeholder] {
+  color: var(--dls-color-component-input-fg-placeholder);
+}
+
+/* ---------------------------------------------------------------------------
+   Clear button
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__clear {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  color: var(--dls-color-text-secondary);
+  border-radius: var(--dls-radius-component-input);
+}
+
+.dls-date-input__clear:hover:not(:disabled) {
+  color: var(--dls-color-text-primary);
+}
+
+.dls-date-input__clear:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-date-input__clear svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Chevron icon
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-date-input__chevron svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   State: Hover
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__trigger:hover:not(:disabled):not([data-error]) {
+  border-color: var(--dls-color-component-input-border-hover);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Focus
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__trigger:focus-visible {
+  border-color: var(--dls-color-component-input-border-focus);
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__trigger:disabled {
+  background: var(--dls-color-component-input-bg-disabled);
+  border-color: var(--dls-color-component-input-border-base);
+  cursor: not-allowed;
+}
+
+.dls-date-input__trigger:disabled .dls-date-input__value {
+  color: var(--dls-color-component-input-fg-disabled);
+}
+
+.dls-date-input__trigger:disabled .dls-date-input__chevron,
+.dls-date-input__trigger:disabled .dls-date-input__calendar-icon {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Error
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__trigger[data-error] {
+  background: var(--dls-color-intent-danger-subtle);
+  border-color: var(--dls-color-intent-danger-border);
+}
+
+/* ---------------------------------------------------------------------------
+   Hint / Error message
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__hint {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1-5);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-date-input__hint[data-error] {
+  color: var(--dls-color-intent-danger-text);
+}
+
+.dls-date-input__hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.dls-date-input__hint-icon svg {
+  width: 100%;
+  height: 100%;
+}

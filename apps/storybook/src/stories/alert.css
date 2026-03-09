@@ -67,8 +67,8 @@
   line-height: var(--dls-text-m-line-height);
 }
 .dls-alert[data-size="m"] .dls-alert__icon {
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   padding-top: var(--dls-spacing-0-5);
   padding-bottom: var(--dls-spacing-0-5);
 }

@@ -1,0 +1,64 @@
+/* ==========================================================================
+   DLS Calendar Day — reusable cell for date/month/year grids
+   States: normal | today | hover | highlight | selected | disabled
+   ========================================================================== */
+
+.dls-calendar-day {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: var(--dls-spacing-2);
+  border-radius: var(--dls-radius-component-calendar-day);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-intent-neutral-text);
+  cursor: pointer;
+}
+
+/* Outside current month — muted text */
+.dls-calendar-day[data-outside] {
+  color: var(--dls-color-text-placeholder);
+}
+
+/* Hover */
+.dls-calendar-day:hover:not(:disabled):not([data-selected]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+/* Today — primary subtle fill + border */
+.dls-calendar-day[data-today]:not([data-selected]) {
+  background: var(--dls-color-intent-primary-subtle);
+  border: 1px solid var(--dls-color-intent-primary-border);
+  color: var(--dls-color-intent-primary-text);
+}
+
+/* Selected — neutral base fill */
+.dls-calendar-day[data-selected] {
+  background: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+}
+
+/* Highlight (range) — no radius, subtle overlay */
+.dls-calendar-day[data-highlight]:not([data-selected]) {
+  border-radius: 0;
+  background: var(--dls-state-hover-overlay);
+}
+
+/* Disabled */
+.dls-calendar-day:disabled {
+  background: var(--dls-color-surface-disabled);
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Focus */
+.dls-calendar-day:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+  position: relative;
+}

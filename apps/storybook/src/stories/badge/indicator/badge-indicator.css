@@ -1,0 +1,89 @@
+/* ==========================================================================
+   DLS Badge Indicator — circular status dot / count indicator
+   Always filled, always pill-shaped. Optionally displays a number.
+   Intents:  neutral | primary | info | success | warning | danger
+   Sizes:    xs (8px dot) | s (16px) | m (24px) | l (32px)
+   ========================================================================== */
+
+.dls-badge-indicator {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--dls-radius-component-badge);
+  font-family: var(--dls-font-family);
+  font-weight: var(--dls-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  user-select: none;
+  flex-shrink: 0;
+
+  --_base: var(--dls-color-intent-neutral-base);
+  --_on-base: var(--dls-color-intent-neutral-on-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Intent overrides
+   --------------------------------------------------------------------------- */
+
+.dls-badge-indicator[data-intent="primary"] {
+  --_base: var(--dls-color-intent-primary-base);
+  --_on-base: var(--dls-color-intent-primary-on-base);
+}
+.dls-badge-indicator[data-intent="info"] {
+  --_base: var(--dls-color-intent-info-base);
+  --_on-base: var(--dls-color-intent-info-on-base);
+}
+.dls-badge-indicator[data-intent="success"] {
+  --_base: var(--dls-color-intent-success-base);
+  --_on-base: var(--dls-color-intent-success-on-base);
+}
+.dls-badge-indicator[data-intent="warning"] {
+  --_base: var(--dls-color-intent-warning-base);
+  --_on-base: var(--dls-color-intent-warning-on-base);
+}
+.dls-badge-indicator[data-intent="danger"] {
+  --_base: var(--dls-color-intent-danger-base);
+  --_on-base: var(--dls-color-intent-danger-on-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Always filled
+   --------------------------------------------------------------------------- */
+
+.dls-badge-indicator {
+  background: var(--_base);
+  color: var(--_on-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Sizes (match Figma: XS=8, S=16, M=24, L=32)
+   --------------------------------------------------------------------------- */
+
+.dls-badge-indicator[data-size="xs"] {
+  width: 8px;
+  height: 8px;
+  font-size: 0;
+  line-height: 0;
+}
+.dls-badge-indicator[data-size="s"] {
+  width: 16px;
+  height: 16px;
+  font-size: var(--dls-text-xs-font-size);
+  line-height: var(--dls-text-xs-line-height);
+}
+.dls-badge-indicator[data-size="m"] {
+  min-width: 24px;
+  height: 24px;
+  padding: 0 var(--dls-spacing-1);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+}
+.dls-badge-indicator[data-size="l"] {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 var(--dls-spacing-1-5);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+}

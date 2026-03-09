@@ -1,0 +1,173 @@
+/* ==========================================================================
+   DLS Chip Filter — compound filter chip with label segments + chevron
+   States: active | inactive
+   Sizes: m | s
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-chip-filter {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--dls-font-family);
+  white-space: nowrap;
+  max-width: 100%;
+  border-radius: var(--dls-radius-component-chip);
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+/* Active state — surface/base bg, border/base stroke */
+.dls-chip-filter[data-active] {
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-base);
+  color: var(--dls-color-intent-neutral-text);
+}
+
+/* Inactive state (default) — surface/disabled bg, border/disabled stroke */
+.dls-chip-filter:not([data-active]) {
+  background: var(--dls-color-surface-disabled);
+  border: 1px solid var(--dls-color-border-disabled);
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Hover
+   --------------------------------------------------------------------------- */
+
+.dls-chip-filter:hover:not([data-disabled]) {
+  box-shadow: inset 0 0 0 100px var(--dls-state-hover-overlay);
+}
+
+.dls-chip-filter:active:not([data-disabled]) {
+  box-shadow: inset 0 0 0 100px var(--dls-state-pressed-overlay);
+}
+
+/* ---------------------------------------------------------------------------
+   Focus
+   --------------------------------------------------------------------------- */
+
+.dls-chip-filter:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-chip-filter[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Sizes
+   --------------------------------------------------------------------------- */
+
+/* M (default) — 32px */
+.dls-chip-filter,
+.dls-chip-filter[data-size="m"] {
+  height: 32px;
+}
+
+/* S — 28px */
+.dls-chip-filter[data-size="s"] {
+  height: 28px;
+}
+
+/* ---------------------------------------------------------------------------
+   Segments — individual chip-like sections within the filter
+   --------------------------------------------------------------------------- */
+
+.dls-chip-filter__segment {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: inherit;
+}
+
+/* M segment padding */
+.dls-chip-filter__segment,
+.dls-chip-filter[data-size="m"] .dls-chip-filter__segment {
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2);
+  gap: var(--dls-spacing-2);
+}
+
+/* S segment padding */
+.dls-chip-filter[data-size="s"] .dls-chip-filter__segment {
+  padding: var(--dls-spacing-1) var(--dls-spacing-1-5);
+  gap: var(--dls-spacing-1-5);
+}
+
+/* ---------------------------------------------------------------------------
+   Segment icon
+   --------------------------------------------------------------------------- */
+
+.dls-chip-filter__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-chip-filter__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-chip-filter[data-active] .dls-chip-filter__icon {
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-chip-filter:not([data-active]) .dls-chip-filter__icon {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Chevron segment
+   --------------------------------------------------------------------------- */
+
+.dls-chip-filter__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+/* M chevron padding */
+.dls-chip-filter__chevron,
+.dls-chip-filter[data-size="m"] .dls-chip-filter__chevron {
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2);
+}
+
+/* S chevron padding */
+.dls-chip-filter[data-size="s"] .dls-chip-filter__chevron {
+  padding: var(--dls-spacing-1) var(--dls-spacing-1-5);
+}
+
+.dls-chip-filter__chevron svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Label
+   --------------------------------------------------------------------------- */
+
+.dls-chip-filter__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

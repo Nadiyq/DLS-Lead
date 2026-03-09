@@ -1,0 +1,109 @@
+/* ==========================================================================
+   DLS Button Group — groups buttons into a unified control
+   Variants:    filled | outline | soft | ghost
+   Orientation: horizontal | vertical
+   Sizes:       m | s
+   ========================================================================== */
+
+.dls-button-group {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  border-radius: var(--dls-radius-component-button);
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Orientation
+   --------------------------------------------------------------------------- */
+
+.dls-button-group[data-orientation="horizontal"] {
+  flex-direction: row;
+}
+.dls-button-group[data-orientation="vertical"] {
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------------------
+   Reset child button radius (parent clips via overflow: hidden)
+   --------------------------------------------------------------------------- */
+
+.dls-button-group .dls-button {
+  border-radius: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Filled
+   Background covers the group; child buttons are transparent-bordered.
+   --------------------------------------------------------------------------- */
+
+.dls-button-group[data-variant="filled"] {
+  background: var(--dls-color-intent-neutral-base);
+}
+
+/* Dividers between filled buttons */
+.dls-button-group[data-variant="filled"][data-orientation="horizontal"] > .dls-button + .dls-button {
+  border-left: 1px solid var(--dls-color-intent-neutral-on-base);
+  border-left-color: color-mix(in srgb, var(--dls-color-intent-neutral-on-base) 20%, transparent);
+}
+.dls-button-group[data-variant="filled"][data-orientation="vertical"] > .dls-button + .dls-button {
+  border-top: 1px solid var(--dls-color-intent-neutral-on-base);
+  border-top-color: color-mix(in srgb, var(--dls-color-intent-neutral-on-base) 20%, transparent);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Outline
+   --------------------------------------------------------------------------- */
+
+.dls-button-group[data-variant="outline"] {
+  border: 1px solid var(--dls-color-intent-neutral-base);
+}
+
+/* Dividers between outline buttons */
+.dls-button-group[data-variant="outline"][data-orientation="horizontal"] > .dls-button + .dls-button {
+  border-left: 1px solid var(--dls-color-intent-neutral-base);
+}
+.dls-button-group[data-variant="outline"][data-orientation="vertical"] > .dls-button + .dls-button {
+  border-top: 1px solid var(--dls-color-intent-neutral-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Soft
+   --------------------------------------------------------------------------- */
+
+.dls-button-group[data-variant="soft"] {
+  background: var(--dls-color-intent-neutral-subtle);
+  border: 1px solid var(--dls-color-border-base);
+}
+
+/* Dividers between soft buttons */
+.dls-button-group[data-variant="soft"][data-orientation="horizontal"] > .dls-button + .dls-button {
+  border-left: 1px solid var(--dls-color-border-base);
+}
+.dls-button-group[data-variant="soft"][data-orientation="vertical"] > .dls-button + .dls-button {
+  border-top: 1px solid var(--dls-color-border-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Ghost (no container styling)
+   --------------------------------------------------------------------------- */
+
+.dls-button-group[data-variant="ghost"] {
+  background: transparent;
+}
+
+/* Dividers between ghost buttons */
+.dls-button-group[data-variant="ghost"][data-orientation="horizontal"] > .dls-button + .dls-button {
+  border-left: 1px solid var(--dls-color-border-subtle);
+}
+.dls-button-group[data-variant="ghost"][data-orientation="vertical"] > .dls-button + .dls-button {
+  border-top: 1px solid var(--dls-color-border-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+   Child button overrides — remove individual borders since group handles them
+   --------------------------------------------------------------------------- */
+
+.dls-button-group .dls-button {
+  border: none;
+}

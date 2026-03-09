@@ -1,0 +1,235 @@
+/* ==========================================================================
+   DLS OTP Input — token-driven one-time-password input
+   Types: spacing | no-spacing | 1-separator | 2-separator
+   Slot states: normal | filled | focus | error
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Wrapper (vertical stack: label -> field -> hint/error)
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Label
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-otp-input__label[data-disabled] {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Field row (holds slot groups + separators)
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input__field {
+  display: flex;
+  align-items: center;
+}
+
+/* Spacing type: 6px gap between individual slots */
+.dls-otp-input__field[data-type="spacing"] {
+  gap: var(--dls-spacing-1-5);
+}
+
+/* No-spacing type: no gap, outer border wraps all slots */
+.dls-otp-input__field[data-type="no-spacing"] {
+  gap: 0;
+  border: 1px solid var(--dls-color-border-base);
+  border-radius: var(--dls-radius-component-input);
+  overflow: hidden;
+}
+
+/* Separator types: 6px gap between groups and separators */
+.dls-otp-input__field[data-type="1-separator"],
+.dls-otp-input__field[data-type="2-separator"] {
+  gap: var(--dls-spacing-1-5);
+}
+
+/* ---------------------------------------------------------------------------
+   Slot group (for separator types: grouped slots with shared border)
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input__group {
+  display: flex;
+  border: 1px solid var(--dls-color-border-base);
+  border-radius: var(--dls-radius-component-input);
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Individual slot
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input__slot {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-component-input-fg-placeholder);
+  background: var(--dls-color-surface-base);
+  text-align: center;
+  caret-color: transparent;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+/* Spacing type: each slot has its own border */
+.dls-otp-input__field[data-type="spacing"] .dls-otp-input__slot {
+  border: 1px solid var(--dls-color-border-base);
+  border-radius: var(--dls-radius-component-input);
+}
+
+/* No-spacing type: slots share outer border, inner dividers */
+.dls-otp-input__field[data-type="no-spacing"] .dls-otp-input__slot {
+  border: none;
+  border-radius: 0;
+  border-right: 1px solid var(--dls-color-border-base);
+}
+
+.dls-otp-input__field[data-type="no-spacing"] .dls-otp-input__slot:last-child {
+  border-right: none;
+}
+
+/* Grouped slots: no individual border, inner dividers */
+.dls-otp-input__group .dls-otp-input__slot {
+  border: none;
+  border-radius: 0;
+  border-right: 1px solid var(--dls-color-border-base);
+}
+
+.dls-otp-input__group .dls-otp-input__slot:last-child {
+  border-right: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Slot: Filled
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input__slot[data-filled] {
+  color: var(--dls-color-text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Slot: Focus
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input__slot:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+  position: relative;
+}
+
+/* Spacing type focus: also highlight border */
+.dls-otp-input__field[data-type="spacing"] .dls-otp-input__slot:focus-visible {
+  border-color: var(--dls-color-component-input-border-focus);
+}
+
+/* ---------------------------------------------------------------------------
+   Slot: Error
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input__slot[data-error] {
+  border-color: var(--dls-color-intent-danger-base);
+}
+
+.dls-otp-input__field[data-type="no-spacing"][data-error] {
+  border-color: var(--dls-color-intent-danger-base);
+}
+
+.dls-otp-input__group[data-error] {
+  border-color: var(--dls-color-intent-danger-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Slot: Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input__slot:disabled {
+  background: var(--dls-color-component-input-bg-disabled);
+  color: var(--dls-color-component-input-fg-disabled);
+  cursor: not-allowed;
+}
+
+.dls-otp-input__field[data-type="spacing"] .dls-otp-input__slot:disabled {
+  border-color: var(--dls-color-component-input-border-disabled);
+}
+
+.dls-otp-input__field[data-type="no-spacing"][data-disabled] {
+  border-color: var(--dls-color-component-input-border-disabled);
+}
+
+.dls-otp-input__group[data-disabled] {
+  border-color: var(--dls-color-component-input-border-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Separator (minus icon)
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input__separator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--dls-color-border-strong);
+}
+
+.dls-otp-input__separator svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Hint / Error message
+   --------------------------------------------------------------------------- */
+
+.dls-otp-input__hint {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1-5);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-otp-input__hint[data-error] {
+  color: var(--dls-color-intent-danger-text);
+}
+
+.dls-otp-input__hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.dls-otp-input__hint-icon svg {
+  width: 100%;
+  height: 100%;
+}

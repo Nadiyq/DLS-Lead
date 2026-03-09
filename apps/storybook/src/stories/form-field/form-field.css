@@ -1,0 +1,113 @@
+/* ==========================================================================
+   DLS Form Field — layout wrapper for input components
+   Orientations: vertical (stacked) | horizontal (side-by-side)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+.dls-form-field {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  font-family: var(--dls-font-family);
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Vertical layout (default): label → input → hint, stacked
+   --------------------------------------------------------------------------- */
+
+.dls-form-field,
+.dls-form-field[data-orientation="vertical"] {
+  flex-direction: column;
+  gap: var(--dls-spacing-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Horizontal layout: label+hint on left, input on right
+   --------------------------------------------------------------------------- */
+
+.dls-form-field[data-orientation="horizontal"] {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+}
+
+/* ---------------------------------------------------------------------------
+   Left column (horizontal mode: label + hint stacked)
+   --------------------------------------------------------------------------- */
+
+.dls-form-field__left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  flex-shrink: 0;
+  width: 140px;
+}
+
+/* ---------------------------------------------------------------------------
+   Label row
+   --------------------------------------------------------------------------- */
+
+.dls-form-field__label-row {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+}
+
+.dls-form-field__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-form-field__label[data-disabled] {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Info icon (optional, next to label)
+   --------------------------------------------------------------------------- */
+
+.dls-form-field__info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  color: var(--dls-color-text-secondary);
+  cursor: help;
+}
+
+.dls-form-field__info svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Input area
+   --------------------------------------------------------------------------- */
+
+.dls-form-field__input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Hint text
+   --------------------------------------------------------------------------- */
+
+.dls-form-field__hint {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-form-field__hint[data-disabled] {
+  color: var(--dls-color-text-disabled);
+}

@@ -1,0 +1,108 @@
+/* ==========================================================================
+   DLS Icon Shape — colored icon container with intent background
+   Intents: primary | success | warning | danger | info | neutral
+   Sizes: M (40px) | S (32px) | XS (24px)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+.dls-icon-shape {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--dls-font-family);
+
+  /* Internal intent variables — set per data-intent */
+  --_subtle: var(--dls-color-intent-neutral-subtle);
+  --_text: var(--dls-color-intent-neutral-text);
+}
+
+/* ---------------------------------------------------------------------------
+   Intents
+   --------------------------------------------------------------------------- */
+
+.dls-icon-shape[data-intent="primary"] {
+  --_subtle: var(--dls-color-intent-primary-subtle);
+  --_text: var(--dls-color-intent-primary-text);
+}
+
+.dls-icon-shape[data-intent="success"] {
+  --_subtle: var(--dls-color-intent-success-subtle);
+  --_text: var(--dls-color-intent-success-text);
+}
+
+.dls-icon-shape[data-intent="warning"] {
+  --_subtle: var(--dls-color-intent-warning-subtle);
+  --_text: var(--dls-color-intent-warning-text);
+}
+
+.dls-icon-shape[data-intent="danger"] {
+  --_subtle: var(--dls-color-intent-danger-subtle);
+  --_text: var(--dls-color-intent-danger-text);
+}
+
+.dls-icon-shape[data-intent="info"] {
+  --_subtle: var(--dls-color-intent-info-subtle);
+  --_text: var(--dls-color-intent-info-text);
+}
+
+.dls-icon-shape[data-intent="neutral"] {
+  --_subtle: var(--dls-color-intent-neutral-subtle);
+  --_text: var(--dls-color-intent-neutral-text);
+}
+
+/* Apply intent colors */
+.dls-icon-shape {
+  background: var(--_subtle);
+  color: var(--_text);
+}
+
+/* ---------------------------------------------------------------------------
+   Sizes
+   --------------------------------------------------------------------------- */
+
+/* M — 40×40, radius 8 (primitives/l), icon 24, padding 8 */
+.dls-icon-shape,
+.dls-icon-shape[data-size="m"] {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--dls-radius-component-icon-shape);
+  padding: var(--dls-spacing-2);
+}
+
+.dls-icon-shape[data-size="m"] svg,
+.dls-icon-shape:not([data-size]) svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* S — 32×32, radius 8, icon 16, padding 8 */
+.dls-icon-shape[data-size="s"] {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--dls-radius-component-icon-shape);
+  padding: var(--dls-spacing-2);
+}
+
+.dls-icon-shape[data-size="s"] svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* XS — 24×24, radius 6, icon 12, padding 6 */
+.dls-icon-shape[data-size="xs"] {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--dls-radius-component-icon-shape-xs);
+  padding: var(--dls-spacing-1-5);
+}
+
+.dls-icon-shape[data-size="xs"] svg {
+  width: 12px;
+  height: 12px;
+}

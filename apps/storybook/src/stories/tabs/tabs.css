@@ -1,0 +1,132 @@
+/* ==========================================================================
+   DLS Tabs — tab group + tab items
+   Types: pill | folder
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Tab group container
+   --------------------------------------------------------------------------- */
+
+.dls-tab-group {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--dls-font-family);
+}
+
+/* Pill group — muted bg, rounded, padded */
+.dls-tab-group,
+.dls-tab-group[data-type="pill"] {
+  background: var(--dls-color-surface-muted);
+  border-radius: var(--dls-radius-component-tab-group);
+  padding: var(--dls-spacing-0-5);
+  gap: var(--dls-spacing-1);
+}
+
+/* Folder group — flat, sits on a border line */
+.dls-tab-group[data-type="folder"] {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  gap: var(--dls-spacing-0-5);
+  border-bottom: 1px solid var(--dls-color-border-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Tab item — shared base
+   --------------------------------------------------------------------------- */
+
+.dls-tab-item {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dls-spacing-1-5);
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+  cursor: pointer;
+  position: relative;
+}
+
+/* ---------------------------------------------------------------------------
+   Tab item — pill type
+   --------------------------------------------------------------------------- */
+
+.dls-tab-group[data-type="pill"] .dls-tab-item {
+  border-radius: var(--dls-radius-component-tab);
+}
+
+/* Pill: hover */
+.dls-tab-group[data-type="pill"] .dls-tab-item:hover:not(:disabled):not([data-selected]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+/* Pill: selected */
+.dls-tab-group[data-type="pill"] .dls-tab-item[data-selected] {
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-base);
+  font-weight: var(--dls-font-weight-medium);
+  box-shadow: 0 1px 2px var(--dls-color-overlay-scrim);
+}
+
+/* ---------------------------------------------------------------------------
+   Tab item — folder type
+   --------------------------------------------------------------------------- */
+
+.dls-tab-group[data-type="folder"] .dls-tab-item {
+  border-radius: var(--dls-radius-component-tab) var(--dls-radius-component-tab) 0 0;
+  background: var(--dls-color-surface-muted);
+  margin-bottom: -1px;
+}
+
+/* Folder: hover */
+.dls-tab-group[data-type="folder"] .dls-tab-item:hover:not(:disabled):not([data-selected]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+/* Folder: selected — sits on border, covers it */
+.dls-tab-group[data-type="folder"] .dls-tab-item[data-selected] {
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-base);
+  border-bottom-color: var(--dls-color-surface-base);
+  font-weight: var(--dls-font-weight-medium);
+}
+
+/* ---------------------------------------------------------------------------
+   Tab item — shared states
+   --------------------------------------------------------------------------- */
+
+/* Focus */
+.dls-tab-item:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+}
+
+/* Disabled */
+.dls-tab-item:disabled {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Tab icon (optional leading icon)
+   --------------------------------------------------------------------------- */
+
+.dls-tab-item__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.dls-tab-item__icon svg {
+  width: 100%;
+  height: 100%;
+}

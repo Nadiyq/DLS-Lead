@@ -1,0 +1,209 @@
+/* ==========================================================================
+   DLS Checkbox
+   Types: selected | middle (indeterminate) | unselected
+   States: normal | hover | focus | pressed | disabled
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Wrapper — acts as click target
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  cursor: pointer;
+  font-family: var(--dls-font-family);
+}
+
+.dls-checkbox:has(.dls-checkbox__input:disabled) {
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Hidden native input
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Visual box — 18×18
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox__box {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--dls-radius-component-checkbox);
+
+  /* Unselected base */
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-strong);
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+/* Icon hidden by default */
+.dls-checkbox__box svg {
+  width: 12px;
+  height: 12px;
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Selected (checked)
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox__input:checked + .dls-checkbox__box-wrapper .dls-checkbox__box {
+  background: var(--dls-color-intent-neutral-base);
+  border-color: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+}
+
+.dls-checkbox__input:checked + .dls-checkbox__box-wrapper .dls-checkbox__box .dls-checkbox__icon-check {
+  display: block;
+}
+
+/* ---------------------------------------------------------------------------
+   Indeterminate (middle)
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox__input:indeterminate + .dls-checkbox__box-wrapper .dls-checkbox__box {
+  background: var(--dls-color-intent-neutral-base);
+  border-color: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+}
+
+.dls-checkbox__input:indeterminate + .dls-checkbox__box-wrapper .dls-checkbox__box .dls-checkbox__icon-check {
+  display: none;
+}
+
+.dls-checkbox__input:indeterminate + .dls-checkbox__box-wrapper .dls-checkbox__box .dls-checkbox__icon-minus {
+  display: block;
+}
+
+/* ---------------------------------------------------------------------------
+   Hover — unselected
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox__input:not(:checked):not(:indeterminate):not(:disabled):hover + .dls-checkbox__box-wrapper .dls-checkbox__box,
+.dls-checkbox:hover .dls-checkbox__input:not(:checked):not(:indeterminate):not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box {
+  background: var(--dls-state-hover-overlay);
+  border-color: var(--dls-color-border-focus);
+}
+
+/* Hover — selected / indeterminate */
+
+.dls-checkbox__input:checked:not(:disabled):hover + .dls-checkbox__box-wrapper .dls-checkbox__box,
+.dls-checkbox:hover .dls-checkbox__input:checked:not(:disabled) + .dls-checkbox__box,
+.dls-checkbox__input:indeterminate:not(:disabled):hover + .dls-checkbox__box-wrapper .dls-checkbox__box,
+.dls-checkbox:hover .dls-checkbox__input:indeterminate:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box {
+  background:
+    var(--dls-state-hover-overlay),
+    var(--dls-color-intent-neutral-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Pressed — unselected
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox__input:not(:checked):not(:indeterminate):not(:disabled):active + .dls-checkbox__box-wrapper .dls-checkbox__box,
+.dls-checkbox:active .dls-checkbox__input:not(:checked):not(:indeterminate):not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box {
+  background: var(--dls-state-pressed-overlay);
+  border-color: var(--dls-color-border-focus);
+}
+
+/* Pressed — selected / indeterminate */
+
+.dls-checkbox__input:checked:not(:disabled):active + .dls-checkbox__box-wrapper .dls-checkbox__box,
+.dls-checkbox:active .dls-checkbox__input:checked:not(:disabled) + .dls-checkbox__box,
+.dls-checkbox__input:indeterminate:not(:disabled):active + .dls-checkbox__box-wrapper .dls-checkbox__box,
+.dls-checkbox:active .dls-checkbox__input:indeterminate:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box {
+  background:
+    var(--dls-state-pressed-overlay),
+    var(--dls-color-intent-neutral-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Focus
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox__input:focus-visible + .dls-checkbox__box-wrapper .dls-checkbox__box {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox__input:disabled + .dls-checkbox__box-wrapper .dls-checkbox__box {
+  background: var(--dls-color-surface-disabled);
+  border-color: var(--dls-color-border-disabled);
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Text orientation — label before checkbox
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox[data-text-orientation="left"] {
+  flex-direction: row-reverse;
+}
+
+/* ---------------------------------------------------------------------------
+   Box wrapper — aligns checkbox to first line of text
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox__box-wrapper {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+/* ---------------------------------------------------------------------------
+   Text block — label + optional description
+   --------------------------------------------------------------------------- */
+
+.dls-checkbox__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  user-select: none;
+}
+
+.dls-checkbox__label {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-checkbox__description {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-checkbox__input:disabled ~ .dls-checkbox__text .dls-checkbox__label,
+.dls-checkbox__input:disabled ~ .dls-checkbox__text .dls-checkbox__description {
+  color: var(--dls-color-text-disabled);
+}

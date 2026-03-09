@@ -1,0 +1,169 @@
+/* ==========================================================================
+   DLS Badge — token-driven status/label component
+   Variants: outline | soft | filled | ghost
+   Intents:  neutral | info | success | warning | danger
+   Sizes:    m | s | xs
+   ========================================================================== */
+
+.dls-badge {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--dls-font-family);
+  font-weight: var(--dls-font-weight-medium);
+  border-radius: var(--dls-radius-component-badge);
+  white-space: nowrap;
+  user-select: none;
+
+  --_bg: var(--dls-color-component-badge-neutral-bg);
+  --_fg: var(--dls-color-component-badge-neutral-fg);
+  --_border: var(--dls-color-component-badge-neutral-border);
+  --_base: var(--dls-color-intent-neutral-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Intent overrides
+   --------------------------------------------------------------------------- */
+
+.dls-badge[data-intent="info"] {
+  --_bg: var(--dls-color-component-badge-info-bg);
+  --_fg: var(--dls-color-component-badge-info-fg);
+  --_border: var(--dls-color-component-badge-info-border);
+  --_base: var(--dls-color-intent-info-base);
+}
+.dls-badge[data-intent="success"] {
+  --_bg: var(--dls-color-component-badge-success-bg);
+  --_fg: var(--dls-color-component-badge-success-fg);
+  --_border: var(--dls-color-component-badge-success-border);
+  --_base: var(--dls-color-intent-success-base);
+}
+.dls-badge[data-intent="warning"] {
+  --_bg: var(--dls-color-component-badge-warning-bg);
+  --_fg: var(--dls-color-component-badge-warning-fg);
+  --_border: var(--dls-color-component-badge-warning-border);
+  --_base: var(--dls-color-intent-warning-base);
+}
+.dls-badge[data-intent="danger"] {
+  --_bg: var(--dls-color-component-badge-danger-bg);
+  --_fg: var(--dls-color-component-badge-danger-fg);
+  --_border: var(--dls-color-component-badge-danger-border);
+  --_base: var(--dls-color-intent-danger-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Sizes
+   --------------------------------------------------------------------------- */
+
+.dls-badge[data-size="m"] {
+  padding: var(--dls-spacing-0-5) var(--dls-spacing-2);
+  gap: var(--dls-spacing-1-5);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+}
+.dls-badge[data-size="s"] {
+  padding: var(--dls-spacing-0-5) var(--dls-spacing-1-5);
+  gap: var(--dls-spacing-1);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+}
+.dls-badge[data-size="xs"] {
+  padding: var(--dls-spacing-0-5) var(--dls-spacing-1);
+  gap: var(--dls-spacing-1);
+  font-size: var(--dls-text-xs-font-size);
+  line-height: var(--dls-text-xs-line-height);
+}
+
+/* ---------------------------------------------------------------------------
+   Icon sizing
+   --------------------------------------------------------------------------- */
+
+.dls-badge__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.dls-badge__icon svg {
+  width: 100%;
+  height: 100%;
+}
+.dls-badge[data-size="m"] .dls-badge__icon {
+  width: 16px;
+  height: 16px;
+}
+.dls-badge[data-size="s"] .dls-badge__icon,
+.dls-badge[data-size="xs"] .dls-badge__icon {
+  width: 12px;
+  height: 12px;
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Outline
+   --------------------------------------------------------------------------- */
+
+.dls-badge[data-variant="outline"] {
+  background: transparent;
+  color: var(--_fg);
+  border: 1px solid var(--_fg);
+}
+.dls-badge[data-variant="outline"][data-intent="neutral"],
+.dls-badge[data-variant="outline"]:not([data-intent]) {
+  border-color: var(--dls-color-border-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Soft
+   --------------------------------------------------------------------------- */
+
+.dls-badge[data-variant="soft"] {
+  background: var(--_bg);
+  color: var(--_fg);
+  border: 1px solid var(--_border);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Filled
+   --------------------------------------------------------------------------- */
+
+.dls-badge[data-variant="filled"] {
+  background: var(--_base);
+  color: var(--dls-color-intent-neutral-on-base);
+  border: 1px solid transparent;
+}
+.dls-badge[data-variant="filled"][data-intent="info"] {
+  background: var(--dls-color-intent-info-base);
+  color: var(--dls-color-intent-info-on-base);
+}
+.dls-badge[data-variant="filled"][data-intent="success"] {
+  background: var(--dls-color-intent-success-base);
+  color: var(--dls-color-intent-success-on-base);
+}
+.dls-badge[data-variant="filled"][data-intent="warning"] {
+  background: var(--dls-color-intent-warning-base);
+  color: var(--dls-color-intent-warning-on-base);
+}
+.dls-badge[data-variant="filled"][data-intent="danger"] {
+  background: var(--dls-color-intent-danger-base);
+  color: var(--dls-color-intent-danger-on-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Ghost (dot + text, no container)
+   --------------------------------------------------------------------------- */
+
+.dls-badge[data-variant="ghost"] {
+  background: transparent;
+  color: var(--_fg);
+  border: none;
+  padding: 0;
+}
+
+.dls-badge__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--dls-radius-full);
+  background: var(--_base);
+  flex-shrink: 0;
+}

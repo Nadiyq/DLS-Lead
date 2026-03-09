@@ -1,0 +1,217 @@
+/* ==========================================================================
+   DLS List Item — item within a dropdown/list
+   Types: text | label | with-slots | two-line | two-line-slots |
+          buttons | search | empty-state | chips | divider
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+.dls-list-item {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+  border-radius: var(--dls-radius-component-list-item);
+  font-family: var(--dls-font-family);
+  background: var(--dls-color-surface-base);
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------------------
+   States
+   --------------------------------------------------------------------------- */
+
+.dls-list-item:hover:not(:disabled):not([data-type="divider"]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-list-item:active:not(:disabled):not([data-type="divider"]) {
+  background: var(--dls-color-intent-info-subtle);
+  border: 1px solid var(--dls-color-intent-info-border);
+}
+
+.dls-list-item:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+  position: relative;
+}
+
+.dls-list-item:disabled {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Type: text (default)
+   --------------------------------------------------------------------------- */
+
+.dls-list-item__text {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-intent-neutral-text);
+}
+
+/* ---------------------------------------------------------------------------
+   Type: label
+   --------------------------------------------------------------------------- */
+
+.dls-list-item[data-type="label"] {
+  cursor: default;
+}
+
+.dls-list-item[data-type="label"]:hover:not(:disabled) {
+  background: var(--dls-color-surface-base);
+}
+
+.dls-list-item__label {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Type: two-line
+   --------------------------------------------------------------------------- */
+
+.dls-list-item__two-line {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+}
+
+.dls-list-item__primary {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-intent-neutral-text);
+}
+
+.dls-list-item__secondary {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Slot icons (leading / trailing)
+   --------------------------------------------------------------------------- */
+
+.dls-list-item__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-list-item__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Slot content (left / right)
+   --------------------------------------------------------------------------- */
+
+.dls-list-item__slot {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Type: empty-state
+   --------------------------------------------------------------------------- */
+
+.dls-list-item[data-type="empty-state"] {
+  cursor: default;
+}
+
+.dls-list-item[data-type="empty-state"]:hover:not(:disabled) {
+  background: var(--dls-color-surface-base);
+}
+
+.dls-list-item__empty {
+  flex: 1;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-placeholder);
+}
+
+/* ---------------------------------------------------------------------------
+   Type: divider
+   --------------------------------------------------------------------------- */
+
+.dls-list-item[data-type="divider"] {
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+  cursor: default;
+  height: auto;
+}
+
+.dls-list-item[data-type="divider"]:hover:not(:disabled) {
+  background: var(--dls-color-surface-base);
+}
+
+.dls-list-item__divider {
+  flex: 1;
+  height: 1px;
+  background: var(--dls-color-border-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Type: buttons — full-width row of action buttons
+   --------------------------------------------------------------------------- */
+
+.dls-list-item[data-type="buttons"] {
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+}
+
+.dls-list-item__buttons {
+  display: flex;
+  flex: 1;
+  gap: var(--dls-spacing-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Type: chips — row of chip components
+   --------------------------------------------------------------------------- */
+
+.dls-list-item[data-type="chips"] {
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+}
+
+.dls-list-item__chips {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: var(--dls-spacing-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Type: search — embedded search input
+   --------------------------------------------------------------------------- */
+
+.dls-list-item[data-type="search"] {
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+}
+
+.dls-list-item__search {
+  flex: 1;
+  min-width: 0;
+}

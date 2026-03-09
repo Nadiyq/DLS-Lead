@@ -1,0 +1,155 @@
+/* ==========================================================================
+   DLS Comment — rich text comment input with channel support
+   Channels: sms | email
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-comment {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--dls-font-family);
+
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-base);
+  border-radius: var(--dls-radius-component-input);
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Top bar — tabs + channel status
+   --------------------------------------------------------------------------- */
+
+.dls-comment__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dls-spacing-1);
+  padding: var(--dls-spacing-2);
+  border-bottom: 1px solid var(--dls-color-border-subtle);
+}
+
+.dls-comment__channel-status {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-placeholder);
+}
+
+/* ---------------------------------------------------------------------------
+   Alert section
+   --------------------------------------------------------------------------- */
+
+.dls-comment__alert {
+  padding: var(--dls-spacing-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Email fields — subject, to
+   --------------------------------------------------------------------------- */
+
+.dls-comment__field-row {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+  padding: var(--dls-spacing-2);
+  border-bottom: 1px solid var(--dls-color-border-subtle);
+}
+
+.dls-comment__field-label {
+  flex-shrink: 0;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-placeholder);
+}
+
+.dls-comment__field-value {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Toolbar section — sticky formatting bar
+   --------------------------------------------------------------------------- */
+
+.dls-comment__toolbar {
+  border-bottom: 1px solid var(--dls-color-border-subtle);
+}
+
+/* Override toolbar styles for embedded use */
+.dls-comment__toolbar .dls-toolbar {
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  border-bottom: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Text field
+   --------------------------------------------------------------------------- */
+
+.dls-comment__input {
+  padding: var(--dls-spacing-2);
+  min-height: 56px;
+}
+
+.dls-comment__textarea {
+  all: unset;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  font-family: var(--dls-font-family);
+  color: var(--dls-color-text-primary);
+  resize: none;
+}
+
+.dls-comment__textarea::placeholder {
+  color: var(--dls-color-text-placeholder);
+}
+
+/* Floating toolbar — appears on text selection, positioned relative to input */
+.dls-comment__input {
+  position: relative;
+}
+
+.dls-comment__floating-toolbar {
+  margin-top: var(--dls-spacing-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Actions footer
+   --------------------------------------------------------------------------- */
+
+.dls-comment__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dls-spacing-2);
+  padding: var(--dls-spacing-2);
+}
+
+.dls-comment__actions-left {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+}
+
+.dls-comment__actions-right {
+  display: flex;
+  align-items: center;
+}

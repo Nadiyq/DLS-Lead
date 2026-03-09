@@ -1,0 +1,173 @@
+/* ==========================================================================
+   DLS Textarea — token-driven multi-line text input
+   States: normal | filled | focused | disabled | error
+   Features: character count, bottom bar
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Outer wrapper (vertical stack: textarea-box → error hint)
+   --------------------------------------------------------------------------- */
+
+.dls-textarea {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  font-family: var(--dls-font-family);
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Label
+   --------------------------------------------------------------------------- */
+
+.dls-textarea__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-textarea__label[data-disabled] {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Bordered container (holds field + bottom bar)
+   --------------------------------------------------------------------------- */
+
+.dls-textarea__box {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 106px;
+  background: var(--dls-color-component-input-bg-base);
+  border: 1px solid var(--dls-color-component-input-border-base);
+  border-radius: var(--dls-radius-component-input);
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   The actual <textarea> element
+   --------------------------------------------------------------------------- */
+
+.dls-textarea__input {
+  all: unset;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  flex: 1;
+  padding: var(--dls-spacing-3) var(--dls-spacing-3) var(--dls-spacing-1-5) var(--dls-spacing-3);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-component-input-fg-base);
+  resize: vertical;
+}
+
+.dls-textarea__input::placeholder {
+  color: var(--dls-color-component-input-fg-placeholder);
+}
+
+/* ---------------------------------------------------------------------------
+   Bottom bar (character count, actions)
+   --------------------------------------------------------------------------- */
+
+.dls-textarea__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dls-spacing-2);
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-3) var(--dls-spacing-3) var(--dls-spacing-3);
+}
+
+.dls-textarea__counter {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Hover
+   --------------------------------------------------------------------------- */
+
+.dls-textarea__box:hover:not([data-disabled]):not([data-error]) {
+  border-color: var(--dls-color-component-input-border-hover);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Focus-within (when the textarea inside is focused)
+   --------------------------------------------------------------------------- */
+
+.dls-textarea__box:focus-within:not([data-disabled]) {
+  border-color: var(--dls-color-component-input-border-focus);
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-textarea__input:focus-visible {
+  outline: none;
+}
+
+/* ---------------------------------------------------------------------------
+   State: Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-textarea__box[data-disabled] {
+  background: var(--dls-color-component-input-bg-disabled);
+  border-color: var(--dls-color-component-input-border-disabled);
+  cursor: not-allowed;
+}
+
+.dls-textarea__box[data-disabled] .dls-textarea__input {
+  color: var(--dls-color-component-input-fg-disabled);
+  cursor: not-allowed;
+}
+
+.dls-textarea__box[data-disabled] .dls-textarea__counter {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   State: Error
+   --------------------------------------------------------------------------- */
+
+.dls-textarea__box[data-error] {
+  background: var(--dls-color-intent-danger-subtle);
+  border-color: var(--dls-color-intent-danger-border);
+}
+
+/* ---------------------------------------------------------------------------
+   Error / Hint message
+   --------------------------------------------------------------------------- */
+
+.dls-textarea__hint {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1-5);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-textarea__hint[data-error] {
+  color: var(--dls-color-intent-danger-text);
+}
+
+.dls-textarea__hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+.dls-textarea__hint-icon svg {
+  width: 100%;
+  height: 100%;
+}
