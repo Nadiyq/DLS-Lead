@@ -1,0 +1,258 @@
+/* ==========================================================================
+   DLS Sidebar Item — navigation item for sidebar / side-nav menus
+   Types: simple | tree | option | collapsible | big-icon
+   States: normal, hover, active (selected), focus
+   Collapsed mode: icon-only when sidebar is collapsed
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar-item {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  padding: var(--dls-spacing-2);
+  border-radius: var(--dls-radius-component-sidebar-item);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-intent-neutral-text);
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Icon slot
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar-item__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+
+.dls-sidebar-item__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------------------------------------------------------------------------
+   Text
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar-item__text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+   Two-line text (big-icon type)
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar-item__text-group {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+}
+
+.dls-sidebar-item__primary-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-intent-neutral-text);
+}
+
+.dls-sidebar-item__secondary-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Media slot (big-icon type — 32×32 logo/avatar)
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar-item__media {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--dls-radius-component-sidebar-item);
+  overflow: hidden;
+}
+
+.dls-sidebar-item__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------------------------------------------------------------------------
+   Indicator dot (notification badge)
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar-item__indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--dls-radius-component-badge);
+  background: var(--dls-color-intent-danger-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Number badge
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar-item__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: var(--dls-spacing-05) var(--dls-spacing-1-5);
+  border-radius: var(--dls-radius-component-badge-number);
+  background: var(--dls-color-intent-info-subtle);
+  border: 1px solid var(--dls-color-intent-info-border);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-intent-info-text);
+  min-width: var(--dls-spacing-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Chevron icon (tree / collapsible / big-icon)
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar-item__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+  transition: transform 150ms ease;
+}
+
+.dls-sidebar-item__chevron svg {
+  width: 16px;
+  height: 16px;
+}
+
+.dls-sidebar-item[data-expanded] .dls-sidebar-item__chevron {
+  transform: rotate(0deg);
+}
+
+.dls-sidebar-item:not([data-expanded]) .dls-sidebar-item__chevron {
+  transform: rotate(-90deg);
+}
+
+/* ---------------------------------------------------------------------------
+   Ellipsis action (option type)
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar-item__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+  opacity: 0;
+  transition: opacity 100ms ease;
+}
+
+.dls-sidebar-item__action svg {
+  width: 16px;
+  height: 16px;
+}
+
+.dls-sidebar-item:hover:not([data-disabled]) .dls-sidebar-item__action {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   States
+   --------------------------------------------------------------------------- */
+
+/* Hover */
+.dls-sidebar-item:hover:not([data-disabled]):not([data-active]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+/* Active (selected) */
+.dls-sidebar-item[data-active] {
+  background: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+}
+
+.dls-sidebar-item[data-active] .dls-sidebar-item__primary-text {
+  color: var(--dls-color-intent-neutral-on-base);
+}
+
+.dls-sidebar-item[data-active] .dls-sidebar-item__secondary-text {
+  color: var(--dls-color-intent-neutral-on-base);
+  opacity: 0.7;
+}
+
+/* Focus */
+.dls-sidebar-item:focus-visible {
+  background: var(--dls-color-surface-base);
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* Disabled */
+.dls-sidebar-item[data-disabled] {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Collapsed mode (icon-only)
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar-item[data-collapsed] {
+  padding: var(--dls-spacing-2-5);
+  justify-content: center;
+}
+
+.dls-sidebar-item[data-collapsed] .dls-sidebar-item__text,
+.dls-sidebar-item[data-collapsed] .dls-sidebar-item__text-group,
+.dls-sidebar-item[data-collapsed] .dls-sidebar-item__badge,
+.dls-sidebar-item[data-collapsed] .dls-sidebar-item__chevron,
+.dls-sidebar-item[data-collapsed] .dls-sidebar-item__action {
+  display: none;
+}
+
+/* big-icon collapsed — larger padding */
+.dls-sidebar-item[data-type="big-icon"][data-collapsed] {
+  padding: var(--dls-spacing-2);
+}

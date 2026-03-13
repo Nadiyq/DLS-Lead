@@ -1,0 +1,163 @@
+/* ==========================================================================
+   DLS Dropdown Sorting — sort configuration panel for tables
+   Two side-by-side dropdowns: column selector + sort direction
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container — list panel style
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-sorting {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--dls-spacing-2);
+  width: 280px;
+  padding: var(--dls-spacing-4);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-list);
+  box-shadow:
+    0 2px 4px -2px rgba(47, 55, 70, 0.20),
+    0 4px 6px -1px rgba(47, 55, 70, 0.20);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Field wrapper (label + select)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-sorting__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.dls-dropdown-sorting__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Select trigger
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-sorting__select {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  width: 100%;
+  height: 32px;
+  padding: 0 var(--dls-spacing-2-5);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-base);
+  border-radius: var(--dls-radius-component-input);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+  cursor: pointer;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.dls-dropdown-sorting__select:hover:not(:disabled) {
+  border-color: var(--dls-color-border-strong);
+}
+
+.dls-dropdown-sorting__select:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-dropdown-sorting__select[data-placeholder] {
+  color: var(--dls-color-text-placeholder);
+}
+
+.dls-dropdown-sorting__select-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Chevron */
+
+.dls-dropdown-sorting__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+  transition: transform 150ms ease;
+}
+
+.dls-dropdown-sorting__chevron svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-dropdown-sorting__select[data-open] .dls-dropdown-sorting__chevron {
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------------------------
+   Options list
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-sorting__options {
+  display: none;
+  position: absolute;
+  top: calc(100% + var(--dls-spacing-1));
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: var(--dls-spacing-1);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-list);
+  box-shadow:
+    0 2px 4px -2px rgba(47, 55, 70, 0.20),
+    0 4px 6px -1px rgba(47, 55, 70, 0.20);
+  list-style: none;
+}
+
+.dls-dropdown-sorting__select-wrapper[data-open] .dls-dropdown-sorting__options {
+  display: block;
+}
+
+.dls-dropdown-sorting__select-wrapper {
+  position: relative;
+}
+
+.dls-dropdown-sorting__option {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+  border-radius: var(--dls-radius-component-list-item);
+  cursor: pointer;
+}
+
+.dls-dropdown-sorting__option:hover:not([data-disabled]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-dropdown-sorting__option[data-selected] {
+  font-weight: var(--dls-font-weight-medium);
+}

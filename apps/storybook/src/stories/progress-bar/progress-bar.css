@@ -1,0 +1,147 @@
+/* ==========================================================================
+   DLS ProgressBar — continuous and segmented progress indicators
+   Sizes: regular (full-width) | small (xs, s, m)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-progress-bar {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  font-family: var(--dls-font-family);
+  width: 100%;
+}
+
+/* Continuous layout — bar + label side-by-side */
+
+.dls-progress-bar[data-type="continuous"] {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Bar track (background)
+   --------------------------------------------------------------------------- */
+
+.dls-progress-bar__bar {
+  flex: 1;
+  min-width: 0;
+  height: 6px;
+  background: var(--dls-color-surface-muted);
+  border-radius: var(--dls-radius-component-progress-bar);
+  overflow: hidden;
+}
+
+/* Segmented bar has no background — segments handle their own fills */
+
+.dls-progress-bar[data-type="segmented"] .dls-progress-bar__bar {
+  background: transparent;
+  overflow: visible;
+  display: flex;
+  gap: var(--dls-spacing-1-5);
+  height: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+   Fill (continuous)
+   --------------------------------------------------------------------------- */
+
+.dls-progress-bar__fill {
+  height: 100%;
+  background: var(--dls-color-intent-neutral-base);
+  border-radius: var(--dls-radius-component-progress-bar);
+  transition: width 0.3s ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Segment (segmented)
+   --------------------------------------------------------------------------- */
+
+.dls-progress-bar__segment {
+  flex: 1;
+  height: 100%;
+  border-radius: var(--dls-radius-component-progress-bar);
+  background: var(--dls-color-surface-muted);
+}
+
+.dls-progress-bar__segment[data-filled="true"] {
+  background: var(--dls-color-intent-neutral-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Label (percentage text)
+   --------------------------------------------------------------------------- */
+
+.dls-progress-bar__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.dls-progress-bar__label[data-empty="true"] {
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Hint (segmented — label + icon row)
+   --------------------------------------------------------------------------- */
+
+.dls-progress-bar__hint {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--dls-spacing-1-5);
+}
+
+.dls-progress-bar__hint-label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-progress-bar__hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-primary);
+}
+
+.dls-progress-bar__hint-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Small variant — fixed widths, bar only
+   --------------------------------------------------------------------------- */
+
+.dls-progress-bar[data-size="xs"] {
+  width: 32px;
+}
+
+.dls-progress-bar[data-size="s"] {
+  width: 40px;
+}
+
+.dls-progress-bar[data-size="m"] {
+  width: 48px;
+}
+
+.dls-progress-bar[data-size="xs"],
+.dls-progress-bar[data-size="s"],
+.dls-progress-bar[data-size="m"] {
+  flex-direction: row;
+}

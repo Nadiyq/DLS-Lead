@@ -1,0 +1,121 @@
+/* ==========================================================================
+   DLS Table Header Cell — column headers for data tables
+   Types: text | control | empty
+   Align: left | center | right
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base header cell
+   --------------------------------------------------------------------------- */
+
+.dls-table-header-cell {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+  padding: var(--dls-spacing-2);
+  background: var(--dls-color-intent-neutral-subtle);
+  border-bottom: 1px solid var(--dls-color-border-subtle);
+  font-family: var(--dls-font-family);
+  min-height: 40px;
+  user-select: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Padding — no horizontal padding variant
+   --------------------------------------------------------------------------- */
+
+.dls-table-header-cell[data-padding="false"] {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Hover
+   --------------------------------------------------------------------------- */
+
+.dls-table-header-cell[data-sortable]:hover:not([data-disabled]) {
+  cursor: pointer;
+  background: oklch(from var(--dls-color-intent-neutral-subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+/* ---------------------------------------------------------------------------
+   Alignment
+   --------------------------------------------------------------------------- */
+
+.dls-table-header-cell[data-align="left"] {
+  justify-content: flex-start;
+}
+
+.dls-table-header-cell[data-align="center"] {
+  justify-content: center;
+}
+
+.dls-table-header-cell[data-align="right"] {
+  justify-content: flex-end;
+}
+
+/* ---------------------------------------------------------------------------
+   Text label
+   --------------------------------------------------------------------------- */
+
+.dls-table-header-cell__text {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------------------------------------------------------------------------
+   Sort icon
+   --------------------------------------------------------------------------- */
+
+.dls-table-header-cell__sort {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  color: var(--dls-color-text-secondary);
+  transition: color 150ms ease, transform 150ms ease;
+}
+
+.dls-table-header-cell__sort svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Active sort — darker icon */
+
+.dls-table-header-cell__sort[data-active] {
+  color: var(--dls-color-text-primary);
+}
+
+/* Descending — flip arrow */
+
+.dls-table-header-cell__sort[data-direction="desc"] {
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------------------------
+   Slot (control type — for checkbox etc.)
+   --------------------------------------------------------------------------- */
+
+.dls-table-header-cell__slot {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Empty type — minimal height filler
+   --------------------------------------------------------------------------- */
+
+.dls-table-header-cell[data-type="empty"] {
+  padding: var(--dls-spacing-3) 0;
+}

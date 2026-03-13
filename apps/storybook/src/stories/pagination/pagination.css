@@ -1,0 +1,172 @@
+/* ==========================================================================
+   DLS Pagination — building blocks: PageButton, ItemsPerPage, Pagination
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   PageButton — single pagination control (number, more, previous, next)
+   --------------------------------------------------------------------------- */
+
+.dls-page-button {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--dls-radius-component-pagination);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-intent-neutral-text);
+  background: var(--dls-color-surface-base);
+  cursor: pointer;
+}
+
+/* Type: number / more — square 32×32 */
+
+.dls-page-button[data-type="number"],
+.dls-page-button[data-type="more"] {
+  min-width: 32px;
+  height: 32px;
+  padding: var(--dls-spacing-1-5);
+}
+
+/* Type: previous / next — with icon + text */
+
+.dls-page-button[data-type="previous"],
+.dls-page-button[data-type="next"] {
+  height: 32px;
+  gap: var(--dls-spacing-2);
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
+}
+
+/* ---------------------------------------------------------------------------
+   PageButton — selected state
+   --------------------------------------------------------------------------- */
+
+.dls-page-button[data-selected="true"] {
+  border: 1px solid var(--dls-color-border-base);
+}
+
+/* ---------------------------------------------------------------------------
+   PageButton — interactive states
+   --------------------------------------------------------------------------- */
+
+.dls-page-button:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-page-button:active:not(:disabled) {
+  background: var(--dls-state-pressed-overlay);
+}
+
+.dls-page-button:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   PageButton — disabled state
+   --------------------------------------------------------------------------- */
+
+.dls-page-button:disabled {
+  background: var(--dls-color-surface-disabled);
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   PageButton — icon
+   --------------------------------------------------------------------------- */
+
+.dls-page-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+
+.dls-page-button__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   ItemsPerPage — "Items per page [10 ▾] of 500"
+   --------------------------------------------------------------------------- */
+
+.dls-items-per-page {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-items-per-page__select {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-1-5);
+  padding-left: var(--dls-spacing-3);
+  border-bottom: 1px solid var(--dls-color-border-subtle);
+  cursor: pointer;
+  color: var(--dls-color-text-primary);
+}
+
+.dls-items-per-page__select-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-primary);
+}
+
+.dls-items-per-page__select-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Pagination — composed bar
+   --------------------------------------------------------------------------- */
+
+.dls-pagination {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-3);
+  padding: var(--dls-spacing-3) var(--dls-spacing-4);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-pagination);
+  font-family: var(--dls-font-family);
+}
+
+/* Variant: borderless (no container chrome) */
+
+.dls-pagination[data-variant="borderless"] {
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Page stack — row of page buttons (Previous + numbers + Next)
+   --------------------------------------------------------------------------- */
+
+.dls-pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+  border-radius: var(--dls-radius-l);
+}

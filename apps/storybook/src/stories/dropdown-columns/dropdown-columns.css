@@ -1,0 +1,233 @@
+/* ==========================================================================
+   DLS Dropdown Columns — column visibility & ordering panel for tables
+   Composes List + ListItem. Adds section headers, count badge, pin/drag icons.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container — inherits List styling, fixed width
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-columns {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  padding: var(--dls-spacing-2);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-list);
+  box-shadow:
+    0 2px 4px -2px rgba(47, 55, 70, 0.20),
+    0 4px 6px -1px rgba(47, 55, 70, 0.20);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Section header (Shown / Hidden labels)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-columns__section {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+  min-height: 32px;
+}
+
+.dls-dropdown-columns__section-label {
+  flex: 1;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}
+
+/* Count badge — small info-soft style */
+
+.dls-dropdown-columns__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--dls-spacing-1-5);
+  border-radius: var(--dls-radius-component-badge);
+  background: var(--dls-color-intent-info-subtle);
+  color: var(--dls-color-intent-info-text);
+  font-size: var(--dls-text-xs-font-size);
+  line-height: var(--dls-text-xs-line-height);
+  font-weight: var(--dls-font-weight-medium);
+}
+
+/* Section trailing icon (eye icon for hidden) */
+
+.dls-dropdown-columns__section-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-dropdown-columns__section-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Column row
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-columns__row {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+  min-height: 32px;
+  border-radius: var(--dls-radius-component-list-item);
+  cursor: grab;
+  transition: background-color 100ms ease;
+}
+
+.dls-dropdown-columns__row:hover:not([data-disabled]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+/* Drag-over state */
+
+.dls-dropdown-columns__row[data-drag-over] {
+  background: var(--dls-color-intent-info-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+   Row icons (grip, pin, eye)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-columns__grip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-dropdown-columns__grip svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-dropdown-columns__row-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-dropdown-columns__action {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--dls-radius-component-list-item);
+}
+
+.dls-dropdown-columns__action:hover:not([data-disabled]) {
+  color: var(--dls-color-text-primary);
+}
+
+.dls-dropdown-columns__action:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-dropdown-columns__action svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Divider
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-columns__divider {
+  height: 1px;
+  margin: var(--dls-spacing-1) var(--dls-spacing-2);
+  background: var(--dls-color-border-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Footer (Cancel / Apply buttons)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-columns__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+}
+
+.dls-dropdown-columns__btn {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 32px;
+  padding: 0 var(--dls-spacing-3);
+  border-radius: var(--dls-radius-component-button);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+/* Outline variant (Cancel) */
+
+.dls-dropdown-columns__btn[data-variant="outline"] {
+  border: 1px solid var(--dls-color-border-base);
+  background: var(--dls-color-surface-base);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-dropdown-columns__btn[data-variant="outline"]:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-dropdown-columns__btn[data-variant="outline"]:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* Filled variant (Apply) */
+
+.dls-dropdown-columns__btn[data-variant="filled"] {
+  background: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+}
+
+.dls-dropdown-columns__btn[data-variant="filled"]:hover:not(:disabled) {
+  background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+.dls-dropdown-columns__btn[data-variant="filled"]:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}

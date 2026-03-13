@@ -1,0 +1,128 @@
+/* ==========================================================================
+   DLS Item — content row with media, text, and controls
+   Types: regular | outline | muted
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-item {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-4);
+  padding: var(--dls-spacing-3);
+  border-radius: var(--dls-radius-component-item);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Type: regular (default — no background, no border)
+   --------------------------------------------------------------------------- */
+
+.dls-item,
+.dls-item[data-type="regular"] {
+  background: transparent;
+  border: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Type: outline (border only)
+   --------------------------------------------------------------------------- */
+
+.dls-item[data-type="outline"] {
+  border: 1px solid var(--dls-color-border-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Type: muted (filled background + subtle border)
+   --------------------------------------------------------------------------- */
+
+.dls-item[data-type="muted"] {
+  background: var(--dls-color-surface-muted);
+  border: 1px solid var(--dls-color-border-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+   States
+   --------------------------------------------------------------------------- */
+
+.dls-item:hover:not(:disabled):not([data-interactive="false"]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-item[data-type="muted"]:hover:not(:disabled):not([data-interactive="false"]) {
+  background: oklch(from var(--dls-color-surface-muted) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+.dls-item:active:not(:disabled):not([data-interactive="false"]) {
+  background: var(--dls-state-pressed-overlay);
+}
+
+.dls-item:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-item:disabled {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Media slot (leading icon / avatar area)
+   --------------------------------------------------------------------------- */
+
+.dls-item__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Content area (title + description + inner slot)
+   --------------------------------------------------------------------------- */
+
+.dls-item__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+  flex: 1;
+  min-width: 0;
+}
+
+.dls-item__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  justify-content: center;
+}
+
+.dls-item__title {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-item__description {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Right controls (trailing actions)
+   --------------------------------------------------------------------------- */
+
+.dls-item__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  flex-shrink: 0;
+  margin-left: auto;
+}

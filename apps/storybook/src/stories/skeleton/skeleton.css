@@ -1,0 +1,108 @@
+/* ==========================================================================
+   DLS Skeleton — loading placeholder
+   Types: regular | card | text
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-skeleton {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  font-family: var(--dls-font-family);
+}
+
+/* Regular — avatar + text lines side by side */
+
+.dls-skeleton[data-type="regular"] {
+  flex-direction: row;
+  gap: var(--dls-spacing-4);
+  align-items: center;
+}
+
+/* Card — text lines + image stacked vertically */
+
+.dls-skeleton[data-type="card"] {
+  flex-direction: column;
+  gap: var(--dls-spacing-4);
+}
+
+/* Text — text lines only */
+
+.dls-skeleton[data-type="text"] {
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+}
+
+/* ---------------------------------------------------------------------------
+   Avatar placeholder — circle
+   --------------------------------------------------------------------------- */
+
+.dls-skeleton__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--dls-radius-component-skeleton-avatar);
+  background: var(--dls-color-surface-muted);
+  flex-shrink: 0;
+  animation: dls-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------------
+   Text lines group
+   --------------------------------------------------------------------------- */
+
+.dls-skeleton__lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.dls-skeleton[data-type="card"] .dls-skeleton__lines,
+.dls-skeleton[data-type="text"] .dls-skeleton__lines {
+  gap: var(--dls-spacing-3);
+}
+
+/* ---------------------------------------------------------------------------
+   Line placeholder — pill shape
+   --------------------------------------------------------------------------- */
+
+.dls-skeleton__line {
+  height: 16px;
+  border-radius: var(--dls-radius-component-skeleton-line);
+  background: var(--dls-color-surface-muted);
+  animation: dls-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.dls-skeleton__line:first-child {
+  width: 100%;
+}
+
+.dls-skeleton__line:nth-child(2) {
+  width: 45%;
+}
+
+/* ---------------------------------------------------------------------------
+   Image placeholder — card type
+   --------------------------------------------------------------------------- */
+
+.dls-skeleton__image {
+  width: 100%;
+  flex: 1;
+  min-height: 120px;
+  border-radius: var(--dls-radius-component-skeleton-image);
+  background: var(--dls-color-surface-muted);
+  animation: dls-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------------
+   Pulse animation
+   --------------------------------------------------------------------------- */
+
+@keyframes dls-skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}

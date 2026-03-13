@@ -1,0 +1,63 @@
+/* ==========================================================================
+   DLS Slider Item — draggable thumb/handle for range sliders
+   States: normal | hover | focus | pressed
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Thumb — 16×16 circle
+   --------------------------------------------------------------------------- */
+
+.dls-slider-item {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--dls-radius-component-slider-item);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-focus);
+  box-shadow: var(--dls-shadow-surface-sm);
+  cursor: grab;
+  transition: background 150ms ease, box-shadow 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Hover
+   --------------------------------------------------------------------------- */
+
+.dls-slider-item:hover:not([data-disabled]) {
+  background: var(--dls-color-surface-muted);
+  box-shadow: var(--dls-shadow-surface-md);
+}
+
+/* ---------------------------------------------------------------------------
+   Focus
+   --------------------------------------------------------------------------- */
+
+.dls-slider-item:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Pressed / Active (dragging)
+   --------------------------------------------------------------------------- */
+
+.dls-slider-item:active {
+  cursor: grabbing;
+  background: var(--dls-color-surface-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-slider-item:disabled,
+.dls-slider-item[data-disabled] {
+  background: var(--dls-color-surface-disabled);
+  border-color: var(--dls-color-border-disabled);
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}

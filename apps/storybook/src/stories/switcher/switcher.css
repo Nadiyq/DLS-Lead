@@ -1,0 +1,193 @@
+/* ==========================================================================
+   DLS Switcher
+   States: normal | hover | focus | pressed | disabled
+   Selected: true | false
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Wrapper — acts as click target
+   --------------------------------------------------------------------------- */
+
+.dls-switcher {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  cursor: pointer;
+  font-family: var(--dls-font-family);
+}
+
+.dls-switcher:has(.dls-switcher__input:disabled) {
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Hidden native input
+   --------------------------------------------------------------------------- */
+
+.dls-switcher__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Track — 32×18, pill shape
+   --------------------------------------------------------------------------- */
+
+.dls-switcher__track {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 18px;
+  padding: 2px;
+  border-radius: var(--dls-radius-component-switcher);
+  background: var(--dls-color-intent-neutral-subtle);
+  border: 1px solid var(--dls-color-border-base);
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Toggle knob — 14×14 circle
+   --------------------------------------------------------------------------- */
+
+.dls-switcher__toggle {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--dls-radius-component-switcher);
+  background: var(--dls-color-intent-neutral-text);
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Selected (checked) — toggle moves right, track fills
+   --------------------------------------------------------------------------- */
+
+.dls-switcher__input:checked + .dls-switcher__track-wrapper .dls-switcher__track {
+  background: var(--dls-color-intent-neutral-base);
+  border-color: transparent;
+}
+
+.dls-switcher__input:checked + .dls-switcher__track-wrapper .dls-switcher__toggle {
+  background: var(--dls-color-intent-neutral-on-base);
+  transform: translateX(14px);
+}
+
+/* ---------------------------------------------------------------------------
+   Hover — unselected
+   --------------------------------------------------------------------------- */
+
+.dls-switcher__input:not(:checked):not(:disabled):hover + .dls-switcher__track-wrapper .dls-switcher__track,
+.dls-switcher:hover .dls-switcher__input:not(:checked):not(:disabled) + .dls-switcher__track-wrapper .dls-switcher__track {
+  background: var(--dls-state-hover-overlay);
+}
+
+/* Hover — selected */
+
+.dls-switcher__input:checked:not(:disabled):hover + .dls-switcher__track-wrapper .dls-switcher__track,
+.dls-switcher:hover .dls-switcher__input:checked:not(:disabled) + .dls-switcher__track-wrapper .dls-switcher__track {
+  background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+/* ---------------------------------------------------------------------------
+   Pressed — unselected
+   --------------------------------------------------------------------------- */
+
+.dls-switcher__input:not(:checked):not(:disabled):active + .dls-switcher__track-wrapper .dls-switcher__track,
+.dls-switcher:active .dls-switcher__input:not(:checked):not(:disabled) + .dls-switcher__track-wrapper .dls-switcher__track {
+  background: var(--dls-state-pressed-overlay);
+}
+
+/* Pressed — selected */
+
+.dls-switcher__input:checked:not(:disabled):active + .dls-switcher__track-wrapper .dls-switcher__track,
+.dls-switcher:active .dls-switcher__input:checked:not(:disabled) + .dls-switcher__track-wrapper .dls-switcher__track {
+  background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-pressed)) c h);
+}
+
+/* ---------------------------------------------------------------------------
+   Focus
+   --------------------------------------------------------------------------- */
+
+.dls-switcher__input:focus-visible + .dls-switcher__track-wrapper .dls-switcher__track {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-switcher__input:disabled + .dls-switcher__track-wrapper .dls-switcher__track {
+  background: var(--dls-color-surface-disabled);
+  border-color: var(--dls-color-border-disabled);
+}
+
+.dls-switcher__input:disabled + .dls-switcher__track-wrapper .dls-switcher__toggle {
+  background: var(--dls-color-text-disabled);
+}
+
+/* Disabled selected — toggle still on right */
+
+.dls-switcher__input:checked:disabled + .dls-switcher__track-wrapper .dls-switcher__toggle {
+  transform: translateX(14px);
+}
+
+/* ---------------------------------------------------------------------------
+   Text orientation — label before switcher
+   --------------------------------------------------------------------------- */
+
+.dls-switcher[data-text-orientation="left"] {
+  flex-direction: row-reverse;
+}
+
+/* ---------------------------------------------------------------------------
+   Track wrapper — aligns switcher to first line of text
+   --------------------------------------------------------------------------- */
+
+.dls-switcher__track-wrapper {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+/* ---------------------------------------------------------------------------
+   Text block — label + optional description
+   --------------------------------------------------------------------------- */
+
+.dls-switcher__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  user-select: none;
+}
+
+.dls-switcher__label {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-switcher__description {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-switcher__input:disabled ~ .dls-switcher__text .dls-switcher__label,
+.dls-switcher__input:disabled ~ .dls-switcher__text .dls-switcher__description {
+  color: var(--dls-color-text-disabled);
+}

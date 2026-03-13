@@ -1,0 +1,77 @@
+/* ==========================================================================
+   DLS Text — reusable slot content for title + description
+   Sizes: m | s | xs
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-text {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Title
+   --------------------------------------------------------------------------- */
+
+.dls-text__title {
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+/* Size M — title L (16/24) */
+
+.dls-text[data-size="m"] .dls-text__title {
+  font-size: var(--dls-text-l-font-size);
+  line-height: var(--dls-text-l-line-height);
+}
+
+/* Size S — title M (14/20) */
+
+.dls-text[data-size="s"] .dls-text__title {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+}
+
+/* Size XS — title S (12/16) */
+
+.dls-text[data-size="xs"] .dls-text__title {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+}
+
+/* ---------------------------------------------------------------------------
+   Description
+   --------------------------------------------------------------------------- */
+
+.dls-text__description {
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* Size M — description M (14/20) */
+
+.dls-text[data-size="m"] .dls-text__description {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+}
+
+/* Size S — description S (12/16) */
+
+.dls-text[data-size="s"] .dls-text__description {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+}
+
+/* Size XS — description XS (10/14) */
+
+.dls-text[data-size="xs"] .dls-text__description {
+  font-size: var(--dls-text-xs-font-size);
+  line-height: var(--dls-text-xs-line-height);
+}

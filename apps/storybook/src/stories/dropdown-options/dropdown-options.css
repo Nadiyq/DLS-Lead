@@ -1,0 +1,108 @@
+/* ==========================================================================
+   DLS Dropdown Options — popover menu triggered by kebab/options button
+   Composes List + ListItem internally; this CSS handles the trigger + popover
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Wrapper — anchors the popover
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-options {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  position: relative;
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Trigger — icon-soft style button (3-dot kebab)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-options__trigger {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--dls-radius-component-button);
+  background: var(--dls-color-intent-neutral-subtle);
+  border: 1px solid var(--dls-color-border-base);
+  color: var(--dls-color-text-secondary);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.dls-dropdown-options__trigger svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Hover */
+
+.dls-dropdown-options__trigger:hover:not(:disabled) {
+  background: oklch(from var(--dls-color-intent-neutral-subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+/* Active / pressed */
+
+.dls-dropdown-options__trigger:active:not(:disabled) {
+  background: oklch(from var(--dls-color-intent-neutral-subtle) calc(l + var(--dls-state-l-delta-pressed)) c h);
+}
+
+/* Focus */
+
+.dls-dropdown-options__trigger:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* Open state — keep pressed look */
+
+.dls-dropdown-options[data-open] .dls-dropdown-options__trigger {
+  background: oklch(from var(--dls-color-intent-neutral-subtle) calc(l + var(--dls-state-l-delta-pressed)) c h);
+}
+
+/* Disabled */
+
+.dls-dropdown-options__trigger:disabled {
+  background: var(--dls-color-surface-disabled);
+  border-color: var(--dls-color-border-disabled);
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Popover panel
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-options__panel {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  min-width: 196px;
+}
+
+.dls-dropdown-options[data-open] .dls-dropdown-options__panel {
+  display: block;
+}
+
+/* Placement */
+
+.dls-dropdown-options__panel[data-align="start"] {
+  left: 0;
+}
+
+.dls-dropdown-options__panel[data-align="end"] {
+  right: 0;
+}
+
+.dls-dropdown-options__panel[data-side="bottom"] {
+  top: calc(100% + var(--dls-spacing-1));
+}
+
+.dls-dropdown-options__panel[data-side="top"] {
+  bottom: calc(100% + var(--dls-spacing-1));
+}

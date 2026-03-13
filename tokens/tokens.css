@@ -556,6 +556,7 @@
   --dls-radius-component-chip: var(--dls-radius-m);
   --dls-radius-component-context-menu: var(--dls-radius-xl);
   --dls-radius-component-dropdown: var(--dls-radius-m);
+  --dls-radius-component-empty-state: var(--dls-radius-xl);
   --dls-radius-component-icon-shape: var(--dls-radius-l);
   --dls-radius-component-icon-shape-xs: var(--dls-radius-m);
   --dls-radius-component-input: var(--dls-radius-m);
@@ -567,7 +568,13 @@
   --dls-radius-component-modal: var(--dls-radius-xl);
   --dls-radius-component-otp-slot: var(--dls-radius-m);
   --dls-radius-component-pagination: var(--dls-radius-m);
+  --dls-radius-component-progress-bar: var(--dls-radius-full);
   --dls-radius-component-radiobutton: var(--dls-radius-full);
+  --dls-radius-component-scroll: var(--dls-radius-l);
+  --dls-radius-component-scroll-thumb: var(--dls-radius-full);
+  --dls-radius-component-skeleton-line: var(--dls-radius-full);
+  --dls-radius-component-skeleton-avatar: var(--dls-radius-full);
+  --dls-radius-component-skeleton-image: var(--dls-radius-l);
   --dls-radius-component-sidebar-item: var(--dls-radius-m);
   --dls-radius-component-slider-item: var(--dls-radius-full);
   --dls-radius-component-switcher: var(--dls-radius-full);

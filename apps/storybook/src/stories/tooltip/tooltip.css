@@ -1,0 +1,156 @@
+/* ==========================================================================
+   DLS Tooltip
+   Types: general | error
+   Orientations: top-center | top-left | top-right | bottom-center |
+                 bottom-left | bottom-right | left | right
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container — positioned wrapper
+   --------------------------------------------------------------------------- */
+
+.dls-tooltip {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--dls-font-family);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ---------------------------------------------------------------------------
+   Body — text + optional slot
+   --------------------------------------------------------------------------- */
+
+.dls-tooltip__body {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-1-5);
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2);
+  border-radius: var(--dls-radius-component-tooltip);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  box-shadow: var(--dls-shadow-surface-sm);
+}
+
+/* ---------------------------------------------------------------------------
+   Text
+   --------------------------------------------------------------------------- */
+
+.dls-tooltip__text {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+   Arrow — CSS triangle, 12×8
+   --------------------------------------------------------------------------- */
+
+.dls-tooltip__arrow {
+  width: 12px;
+  height: 8px;
+  flex-shrink: 0;
+}
+
+.dls-tooltip__arrow svg {
+  display: block;
+  width: 12px;
+  height: 8px;
+}
+
+/* General arrow colors */
+
+.dls-tooltip__arrow-fill {
+  fill: var(--dls-color-surface-base);
+}
+
+.dls-tooltip__arrow-stroke {
+  fill: var(--dls-color-border-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+   Error type
+   --------------------------------------------------------------------------- */
+
+.dls-tooltip[data-type="error"] .dls-tooltip__body {
+  background: var(--dls-color-intent-danger-subtle);
+  border-color: var(--dls-color-intent-danger-border);
+}
+
+.dls-tooltip[data-type="error"] .dls-tooltip__arrow-fill {
+  fill: var(--dls-color-intent-danger-subtle);
+}
+
+.dls-tooltip[data-type="error"] .dls-tooltip__arrow-stroke {
+  fill: var(--dls-color-intent-danger-border);
+}
+
+/* ---------------------------------------------------------------------------
+   Orientation — arrow placement
+   --------------------------------------------------------------------------- */
+
+/* Top orientations — arrow below body, points down */
+
+.dls-tooltip[data-orientation^="top"] {
+  flex-direction: column;
+}
+
+/* Bottom orientations — arrow above body, points up */
+
+.dls-tooltip[data-orientation^="bottom"] {
+  flex-direction: column-reverse;
+}
+
+.dls-tooltip[data-orientation^="bottom"] .dls-tooltip__arrow {
+  transform: rotate(180deg);
+}
+
+/* Left — arrow to the right of body, points right */
+
+.dls-tooltip[data-orientation="left"] {
+  flex-direction: row;
+}
+
+.dls-tooltip[data-orientation="left"] .dls-tooltip__arrow {
+  transform: rotate(90deg);
+}
+
+/* Right — arrow to the left of body, points left */
+
+.dls-tooltip[data-orientation="right"] {
+  flex-direction: row-reverse;
+}
+
+.dls-tooltip[data-orientation="right"] .dls-tooltip__arrow {
+  transform: rotate(-90deg);
+}
+
+/* Arrow alignment for top/bottom left/right variants */
+
+.dls-tooltip[data-orientation$="-left"] {
+  align-items: flex-start;
+}
+
+.dls-tooltip[data-orientation$="-left"] .dls-tooltip__arrow {
+  margin-left: var(--dls-spacing-2);
+}
+
+.dls-tooltip[data-orientation$="-right"] {
+  align-items: flex-end;
+}
+
+.dls-tooltip[data-orientation$="-right"] .dls-tooltip__arrow {
+  margin-right: var(--dls-spacing-2);
+}
+
+/* Left/right — vertical centering */
+
+.dls-tooltip[data-orientation="left"],
+.dls-tooltip[data-orientation="right"] {
+  align-items: center;
+}

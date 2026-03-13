@@ -1,0 +1,64 @@
+/* ==========================================================================
+   DLS Kbd — keyboard key indicator
+   DLS KbdGroup — group of keyboard keys (regular or + separated)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Kbd (single key)
+   --------------------------------------------------------------------------- */
+
+.dls-kbd {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dls-spacing-1);
+  padding: var(--dls-spacing-0-5) var(--dls-spacing-1);
+  border-radius: var(--dls-radius-component-kbd);
+  background: var(--dls-color-surface-muted);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-kbd__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-kbd__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   KbdGroup
+   --------------------------------------------------------------------------- */
+
+.dls-kbd-group {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   KbdGroup separator (+ sign)
+   --------------------------------------------------------------------------- */
+
+.dls-kbd-group__separator {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}

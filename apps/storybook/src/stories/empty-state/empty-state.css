@@ -1,0 +1,88 @@
+/* ==========================================================================
+   DLS Empty State — placeholder for empty content areas
+   Variants: bordered | borderless (default)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-empty-state {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dls-spacing-4);
+  font-family: var(--dls-font-family);
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: borderless (default)
+   --------------------------------------------------------------------------- */
+
+.dls-empty-state,
+.dls-empty-state[data-variant="borderless"] {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: bordered (card-like container)
+   --------------------------------------------------------------------------- */
+
+.dls-empty-state[data-variant="bordered"] {
+  padding: var(--dls-spacing-6);
+  border-radius: var(--dls-radius-component-empty-state);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+   Media slot (icon area)
+   --------------------------------------------------------------------------- */
+
+.dls-empty-state__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Text area (title + description)
+   --------------------------------------------------------------------------- */
+
+.dls-empty-state__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-empty-state__title {
+  font-size: var(--dls-text-l-font-size);
+  line-height: var(--dls-text-l-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-empty-state__description {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Actions slot
+   --------------------------------------------------------------------------- */
+
+.dls-empty-state__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+}

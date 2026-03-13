@@ -1,0 +1,113 @@
+/* ==========================================================================
+   DLS Switcher Box — bordered toggle-box container wrapping a switcher
+   States: normal | hover | focus | pressed | disabled
+   Selected: true | false
+   Text orientation: right (default) | left
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+.dls-switcher-box {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--dls-spacing-2);
+  padding: var(--dls-spacing-3) var(--dls-spacing-2-5);
+  border-radius: var(--dls-radius-component-toggle-box);
+  border: 1px solid var(--dls-color-border-base);
+  cursor: pointer;
+  font-family: var(--dls-font-family);
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Text orientation
+   --------------------------------------------------------------------------- */
+
+.dls-switcher-box[data-text-orientation="left"] {
+  flex-direction: row-reverse;
+}
+
+/* ---------------------------------------------------------------------------
+   Selected state — box appearance
+   --------------------------------------------------------------------------- */
+
+.dls-switcher-box[data-selected] {
+  background: var(--dls-state-pressed-overlay);
+  border-color: var(--dls-color-border-focus);
+}
+
+/* ---------------------------------------------------------------------------
+   Hover
+   --------------------------------------------------------------------------- */
+
+.dls-switcher-box:hover:not([data-disabled]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-switcher-box[data-selected]:hover:not([data-disabled]) {
+  background: var(--dls-state-pressed-overlay);
+}
+
+/* ---------------------------------------------------------------------------
+   Focus
+   --------------------------------------------------------------------------- */
+
+.dls-switcher-box:focus-within:not([data-disabled]) {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-switcher-box[data-disabled] {
+  border-color: var(--dls-color-border-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dls-switcher-box[data-disabled][data-selected] {
+  background: var(--dls-color-surface-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Inner switcher — reset outer wrapper styles (switcher has its own)
+   --------------------------------------------------------------------------- */
+
+.dls-switcher-box .dls-switcher {
+  cursor: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+   Text block — label + description
+   --------------------------------------------------------------------------- */
+
+.dls-switcher-box__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  user-select: none;
+}
+
+.dls-switcher-box__label {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-switcher-box__description {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-switcher-box[data-disabled] .dls-switcher-box__label,
+.dls-switcher-box[data-disabled] .dls-switcher-box__description {
+  color: var(--dls-color-text-disabled);
+}

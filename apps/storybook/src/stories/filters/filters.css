@@ -1,0 +1,94 @@
+/* ==========================================================================
+   DLS Filters — horizontal filter bar for tables
+   Sizes: m | s
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-filters {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  font-family: var(--dls-font-family);
+  flex-wrap: wrap;
+}
+
+/* ---------------------------------------------------------------------------
+   Divider between filter groups
+   --------------------------------------------------------------------------- */
+
+.dls-filters__divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--dls-color-border-base);
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Add-filter button — icon-soft style
+   --------------------------------------------------------------------------- */
+
+.dls-filters__add {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--dls-color-intent-neutral-subtle);
+  border: 1px solid var(--dls-color-border-base);
+  border-radius: var(--dls-radius-component-button);
+  color: var(--dls-color-text-secondary);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+/* Sizes */
+
+.dls-filters__add,
+.dls-filters[data-size="m"] .dls-filters__add {
+  width: 32px;
+  height: 32px;
+}
+
+.dls-filters[data-size="s"] .dls-filters__add {
+  width: 24px;
+  height: 24px;
+}
+
+/* Icon sizing */
+
+.dls-filters__add svg {
+  width: 16px;
+  height: 16px;
+}
+
+.dls-filters[data-size="s"] .dls-filters__add svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Hover / active / focus */
+
+.dls-filters__add:hover:not([data-disabled]) {
+  background: oklch(from var(--dls-color-intent-neutral-subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+.dls-filters__add:active:not([data-disabled]) {
+  background: oklch(from var(--dls-color-intent-neutral-subtle) calc(l + var(--dls-state-l-delta-pressed)) c h);
+}
+
+.dls-filters__add:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-filters__add[data-disabled] {
+  background: var(--dls-color-surface-disabled);
+  border-color: var(--dls-color-border-disabled);
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}

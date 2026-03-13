@@ -1,0 +1,185 @@
+/* ==========================================================================
+   DLS Radiobutton
+   States: normal | hover | focus | pressed | disabled
+   Selected: true | false
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Wrapper — acts as click target
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  cursor: pointer;
+  font-family: var(--dls-font-family);
+}
+
+.dls-radiobutton:has(.dls-radiobutton__input:disabled) {
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Hidden native input
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Visual circle — 18×18
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton__circle {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--dls-radius-component-radiobutton);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-strong);
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+/* Inner dot — hidden by default */
+
+.dls-radiobutton__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--dls-radius-component-radiobutton);
+  background: var(--dls-color-surface-inverse);
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Selected (checked)
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton__input:checked + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
+  border-color: var(--dls-color-border-focus);
+}
+
+.dls-radiobutton__input:checked + .dls-radiobutton__circle-wrapper .dls-radiobutton__dot {
+  display: block;
+}
+
+/* ---------------------------------------------------------------------------
+   Hover — unselected
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton__input:not(:checked):not(:disabled):hover + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle,
+.dls-radiobutton:hover .dls-radiobutton__input:not(:checked):not(:disabled) + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
+  background: var(--dls-state-hover-overlay);
+  border-color: var(--dls-color-border-focus);
+}
+
+/* Hover — selected */
+
+.dls-radiobutton__input:checked:not(:disabled):hover + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle,
+.dls-radiobutton:hover .dls-radiobutton__input:checked:not(:disabled) + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
+  background: var(--dls-state-hover-overlay);
+}
+
+/* ---------------------------------------------------------------------------
+   Pressed — unselected
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton__input:not(:checked):not(:disabled):active + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle,
+.dls-radiobutton:active .dls-radiobutton__input:not(:checked):not(:disabled) + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
+  background: var(--dls-state-pressed-overlay);
+  border-color: var(--dls-color-border-focus);
+}
+
+/* Pressed — selected */
+
+.dls-radiobutton__input:checked:not(:disabled):active + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle,
+.dls-radiobutton:active .dls-radiobutton__input:checked:not(:disabled) + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
+  background: var(--dls-state-pressed-overlay);
+}
+
+/* ---------------------------------------------------------------------------
+   Focus
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton__input:focus-visible + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton__input:disabled + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
+  background: var(--dls-color-surface-disabled);
+  border-color: var(--dls-color-border-disabled);
+}
+
+.dls-radiobutton__input:disabled + .dls-radiobutton__circle-wrapper .dls-radiobutton__dot {
+  background: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Text orientation — label before radio
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton[data-text-orientation="left"] {
+  flex-direction: row-reverse;
+}
+
+/* ---------------------------------------------------------------------------
+   Circle wrapper — aligns radio to first line of text
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton__circle-wrapper {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+/* ---------------------------------------------------------------------------
+   Text block — label + optional description
+   --------------------------------------------------------------------------- */
+
+.dls-radiobutton__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  user-select: none;
+}
+
+.dls-radiobutton__label {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-radiobutton__description {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-radiobutton__input:disabled ~ .dls-radiobutton__text .dls-radiobutton__label,
+.dls-radiobutton__input:disabled ~ .dls-radiobutton__text .dls-radiobutton__description {
+  color: var(--dls-color-text-disabled);
+}

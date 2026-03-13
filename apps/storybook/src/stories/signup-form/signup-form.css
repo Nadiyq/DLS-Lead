@@ -1,0 +1,375 @@
+/* ==========================================================================
+   DLS Sign Up Form — registration form template
+   Types: 1 (simple card), 2 (card + image), 3 (logo + social), 4 (logo + image)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Outer wrapper
+   --------------------------------------------------------------------------- */
+
+.dls-signup {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--dls-font-family);
+}
+
+.dls-signup[data-type="3"],
+.dls-signup[data-type="4"] {
+  gap: var(--dls-spacing-10);
+}
+
+/* ---------------------------------------------------------------------------
+   Card container
+   --------------------------------------------------------------------------- */
+
+.dls-signup__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-6);
+  padding: var(--dls-spacing-10) 0;
+  border-radius: var(--dls-radius-component-card);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  box-shadow: var(--dls-shadow-dropdown);
+  width: 416px;
+}
+
+.dls-signup[data-type="2"] .dls-signup__card,
+.dls-signup[data-type="4"] .dls-signup__card {
+  flex-direction: row;
+  width: 832px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.dls-signup__card-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-6);
+  padding: var(--dls-spacing-10) 0;
+  width: 416px;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Image panel
+   --------------------------------------------------------------------------- */
+
+.dls-signup__image {
+  flex: 1;
+  min-height: 0;
+  background: var(--dls-color-surface-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dls-color-text-disabled);
+  font-size: var(--dls-text-s-font-size);
+}
+
+.dls-signup__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------------------------------------------------------------------------
+   Logo
+   --------------------------------------------------------------------------- */
+
+.dls-signup__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Sections (shared padding)
+   --------------------------------------------------------------------------- */
+
+.dls-signup__header,
+.dls-signup__form,
+.dls-signup__footer,
+.dls-signup__social {
+  padding: 0 var(--dls-spacing-10);
+}
+
+/* ---------------------------------------------------------------------------
+   Header
+   --------------------------------------------------------------------------- */
+
+.dls-signup__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-signup__title {
+  font-size: var(--dls-text-2xl-font-size);
+  line-height: var(--dls-text-2xl-line-height);
+  font-weight: var(--dls-font-weight-semibold);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-signup__subtitle {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Form fields
+   --------------------------------------------------------------------------- */
+
+.dls-signup__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-4);
+}
+
+.dls-signup__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-signup__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-signup__input {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
+  border-radius: var(--dls-radius-component-input);
+  border: 1px solid var(--dls-color-border-base);
+  background: var(--dls-color-surface-base);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-signup__input::placeholder {
+  color: var(--dls-color-text-disabled);
+}
+
+.dls-signup__input:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  border-color: var(--dls-color-border-strong);
+}
+
+/* ---------------------------------------------------------------------------
+   Hint text
+   --------------------------------------------------------------------------- */
+
+.dls-signup__hint {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Password strength bar
+   --------------------------------------------------------------------------- */
+
+.dls-signup__strength {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-signup__strength-bar {
+  display: flex;
+  gap: var(--dls-spacing-1);
+  height: 4px;
+}
+
+.dls-signup__strength-segment {
+  flex: 1;
+  border-radius: var(--dls-radius-full);
+  background: var(--dls-color-border-subtle);
+  transition: background-color 200ms ease;
+}
+
+.dls-signup__strength-segment[data-active] {
+  background: var(--dls-color-intent-neutral-base);
+}
+
+.dls-signup__strength[data-level="weak"] .dls-signup__strength-segment[data-active] {
+  background: var(--dls-color-intent-danger-base);
+}
+
+.dls-signup__strength[data-level="fair"] .dls-signup__strength-segment[data-active] {
+  background: var(--dls-color-intent-warning-base);
+}
+
+.dls-signup__strength[data-level="good"] .dls-signup__strength-segment[data-active] {
+  background: var(--dls-color-intent-info-base);
+}
+
+.dls-signup__strength[data-level="strong"] .dls-signup__strength-segment[data-active] {
+  background: var(--dls-color-intent-success-base);
+}
+
+.dls-signup__strength-label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Social login
+   --------------------------------------------------------------------------- */
+
+.dls-signup__social {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+}
+
+/* "or" divider */
+.dls-signup__or {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-3);
+  padding: 0 var(--dls-spacing-10);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  color: var(--dls-color-text-secondary);
+  text-transform: uppercase;
+}
+
+.dls-signup__or::before,
+.dls-signup__or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--dls-color-border-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------------- */
+
+.dls-signup__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-6);
+}
+
+.dls-signup__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+}
+
+/* Primary button */
+.dls-signup__btn-primary {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
+  border-radius: var(--dls-radius-component-button);
+  background: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.dls-signup__btn-primary:hover:not(:disabled) {
+  background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+.dls-signup__btn-primary:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* Outline button */
+.dls-signup__btn-outline {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dls-spacing-2);
+  width: 100%;
+  height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
+  border-radius: var(--dls-radius-component-button);
+  border: 1px solid var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-text);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.dls-signup__btn-outline:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-signup__btn-outline:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-signup__btn-outline svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Bottom text
+   --------------------------------------------------------------------------- */
+
+.dls-signup__bottom-text {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-signup__bottom-text a {
+  color: var(--dls-color-text-primary);
+  font-weight: var(--dls-font-weight-medium);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Terms */
+.dls-signup__terms {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+  text-align: center;
+  max-width: 416px;
+}
+
+.dls-signup[data-type="4"] .dls-signup__terms {
+  max-width: 832px;
+}

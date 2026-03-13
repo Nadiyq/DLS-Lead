@@ -1,0 +1,42 @@
+/* ==========================================================================
+   DLS Submenu — sidebar menu group with parent item + indented children
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container — vertical stack of parent + children
+   --------------------------------------------------------------------------- */
+
+.dls-submenu {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Children area — indented items
+   --------------------------------------------------------------------------- */
+
+.dls-submenu__children {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Indented child items — left padding to nest under parent */
+.dls-submenu__children .dls-sidebar-item {
+  padding-left: var(--dls-spacing-8);
+}
+
+/* Child items use normal weight (not medium like parent) */
+.dls-submenu__children .dls-sidebar-item .dls-sidebar-item__text {
+  font-weight: var(--dls-font-weight-normal);
+}
+
+/* ---------------------------------------------------------------------------
+   Slot for additional custom content
+   --------------------------------------------------------------------------- */
+
+.dls-submenu__slot {
+  padding-left: var(--dls-spacing-6);
+}

@@ -1,0 +1,80 @@
+/* ==========================================================================
+   DLS Sidebar — full sidebar template assembling menu-items, submenus, account
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+  padding: var(--dls-spacing-2);
+  background: var(--dls-color-surface-base);
+  font-family: var(--dls-font-family);
+  height: 100%;
+}
+
+/* Variants 2–4 use wider spacing between top sections */
+.dls-sidebar[data-variant="2"],
+.dls-sidebar[data-variant="3"],
+.dls-sidebar[data-variant="4"] {
+  gap: var(--dls-spacing-4);
+}
+
+/* ---------------------------------------------------------------------------
+   Nav section — the scrollable middle area
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Grouped variant — sections within nav have larger gaps */
+.dls-sidebar[data-variant="2"] .dls-sidebar__nav,
+.dls-sidebar[data-variant="3"] .dls-sidebar__nav,
+.dls-sidebar[data-variant="4"] .dls-sidebar__nav {
+  gap: var(--dls-spacing-4);
+}
+
+/* ---------------------------------------------------------------------------
+   Menu group — cluster of items within nav
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+}
+
+/* ---------------------------------------------------------------------------
+   Divider
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar__divider {
+  height: 1px;
+  margin: var(--dls-spacing-1) var(--dls-spacing-2);
+  background: var(--dls-color-border-subtle);
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Collapsed mode
+   --------------------------------------------------------------------------- */
+
+.dls-sidebar[data-collapsed] {
+  width: 64px;
+  align-items: center;
+}
+
+.dls-sidebar:not([data-collapsed]) {
+  width: 266px;
+}

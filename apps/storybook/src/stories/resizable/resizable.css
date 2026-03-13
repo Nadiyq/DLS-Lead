@@ -1,0 +1,149 @@
+/* ==========================================================================
+   DLS Resizable — column resize handle
+   States: normal | hover | focus/active
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container — vertical strip
+   --------------------------------------------------------------------------- */
+
+.dls-resizable {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  padding-left: var(--dls-spacing-0-5);
+  padding-right: var(--dls-spacing-0-5);
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+  transition: background 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Vertical lines (top + bottom)
+   --------------------------------------------------------------------------- */
+
+.dls-resizable__line {
+  flex: 1;
+  width: 1px;
+  background: var(--dls-color-border-base);
+  transition: background 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Handle — central grip area
+   --------------------------------------------------------------------------- */
+
+.dls-resizable__handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 16px;
+  padding: var(--dls-spacing-0-5) 0;
+  border-radius: 2px;
+  background: var(--dls-color-surface-strong);
+  flex-shrink: 0;
+  transition: background 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Grip icon
+   --------------------------------------------------------------------------- */
+
+.dls-resizable__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  color: var(--dls-color-intent-neutral-text);
+  transition: color 150ms ease;
+}
+
+.dls-resizable__icon svg {
+  width: 4px;
+  height: 8px;
+}
+
+/* ---------------------------------------------------------------------------
+   Hover
+   --------------------------------------------------------------------------- */
+
+.dls-resizable:hover:not([data-disabled]) {
+  background: var(--dls-state-hover-overlay);
+  border-radius: 4px;
+}
+
+.dls-resizable:hover:not([data-disabled]) .dls-resizable__line {
+  background: var(--dls-color-intent-info-border);
+}
+
+.dls-resizable:hover:not([data-disabled]) .dls-resizable__handle {
+  background: var(--dls-color-intent-info-border);
+}
+
+.dls-resizable:hover:not([data-disabled]) .dls-resizable__icon {
+  color: var(--dls-color-text-inverse);
+}
+
+/* ---------------------------------------------------------------------------
+   Focus / Active (dragging)
+   --------------------------------------------------------------------------- */
+
+.dls-resizable:focus-visible {
+  background: var(--dls-state-hover-overlay);
+  border-radius: 4px;
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-resizable:focus-visible .dls-resizable__line {
+  background: var(--dls-color-intent-info-border);
+}
+
+.dls-resizable:focus-visible .dls-resizable__handle {
+  background: var(--dls-color-intent-info-border);
+}
+
+.dls-resizable:focus-visible .dls-resizable__icon {
+  color: var(--dls-color-text-inverse);
+}
+
+/* Active (dragging) */
+
+.dls-resizable[data-active] .dls-resizable__line {
+  background: var(--dls-color-intent-info-border);
+}
+
+.dls-resizable[data-active] .dls-resizable__handle {
+  background: var(--dls-color-intent-info-border);
+}
+
+.dls-resizable[data-active] .dls-resizable__icon {
+  color: var(--dls-color-text-inverse);
+}
+
+/* ---------------------------------------------------------------------------
+   Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-resizable[data-disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dls-resizable[data-disabled] .dls-resizable__line {
+  background: var(--dls-color-border-disabled);
+}
+
+.dls-resizable[data-disabled] .dls-resizable__handle {
+  background: var(--dls-color-surface-disabled);
+}
+
+.dls-resizable[data-disabled] .dls-resizable__icon {
+  color: var(--dls-color-text-disabled);
+}

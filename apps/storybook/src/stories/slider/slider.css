@@ -1,0 +1,70 @@
+/* ==========================================================================
+   DLS Slider — single value and range slider
+   Variants: single | range
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-slider {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 16px;
+  cursor: pointer;
+  font-family: var(--dls-font-family);
+  touch-action: none;
+  user-select: none;
+}
+
+.dls-slider[data-disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Bar (background track) — 6px, full-width
+   --------------------------------------------------------------------------- */
+
+.dls-slider__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  border-radius: var(--dls-radius-component-slider-item);
+  background: var(--dls-color-surface-strong);
+}
+
+/* ---------------------------------------------------------------------------
+   Track (filled portion) — colored range
+   --------------------------------------------------------------------------- */
+
+.dls-slider__track {
+  position: absolute;
+  height: 6px;
+  border-radius: var(--dls-radius-component-slider-item);
+  background: var(--dls-color-intent-neutral-base);
+}
+
+.dls-slider[data-disabled] .dls-slider__track {
+  background: var(--dls-color-surface-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Thumb (slider-item) — positioned absolutely
+   --------------------------------------------------------------------------- */
+
+.dls-slider__thumb {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.dls-slider__thumb:last-of-type {
+  z-index: 2;
+}

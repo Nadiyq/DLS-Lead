@@ -1,0 +1,138 @@
+/* ==========================================================================
+   DLS Table Cell — content cells for data tables
+   Types: text | two-line | badge | trend | button | actions | slot |
+          users-stacked | credit-card
+   Align: left | center | right
+   Padding: true | false
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Base cell
+   --------------------------------------------------------------------------- */
+
+.dls-table-cell {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1-5);
+  padding: var(--dls-spacing-2) var(--dls-spacing-2);
+  border-bottom: 1px solid var(--dls-color-border-subtle);
+  font-family: var(--dls-font-family);
+  min-height: 40px;
+}
+
+/* ---------------------------------------------------------------------------
+   Padding — no horizontal padding variant
+   --------------------------------------------------------------------------- */
+
+.dls-table-cell[data-padding="false"] {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Alignment
+   --------------------------------------------------------------------------- */
+
+.dls-table-cell[data-align="left"] {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.dls-table-cell[data-align="center"] {
+  justify-content: center;
+  text-align: center;
+}
+
+.dls-table-cell[data-align="right"] {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/* ---------------------------------------------------------------------------
+   Two-line layout — stack vertically
+   --------------------------------------------------------------------------- */
+
+.dls-table-cell[data-type="two-line"] {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--dls-spacing-1);
+}
+
+.dls-table-cell[data-type="two-line"][data-align="left"] {
+  align-items: flex-start;
+}
+
+.dls-table-cell[data-type="two-line"][data-align="center"] {
+  align-items: center;
+}
+
+.dls-table-cell[data-type="two-line"][data-align="right"] {
+  align-items: flex-end;
+}
+
+/* ---------------------------------------------------------------------------
+   Primary text
+   --------------------------------------------------------------------------- */
+
+.dls-table-cell__text {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------------------------------------------------------------------------
+   Secondary text (two-line)
+   --------------------------------------------------------------------------- */
+
+.dls-table-cell__secondary {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-placeholder);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------------------------------------------------------------------------
+   Icon (leading)
+   --------------------------------------------------------------------------- */
+
+.dls-table-cell__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-table-cell__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Slot containers (left / right)
+   --------------------------------------------------------------------------- */
+
+.dls-table-cell__slot {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Actions layout
+   --------------------------------------------------------------------------- */
+
+.dls-table-cell[data-type="actions"] {
+  gap: var(--dls-spacing-1);
+}

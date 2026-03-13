@@ -1,0 +1,309 @@
+/* ==========================================================================
+   DLS Upload File Form — file upload card with drop zone + file list
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Card container
+   --------------------------------------------------------------------------- */
+
+.dls-upload-file-form {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-6);
+  padding: var(--dls-spacing-10) 0;
+  border-radius: var(--dls-radius-component-card);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  box-shadow: var(--dls-shadow-dropdown);
+  width: 516px;
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Sections (shared horizontal padding)
+   --------------------------------------------------------------------------- */
+
+.dls-upload-file-form__header,
+.dls-upload-file-form__dropzone-wrapper,
+.dls-upload-file-form__slot,
+.dls-upload-file-form__list {
+  padding: 0 var(--dls-spacing-6);
+}
+
+/* ---------------------------------------------------------------------------
+   Header
+   --------------------------------------------------------------------------- */
+
+.dls-upload-file-form__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-upload-file-form__title {
+  font-size: var(--dls-text-2xl-font-size);
+  line-height: var(--dls-text-2xl-line-height);
+  font-weight: var(--dls-font-weight-semibold);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-upload-file-form__subtitle {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Drop zone
+   --------------------------------------------------------------------------- */
+
+.dls-upload-file-form__dropzone {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--dls-spacing-4);
+  padding: var(--dls-spacing-10) var(--dls-spacing-6);
+  border-radius: var(--dls-radius-xl);
+  background: var(--dls-color-intent-info-subtle);
+  border: 1px dashed var(--dls-color-intent-info-border);
+  cursor: pointer;
+  transition: background-color 100ms ease, border-color 100ms ease;
+}
+
+.dls-upload-file-form__dropzone[data-drag-over] {
+  background: var(--dls-color-intent-info-subtle);
+  border-color: var(--dls-color-intent-info-strong);
+}
+
+.dls-upload-file-form__dropzone-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-upload-file-form__dropzone-title {
+  font-size: var(--dls-text-l-font-size);
+  line-height: var(--dls-text-l-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-upload-file-form__dropzone-description {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-upload-file-form__upload-btn {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dls-spacing-2);
+  height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
+  border-radius: var(--dls-radius-component-button);
+  background: var(--dls-color-intent-info-strong);
+  color: var(--dls-color-intent-info-on-base);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.dls-upload-file-form__upload-btn:hover:not(:disabled) {
+  background: oklch(from var(--dls-color-intent-info-strong) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+.dls-upload-file-form__upload-btn:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Slot content
+   --------------------------------------------------------------------------- */
+
+.dls-upload-file-form__slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-4);
+}
+
+.dls-upload-file-form__slot:empty {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   File list
+   --------------------------------------------------------------------------- */
+
+.dls-upload-file-form__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+}
+
+/* ---------------------------------------------------------------------------
+   File item
+   --------------------------------------------------------------------------- */
+
+.dls-upload-file-form__item {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-3);
+  padding: var(--dls-spacing-3);
+  border-radius: var(--dls-radius-component-item);
+  border: 1px solid var(--dls-color-border-base);
+}
+
+.dls-upload-file-form__item-top {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--dls-spacing-4);
+}
+
+/* Media thumbnail */
+.dls-upload-file-form__item-media {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--dls-radius-component-item);
+  background: var(--dls-color-surface-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dls-upload-file-form__item-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* File info */
+.dls-upload-file-form__item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+}
+
+.dls-upload-file-form__item-name {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dls-upload-file-form__item-details {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-3);
+}
+
+.dls-upload-file-form__item-size {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* Status badge */
+.dls-upload-file-form__item-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--dls-spacing-2);
+  border-radius: var(--dls-radius-component-badge);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+}
+
+.dls-upload-file-form__item-badge[data-status="complete"] {
+  background: var(--dls-color-intent-success-subtle);
+  color: var(--dls-color-intent-success-text);
+}
+
+.dls-upload-file-form__item-badge[data-status="error"] {
+  background: var(--dls-color-intent-danger-subtle);
+  color: var(--dls-color-intent-danger-text);
+}
+
+.dls-upload-file-form__item-badge[data-status="uploading"] {
+  background: var(--dls-color-intent-info-subtle);
+  color: var(--dls-color-intent-info-text);
+}
+
+/* Delete / remove button */
+.dls-upload-file-form__item-remove {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--dls-radius-component-button);
+  color: var(--dls-color-text-secondary);
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.dls-upload-file-form__item-remove:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-upload-file-form__item-remove:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Progress bar
+   --------------------------------------------------------------------------- */
+
+.dls-upload-file-form__progress {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-upload-file-form__progress-track {
+  flex: 1;
+  height: 6px;
+  border-radius: var(--dls-radius-full);
+  background: var(--dls-color-surface-muted);
+  overflow: hidden;
+}
+
+.dls-upload-file-form__progress-fill {
+  height: 100%;
+  border-radius: var(--dls-radius-full);
+  background: var(--dls-color-intent-success-base);
+  transition: width 200ms ease;
+}
+
+.dls-upload-file-form__progress-label {
+  flex-shrink: 0;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}

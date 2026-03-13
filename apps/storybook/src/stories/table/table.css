@@ -1,0 +1,123 @@
+/* ==========================================================================
+   DLS Table — full table template assembling top-bar, columns, pagination
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
+.dls-table {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--dls-color-border-base);
+  border-radius: var(--dls-radius-component-table);
+  overflow: hidden;
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Columns area — horizontal row of TableColumn components
+   --------------------------------------------------------------------------- */
+
+.dls-table__columns {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Pagination row
+   --------------------------------------------------------------------------- */
+
+.dls-table__pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-3);
+  padding: var(--dls-spacing-3) var(--dls-spacing-4);
+  border-top: 1px solid var(--dls-color-border-subtle);
+}
+
+.dls-table__pagination-left {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  flex: 1;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-table__pagination-left select {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--dls-spacing-2);
+  height: 24px;
+  border: 1px solid var(--dls-color-border-base);
+  border-radius: var(--dls-radius-component-input);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-s-font-size);
+  color: var(--dls-color-text-primary);
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------------------
+   Page buttons
+   --------------------------------------------------------------------------- */
+
+.dls-table__pages {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+}
+
+.dls-table__page {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 var(--dls-spacing-2);
+  border-radius: var(--dls-radius-component-pagination);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.dls-table__page:hover:not(:disabled):not([data-selected]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-table__page[data-selected] {
+  background: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+}
+
+.dls-table__page:disabled {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.dls-table__page:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-table__page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  color: var(--dls-color-text-secondary);
+  font-size: var(--dls-text-m-font-size);
+}

@@ -1,0 +1,63 @@
+/* ==========================================================================
+   DLS Scroll — custom scrollbar indicator
+   Variants: vertical | horizontal
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Track container
+   --------------------------------------------------------------------------- */
+
+.dls-scroll {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  padding: var(--dls-spacing-0-5);
+  border-radius: var(--dls-radius-component-scroll);
+}
+
+/* Vertical — column, 8px wide */
+
+.dls-scroll[data-orientation="vertical"] {
+  flex-direction: column;
+  width: 8px;
+  height: 100%;
+}
+
+/* Horizontal — row, 8px tall */
+
+.dls-scroll[data-orientation="horizontal"] {
+  flex-direction: row;
+  height: 8px;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Thumb
+   --------------------------------------------------------------------------- */
+
+.dls-scroll__thumb {
+  border-radius: var(--dls-radius-component-scroll-thumb);
+  background: var(--dls-color-intent-neutral-base);
+  flex-shrink: 0;
+  transition: opacity 150ms ease;
+}
+
+/* Vertical thumb */
+
+.dls-scroll[data-orientation="vertical"] .dls-scroll__thumb {
+  width: 4px;
+}
+
+/* Horizontal thumb */
+
+.dls-scroll[data-orientation="horizontal"] .dls-scroll__thumb {
+  height: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+   Hover — thumb becomes slightly more visible
+   --------------------------------------------------------------------------- */
+
+.dls-scroll:hover .dls-scroll__thumb {
+  opacity: 0.8;
+}

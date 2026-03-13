@@ -1,0 +1,96 @@
+/* ==========================================================================
+   DLS Dropdown Column Actions — per-column context menu for table headers
+   Actions: sort, filter, pin, move, hide
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container — list panel style
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-column-actions {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 227px;
+  padding: var(--dls-spacing-2);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-list);
+  box-shadow:
+    0 2px 4px -2px rgba(47, 55, 70, 0.20),
+    0 4px 6px -1px rgba(47, 55, 70, 0.20);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Action row
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-column-actions__item {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  width: 100%;
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+  min-height: 32px;
+  border-radius: var(--dls-radius-component-list-item);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.dls-dropdown-column-actions__item:hover:not([data-disabled]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-dropdown-column-actions__item[data-active] {
+  background: var(--dls-state-pressed-overlay);
+}
+
+.dls-dropdown-column-actions__item:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-dropdown-column-actions__item[data-disabled] {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Icon
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-column-actions__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-dropdown-column-actions__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-dropdown-column-actions__item[data-active] .dls-dropdown-column-actions__icon {
+  color: var(--dls-color-text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Divider
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-column-actions__divider {
+  height: 1px;
+  margin: var(--dls-spacing-1) var(--dls-spacing-2);
+  background: var(--dls-color-border-base);
+}

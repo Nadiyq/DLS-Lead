@@ -1,0 +1,26 @@
+/* ==========================================================================
+   DLS Separator — horizontal or vertical divider line
+   Orientation: horizontal (default) | vertical
+   ========================================================================== */
+
+.dls-separator {
+  all: unset;
+  box-sizing: border-box;
+  display: block;
+  background: var(--dls-color-border-base);
+  flex-shrink: 0;
+}
+
+/* Horizontal — full width, 1px tall */
+
+.dls-separator[data-orientation="horizontal"] {
+  width: 100%;
+  height: 1px;
+}
+
+/* Vertical — full height, 1px wide */
+
+.dls-separator[data-orientation="vertical"] {
+  width: 1px;
+  align-self: stretch;
+}

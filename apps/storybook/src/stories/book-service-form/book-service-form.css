@@ -1,0 +1,270 @@
+/* ==========================================================================
+   DLS Book Service Form — appointment booking card with form fields
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Card container
+   --------------------------------------------------------------------------- */
+
+.dls-book-service-form {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-6);
+  padding: var(--dls-spacing-10) 0;
+  border-radius: var(--dls-radius-component-card);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  box-shadow: var(--dls-shadow-dropdown);
+  width: 416px;
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Sections (shared horizontal padding)
+   --------------------------------------------------------------------------- */
+
+.dls-book-service-form__header,
+.dls-book-service-form__form,
+.dls-book-service-form__slot,
+.dls-book-service-form__footer {
+  padding: 0 var(--dls-spacing-10);
+}
+
+/* ---------------------------------------------------------------------------
+   Header
+   --------------------------------------------------------------------------- */
+
+.dls-book-service-form__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-book-service-form__title {
+  font-size: var(--dls-text-2xl-font-size);
+  line-height: var(--dls-text-2xl-line-height);
+  font-weight: var(--dls-font-weight-semibold);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-book-service-form__subtitle {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Form fields
+   --------------------------------------------------------------------------- */
+
+.dls-book-service-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-4);
+}
+
+.dls-book-service-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-book-service-form__label {
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-book-service-form__input {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
+  border-radius: var(--dls-radius-component-input);
+  border: 1px solid var(--dls-color-border-base);
+  background: var(--dls-color-surface-base);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-book-service-form__input::placeholder {
+  color: var(--dls-color-text-disabled);
+}
+
+.dls-book-service-form__input:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  border-color: var(--dls-color-border-strong);
+}
+
+/* Select (service dropdown) */
+.dls-book-service-form__select {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
+  border-radius: var(--dls-radius-component-input);
+  border: 1px solid var(--dls-color-border-base);
+  background: var(--dls-color-surface-base);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  color: var(--dls-color-text-primary);
+  cursor: pointer;
+  appearance: none;
+}
+
+.dls-book-service-form__select:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  border-color: var(--dls-color-border-strong);
+}
+
+/* Date input */
+.dls-book-service-form__date-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dls-book-service-form__date-wrapper .dls-book-service-form__input {
+  padding-right: var(--dls-spacing-8);
+}
+
+.dls-book-service-form__date-icon {
+  position: absolute;
+  right: var(--dls-spacing-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dls-color-text-secondary);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Checkbox row
+   --------------------------------------------------------------------------- */
+
+.dls-book-service-form__checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--dls-spacing-2);
+  cursor: pointer;
+}
+
+.dls-book-service-form__checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: var(--dls-radius-component-checkbox);
+  border: 1px solid var(--dls-color-border-strong);
+  background: var(--dls-color-surface-base);
+  color: var(--dls-color-intent-neutral-on-base);
+  transition: background-color 100ms ease, border-color 100ms ease;
+}
+
+.dls-book-service-form__checkbox[data-checked] {
+  background: var(--dls-color-intent-neutral-base);
+  border-color: var(--dls-color-intent-neutral-base);
+}
+
+.dls-book-service-form__checkbox-text {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Slot content
+   --------------------------------------------------------------------------- */
+
+.dls-book-service-form__slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-4);
+}
+
+.dls-book-service-form__slot:empty {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Footer — Cancel + Submit side by side
+   --------------------------------------------------------------------------- */
+
+.dls-book-service-form__footer {
+  display: flex;
+  gap: var(--dls-spacing-3);
+}
+
+.dls-book-service-form__btn-secondary {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
+  border-radius: var(--dls-radius-component-button);
+  background: var(--dls-color-intent-neutral-subtle);
+  border: 1px solid var(--dls-color-border-base);
+  color: var(--dls-color-intent-neutral-text);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.dls-book-service-form__btn-secondary:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-book-service-form__btn-secondary:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-book-service-form__btn-primary {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 32px;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
+  border-radius: var(--dls-radius-component-button);
+  background: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.dls-book-service-form__btn-primary:hover:not(:disabled) {
+  background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+.dls-book-service-form__btn-primary:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}

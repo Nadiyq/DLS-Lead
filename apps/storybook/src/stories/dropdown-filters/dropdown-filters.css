@@ -1,0 +1,51 @@
+/* ==========================================================================
+   DLS Dropdown Filters — filter selection panel for tables
+   Shows available filters as toggleable chips inside a list panel
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Container — list panel style
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-filters {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  padding: var(--dls-spacing-2);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-list);
+  box-shadow:
+    0 2px 4px -2px rgba(47, 55, 70, 0.20),
+    0 4px 6px -1px rgba(47, 55, 70, 0.20);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Label row
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-filters__label {
+  display: flex;
+  align-items: center;
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+  min-height: 32px;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+   Chips row
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-filters__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--dls-spacing-1);
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+}
