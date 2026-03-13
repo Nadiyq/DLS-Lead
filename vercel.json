@@ -1,6 +1,0 @@
-{
-    "buildCommand": "cd apps/storybook && npm install && npx storybook build",
-    "outputDirectory": "apps/storybook/storybook-static",
-    "framework": null,
-    "installCommand": "echo 'skip'"
-  }
