@@ -15,7 +15,13 @@
       "Bash(node:*)",
       "mcp__figma-console__figma_take_screenshot",
       "mcp__figma-console__figma_get_status",
-      "mcp__figma-console__figma_reconnect"
+      "mcp__figma-console__figma_reconnect",
+      "Bash(tree -L 3 -I node_modules /Users/nadaabrosimova/Documents/DLS-Lead 2>/dev/null || find /Users/nadaabrosimova/Documents/DLS-Lead -not -path \"*/node_modules/*\" -type f -o -type d | head -100)",
+      "mcp__figma-console__figma_list_open_files",
+      "Bash(ls /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/*.stories.tsx /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/**/*.stories.tsx 2>/dev/null | head -5)",
+      "Bash(find /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/chip* -name \"*.tsx\" -type f)",
+      "Bash(ls -la /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/table*/ 2>/dev/null | grep -E \"\\\\.tsx$|\\\\.css$\")",
+      "Bash(find /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories -type d -name \"*table*\" -o -type d -name \"*Table*\" 2>/dev/null | sort)"
     ]
   },
   "enableAllProjectMcpServers": true,

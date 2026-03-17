@@ -33,11 +33,10 @@ const Arrow = () => (
     width="12"
     height="8"
     viewBox="0 0 12 8"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path className="dls-tooltip__arrow-stroke" d="M0 0L6 8L12 0H0Z" />
-    <path className="dls-tooltip__arrow-fill" d="M1 0L6 6.5L11 0H1Z" />
+    <path className="dls-tooltip__arrow-stroke" d="M0 0L6 8L12 0Z" />
+    <path className="dls-tooltip__arrow-fill" d="M1 0L6 6.5L11 0Z" />
   </svg>
 );
 

@@ -295,7 +295,552 @@ const ICO={
 let tokens=null;
 let primitiveMap={};
 let semanticRefMap={};
-const COMPONENTS=['Accordion','Alert','Alert Dialog','Avatar','Badge','Breadcrumbs','Button','Button Group','Calendar','Carousel','Chart','Checkbox','Chips','Comment','Context Menu','Dialog','Empty','Fields','Input','Item','Kbd','List','Pagination','Progress Bar','Radiobutton','Resizable','Scroll','Separator','Slider','Spinner','Switcher','Skeleton','Table','Tabs','Tooltips'];
+const COMPONENTS=['Accordion','Alert','Alert Dialog','Avatar','Avatar Stack','Badge','Badge Indicator','Badge Number','Breadcrumbs','Button','Button Group','Calendar','Card','Carousel','Checkbox','Checkmark','Chip','Comment','Context Menu','Dialog','Dropdown','Empty State','Form Field','Icon Shape','Input Field','Item','Kbd','List Item','Pagination','Progress Bar','Radiobutton','Resizable','Scroll','Search Field','Separator','Sidebar','Skeleton','Slider','Spinner','Switcher','Table','Tabs','Text','Textarea','Toolbar','Tooltip','Top Bar'];
+
+/* ═══════ Component Registry ═════════════════════════════ */
+const COMP_DATA={
+'accordion':{desc:'Container for expandable accordion items that manage open/closed state.',
+storybook:'accordion',
+code:`import { Accordion, AccordionItem } from './Accordion'
+
+<Accordion>
+  <AccordionItem title="Section 1">
+    Content for section 1
+  </AccordionItem>
+  <AccordionItem title="Section 2" defaultOpen>
+    Content for section 2
+  </AccordionItem>
+  <AccordionItem title="Disabled" disabled>
+    Hidden content
+  </AccordionItem>
+</Accordion>`},
+
+'alert':{desc:'Displays important messages to inform users about system status, required actions, or critical feedback.',
+storybook:'alert',
+code:`import { Alert } from './Alert'
+
+<Alert
+  intent="info"
+  title="New feature available"
+  description="We've added dark mode support."
+/>
+
+<Alert
+  intent="success"
+  size="sm"
+  title="Payment successful"
+  description="Your payment of $99.99 has been processed."
+  action={<button>View</button>}
+/>`},
+
+'alert-dialog':{desc:'Modal dialog for critical alerts requiring user action before proceeding.',
+storybook:'alertdialog',
+code:`import { AlertDialog } from './AlertDialog'
+
+<AlertDialog
+  open={isOpen}
+  intent="danger"
+  title="Delete item?"
+  description="This action cannot be undone."
+  primaryAction={<button>Delete</button>}
+  secondaryAction={<button>Cancel</button>}
+  onClose={() => setIsOpen(false)}
+/>`},
+
+'avatar':{desc:'Displays a user profile image, initials, or icon with optional status dot.',
+storybook:'avatar',
+code:`import { Avatar } from './Avatar'
+
+<Avatar src="/user.jpg" alt="Jane" size="md" />
+<Avatar initials="JD" size="lg" circle />
+<Avatar icon={<UserIcon />} dot />`},
+
+'avatar-stack':{desc:'Displays overlapping stacked avatars with overflow counter and dropdown.',
+storybook:'avatarstack',
+code:`import { AvatarStack } from './AvatarStack'
+import { Avatar } from './Avatar'
+
+<AvatarStack max={3} total={8}>
+  <Avatar src="/user1.jpg" />
+  <Avatar src="/user2.jpg" />
+  <Avatar initials="AB" />
+</AvatarStack>`},
+
+'badge':{desc:'Small label for displaying status, category, or count information.',
+storybook:'badge',
+code:`import { Badge } from './Badge'
+
+<Badge intent="info">New</Badge>
+<Badge variant="soft" intent="success">Active</Badge>
+<Badge variant="outline" intent="danger" size="sm">
+  Error
+</Badge>`},
+
+'badge-indicator':{desc:'Notification dot badge for showing unread count.',
+storybook:'badge-indicator-badgeindicator',
+code:`import { BadgeIndicator } from './badge/indicator/BadgeIndicator'
+
+<BadgeIndicator value={5} />
+<BadgeIndicator value={100} max={99} intent="danger" />`},
+
+'badge-number':{desc:'Numeric badge with variant support for counters and labels.',
+storybook:'badge-number-badgenumber',
+code:`import { BadgeNumber } from './badge/number/BadgeNumber'
+
+<BadgeNumber value={42} intent="primary" />
+<BadgeNumber value={100} max={99} variant="soft" />`},
+
+'breadcrumbs':{desc:'Navigation showing the current page location within a hierarchy.',
+storybook:'breadcrumbs',
+code:`import { Breadcrumbs } from './breadcrumbs/Breadcrumbs'
+
+<Breadcrumbs items={[
+  { label: 'Home', href: '/' },
+  { label: 'Products', href: '/products' },
+  { label: 'Details' },
+]} />`},
+
+'button':{desc:'Interactive button with multiple variants, intents, sizes, and icon support.',
+storybook:'button',
+code:`import { Button } from './Button'
+
+<Button variant="filled" intent="primary">Save</Button>
+<Button variant="ghost" intent="neutral">Cancel</Button>
+<Button icon={<PlusIcon />} iconOnly aria-label="Add" />
+<Button size="sm" intent="danger">Delete</Button>`},
+
+'button-group':{desc:'Container for grouped buttons with unified styling and orientation.',
+storybook:'button-group-buttongroup',
+code:`import { ButtonGroup } from './button-group/ButtonGroup'
+import { Button } from './Button'
+
+<ButtonGroup variant="outline">
+  <Button>Left</Button>
+  <Button>Center</Button>
+  <Button>Right</Button>
+</ButtonGroup>`},
+
+'calendar':{desc:'Date picker with month/year navigation, range selection, and view modes.',
+storybook:'calendar',
+code:`import { Calendar } from './calendar/Calendar'
+
+<Calendar
+  value={selectedDate}
+  onSelect={(date) => setSelectedDate(date)}
+  minDate={new Date(2024, 0, 1)}
+  maxDate={new Date(2026, 11, 31)}
+/>`},
+
+'card':{desc:'Container with header, title, description, content area, and footer.',
+storybook:'card',
+code:`import { Card } from './card/Card'
+
+<Card
+  type="elevated"
+  title="Card Title"
+  description="Card description text."
+  footer={<button>Action</button>}
+>
+  Card body content here
+</Card>`},
+
+'carousel':{desc:'Slide-based content viewer with arrows, dots, and slide counter.',
+storybook:'carousel',
+code:`import { Carousel, CarouselItem } from './carousel/Carousel'
+
+<Carousel showDots showArrows>
+  <CarouselItem><img src="/slide1.jpg" /></CarouselItem>
+  <CarouselItem><img src="/slide2.jpg" /></CarouselItem>
+  <CarouselItem><img src="/slide3.jpg" /></CarouselItem>
+</Carousel>`},
+
+'checkbox':{desc:'Checkable input with label, description, and indeterminate state.',
+storybook:'checkbox',
+code:`import { Checkbox } from './checkbox/Checkbox'
+
+<Checkbox
+  label="Accept terms"
+  description="You agree to our terms of service."
+  checked={isChecked}
+  onChange={setIsChecked}
+/>
+<Checkbox label="Select all" indeterminate />`},
+
+'checkmark':{desc:'Animated checkmark icon for success states.',
+storybook:'checkmark',
+code:`import { Checkmark } from './checkmark/Checkmark'
+
+<Checkmark size="sm" />
+<Checkmark size="md" />
+<Checkmark size="lg" />`},
+
+'chip':{desc:'Compact element for tags, filters, or selections with remove support.',
+storybook:'chip',
+code:`import { Chip } from './chip/Chip'
+
+<Chip label="React" onRemove={() => {}} />
+<Chip label="John" avatar={{ src: '/john.jpg' }} />
+<Chip label="Status" dot="success" chevron />`},
+
+'comment':{desc:'Rich text editor for composing messages with formatting toolbar.',
+storybook:'comment',
+code:`import { Comment } from './comment/Comment'
+
+<Comment
+  channel="email"
+  subject="Meeting recap"
+  onSubjectChange={setSubject}
+  value={body}
+  onChange={setBody}
+  placeholder="Write your message..."
+/>`},
+
+'context-menu':{desc:'Right-click menu with items, submenus, and keyboard shortcuts.',
+storybook:'context-menu-contextmenu',
+code:`import { ContextMenu, ContextMenuItem, ContextMenuSubmenu }
+  from './context-menu/ContextMenu'
+
+<ContextMenu>
+  <ContextMenuItem label="Cut" shortcut={['⌘', 'X']} />
+  <ContextMenuItem label="Copy" shortcut={['⌘', 'C']} />
+  <ContextMenuSubmenu label="Share">
+    <ContextMenuItem label="Email" />
+    <ContextMenuItem label="Slack" />
+  </ContextMenuSubmenu>
+</ContextMenu>`},
+
+'dialog':{desc:'Modal dialog with title, description, body content, and action buttons.',
+storybook:'dialog',
+code:`import { Dialog } from './dialog/Dialog'
+
+<Dialog
+  open={isOpen}
+  title="Edit Profile"
+  description="Update your personal information."
+  actions={<>
+    <button onClick={close}>Cancel</button>
+    <button onClick={save}>Save</button>
+  </>}
+  onClose={() => setIsOpen(false)}
+>
+  <form>...</form>
+</Dialog>`},
+
+'dropdown':{desc:'Searchable select with icons, avatars, autocomplete, and clearable state.',
+storybook:'dropdown',
+code:`import { Dropdown } from './dropdown/Dropdown'
+
+<Dropdown
+  label="Country"
+  placeholder="Select a country"
+  options={[
+    { value: 'us', label: 'United States' },
+    { value: 'uk', label: 'United Kingdom' },
+  ]}
+  value={country}
+  onChange={setCountry}
+  autocomplete
+  clearable
+/>`},
+
+'empty-state':{desc:'Placeholder for empty pages with icon, title, description, and actions.',
+storybook:'empty-state-emptystate',
+code:`import { EmptyState } from './empty-state/EmptyState'
+
+<EmptyState
+  variant="page"
+  media={<EmptyIcon />}
+  title="No results found"
+  description="Try adjusting your search or filters."
+>
+  <button>Clear filters</button>
+</EmptyState>`},
+
+'form-field':{desc:'Wrapper for form inputs providing label, hint, and info icon.',
+storybook:'form-field-formfield',
+code:`import { FormField } from './form-field/FormField'
+
+<FormField label="Email" hint="We'll never share your email.">
+  <input type="email" />
+</FormField>`},
+
+'icon-shape':{desc:'Icon wrapper with intent-based background color.',
+storybook:'icon-shape-iconshape',
+code:`import { IconShape } from './icon-shape/IconShape'
+
+<IconShape intent="primary" size="md">
+  <StarIcon />
+</IconShape>`},
+
+'input-field':{desc:'Text input with label, hint, error message, icons, and clear button.',
+storybook:'input-field-inputfield',
+code:`import { InputField } from './input-field/InputField'
+
+<InputField
+  label="Email"
+  hint="Enter your work email"
+  error={errors.email}
+  iconStart={<MailIcon />}
+  clearable
+/>`},
+
+'item':{desc:'Versatile list item with media, title, description, and action controls.',
+storybook:'item',
+code:`import { Item } from './item/Item'
+
+<Item
+  media={<Avatar initials="JD" />}
+  title="John Doe"
+  description="Software Engineer"
+  controls={<Button size="sm">View</Button>}
+  interactive
+/>`},
+
+'kbd':{desc:'Keyboard key indicator for displaying shortcuts.',
+storybook:'kbd',
+code:`import { Kbd, KbdGroup } from './kbd/Kbd'
+
+<KbdGroup type="combo">
+  <Kbd>⌘</Kbd>
+  <Kbd>S</Kbd>
+</KbdGroup>
+
+<KbdGroup type="sequence">
+  <Kbd>G</Kbd>
+  <Kbd>I</Kbd>
+</KbdGroup>`},
+
+'list-item':{desc:'Flexible list item supporting 9 layout types with text, icons, chips, and slots.',
+storybook:'list-item-listitem',
+code:`import { ListItem } from './list-item/ListItem'
+
+<ListItem
+  type="item"
+  text="Dashboard"
+  iconStart={<HomeIcon />}
+  selected
+/>
+<ListItem
+  type="checkbox"
+  text="Enable notifications"
+  secondaryText="Get alerts via email"
+/>`},
+
+'pagination':{desc:'Page navigation with numbered buttons and items-per-page selector.',
+storybook:'pagination',
+code:`import { Pagination } from './pagination/Pagination'
+
+<Pagination
+  currentPage={page}
+  totalPages={10}
+  totalItems={97}
+  pageSize={10}
+  onPageChange={setPage}
+  onPageSizeChange={setPageSize}
+/>`},
+
+'progress-bar':{desc:'Visual progress indicator — continuous or segmented — with optional label.',
+storybook:'progress-bar-progressbar',
+code:`import { ProgressBar } from './progress-bar/ProgressBar'
+
+<ProgressBar value={65} showLabel />
+<ProgressBar type="segmented" value={3} segments={5}
+  hintLabel="Step 3 of 5" />`},
+
+'radiobutton':{desc:'Single-select radio input with label and optional description.',
+storybook:'radiobutton',
+code:`import { Radiobutton } from './radiobutton/Radiobutton'
+
+<Radiobutton
+  name="plan"
+  value="pro"
+  label="Pro Plan"
+  description="$29/month — unlimited projects"
+  checked={plan === 'pro'}
+  onChange={() => setPlan('pro')}
+/>`},
+
+'resizable':{desc:'Draggable separator handle for resizing adjacent panels.',
+storybook:'resizable',
+code:`import { Resizable } from './resizable/Resizable'
+
+<div style={{ display: 'flex' }}>
+  <div style={{ width: leftWidth }}>Left</div>
+  <Resizable onResize={(dx) => setLeftWidth(w => w + dx)} />
+  <div style={{ flex: 1 }}>Right</div>
+</div>`},
+
+'scroll':{desc:'Custom scrollbar thumb display component.',
+storybook:'scroll',
+code:`import { Scroll } from './scroll/Scroll'
+
+<Scroll orientation="vertical" thumbSize={30} thumbPosition={50} />`},
+
+'search-field':{desc:'Search input with built-in search icon and clear button.',
+storybook:'search-field-searchfield',
+code:`import { SearchField } from './search-field/SearchField'
+
+<SearchField
+  label="Search"
+  placeholder="Search users..."
+  value={query}
+  onChange={e => setQuery(e.target.value)}
+  onClear={() => setQuery('')}
+/>`},
+
+'separator':{desc:'Horizontal or vertical dividing line for content sections.',
+storybook:'separator',
+code:`import { Separator } from './separator/Separator'
+
+<Separator />
+<Separator orientation="vertical" />`},
+
+'sidebar':{desc:'Vertical navigation sidebar with collapsible groups and top/bottom slots.',
+storybook:'sidebar',
+code:`import { Sidebar, SidebarGroup, SidebarDivider }
+  from './sidebar/Sidebar'
+
+<Sidebar variant="1" collapsed={isCollapsed}>
+  <SidebarGroup>
+    <SidebarItem icon={<HomeIcon />} label="Home" />
+    <SidebarItem icon={<InboxIcon />} label="Inbox" />
+  </SidebarGroup>
+  <SidebarDivider />
+</Sidebar>`},
+
+'skeleton':{desc:'Placeholder shimmer animation for loading states.',
+storybook:'skeleton',
+code:`import { Skeleton } from './skeleton/Skeleton'
+
+<Skeleton type="text" />
+<Skeleton type="card" />
+<Skeleton type="regular" />`},
+
+'slider':{desc:'Single or range slider with keyboard and pointer interaction.',
+storybook:'slider',
+code:`import { Slider } from './slider/Slider'
+
+<Slider value={50} onChange={setValue} />
+<Slider
+  range={[20, 80]}
+  onRangeChange={setRange}
+  min={0} max={100} step={5}
+/>`},
+
+'spinner':{desc:'Animated loading indicator available in multiple sizes.',
+storybook:'spinner',
+code:`import { Spinner } from './spinner/Spinner'
+
+<Spinner size="sm" />
+<Spinner size="md" />
+<Spinner size="lg" />`},
+
+'switcher':{desc:'Toggle switch input with label and optional description text.',
+storybook:'switcher',
+code:`import { Switcher } from './switcher/Switcher'
+
+<Switcher
+  label="Dark mode"
+  description="Switch between light and dark themes"
+  checked={isDark}
+  onChange={setIsDark}
+/>`},
+
+'table':{desc:'Data table with sortable columns, pagination, and items-per-page.',
+storybook:'table',
+code:`import { Table, TableColumn } from './table/Table'
+
+<Table
+  showPagination
+  totalItems={data.length}
+  currentPage={page}
+  onPageChange={setPage}
+>
+  <TableColumn header="Name" accessor="name" />
+  <TableColumn header="Email" accessor="email" />
+  <TableColumn header="Role" accessor="role" />
+</Table>`},
+
+'tabs':{desc:'Tab navigation with pill or folder variants.',
+storybook:'tabs',
+code:`import { Tabs } from './tabs/Tabs'
+
+<Tabs
+  type="pill"
+  value={activeTab}
+  onChange={setActiveTab}
+  items={[
+    { value: 'overview', label: 'Overview' },
+    { value: 'settings', label: 'Settings' },
+    { value: 'billing', label: 'Billing' },
+  ]}
+/>`},
+
+'text':{desc:'Text content block with optional title and description.',
+storybook:'text',
+code:`import { Text } from './text/Text'
+
+<Text
+  size="md"
+  title="Section Title"
+  description="This is the section description text."
+/>`},
+
+'textarea':{desc:'Multi-line text input with character counter and error state.',
+storybook:'textarea',
+code:`import { Textarea } from './textarea/Textarea'
+
+<Textarea
+  label="Description"
+  hint="Max 500 characters"
+  maxLength={500}
+  showCount
+  value={desc}
+  onChange={e => setDesc(e.target.value)}
+/>`},
+
+'toolbar':{desc:'Container for action buttons, toggles, and separators.',
+storybook:'toolbar',
+code:`import { Toolbar, ToolbarButton, ToolbarSeparator, ToolbarGroup }
+  from './toolbar/Toolbar'
+
+<Toolbar>
+  <ToolbarGroup>
+    <ToolbarButton aria-label="Bold"><BoldIcon /></ToolbarButton>
+    <ToolbarButton aria-label="Italic"><ItalicIcon /></ToolbarButton>
+  </ToolbarGroup>
+  <ToolbarSeparator />
+  <ToolbarButton active aria-label="List"><ListIcon /></ToolbarButton>
+</Toolbar>`},
+
+'tooltip':{desc:'Floating hint with arrow pointing to its anchor element.',
+storybook:'tooltip',
+code:`import { Tooltip } from './tooltip/Tooltip'
+
+<Tooltip text="Save changes" orientation="top" />
+<Tooltip
+  type="description"
+  text="Keyboard shortcut"
+  slotContent={<Kbd>⌘S</Kbd>}
+/>`},
+
+'top-bar':{desc:'Application header bar with 3 layout types: minimal, centered, or nav tabs.',
+storybook:'top-bar-topbar',
+code:`import { TopBar } from './top-bar/TopBar'
+
+<TopBar
+  type="type2"
+  showSearch
+  searchPlaceholder="Search..."
+  showNotifications
+  hasNotifications
+  avatarInitials="JD"
+  navItems={[
+    { label: 'Home', value: 'home', active: true },
+    { label: 'Projects', value: 'projects' },
+  ]}
+/>`},
+};
 
 /* ═══════ Utils ═══════════════════════════════════════════ */
 function h(tag,attrs={},...ch){
@@ -463,105 +1008,216 @@ function mkTabs(items,active){
 }
 
 /* ═══════ Page: Documentation ═════════════════════════════ */
+/* ── doc helpers ─────────────────────────────────── */
+function docSection(card,title){card.appendChild(h('div',{class:'doc-section-title'},title))}
+function docBlock(card,title,text){const b=h('div',{class:'doc-block'});b.appendChild(h('div',{class:'doc-block-title'},title));b.appendChild(h('div',{class:'doc-text'},text));card.appendChild(b)}
+function docList(card,items){const ul=h('ul',{class:'changelog-list',style:{marginTop:'8px'}});items.forEach(i=>ul.appendChild(h('li',{},i)));card.appendChild(ul)}
+
 function renderDocumentation(){
+  const route=getRoute();
+  const tab=route==='documentation/technical'?'technical':route==='changelog'?'changelog':'guides';
   const m=$('#main');m.innerHTML='';
   const inner=h('div',{class:'main-inner'});
   inner.appendChild(mkHeader());
   inner.appendChild(h('h1',{class:'page-title'},'Documentation'));
-  inner.appendChild(mkTabs([['Changelog','changelog'],['Technical documentation','documentation']],'documentation'));
+  inner.appendChild(mkTabs([['Guides','documentation'],['Technical Docs','documentation/technical'],['Changelog','changelog']],(tab==='guides'?'documentation':tab==='technical'?'documentation/technical':'changelog')));
 
-  const row=h('div',{class:'content-row'});
-  const card=h('div',{class:'card content-main'});
-
-  card.appendChild(h('div',{class:'doc-title'},'Token Architecture'));
-  card.appendChild(h('div',{class:'doc-subtitle'},'DLS-Lead uses a 4-layer DTCG-compliant token system. Every visual decision is encoded as a design token. Components consume tokens \u2014 they never hardcode values.'));
-
-  // 4-Layer Model
-  card.appendChild(h('div',{class:'doc-section-title'},'4-Layer Model'));
-
-  const layers=[
-    {title:'Layer 1 \u2014 Primitives',text:'Raw values: hex colors, pixel dimensions, font weights, numeric scales.\n\nExamples:\ncolor.neutral.700 \u2192 #414651\nradius.m \u2192 6px\nspacing.4 \u2192 16px\ntext.m.fontSize \u2192 14px',rule:'Rule: NEVER referenced directly by components.'},
-    {title:'Layer 2 \u2014 System Semantics',text:'UI roles mapped from primitives. Define meaning, not appearance.\n\nExamples:\ncolor.surface.base \u2192 {color.neutral.0}\ncolor.text.primary \u2192 {color.neutral.900}\ncolor.intent.primary.base \u2192 {color.primary.700}\ncolor.border.focus \u2192 {color.neutral.700}',rule:'Used by components when no Layer 4 token exists.'},
-    {title:'Layer 3 \u2014 State Abstraction',text:'Behavioral modifiers independent of brand color.\n\nCode: OKLCH lightness shift\nstate.lDelta.hover \u2192 -0.05\nstate.lDelta.pressed \u2192 -0.10\n\nFigma: opacity overlays\nstate.overlay.hover.light \u2192 rgba(0,0,0,0.05)\nstate.overlay.pressed.light \u2192 rgba(0,0,0,0.10)\n\nstate.disabled.opacity \u2192 0.38\nstate.focus.ring.color \u2192 {color.info.300}'},
-    {title:'Layer 4 \u2014 Component Tokens',text:'Override-safe, per-component values. Primary source for all component CSS.\n\nExamples:\ncolor.component.button.primary.bg.base\ncolor.component.badge.danger.fg\nradius.component.card \u2192 {radius.xl} (12px)\nradius.component.button \u2192 {radius.m} (6px)',rule:'Components MUST use Layer 4 tokens first.'},
-  ];
-  for(const l of layers){
-    const blk=h('div',{class:'doc-block'});
-    blk.appendChild(h('div',{class:'doc-block-title'},l.title));
-    blk.appendChild(h('div',{class:'doc-text'},l.text));
-    if(l.rule)blk.appendChild(h('div',{class:'doc-rule'},l.rule));
-    card.appendChild(blk);
+  if(tab==='guides'){
+    renderGuides(inner);
+  } else if(tab==='technical'){
+    renderTechnicalDocs(inner);
+  } else {
+    renderChangelog(inner);
   }
-
-  card.appendChild(h('div',{class:'doc-section-title'},'Dependency Rules'));
-  const rules=[
-    {title:'Reference Direction',text:'References flow downward only:\n\nLayer 4 \u2192 can reference Layers 3, 2, 1\nLayer 3 \u2192 can reference Layers 2, 1\nLayer 2 \u2192 can reference Layer 1 only\nLayer 1 \u2192 raw values only, no references\n\nA lower layer MUST NOT reference a higher layer.'},
-    {title:'Component Lookup Order',text:'1. Check: does --dls-color-component-{name}-{property}-{state} exist? \u2192 Use it.\n2. Check: does --dls-color-{semantic}-{role} exist? \u2192 Use it.\n3. No match? \u2192 Request a new token. Do NOT hardcode.',rule:'This order is mandatory for both human developers and AI agents.'},
-    {title:'Anti-Patterns',text:'\u2717 Using #hex or rgb() values in component CSS\n\u2717 Referencing color.neutral.700 (primitive) in a component\n\u2717 Referencing color.intent.primary.base when color.component.button.primary.bg.base exists\n\u2717 Hardcoding state shift values instead of using state.lDelta tokens\n\u2717 Layer 4 token referencing another Layer 4 token'},
-  ];
-  for(const r of rules){
-    const blk=h('div',{class:'doc-block'});
-    blk.appendChild(h('div',{class:'doc-block-title'},r.title));
-    blk.appendChild(h('div',{class:'doc-text'},r.text));
-    if(r.rule)blk.appendChild(h('div',{class:'doc-rule'},r.rule));
-    card.appendChild(blk);
-  }
-  row.appendChild(card);
-
-  // Right sidebar TOC
-  const aside=h('div',{class:'card-sm content-aside'});
-  const tocItems=['Token architecture','Naming & Components','States & Theming','Typography & Extension','Governance & AI'];
-  for(let i=0;i<tocItems.length;i++){
-    aside.appendChild(h('div',{class:'toc-item'+(i===0?' active':'')},tocItems[i]));
-  }
-  row.appendChild(aside);
-  inner.appendChild(row);
   inner.appendChild(mkFooter());
   m.appendChild(inner);
 }
 
-/* ═══════ Page: Changelog ═════════════════════════════════ */
-function renderChangelog(){
-  const m=$('#main');m.innerHTML='';
-  const inner=h('div',{class:'main-inner'});
-  inner.appendChild(mkHeader());
-  inner.appendChild(h('h1',{class:'page-title'},'Documentation'));
-  inner.appendChild(mkTabs([['Changelog','changelog'],['Technical documentation','documentation']],'changelog'));
+/* ═══════ Tab: Guides (matches Figma "guides" section) ═══ */
+function renderGuides(inner){
+  const row=h('div',{class:'content-row'});
+  const card=h('div',{class:'card content-main'});
+
+  card.appendChild(h('div',{class:'doc-title'},'Guides'));
+  card.appendChild(h('div',{class:'doc-subtitle'},'This section explains how DLS-Lead works and how to use it properly \u2014 including components, styles, variables, updates, and customization rules.'));
+
+  /* ── Updates & Support ─────────────── */
+  docSection(card,'Updates & Support');
+  docBlock(card,'Updates (one-time purchase)','DLS-Lead is a one-time payment product and includes lifetime updates.\nNew releases may include:');
+  docList(card,['new components and patterns','improvements and fixes','new variants and states','token expansions (color, spacing, typography, etc.)','documentation updates']);
+  docBlock(card,'Support','If you have questions, feedback, or access issues:\n\n\u2022 Email: nadiyqabrosimova@gmail.com\n\u2022 LinkedIn DM\n\u2022 Instagram DM');
+  docBlock(card,'License Agreement','Using this file means you agree to the DLS-Lead license.\nThis file is licensed for use by the purchaser only. Redistribution or resale is not allowed.');
+
+  /* ── Getting Started ────────────────── */
+  docSection(card,'Getting Started');
+  docBlock(card,"What\u2019s Inside",'DLS-Lead is a production-ready design system built to help teams design faster, stay consistent, and scale UI across products. It comes with reusable components, a structured set of styles, and a complete library of tokens / variables for colors, typography, spacing, and more.');
+  docBlock(card,'Components','Reusable UI building blocks \u2014 Buttons, Inputs, Tables, Dropdowns, Modals, Tabs, and more.\nDesigned to be consistent across screens, support real product use cases, and scale through variants, states, and nested parts.');
+  docBlock(card,'Styles','Typography styles (text sizes, weights), effects (shadows), images, flags, and avatars.\nHelps keep UI consistent even when not using components.');
+  docBlock(card,'Tokens & Variables','DLS-Lead uses Figma Variables as the foundation.\nVariables store design decisions: colors (primitives + semantic), spacing, border radiuses, typography values, icon stroke weights.');
+  docBlock(card,'Variants','Size (S / M / L), style (Primary / Secondary / Ghost), state (Normal / Hover / Focus / Disabled), layout (With icon / Without icon).\nVariants let you scale a component without duplicating it.');
+  docBlock(card,'Benefits','\u2022 Speed \u2014 assemble screens using building blocks\n\u2022 Consistency \u2014 same components reused everywhere\n\u2022 Scalability \u2014 expand the system, don\u2019t redesign\n\u2022 Better design \u21D4 dev alignment\n\u2022 Easy to translate UI into code\n\u2022 Theming ready \u2014 supports light + dark, white-label setups');
+
+  /* ── How to use in Figma ────────────── */
+  docSection(card,'How to Use DLS-Lead in Your Projects (Figma)');
+  docBlock(card,'Step 1 \u2014 Duplicate or open the DLS-Lead file','You\u2019ll receive access to the official DLS-Lead source file. This file is your master library.');
+  docBlock(card,'Step 2 \u2014 Publish the library','Open the DLS-Lead file, go to Assets \u2192 Library, select Components, Styles, Variables (recommended), and click Publish.');
+  docBlock(card,'Step 3 \u2014 Enable the library in your project file','Open your project file \u2192 Assets \u2192 Library icon \u2192 Find DLS-Lead \u2192 Add to file. You can now insert components from the Assets panel.');
+  docBlock(card,'Step 4 \u2014 Use components the right way','\u2022 Use components instead of copying frames\n\u2022 Avoid detaching instances\n\u2022 Use variants instead of creating new versions\n\u2022 Use nested components as provided\n\u2022 Use slots for flexible content');
+  docBlock(card,'Step 5 \u2014 Use tokens / variables','Use variables for: colors (semantic tokens), spacing and layout consistency, radius and border rules, typography scale.\nThis makes your UI consistent and makes future changes easy.');
+
+  /* ── Customization Guide ────────────── */
+  docSection(card,'Customization Guide');
+  docBlock(card,'How colors are structured','Color Primitives \u2014 raw hex values (color.neutral.0, color.primary.700). Not used directly in UI.\nSemantic Colors \u2014 meaning-based tokens (bg.light, fg.primary, border.base). Referenced by components.\nYou can remap DLS-Lead by updating primitives or remapping semantic tokens, without touching components.');
+  docBlock(card,'How to change the main brand colors','Option A \u2014 Replace primitive values (recommended):\n1. Open Variables \u2192 Color Primitives\n2. Find your main palette (primary, neutral, info)\n3. Replace the colors with your own\n4. Components update automatically through semantic mapping\n\nOption B \u2014 Remap semantic tokens (advanced):\n1. Open Variables \u2192 Color Semantic\n2. Find tokens like bg.light, fg.primary, border.base\n3. Change their mapping to different primitives');
+  docBlock(card,'How to add a new theme','DLS-Lead ships with Light and Dark.\nYou can add more: High Contrast, Brand Theme, Client A, Client B.\n\nSteps:\n1. Open Variables\n2. Select the Color Semantic collection\n3. Add a new mode (example: High Contrast)\n4. For each semantic token, define values for the new mode');
+  docBlock(card,'How to change font family','1. Go to Variables \u2192 Font\n2. Find the Font Family token \u2192 Font.Family.Inter\n3. Replace it with your font (e.g. SF Pro, Roboto, IBM Plex Sans)');
+  docBlock(card,'Best practices','\u2022 Change values in variables, not inside components\n\u2022 Avoid detaching components\n\u2022 Keep semantic token naming consistent\n\u2022 Add new tokens only when they represent a reusable rule\n\u2022 Prefer adding new semantic tokens instead of hardcoded primitives\n\u2022 When adding a new theme, update semantic tokens first');
+
+  /* ── Components guide ───────────────── */
+  docSection(card,'Components');
+  docBlock(card,'How to use components','Insert components from the library using the Assets panel instead of copying frames.\nConfigure with properties (instead of detaching): variants, size, state, optional elements.\nAvoid detaching instances \u2014 use properties, nested overrides, and slots.');
+  docBlock(card,'How to create a new component','Step 1 \u2014 Start from a clear UI purpose: what problem it solves, where it\u2019ll be used, what must be customizable.\nStep 2 \u2014 Build from existing blocks: typography styles, spacing tokens, border-radius tokens, semantic colors, existing nested components.\nStep 3 \u2014 Use variants for scale: Size, Variant, State, Icon, Layout.\nStep 4 \u2014 Use semantic tokens (not hardcoded colors).\nStep 5 \u2014 Document it: description, when to use / when not to use, properties list, examples.');
+  docBlock(card,'Best practices','\u2022 Use components from the library\n\u2022 Avoid detaching instances\n\u2022 Add new variants only when they represent a real system rule\n\u2022 Define tokens first, then update components\n\u2022 Keep naming consistent and predictable');
+
+  /* ── Icons ──────────────────────────── */
+  docSection(card,'Icons');
+  docBlock(card,'Icon system','DLS-Lead uses Lucide icons as the default icon set.\nLucide icons are stroke-based, clean and consistent, easy to scale, ideal for modern SaaS products.\nYou can replace Lucide with any other icon library, but it will require manual updates to icon components.');
+  docBlock(card,'Icon structure','Individual icon components, consistent naming, consistent sizes.\nStroke tokens: icon.stroke-12, icon.stroke-16, icon.stroke-24.');
+  docBlock(card,'How to add a new custom icon','Step 1 \u2014 Add your icon vector: paste SVG into Figma, ensure it\u2019s a clean vector, stroke-based preferred.\nStep 2 \u2014 Convert it into a component: select the icon vector, click Create Component.\n\nKeep icons consistent: avoid mixing filled and stroke, avoid random stroke widths, keep icons aligned to pixel grid.');
+
+  /* ── How to get updates ─────────────── */
+  docSection(card,'How to Get New Updates');
+  docBlock(card,'Receipt (recommended)','After purchase you receive a receipt email with access to your files.\nOpen the receipt, click Download content, save the email to your contacts.');
+  docBlock(card,'How do updates work?','New components, variants, states, improvements, fixes, new tokens/variables, documentation.\nFigma updates cannot be installed automatically. Two options:\na. Swap your library (recommended)\nb. Copy only what you need (selective)');
+  docBlock(card,'Updating via Swap Library','1. Open your project file \u2192 Assets \u2192 Library icon\n2. Find DLS-Lead under Libraries used in this file\n3. Click Swap Library\n4. Choose the latest DLS-Lead library file\n5. Review the list of components and styles to be replaced\n6. Click Swap Library to apply\n\nAll components will update to the latest versions.');
+  docBlock(card,'Updating via Selective Copy','Best if you only need a few new components or your project is heavily customized.\n1. Open the newest DLS-Lead file\n2. Copy only the components / styles you need\n3. Paste them into your current library file\n4. Publish the updated library');
+
+  row.appendChild(card);
+
+  // TOC sidebar
+  const aside=h('div',{class:'card-sm content-aside'});
+  for(const s of['Updates & Support','Getting Started','How to Use in Figma','Customization Guide','Components','Icons','How to Get Updates']){
+    aside.appendChild(h('div',{class:'toc-item'+(s==='Updates & Support'?' active':'')},s));
+  }
+  row.appendChild(aside);
+  inner.appendChild(row);
+}
+
+/* ═══════ Tab: Technical Documentation ════════════════════ */
+function renderTechnicalDocs(inner){
+  const row=h('div',{class:'content-row'});
+  const card=h('div',{class:'card content-main'});
+
+  card.appendChild(h('div',{class:'doc-title'},'Technical Documentation'));
+  card.appendChild(h('div',{class:'doc-subtitle'},'Infrastructure reference for the DLS-Lead 4-layer token system. Covers architecture, naming, components, states, theming, typography, extensions, and governance.'));
+
+  /* ── Token Architecture ─────────────── */
+  docSection(card,'Token Architecture');
+  docBlock(card,'4-Layer Model','DLS-Lead uses a 4-layer DTCG-compliant token system. Every visual decision is encoded as a design token. Components consume tokens \u2014 they never hardcode values.');
+  docBlock(card,'Layer 1 \u2014 Primitives','Raw values: hex colors, pixel dimensions, font weights, numeric scales.\n\nExamples:\ncolor.neutral.700 \u2192 #414651\nradius.m \u2192 6px\nspacing.4 \u2192 16px\ntext.m.fontSize \u2192 14px\n\nRule: NEVER referenced directly by components.');
+  docBlock(card,'Layer 2 \u2014 System Semantics','UI roles mapped from primitives. Define meaning, not appearance.\n\nExamples:\ncolor.surface.base \u2192 {color.neutral.0}\ncolor.text.primary \u2192 {color.neutral.900}\ncolor.intent.primary.base \u2192 {color.primary.700}\n\nUsed by components when no Layer 4 token exists.');
+  docBlock(card,'Layer 3 \u2014 State Abstraction','Behavioral modifiers independent of brand color.\n\nCode: OKLCH lightness shift\nstate.lDelta.hover \u2192 -0.05\nstate.lDelta.pressed \u2192 -0.10\n\nFigma: opacity overlays\nstate.overlay.hover.light \u2192 rgba(0,0,0,0.05)\nstate.overlay.pressed.light \u2192 rgba(0,0,0,0.10)\n\nstate.disabled.opacity \u2192 0.38\nstate.focus.ring.color \u2192 {color.info.300}');
+  docBlock(card,'Layer 4 \u2014 Component Tokens','Override-safe, per-component values. Primary source for all component CSS.\n\nExamples:\ncolor.component.button.primary.bg.base\ncolor.component.badge.danger.fg\nradius.component.card \u2192 {radius.xl} (12px)\nradius.component.button \u2192 {radius.m} (6px)\n\nComponents MUST use Layer 4 tokens first.');
+  docBlock(card,'Dependency Rules','References flow downward only:\nLayer 4 \u2192 can reference Layers 3, 2, 1\nLayer 3 \u2192 can reference Layers 2, 1\nLayer 2 \u2192 can reference Layer 1 only\nLayer 1 \u2192 raw values only, no references\n\nA lower layer MUST NOT reference a higher layer.');
+  docBlock(card,'Component Lookup Order','1. Check: does --dls-color-component-{name}-{property}-{state} exist? \u2192 Use it.\n2. Check: does --dls-color-{semantic}-{role} exist? \u2192 Use it.\n3. No match? \u2192 Request a new token. Do NOT hardcode.\n\nThis order is mandatory for both human developers and AI agents.');
+  docBlock(card,'Anti-Patterns','\u2717 Using #hex or rgb() values in component CSS\n\u2717 Referencing color.neutral.700 (primitive) in a component\n\u2717 Referencing color.intent.primary.base when color.component.button.primary.bg.base exists\n\u2717 Hardcoding state shift values instead of using state.lDelta tokens\n\u2717 Layer 4 token referencing another Layer 4 token');
+
+  /* ── Naming & Components ────────────── */
+  docSection(card,'Naming & Components');
+  docBlock(card,'Token Path Format','category.scope.element.variant.property.state\nEach segment is lowercase. Hyphens within a segment, dots between segments.\n\nCSS Variable Format:\nAll tokens expand as --dls-{path with dots replaced by hyphens}\ncolor.neutral.700 \u2192 --dls-color-neutral-700\ncolor.intent.primary.base \u2192 --dls-color-intent-primary-base');
+  docBlock(card,'Fixed Enums','Intents: neutral, primary, info, success, warning, danger\nStates: base, hover, pressed, focus, disabled, active, selected\nSizes: xs, s, m, l, xl, 2xl, 3xl\nVariants: filled, outline, soft, ghost, dotted, ghost, link\n\nDo not invent new names. Use only these enums.');
+  docBlock(card,'Naming Anti-Patterns','\u2717 camelCase in CSS: --dls-colorIntentPrimaryBase\n\u2717 Abbreviated scope: --dls-btn-bg\n\u2717 Mixed layer concerns: --dls-color-border-neutral-700\n\u2717 Generic names: --dls-color-1, --dls-blue\n\n\u2713 Correct: --dls-color-component-button-primary-bg-base');
+  docBlock(card,'Component CSS Model','Base Structure \u2014 every DLS component starts with:\n\n.dls-component {\n  all: unset;\n  box-sizing: border-box;\n  /* Internal variables per intent */\n  --_base: var(--dls-color-intent-neutral-on-base);\n  --_subtle: var(--dls-color-intent-neutral-subtle);\n  --_text: var(--dls-color-intent-neutral-text);\n  --_border: var(--dls-color-intent-neutral-border);\n}');
+  docBlock(card,'Attribute Model','Components use data-* attributes for all dynamic properties:\ndata-variant="filled|outline|soft|dotted|ghost|link"\ndata-intent="neutral|primary|info|success|warning|danger"\ndata-size="xs|s|m|l|xl"\ndata-icon-only (presence attribute)\n:disabled (native HTML)\n\nNo .is-* or .has-* classes. No class-based state management.');
+
+  /* ── States & Theming ───────────────── */
+  docSection(card,'States & Theming');
+  docBlock(card,'Interaction States','Hover: OKLCH lightness shift\nbackground: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-hover)) c h)\n\nFigma: Opacity overlay layer\nstate.overlay.hover.light \u2192 rgba(0, 0, 0, 0.05)\n\nFilled/soft/ghost variants use the same formula.');
+  docBlock(card,'Pressed','Code: color L-shift with state.lDelta.pressed (-0.10)\nFigma: state.overlay.pressed.light = rgba(0, 0, 0, 0.10)');
+  docBlock(card,'Focus','Applied via :focus-visible only (keyboard navigation).\nBorder: 0 0 0 3px var(--dls-state-focus-ring-color)\nColor: state.focus.ring.color \u2192 {color.info.300}\n\nNon-filled variants get background: var(--dls-color-surface-base) on focus to ensure contrast.\nUse box-shadow, not outline, to respect border-radius.');
+  docBlock(card,'Disabled','Background: --dls-color-surface-disabled\nForeground: --dls-color-text-disabled\nBorder: --dls-color-border-disabled\nCursor: not-allowed\nOpacity: state.disabled.opacity = 0.38\n\nAlways use :hover:not(:disabled) and guard hover/pressed with :not(:disabled).\nUse :focus-visible, never :focus.\nUse box-shadow for focus ring.');
+  docBlock(card,'Light Theme (Default)','All tokens in tokens.json define light-theme values. The root scope in tokens.css is the light theme.');
+  docBlock(card,'Dark Theme','Applied via [data-theme="dark"] selector overriding CSS variables.\nStrategy: Override Layer 2 semantic tokens only.\n\n[data-theme="dark"] {\n  --dls-color-surface-base: var(--dls-color-neutral-900);\n  --dls-color-surface-primary: var(--dls-color-neutral-92);\n  --dls-color-border-base: var(--dls-color-neutral-700);\n}\n\nComponents auto-update because they reference semantic tokens.');
+
+  /* ── Typography & Extension ─────────── */
+  docSection(card,'Typography & Extension');
+  docBlock(card,'Font Stack','Font family: Inter\nWeights: normal (400), medium (500), semibold (600), bold (800), black (900)');
+  docBlock(card,'Primitive Text Scale','xs: 10/14, s: 12/16, m: 14/20, l: 16/24, xl: 18/28, 2xl: 24/32, 3xl: 32/40, hero: 36/46\n\nFormat: fontSize/lineHeight in pixels');
+  docBlock(card,'Semantic Categories','Heading: hero, h1\u2013h6\nParagraph: m \u2014 light/medium/heavy\nButton: 1/m/xs (xl weight 500)\nLink: 1/m/xs \u2014 light/medium/heavy\nUpper: 1/m/xs (uppercase, 2% letter-spacing)\nItalic: 1/m/xs (font-style: italic)\nAvatar: 2xl through 5xs (line-height = font-size)');
+  docBlock(card,'Extension Guide','Adding a New Component:\n1. Define radius: radius.component.{name}\n2. Define colors: color.component.{name}.bg/fg/border.{state}\n3. Regenerate outputs (CSS, SCSS, TS)\n4. Create component CSS with all reset patterns\n5. Add Storybook story\n\nAdding a New Intent:\n1. Add color.{name}.{numeral} (even) (a-step: 100/300/500/700)\n2. For intent use: promote to full 11-stop scale\n3. Add data-intent support to components\n4. Regenerate all output files');
+  docBlock(card,'Versioning','Patch (0.0.x): Value adjustments within existing tokens\nMinor (0.x.0): New tokens, components, intents, scales. No removals.\nMajor (x.0.0): Removed tokens, renamed tokens, structural changes.\n\nBreaking Change Rules:\n\u2022 Add new + Minor (for old, action needed)\n\u2022 Change token value = Patch (document in changelog)\n\u2022 Rename token = Major (deprecate for 2 Minors first)\n\u2022 Remove token = Major (deprecate for 2 Minors first)\n\u2022 Change layer assignment = Major (full migration guide)\n\u2022 Add new variant = Minor');
+
+  /* ── Governance & AI ────────────────── */
+  docSection(card,'Governance & AI');
+  docBlock(card,'Token Lifecycle','Stages: PROPOSED \u2192 EXPERIMENTAL \u2192 STABLE \u2192 DEPRECATED \u2192 REMOVED\n\nProposed: Exists in discussion/Figma only. Not in tokens.json.\nExperimental: In tokens.json with [experimental] tag. May change.\nStable: At least 2 Minor versions, or documented \"used broadly\".\nDeprecated: [deprecated: use {replacement}] in $description. Must remain for 2 Minor versions.\nRemoved: Deleted. Requires major version bump.');
+  docBlock(card,'Modification Rules','What You Can Do:\n\u2022 Override Layer 4 tokens per-brand\n\u2022 Add new component tokens\n\u2022 Adjust primitive values (affects entire system)\n\u2022 Add dark-mode overrides to Layer 2\n\u2022 Add new intents with full 6-property set\n\nWhat You MUST Not Do:\n\u2022 Override system-level primitives for a single component\n\u2022 Create component tokens that skip Layer 2 semantics\n\u2022 Adjust primitive values expecting local effect\n\u2022 Put dark-mode logic inside component CSS\n\u2022 Create tokens that reference higher layers');
+  docBlock(card,'AI Integration Guide','How AI Should Reference Tokens:\n1. Read tokens.json before generating any CSS\n2. Identify which Layer 4 tokens exist for the target component\n3. Use CSS custom properties, never raw values\n4. Use internal variable pattern (--_base, --_on-base, etc.) for intent-driven components\n\nHow AI Should Generate Components:\n1. Parse tokens for available tokens\n2. Generate Layer 4 token entries first\n3. Generate CSS referencing only those tokens\n4. Use data-* attributes for variants/intents/sizes\n5. Start with: all: unset; box-sizing: border-box;\n6. Include all states: base, hover, pressed, focus-visible, disabled\n7. Test against all 6 intents\n\nProhibited Actions:\n\u2717 Using #hex or rgb() in component CSS\n\u2717 Using primitives (var(--dls-color-neutral-700)) in components\n\u2717 Generating inline styles with token values\n\u2717 Skipping disabled state\n\u2717 Using :focus instead of :focus-visible\n\u2717 Using outline for focus ring\n\u2717 Adding .is-* or .has-* classes\n\u2717 Deleting all: unset on new components');
+
+  row.appendChild(card);
+
+  // TOC sidebar
+  const aside=h('div',{class:'card-sm content-aside'});
+  for(const s of['Token Architecture','Naming & Components','States & Theming','Typography & Extension','Governance & AI']){
+    aside.appendChild(h('div',{class:'toc-item'+(s==='Token Architecture'?' active':'')},s));
+  }
+  row.appendChild(aside);
+  inner.appendChild(row);
+}
+
+/* ═══════ Tab: Changelog (synced from git) ════════════════ */
+let changelogData=null;
+async function loadChangelog(){
+  if(changelogData)return changelogData;
+  try{const r=await fetch('/changelog.json');changelogData=await r.json();return changelogData}
+  catch(e){return null}
+}
+
+function renderChangelog(inner){
   const row=h('div',{class:'content-row'});
   const card=h('div',{class:'card content-main'});
   card.appendChild(h('div',{class:'doc-title'},'Changelog'));
-  card.appendChild(h('div',{class:'doc-subtitle'},'Latest updates and announcements.'));
-  const entries=[
-    {date:'February 2026 \u2014 Bug fixes',desc:'Component token alignment and dark mode improvements.',changes:['Full Base UI docs \u2014 Every component now has dedicated documentation.','Rebuilt examples \u2014 All component examples rebuilt for both Radix and Base UI.','Side-by-side comparison \u2014 Docs make it easy to compare across libraries.'],file:'components/ui/dialog.tsx',del:'- import * as DialogPrimitive from "@radix-ui/react-dialog"',add:'+ import { Dialog as DialogPrimitive } from "radix-ui"'},
-    {date:'January 2026 \u2014 Bug fixes',desc:'Initial 4-layer token system release.',changes:['4-layer token architecture implemented.','All color primitives, semantics, and component tokens defined.','Figma variable sync scripts consolidated.'],file:'tokens/tokens.json',del:'- "button": { "bg": "#6941C6" }',add:'+ "button": { "bg": { "$value": "{color.intent.primary.base}" } }'},
-  ];
-  for(const e of entries){
-    const entry=h('div',{class:'changelog-entry'});
-    entry.appendChild(h('div',{class:'changelog-date'},e.date));
-    entry.appendChild(h('div',{class:'changelog-desc'},e.desc));
-    entry.appendChild(h('div',{class:'changelog-sub'},"What\u2019s Changed"));
-    const ul=h('ul',{class:'changelog-list'});
-    for(const c of e.changes)ul.appendChild(h('li',{},c));
-    entry.appendChild(ul);
-    const cb=h('div',{class:'code-block'});
-    cb.appendChild(h('div',{class:'code-block-header',html:ICO.file+'<span class="filename">'+e.file+'</span><span class="copy-btn" style="cursor:pointer">'+ICO.copy+'</span>'}));
-    cb.appendChild(h('div',{class:'code-block-body',html:'<div class="line-del">'+e.del+'</div><div class="line-add">'+e.add+'</div>'}));
-    entry.appendChild(cb);
-    card.appendChild(entry);
-  }
+  card.appendChild(h('div',{class:'doc-subtitle'},'Release history synced from Git commits. Run: node scripts/generate-changelog.mjs --write'));
+
+  // Show loading then fill async
+  const placeholder=h('p',{style:{color:'#666970',fontSize:'14px'}},'Loading commits...');
+  card.appendChild(placeholder);
+
+  loadChangelog().then(data=>{
+    placeholder.remove();
+    if(!data||data.length===0){
+      card.appendChild(h('p',{style:{color:'#666970',fontSize:'14px'}},'No changelog data found. Run: node scripts/generate-changelog.mjs --write'));
+      return;
+    }
+    for(const group of data){
+      const entry=h('div',{class:'changelog-entry'});
+      entry.appendChild(h('div',{class:'changelog-date'},group.month));
+      const ul=h('ul',{class:'changelog-list'});
+      for(const c of group.commits){
+        const li=h('li',{});
+        li.appendChild(h('code',{style:{fontSize:'12px',background:'#F5F5F5',padding:'2px 6px',borderRadius:'4px',marginRight:'8px',fontFamily:"'JetBrains Mono',monospace",color:'#535862'}},c.hash));
+        li.appendChild(h('span',{style:{color:'#666970',fontSize:'12px',marginRight:'8px'}},c.date));
+        li.appendChild(document.createTextNode(c.message));
+        ul.appendChild(li);
+      }
+      entry.appendChild(ul);
+      card.appendChild(entry);
+    }
+  });
+
   row.appendChild(card);
+  // Sidebar with month list
   const aside=h('div',{class:'card-sm content-aside'});
-  for(const[label,i]of[['February 2026',0],['January 2026',1],['December 2025',2],['November 2025',3]]){
-    aside.appendChild(h('div',{class:'toc-item'+(i===0?' active':'')},label));
-  }
-  const more=h('div',{class:'toc-item',style:{display:'flex',gap:'8px',alignItems:'center'}});
-  more.textContent='More updates';
-  more.innerHTML+='<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>';
-  aside.appendChild(more);
+  loadChangelog().then(data=>{
+    aside.innerHTML='';
+    if(data){
+      for(let i=0;i<data.length;i++){
+        aside.appendChild(h('div',{class:'toc-item'+(i===0?' active':'')},data[i].month));
+      }
+    }
+  });
+  aside.appendChild(h('div',{class:'toc-item active'},'Loading...'));
   row.appendChild(aside);
   inner.appendChild(row);
-  inner.appendChild(mkFooter());
-  m.appendChild(inner);
 }
 
 /* ═══════ Page: Components Index ══════════════════════════ */
@@ -582,70 +1238,107 @@ function renderComponentsIndex(){
   m.appendChild(inner);
 }
 
-/* ═══════ Page: Component Detail (Alert) ══════════════════ */
+/* ═══════ Page: Component Detail ═════════════════════════ */
 function renderComponentDetail(slug){
   const name=COMPONENTS.find(c=>c.toLowerCase().replace(/\s+/g,'-')===slug)||slug;
+  const data=COMP_DATA[slug];
   const m=$('#main');m.innerHTML='';
   const inner=h('div',{class:'main-inner'});
   inner.appendChild(mkHeader());
   inner.appendChild(h('h1',{class:'page-title'},'Components. '+name));
   const card=h('div',{class:'card',style:{marginTop:'24px'}});
 
-  if(slug==='alert'){
-    card.appendChild(h('h2',{style:{fontSize:'32px',fontWeight:700,lineHeight:'40px',marginBottom:'8px'}},'Alert'));
-    card.appendChild(h('p',{style:{fontSize:'14px',color:'#666970',marginBottom:'24px'}},'Displays important messages to inform users about system status, required actions, or critical feedback.'));
-    const preview=h('div',{class:'alert-preview',style:{background:'#fff',border:'1px solid #E9EAEB',borderRadius:'8px'}});
-    const intents=[
-      {name:'neutral',bg:'#F5F5F5',fg:'#1C1D1F',btnBg:'#1C1D1F',icon:ICO.info},
-      {name:'primary',bg:'#F9F5FF',fg:'#6941C6',btnBg:'#6941C6',icon:ICO.info},
-      {name:'info',bg:'#EFF8FF',fg:'#175CD3',btnBg:'#175CD3',icon:ICO.info},
-      {name:'success',bg:'#ECFDF3',fg:'#067647',btnBg:'#067647',icon:ICO.check},
-      {name:'warning',bg:'#FFFAEB',fg:'#B54708',btnBg:'#B54708',icon:ICO.warn},
-      {name:'danger',bg:'#FEF3F2',fg:'#B42318',btnBg:'#B42318',icon:ICO.danger},
-    ];
-    for(const intent of intents){
-      const row=h('div',{class:'alert-row',style:{background:intent.bg,color:intent.fg}});
-      row.innerHTML='<span class="alert-icon">'+intent.icon+'</span>';
-      row.appendChild(h('div',{class:'alert-content'},
-        h('div',{class:'alert-title'},'Alert title'),
-        h('div',{class:'alert-desc'},'This is alert description'),
-      ));
-      row.appendChild(h('button',{class:'alert-btn',style:{background:intent.btnBg}},'Button'));
-      preview.appendChild(row);
-    }
-    card.appendChild(preview);
-    // Code example
-    const cb=h('div',{class:'code-block',style:{marginTop:'24px'}});
-    cb.appendChild(h('div',{class:'code-block-header',html:ICO.file+'<span class="filename">Alert</span><span class="copy-btn">'+ICO.copy+'</span>'}));
-    const code=`import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { CheckCircle2Icon, InfoIcon } from "lucide-react"
+  card.appendChild(h('h2',{style:{fontSize:'32px',fontWeight:700,lineHeight:'40px',marginBottom:'8px'}},name));
 
-export function AlertDemo() {
-  return (
-    <div className="grid w-full max-w-md items-start gap-4">
-      <Alert>
-        <CheckCircle2Icon />
-        <AlertTitle>Payment successful</AlertTitle>
-        <AlertDescription>
-          Your payment of $99.99 has been processed.
-        </AlertDescription>
-      </Alert>
-      <Alert>
-        <InfoIcon />
-        <AlertTitle>New feature available</AlertTitle>
-        <AlertDescription>
-          We&apos;ve added dark mode support.
-        </AlertDescription>
-      </Alert>
-    </div>
-  )
-}`;
-    cb.appendChild(h('pre',{class:'code-block-body',style:{whiteSpace:'pre-wrap',fontSize:'12px',lineHeight:'18px',color:'#666970'}},code));
-    card.appendChild(cb);
+  if(data){
+    card.appendChild(h('p',{style:{fontSize:'14px',color:'#666970',marginBottom:'24px'}},data.desc));
+
+    // Storybook link button
+    if(data.storybook){
+      const sbLink=h('a',{
+        href:'http://localhost:6006/?path=/story/'+data.storybook+'--playground',
+        target:'_blank',
+        class:'btn-outline',
+        style:{display:'inline-flex',gap:'8px',marginBottom:'24px',fontSize:'13px',padding:'8px 14px'},
+        html:ICO.storybook+' <span>View in Storybook</span>'
+      });
+      card.appendChild(sbLink);
+    }
+
+    // Alert-specific visual preview
+    if(slug==='alert'){
+      const preview=h('div',{class:'alert-preview',style:{background:'#fff',border:'1px solid #E9EAEB',borderRadius:'8px'}});
+      const intents=[
+        {name:'neutral',bg:'#F5F5F5',fg:'#1C1D1F',btnBg:'#1C1D1F',icon:ICO.info},
+        {name:'primary',bg:'#F9F5FF',fg:'#6941C6',btnBg:'#6941C6',icon:ICO.info},
+        {name:'info',bg:'#EFF8FF',fg:'#175CD3',btnBg:'#175CD3',icon:ICO.info},
+        {name:'success',bg:'#ECFDF3',fg:'#067647',btnBg:'#067647',icon:ICO.check},
+        {name:'warning',bg:'#FFFAEB',fg:'#B54708',btnBg:'#B54708',icon:ICO.warn},
+        {name:'danger',bg:'#FEF3F2',fg:'#B42318',btnBg:'#B42318',icon:ICO.danger},
+      ];
+      for(const intent of intents){
+        const row=h('div',{class:'alert-row',style:{background:intent.bg,color:intent.fg}});
+        row.innerHTML='<span class="alert-icon">'+intent.icon+'</span>';
+        row.appendChild(h('div',{class:'alert-content'},
+          h('div',{class:'alert-title'},'Alert title'),
+          h('div',{class:'alert-desc'},'This is alert description'),
+        ));
+        row.appendChild(h('button',{class:'alert-btn',style:{background:intent.btnBg}},'Button'));
+        preview.appendChild(row);
+      }
+      card.appendChild(preview);
+    }
+
+    // Code snippet
+    if(data.code){
+      const cb=h('div',{class:'code-block',style:{marginTop:'24px'}});
+      const hdr=h('div',{class:'code-block-header'});
+      hdr.innerHTML=ICO.file+'<span class="filename">'+name+'</span>';
+      const copyBtn=h('span',{class:'copy-btn',style:{cursor:'pointer'},onclick:()=>{navigator.clipboard.writeText(data.code);const t=$('#toast');t.textContent='Code copied!';t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1800)}});
+      copyBtn.innerHTML=ICO.copy;
+      hdr.appendChild(copyBtn);
+      cb.appendChild(hdr);
+      cb.appendChild(h('pre',{class:'code-block-body',style:{whiteSpace:'pre-wrap',fontSize:'12px',lineHeight:'18px',color:'#666970'}},data.code));
+      card.appendChild(cb);
+    }
+
+    // Component tokens section
+    if(tokens&&tokens.color&&tokens.color.component){
+      // Map slug → token key (e.g. 'input-field' → 'input', 'alert-dialog' → 'dialog')
+      const tokenKeyMap={'input-field':'input','alert-dialog':'dialog','list-item':'table','form-field':'input','search-field':'input','top-bar':'tab','badge-indicator':'badge','badge-number':'badge'};
+      const compKey=tokenKeyMap[slug]||slug.replace(/-/g,'');
+      const compTokens=tokens.color.component[compKey];
+      if(compTokens){
+        card.appendChild(h('div',{class:'doc-section-title',style:{marginTop:'32px'}},'Component Tokens'));
+        const table=h('table',{class:'token-table'});
+        table.appendChild(h('thead',{},h('tr',{},h('th',{},''),h('th',{},'Token'),h('th',{},'Reference'),h('th',{},'CSS Variable'))));
+        const tbody=h('tbody');
+        (function walk(obj,prefix){
+          for(const[k,v]of Object.entries(obj)){
+            if(k.startsWith('$'))continue;
+            const path=prefix?prefix+'.'+k:k;
+            if(v&&v.$value&&typeof v.$value==='string'){
+              const resolved=resolveRef(v.$value);
+              const cssVar='var(--dls-color-component-'+compKey+'-'+path.replace(/\./g,'-')+')';
+              tbody.appendChild(h('tr',{onclick:()=>copyToast(cssVar),style:{cursor:'pointer'}},
+                h('td',{},h('span',{class:'swatch',style:{background:resolved}})),
+                h('td',{class:'mono'},path),
+                h('td',{class:'ref'},v.$value.replace(/[{}]/g,'')),
+                h('td',{class:'css-var'},cssVar)
+              ));
+            } else if(typeof v==='object'&&v!==null&&!v.$type){
+              walk(v,path);
+            }
+          }
+        })(compTokens,'');
+        table.appendChild(tbody);
+        if(tbody.children.length>0)card.appendChild(table);
+      }
+    }
   } else {
-    card.appendChild(h('h2',{style:{fontSize:'32px',fontWeight:700,lineHeight:'40px',marginBottom:'8px'}},name));
     card.appendChild(h('p',{style:{fontSize:'14px',color:'#666970'}},'Component documentation coming soon.'));
   }
+
   inner.appendChild(card);
   inner.appendChild(mkFooter());
   m.appendChild(inner);
@@ -878,8 +1571,7 @@ function renderTokensLayout(){
 /* ═══════ Router dispatch ═════════════════════════════════ */
 function renderPage(){
   const route=getRoute();
-  if(route.startsWith('changelog'))renderChangelog();
-  else if(route.startsWith('documentation'))renderDocumentation();
+  if(route.startsWith('changelog')||route.startsWith('documentation'))renderDocumentation();
   else if(route==='components')renderComponentsIndex();
   else if(route.startsWith('components/'))renderComponentDetail(route.split('/')[1]);
   else if(route.startsWith('tokens/color'))renderTokensColor();

@@ -1,5 +1,4 @@
 import React from 'react';
-import { CalendarDay } from './CalendarDay';
 import './calendar.css';
 
 /* ---------------------------------------------------------------------------
@@ -7,13 +6,13 @@ import './calendar.css';
    --------------------------------------------------------------------------- */
 
 const ChevronLeft = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
     <path d="M10 4L6 8L10 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const ChevronRight = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
     <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
@@ -22,31 +21,21 @@ const ChevronRight = () => (
    Types
    --------------------------------------------------------------------------- */
 
-export type CalendarView = 'date' | 'month' | 'year';
-
 export interface CalendarProps {
   /** Currently selected date */
-  value?: Date | null;
-  /** Today's date override (defaults to new Date()) */
-  today?: Date;
+  value?: Date;
+  /** For range mode: end date */
+  valueEnd?: Date;
   /** Called when a date is selected */
   onSelect?: (date: Date) => void;
-  /** Called when month/year changes */
-  onMonthChange?: (year: number, month: number) => void;
+  /** Month being viewed (controlled) */
+  month?: Date;
+  /** Called when month changes via navigation */
+  onMonthChange?: (date: Date) => void;
   /** Minimum selectable date */
-  minDate?: Date;
+  min?: Date;
   /** Maximum selectable date */
-  maxDate?: Date;
-  /** Dates to highlight (e.g. range) */
-  highlightedDates?: Date[];
-  /** Initial view */
-  defaultView?: CalendarView;
-  /** Controlled view */
-  view?: CalendarView;
-  /** Called when view changes */
-  onViewChange?: (view: CalendarView) => void;
-  /** First day of the week: 0 = Sunday, 1 = Monday */
-  weekStartsOn?: 0 | 1;
+  max?: Date;
   className?: string;
 }
 
@@ -59,27 +48,33 @@ const MONTH_NAMES = [
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
-const WEEKDAY_LABELS_SUN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const WEEKDAY_LABELS_MON = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const WEEKDAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-function isSameDay(a: Date, b: Date) {
-  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+function isSameDay(a: Date, b: Date): boolean {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
 }
 
-function getDaysInMonth(year: number, month: number) {
+function stripTime(d: Date): Date {
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate();
 }
 
-function getCalendarDays(year: number, month: number, weekStartsOn: 0 | 1) {
+function getCalendarDays(year: number, month: number): { date: Date; outside: boolean }[] {
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = getDaysInMonth(year, month);
   const daysInPrevMonth = getDaysInMonth(year, month - 1);
 
-  const offset = (firstDay - weekStartsOn + 7) % 7;
   const days: { date: Date; outside: boolean }[] = [];
 
   // Previous month trailing days
-  for (let i = offset - 1; i >= 0; i--) {
+  for (let i = firstDay - 1; i >= 0; i--) {
     days.push({ date: new Date(year, month - 1, daysInPrevMonth - i), outside: true });
   }
 
@@ -97,13 +92,6 @@ function getCalendarDays(year: number, month: number, weekStartsOn: 0 | 1) {
   return days;
 }
 
-function getYearRange(year: number) {
-  const start = Math.floor(year / 16) * 16;
-  const years: number[] = [];
-  for (let i = 0; i < 16; i++) years.push(start + i);
-  return years;
-}
-
 /* ---------------------------------------------------------------------------
    Component
    --------------------------------------------------------------------------- */
@@ -112,58 +100,58 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
   (
     {
       value,
-      today: todayProp,
+      valueEnd,
       onSelect,
+      month: monthProp,
       onMonthChange,
-      minDate,
-      maxDate,
-      highlightedDates,
-      defaultView = 'date',
-      view: viewProp,
-      onViewChange,
-      weekStartsOn = 0,
+      min,
+      max,
       className,
     },
     ref,
   ) => {
-    const today = todayProp || new Date();
-    const [internalView, setInternalView] = React.useState<CalendarView>(defaultView);
-    const currentView = viewProp ?? internalView;
+    const today = new Date();
 
-    const setView = (v: CalendarView) => {
-      if (!viewProp) setInternalView(v);
-      onViewChange?.(v);
-    };
+    // Controlled vs uncontrolled month
+    const [internalMonth, setInternalMonth] = React.useState<Date>(
+      () => monthProp ?? value ?? today,
+    );
 
-    const [displayYear, setDisplayYear] = React.useState(value?.getFullYear() ?? today.getFullYear());
-    const [displayMonth, setDisplayMonth] = React.useState(value?.getMonth() ?? today.getMonth());
-
-    const highlightSet = React.useMemo(() => {
-      if (!highlightedDates) return new Set<string>();
-      return new Set(highlightedDates.map(d => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`));
-    }, [highlightedDates]);
-
-    const isHighlighted = (date: Date) =>
-      highlightSet.has(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
-
-    const isDisabled = (date: Date) => {
-      if (minDate && date < new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate())) return true;
-      if (maxDate && date > new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate())) return true;
-      return false;
-    };
+    const displayDate = monthProp ?? internalMonth;
+    const displayYear = displayDate.getFullYear();
+    const displayMonth = displayDate.getMonth();
 
     const navigateMonth = (delta: number) => {
       let newMonth = displayMonth + delta;
       let newYear = displayYear;
-      if (newMonth < 0) { newMonth = 11; newYear--; }
-      if (newMonth > 11) { newMonth = 0; newYear++; }
-      setDisplayMonth(newMonth);
-      setDisplayYear(newYear);
-      onMonthChange?.(newYear, newMonth);
+      if (newMonth < 0) {
+        newMonth = 11;
+        newYear--;
+      }
+      if (newMonth > 11) {
+        newMonth = 0;
+        newYear++;
+      }
+      const next = new Date(newYear, newMonth, 1);
+      if (!monthProp) setInternalMonth(next);
+      onMonthChange?.(next);
     };
 
-    const navigateYear = (delta: number) => {
-      setDisplayYear(y => y + delta);
+    const isDisabled = (date: Date): boolean => {
+      const d = stripTime(date);
+      if (min && d < stripTime(min)) return true;
+      if (max && d > stripTime(max)) return true;
+      return false;
+    };
+
+    const isInRange = (date: Date): boolean => {
+      if (!value || !valueEnd) return false;
+      const d = stripTime(date);
+      const start = stripTime(value);
+      const end = stripTime(valueEnd);
+      const rangeStart = start <= end ? start : end;
+      const rangeEnd = start <= end ? end : start;
+      return d > rangeStart && d < rangeEnd;
     };
 
     const handleDayClick = (date: Date) => {
@@ -171,129 +159,78 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
       onSelect?.(date);
     };
 
-    const handleMonthSelect = (month: number) => {
-      setDisplayMonth(month);
-      setView('date');
-      onMonthChange?.(displayYear, month);
-    };
-
-    const handleYearSelect = (year: number) => {
-      setDisplayYear(year);
-      setView('month');
-    };
-
-    const handleTitleClick = () => {
-      if (currentView === 'date') setView('month');
-      else if (currentView === 'month') setView('year');
-    };
-
-    /* ----- Date view ----- */
-    const renderDateView = () => {
-      const days = getCalendarDays(displayYear, displayMonth, weekStartsOn);
-      const weekdays = weekStartsOn === 1 ? WEEKDAY_LABELS_MON : WEEKDAY_LABELS_SUN;
-
-      return (
-        <>
-          <div className="dls-calendar__weekdays">
-            {weekdays.map(wd => (
-              <span key={wd} className="dls-calendar__weekday">{wd}</span>
-            ))}
-          </div>
-          <div className="dls-calendar__grid">
-            {days.map(({ date, outside }, i) => (
-              <CalendarDay
-                key={i}
-                label={date.getDate()}
-                disabled={isDisabled(date)}
-                outside={outside}
-                today={isSameDay(date, today)}
-                selected={value ? isSameDay(date, value) : false}
-                highlight={isHighlighted(date)}
-                onClick={() => handleDayClick(date)}
-              />
-            ))}
-          </div>
-        </>
-      );
-    };
-
-    /* ----- Month view ----- */
-    const renderMonthView = () => (
-      <div className="dls-calendar__grid--months">
-        {MONTH_NAMES.map((name, i) => (
-          <CalendarDay
-            key={i}
-            label={name}
-            selected={value ? value.getFullYear() === displayYear && value.getMonth() === i : false}
-            onClick={() => handleMonthSelect(i)}
-          />
-        ))}
-      </div>
-    );
-
-    /* ----- Year view ----- */
-    const renderYearView = () => {
-      const years = getYearRange(displayYear);
-      return (
-        <div className="dls-calendar__grid--years">
-          {years.map(y => (
-            <CalendarDay
-              key={y}
-              label={y}
-              selected={value ? value.getFullYear() === y : false}
-              onClick={() => handleYearSelect(y)}
-            />
-          ))}
-        </div>
-      );
-    };
-
-    /* ----- Header title text ----- */
-    const titleText = currentView === 'date'
-      ? `${MONTH_NAMES[displayMonth]} ${displayYear}`
-      : currentView === 'month'
-        ? `${displayYear}`
-        : `${getYearRange(displayYear)[0]} – ${getYearRange(displayYear)[15]}`;
-
-    /* ----- Navigation handlers ----- */
-    const handlePrev = () => {
-      if (currentView === 'date') navigateMonth(-1);
-      else if (currentView === 'month') navigateYear(-1);
-      else navigateYear(-16);
-    };
-
-    const handleNext = () => {
-      if (currentView === 'date') navigateMonth(1);
-      else if (currentView === 'month') navigateYear(1);
-      else navigateYear(16);
-    };
+    const days = getCalendarDays(displayYear, displayMonth);
+    const titleText = `${MONTH_NAMES[displayMonth]} ${displayYear}`;
 
     return (
       <div
         ref={ref}
         className={['dls-calendar', className].filter(Boolean).join(' ')}
       >
+        {/* Header */}
         <div className="dls-calendar__header">
-          <button type="button" className="dls-calendar__nav" onClick={handlePrev} aria-label="Previous">
+          <button
+            type="button"
+            className="dls-calendar__nav"
+            onClick={() => navigateMonth(-1)}
+            aria-label="Previous month"
+          >
             <ChevronLeft />
           </button>
-          <span
-            className="dls-calendar__title"
-            role="button"
-            tabIndex={0}
-            onClick={handleTitleClick}
-            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleTitleClick(); }}
+          <span className="dls-calendar__title">{titleText}</span>
+          <button
+            type="button"
+            className="dls-calendar__nav"
+            onClick={() => navigateMonth(1)}
+            aria-label="Next month"
           >
-            {titleText}
-          </span>
-          <button type="button" className="dls-calendar__nav" onClick={handleNext} aria-label="Next">
             <ChevronRight />
           </button>
         </div>
 
-        {currentView === 'date' && renderDateView()}
-        {currentView === 'month' && renderMonthView()}
-        {currentView === 'year' && renderYearView()}
+        {/* Weekday headers */}
+        <div className="dls-calendar__weekdays">
+          {WEEKDAY_LABELS.map((wd) => (
+            <span key={wd} className="dls-calendar__weekday">
+              {wd}
+            </span>
+          ))}
+        </div>
+
+        {/* Day grid */}
+        <div className="dls-calendar__grid">
+          {days.map(({ date, outside }, i) => {
+            const isToday = isSameDay(date, today);
+            const isSelected =
+              (value ? isSameDay(date, value) : false) ||
+              (valueEnd ? isSameDay(date, valueEnd) : false);
+            const inRange = isInRange(date);
+            const disabled = isDisabled(date);
+
+            return (
+              <button
+                key={i}
+                type="button"
+                className="dls-calendar__day"
+                disabled={disabled}
+                data-today={isToday || undefined}
+                data-selected={isSelected || undefined}
+                data-in-range={inRange || undefined}
+                data-outside={outside || undefined}
+                aria-label={date.toLocaleDateString('en-US', {
+                  weekday: 'long',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+                aria-pressed={isSelected || undefined}
+                onClick={() => handleDayClick(date)}
+              >
+                {date.getDate()}
+              </button>
+            );
+          })}
+        </div>
       </div>
     );
   },

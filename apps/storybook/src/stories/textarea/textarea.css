@@ -48,6 +48,8 @@
   border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
   transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  resize: vertical;
+  overflow: hidden;
 }
 
 /* ---------------------------------------------------------------------------
@@ -66,7 +68,7 @@
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: var(--dls-color-component-input-fg-base);
-  resize: vertical;
+  resize: none;
 }
 
 .dls-textarea__input::placeholder {
@@ -121,6 +123,7 @@
   background: var(--dls-color-component-input-bg-disabled);
   border-color: var(--dls-color-component-input-border-disabled);
   cursor: not-allowed;
+  resize: none;
 }
 
 .dls-textarea__box[data-disabled] .dls-textarea__input {

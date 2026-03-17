@@ -34,7 +34,7 @@ const MailIcon = () => (
   </svg>
 );
 
-const intents = ['neutral', 'info', 'success', 'warning', 'danger'] as const;
+const intents = ['neutral', 'primary', 'info', 'success', 'warning', 'danger'] as const;
 
 // ---------------------------------------------------------------------------
 // Playground

@@ -29,7 +29,8 @@
   background: var(--dls-state-hover-overlay);
 }
 
-.dls-list-item:active:not(:disabled):not([data-type="divider"]) {
+.dls-list-item:active:not(:disabled):not([data-type="divider"]),
+.dls-list-item[data-selected]:not(:disabled):not([data-type="divider"]) {
   background: var(--dls-color-intent-info-subtle);
   border: 1px solid var(--dls-color-intent-info-border);
 }

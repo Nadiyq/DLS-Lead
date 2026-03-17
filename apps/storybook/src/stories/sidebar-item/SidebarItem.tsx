@@ -1,5 +1,7 @@
 import React from 'react';
 import './sidebar-item.css';
+import { BadgeNumber } from '../badge/number/BadgeNumber';
+import { BadgeIndicator } from '../badge/indicator/BadgeIndicator';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -143,7 +145,11 @@ export const SidebarItem = React.forwardRef<HTMLDivElement, SidebarItemProps>(
 
         {/* Indicator dot */}
         {showIndicator && (
-          <span className="dls-sidebar-item__indicator" aria-label="Notification" />
+          <BadgeIndicator
+            size="xs"
+            intent="danger"
+            className="dls-sidebar-item__indicator"
+          />
         )}
 
         {/* Text content */}
@@ -160,7 +166,13 @@ export const SidebarItem = React.forwardRef<HTMLDivElement, SidebarItemProps>(
 
         {/* Number badge */}
         {badgeCount !== undefined && badgeCount > 0 && (
-          <span className="dls-sidebar-item__badge">{badgeCount}</span>
+          <BadgeNumber
+            value={badgeCount}
+            variant="soft"
+            intent="info"
+            size="s"
+            className="dls-sidebar-item__badge"
+          />
         )}
 
         {/* Option type: ellipsis action */}

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React from 'react';
+import React, { useState } from 'react';
 import { DateRangeInput } from './DateRangeInput';
 
 const meta = {
@@ -9,7 +9,7 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={{ width: 430 }}>
+      <div style={{ width: 430, paddingBottom: 340 }}>
         <Story />
       </div>
     ),
@@ -78,6 +78,33 @@ export const WithLabelAndHint: Story = {
     label: 'Date range',
     hint: 'Select a start and end date.',
   },
+};
+
+// ---------------------------------------------------------------------------
+// Interactive — with calendar dropdown
+// ---------------------------------------------------------------------------
+
+const InteractiveTemplate = () => {
+  const [startDate, setStartDate] = useState<Date | undefined>();
+  const [endDate, setEndDate] = useState<Date | undefined>();
+
+  return (
+    <DateRangeInput
+      label="Date range"
+      hint="Click a field to open the calendar."
+      startDate={startDate}
+      endDate={endDate}
+      onStartDateSelect={setStartDate}
+      onEndDateSelect={setEndDate}
+      onStartClear={() => setStartDate(undefined)}
+      onEndClear={() => setEndDate(undefined)}
+    />
+  );
+};
+
+export const Interactive: Story = {
+  args: {},
+  render: () => <InteractiveTemplate />,
 };
 
 // ---------------------------------------------------------------------------

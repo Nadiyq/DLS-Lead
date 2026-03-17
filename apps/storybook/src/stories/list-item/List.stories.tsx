@@ -135,6 +135,7 @@ export const Interactive: Story = {
               key={item}
               type="with-slots"
               text={item}
+              selected={selected === item}
               iconEnd={selected === item ? <CheckIcon /> : undefined}
               onClick={() => setSelected(item)}
             />

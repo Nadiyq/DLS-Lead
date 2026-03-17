@@ -150,45 +150,11 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Avatar
+   Avatar — uses DLS Avatar component, chip-specific overrides only
    --------------------------------------------------------------------------- */
 
 .dls-chip__avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
-  border-radius: var(--dls-radius-component-avatar-s);
-  overflow: hidden;
-  background: var(--dls-color-surface-subtle);
-  font-size: var(--dls-text-xs-font-size);
-  font-weight: var(--dls-font-weight-semibold);
-  color: var(--dls-color-text-secondary);
-}
-
-/* M avatar: 24px */
-.dls-chip__avatar,
-.dls-chip[data-size="m"] .dls-chip__avatar {
-  width: 24px;
-  height: 24px;
-}
-
-/* S avatar: 20px */
-.dls-chip[data-size="s"] .dls-chip__avatar {
-  width: 20px;
-  height: 20px;
-}
-
-/* XS avatar: 20px */
-.dls-chip[data-size="xs"] .dls-chip__avatar {
-  width: 20px;
-  height: 20px;
-}
-
-.dls-chip__avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* ---------------------------------------------------------------------------

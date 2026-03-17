@@ -1,7 +1,7 @@
 /* ==========================================================================
    DLS Chip Regular — styled chip with variant × intent
    Variants: filled | outline | soft | dot
-   Intents:  neutral | info | success | warning | danger
+   Intents:  neutral | primary | info | success | warning | danger
    Sizes:    m | s | xs
    ========================================================================== */
 
@@ -32,6 +32,14 @@
 /* ---------------------------------------------------------------------------
    Intent overrides
    --------------------------------------------------------------------------- */
+
+.dls-chip-regular[data-intent="primary"] {
+  --_base: var(--dls-color-intent-primary-base);
+  --_on-base: var(--dls-color-intent-primary-on-base);
+  --_subtle: var(--dls-color-intent-primary-subtle);
+  --_text: var(--dls-color-intent-primary-text);
+  --_border: var(--dls-color-intent-primary-border);
+}
 
 .dls-chip-regular[data-intent="info"] {
   --_base: var(--dls-color-intent-info-base);

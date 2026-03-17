@@ -140,34 +140,7 @@
   gap: var(--dls-spacing-6);
 }
 
-/* Verify button */
-.dls-otp-form__btn {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 32px;
-  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
-  border-radius: var(--dls-radius-component-button);
-  background: var(--dls-color-intent-neutral-base);
-  color: var(--dls-color-intent-neutral-on-base);
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-medium);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-otp-form__btn:hover:not(:disabled) {
-  background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-hover)) c h);
-}
-
-.dls-otp-form__btn:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
+/* Verify button uses DLS Button component — no custom styles needed */
 
 /* Resend text */
 .dls-otp-form__resend {

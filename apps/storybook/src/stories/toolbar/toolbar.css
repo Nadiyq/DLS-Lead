@@ -27,7 +27,8 @@
    --------------------------------------------------------------------------- */
 
 .dls-toolbar[data-sticky] {
-  border-color: var(--dls-color-border-base);
+  border: none;
+  border-bottom: 1px solid var(--dls-color-border-base);
   border-radius: 0;
   box-shadow: none;
 }

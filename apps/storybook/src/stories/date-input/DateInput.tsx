@@ -1,5 +1,6 @@
 import React from 'react';
 import './date-input.css';
+import { Calendar } from '../calendar/Calendar';
 
 /* ---------------------------------------------------------------------------
    Icons
@@ -35,13 +36,31 @@ const TriangleAlertIcon = () => (
 );
 
 /* ---------------------------------------------------------------------------
+   Helpers
+   --------------------------------------------------------------------------- */
+
+function formatDate(date: Date): string {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+function parseDate(str: string): Date | undefined {
+  const d = new Date(str);
+  return isNaN(d.getTime()) ? undefined : d;
+}
+
+/* ---------------------------------------------------------------------------
    Types
    --------------------------------------------------------------------------- */
 
 export interface DateInputProps {
   /** Selected date value (display string, e.g. "10 Sep 2023") */
   value?: string;
-  /** Click handler — opens date picker */
+  /** Selected date as Date object (used with built-in calendar) */
+  selectedDate?: Date;
+  /** Called when a date is selected from the calendar */
+  onDateSelect?: (date: Date) => void;
+  /** Click handler — opens date picker (also opens built-in calendar) */
   onClick?: React.MouseEventHandler;
   /** Clear callback */
   onClear?: React.MouseEventHandler;
@@ -55,6 +74,10 @@ export interface DateInputProps {
   error?: string;
   /** Allow clearing the selection */
   clearable?: boolean;
+  /** Minimum selectable date */
+  min?: Date;
+  /** Maximum selectable date */
+  max?: Date;
   disabled?: boolean;
   className?: string;
   id?: string;
@@ -68,6 +91,8 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
   (
     {
       value,
+      selectedDate,
+      onDateSelect,
       onClick,
       onClear,
       placeholder = 'MM / DD / YYYY',
@@ -75,6 +100,8 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
       hint,
       error,
       clearable = true,
+      min,
+      max,
       disabled = false,
       className,
       id,
@@ -82,11 +109,58 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
     ref,
   ) => {
     const hasError = !!error;
-    const hasValue = !!value;
+    const displayValue = value ?? (selectedDate ? formatDate(selectedDate) : undefined);
+    const hasValue = !!displayValue;
     const triggerId = id || React.useId();
 
+    const [open, setOpen] = React.useState(false);
+    const wrapperRef = React.useRef<HTMLDivElement>(null);
+
+    /* Close on outside click */
+    React.useEffect(() => {
+      if (!open) return;
+      const handler = (e: MouseEvent) => {
+        if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+          setOpen(false);
+        }
+      };
+      document.addEventListener('mousedown', handler);
+      return () => document.removeEventListener('mousedown', handler);
+    }, [open]);
+
+    /* Close on Escape */
+    React.useEffect(() => {
+      if (!open) return;
+      const handler = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setOpen(false);
+      };
+      document.addEventListener('keydown', handler);
+      return () => document.removeEventListener('keydown', handler);
+    }, [open]);
+
+    const handleTriggerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      setOpen((prev) => !prev);
+      onClick?.(e);
+    };
+
+    const handleDateSelect = (date: Date) => {
+      onDateSelect?.(date);
+      setOpen(false);
+    };
+
+    const handleClear = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onClear?.(e);
+      setOpen(false);
+    };
+
+    const calendarValue = selectedDate ?? (value ? parseDate(value) : undefined);
+
     return (
-      <div className={['dls-date-input', className].filter(Boolean).join(' ')}>
+      <div
+        ref={wrapperRef}
+        className={['dls-date-input', className].filter(Boolean).join(' ')}
+      >
         {label && (
           <label
             className="dls-date-input__label"
@@ -104,7 +178,8 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
           className="dls-date-input__trigger"
           disabled={disabled}
           data-error={hasError || undefined}
-          onClick={onClick}
+          data-open={open || undefined}
+          onClick={handleTriggerClick}
         >
           <span className="dls-date-input__content">
             <span className="dls-date-input__calendar-icon">
@@ -114,7 +189,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
               className="dls-date-input__value"
               data-placeholder={!hasValue || undefined}
             >
-              {value || placeholder}
+              {displayValue || placeholder}
             </span>
           </span>
 
@@ -122,7 +197,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
             <button
               type="button"
               className="dls-date-input__clear"
-              onClick={(e) => { e.stopPropagation(); onClear?.(e); }}
+              onClick={handleClear}
               aria-label="Clear date"
             >
               <XIcon />
@@ -133,6 +208,17 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
             <ChevronDown />
           </span>
         </button>
+
+        {open && (
+          <div className="dls-date-input__dropdown">
+            <Calendar
+              value={calendarValue}
+              onSelect={handleDateSelect}
+              min={min}
+              max={max}
+            />
+          </div>
+        )}
 
         {(hint || hasError) && (
           <div className="dls-date-input__hint" data-error={hasError || undefined}>

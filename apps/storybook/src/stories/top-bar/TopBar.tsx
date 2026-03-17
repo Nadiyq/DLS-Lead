@@ -1,5 +1,8 @@
 import React from 'react';
 import './top-bar.css';
+import { Avatar } from '../Avatar';
+import { Button } from '../Button';
+import { BadgeIndicator } from '../badge/indicator/BadgeIndicator';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -116,28 +119,29 @@ export const TopBar = React.forwardRef<HTMLDivElement, TopBarProps>(
   ) => {
     const NotificationBtn = () => (
       <span className="dls-top-bar__notification">
-        <button
-          type="button"
-          className="dls-top-bar__icon-btn"
+        <Button
+          variant="ghost"
+          intent="neutral"
+          size="m"
+          icon={<BellIcon />}
+          iconOnly
           aria-label="Notifications"
           onClick={onNotificationClick}
-        >
-          <BellIcon />
-        </button>
-        {hasNotifications && <span className="dls-top-bar__notification-dot" />}
+        />
+        {hasNotifications && <BadgeIndicator size="xs" intent="danger" className="dls-top-bar__notification-dot" />}
       </span>
     );
 
     const AvatarEl = () => (
       <span
-        className="dls-top-bar__avatar"
+        className="dls-top-bar__avatar-wrap"
         role="button"
         tabIndex={0}
         onClick={onAvatarClick}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onAvatarClick?.(); } }}
         aria-label="Account"
       >
-        {avatarSrc ? <img src={avatarSrc} alt="" /> : avatarInitials}
+        <Avatar size="32" circle src={avatarSrc} initials={avatarInitials} />
       </span>
     );
 
@@ -149,14 +153,15 @@ export const TopBar = React.forwardRef<HTMLDivElement, TopBarProps>(
       >
         {/* Left: menu button + optional slot */}
         <div className="dls-top-bar__left">
-          <button
-            type="button"
-            className="dls-top-bar__icon-btn"
+          <Button
+            variant="ghost"
+            intent="neutral"
+            size="m"
+            icon={<MenuIcon />}
+            iconOnly
             aria-label="Menu"
             onClick={onMenuClick}
-          >
-            <MenuIcon />
-          </button>
+          />
           {slotLeft}
         </div>
 
@@ -165,15 +170,11 @@ export const TopBar = React.forwardRef<HTMLDivElement, TopBarProps>(
           <div className="dls-top-bar__right">
             {slotRight}
             {showSearch && (
-              <button type="button" className="dls-top-bar__icon-btn" aria-label="Search" onClick={onSearchClick}>
-                <SearchIcon />
-              </button>
+              <Button variant="ghost" intent="neutral" size="m" icon={<SearchIcon />} iconOnly aria-label="Search" onClick={onSearchClick} />
             )}
             {showNotifications && <NotificationBtn />}
             {showHelp && (
-              <button type="button" className="dls-top-bar__icon-btn" aria-label="Help" onClick={onHelpClick}>
-                <HelpIcon />
-              </button>
+              <Button variant="ghost" intent="neutral" size="m" icon={<HelpIcon />} iconOnly aria-label="Help" onClick={onHelpClick} />
             )}
             <AvatarEl />
           </div>
@@ -186,15 +187,11 @@ export const TopBar = React.forwardRef<HTMLDivElement, TopBarProps>(
               <label className="dls-top-bar__search">
                 <SearchIcon />
                 <input
+                  className="dls-top-bar__search-input"
                   type="text"
                   placeholder={searchPlaceholder}
                   value={searchValue}
                   onChange={(e) => onSearchChange?.(e.target.value)}
-                  style={{
-                    all: 'unset', flex: 1, minWidth: 0,
-                    fontFamily: 'inherit', fontSize: 'inherit',
-                    color: 'var(--dls-color-text-primary)',
-                  }}
                 />
               </label>
             </div>
@@ -202,9 +199,7 @@ export const TopBar = React.forwardRef<HTMLDivElement, TopBarProps>(
               {slotRight}
               {showNotifications && <NotificationBtn />}
               {showHelp && (
-                <button type="button" className="dls-top-bar__icon-btn" aria-label="Help" onClick={onHelpClick}>
-                  <HelpIcon />
-                </button>
+                <Button variant="ghost" intent="neutral" size="m" icon={<HelpIcon />} iconOnly aria-label="Help" onClick={onHelpClick} />
               )}
               <AvatarEl />
             </div>
@@ -214,7 +209,7 @@ export const TopBar = React.forwardRef<HTMLDivElement, TopBarProps>(
         {/* Type 3: nav tabs + right actions */}
         {type === '3' && (
           <div className="dls-top-bar__nav">
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--dls-spacing-2)', flex: 1 }}>
+            <div className="dls-top-bar__nav-list">
               {navItems.map((item, i) => (
                 <button
                   key={i}

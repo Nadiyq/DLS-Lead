@@ -133,45 +133,6 @@
   gap: var(--dls-spacing-6);
 }
 
-.dls-login__field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--dls-spacing-2);
-}
-
-.dls-login__label {
-  font-size: var(--dls-text-s-font-size);
-  line-height: var(--dls-text-s-line-height);
-  font-weight: var(--dls-font-weight-normal);
-  color: var(--dls-color-text-secondary);
-}
-
-.dls-login__input {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 32px;
-  padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
-  border-radius: var(--dls-radius-component-input);
-  border: 1px solid var(--dls-color-border-base);
-  background: var(--dls-color-surface-base);
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  color: var(--dls-color-text-primary);
-}
-
-.dls-login__input::placeholder {
-  color: var(--dls-color-text-disabled);
-}
-
-.dls-login__input:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-  border-color: var(--dls-color-border-strong);
-}
-
 /* Password group — field + forgot link */
 .dls-login__password-group {
   display: flex;
@@ -246,70 +207,7 @@
   gap: var(--dls-spacing-3);
 }
 
-/* Primary button (filled) */
-.dls-login__btn-primary {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 32px;
-  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
-  border-radius: var(--dls-radius-component-button);
-  background: var(--dls-color-intent-neutral-base);
-  color: var(--dls-color-intent-neutral-on-base);
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-medium);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-login__btn-primary:hover:not(:disabled) {
-  background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-hover)) c h);
-}
-
-.dls-login__btn-primary:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-/* Outline button */
-.dls-login__btn-outline {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--dls-spacing-2);
-  width: 100%;
-  height: 32px;
-  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
-  border-radius: var(--dls-radius-component-button);
-  border: 1px solid var(--dls-color-intent-neutral-base);
-  color: var(--dls-color-intent-neutral-text);
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-medium);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-login__btn-outline:hover:not(:disabled) {
-  background: var(--dls-state-hover-overlay);
-}
-
-.dls-login__btn-outline:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-.dls-login__btn-outline svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
+/* Buttons use DLS Button component — no custom styles needed */
 
 /* ---------------------------------------------------------------------------
    Bottom text / link

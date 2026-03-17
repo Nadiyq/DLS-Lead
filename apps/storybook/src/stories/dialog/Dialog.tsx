@@ -1,5 +1,6 @@
 import React from 'react';
 import './dialog.css';
+import { Button } from '../Button';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -97,14 +98,16 @@ export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
             )}
           </div>
           {onClose && (
-            <button
-              type="button"
-              className="dls-dialog__close"
+            <Button
+              variant="ghost"
+              intent="neutral"
+              size="m"
+              icon={<CloseIcon />}
+              iconOnly
               aria-label="Close"
               onClick={onClose}
-            >
-              <CloseIcon />
-            </button>
+              className="dls-dialog__close"
+            />
           )}
         </div>
 

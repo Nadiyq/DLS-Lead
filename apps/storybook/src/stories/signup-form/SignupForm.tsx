@@ -1,5 +1,7 @@
 import React from 'react';
 import './signup-form.css';
+import { Button } from '../Button';
+import { InputField } from '../input-field/InputField';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -136,82 +138,79 @@ const FormContent = (props: SignupFormProps) => {
       {/* Social first (types 3 & 4) */}
       {showOrDivider && showSocialLogin && (
         <div className="dls-signup__social">
-          <button type="button" className="dls-signup__btn-outline">
-            {socialLoginIcon || <GoogleIcon />}
+          <Button
+            variant="outline"
+            intent="neutral"
+            size="m"
+            icon={socialLoginIcon || <GoogleIcon />}
+            style={{ width: '100%' }}
+          >
             {socialLoginLabel}
-          </button>
+          </Button>
         </div>
       )}
 
       {showOrDivider && <div className="dls-signup__or">or</div>}
 
       <form className="dls-signup__form" onSubmit={handleSubmit}>
-        <div className="dls-signup__field">
-          <label className="dls-signup__label">Full name</label>
-          <input
-            className="dls-signup__input"
-            type="text"
-            placeholder="Enter..."
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            autoComplete="name"
-          />
-        </div>
+        <InputField
+          label="Full name"
+          placeholder="Enter..."
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+        />
 
-        <div className="dls-signup__field">
-          <label className="dls-signup__label">Email</label>
-          <input
-            className="dls-signup__input"
-            type="email"
-            placeholder="m@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="email"
-          />
-        </div>
+        <InputField
+          label="Email"
+          type="email"
+          placeholder="m@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-        <div className="dls-signup__field">
-          <label className="dls-signup__label">Password</label>
-          <input
-            className="dls-signup__input"
+        <div className="dls-signup__password-field">
+          <InputField
+            label="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            autoComplete="new-password"
+            hint="Must be at least 8 characters long."
           />
           {showPasswordStrength && <StrengthBar password={password} />}
-          <span className="dls-signup__hint">Must be at least 8 characters long.</span>
         </div>
 
-        <div className="dls-signup__field">
-          <label className="dls-signup__label">Confirm password</label>
-          <input
-            className="dls-signup__input"
-            type="password"
-            placeholder="Enter..."
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            autoComplete="new-password"
-          />
-        </div>
+        <InputField
+          label="Confirm password"
+          type="password"
+          placeholder="Enter..."
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
       </form>
 
       {slotContent}
 
       <div className="dls-signup__footer">
         <div className="dls-signup__buttons">
-          <button
-            type="submit"
-            className="dls-signup__btn-primary"
+          <Button
+            variant="filled"
+            intent="neutral"
+            size="m"
             onClick={() => onSubmit?.({ fullName, email, password, confirmPassword })}
+            style={{ width: '100%' }}
           >
             {primaryButtonLabel}
-          </button>
+          </Button>
           {!showOrDivider && showSocialLogin && (
-            <button type="button" className="dls-signup__btn-outline">
-              {socialLoginIcon || <GoogleIcon />}
+            <Button
+              variant="outline"
+              intent="neutral"
+              size="m"
+              icon={socialLoginIcon || <GoogleIcon />}
+              style={{ width: '100%' }}
+            >
               {socialLoginLabel}
-            </button>
+            </Button>
           )}
         </div>
         {bottomText && <p className="dls-signup__bottom-text">{bottomText}</p>}

@@ -48,29 +48,26 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Arrow — CSS triangle, 12×8
+   Arrow — 12×8 SVG with two filled paths (border + fill)
+   Overlaps body by 1px so border colors merge seamlessly
    --------------------------------------------------------------------------- */
 
 .dls-tooltip__arrow {
   width: 12px;
   height: 8px;
   flex-shrink: 0;
-}
-
-.dls-tooltip__arrow svg {
   display: block;
-  width: 12px;
-  height: 8px;
+  margin-top: -1px;
 }
 
 /* General arrow colors */
 
-.dls-tooltip__arrow-fill {
-  fill: var(--dls-color-surface-base);
-}
-
 .dls-tooltip__arrow-stroke {
   fill: var(--dls-color-border-subtle);
+}
+
+.dls-tooltip__arrow-fill {
+  fill: var(--dls-color-surface-base);
 }
 
 /* ---------------------------------------------------------------------------
@@ -82,12 +79,12 @@
   border-color: var(--dls-color-intent-danger-border);
 }
 
-.dls-tooltip[data-type="error"] .dls-tooltip__arrow-fill {
-  fill: var(--dls-color-intent-danger-subtle);
-}
-
 .dls-tooltip[data-type="error"] .dls-tooltip__arrow-stroke {
   fill: var(--dls-color-intent-danger-border);
+}
+
+.dls-tooltip[data-type="error"] .dls-tooltip__arrow-fill {
+  fill: var(--dls-color-intent-danger-subtle);
 }
 
 /* ---------------------------------------------------------------------------
@@ -108,6 +105,8 @@
 
 .dls-tooltip[data-orientation^="bottom"] .dls-tooltip__arrow {
   transform: rotate(180deg);
+  margin-top: 0;
+  margin-bottom: -1px;
 }
 
 /* Left — arrow to the right of body, points right */
@@ -117,7 +116,9 @@
 }
 
 .dls-tooltip[data-orientation="left"] .dls-tooltip__arrow {
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
+  margin-top: 0;
+  margin-left: -4px;
 }
 
 /* Right — arrow to the left of body, points left */
@@ -127,7 +128,9 @@
 }
 
 .dls-tooltip[data-orientation="right"] .dls-tooltip__arrow {
-  transform: rotate(-90deg);
+  transform: rotate(90deg);
+  margin-top: 0;
+  margin-right: -4px;
 }
 
 /* Arrow alignment for top/bottom left/right variants */

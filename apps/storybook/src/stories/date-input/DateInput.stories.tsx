@@ -9,7 +9,7 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={{ width: 364 }}>
+      <div style={{ width: 364, paddingBottom: 340 }}>
         <Story />
       </div>
     ),
@@ -92,30 +92,20 @@ export const ErrorState: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// Interactive
+// Interactive — with calendar dropdown
 // ---------------------------------------------------------------------------
 
 const InteractiveTemplate = () => {
-  const [value, setValue] = useState<string | undefined>();
-
-  const handleClick = () => {
-    if (!value) {
-      setValue('10 Sep 2023');
-    }
-  };
-
-  const handleClear = () => {
-    setValue(undefined);
-  };
+  const [date, setDate] = useState<Date | undefined>();
 
   return (
     <DateInput
       label="Date"
-      hint="Click to select a date."
+      hint="Click to open the calendar."
       placeholder="MM / DD / YYYY"
-      value={value}
-      onClick={handleClick}
-      onClear={handleClear}
+      selectedDate={date}
+      onDateSelect={setDate}
+      onClear={() => setDate(undefined)}
     />
   );
 };
@@ -123,6 +113,33 @@ const InteractiveTemplate = () => {
 export const Interactive: Story = {
   args: {},
   render: () => <InteractiveTemplate />,
+};
+
+// ---------------------------------------------------------------------------
+// With min / max constraints
+// ---------------------------------------------------------------------------
+
+const ConstrainedTemplate = () => {
+  const [date, setDate] = useState<Date | undefined>();
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+
+  return (
+    <DateInput
+      label="Date (next 30 days)"
+      hint="Only dates within the next 30 days are selectable."
+      selectedDate={date}
+      onDateSelect={setDate}
+      onClear={() => setDate(undefined)}
+      min={today}
+      max={maxDate}
+    />
+  );
+};
+
+export const WithMinMax: Story = {
+  args: {},
+  render: () => <ConstrainedTemplate />,
 };
 
 // ---------------------------------------------------------------------------

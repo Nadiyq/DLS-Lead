@@ -65,8 +65,12 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
         {showContent && (
           <div className="dls-card__content">
-            {title && <div className="dls-card__title">{title}</div>}
-            {description && <div className="dls-card__description">{description}</div>}
+            {(title || description) && (
+              <div className="dls-card__text">
+                {title && <div className="dls-card__title">{title}</div>}
+                {description && <div className="dls-card__description">{description}</div>}
+              </div>
+            )}
             {children}
           </div>
         )}

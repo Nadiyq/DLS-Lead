@@ -1,0 +1,97 @@
+[
+  {
+    "month": "March 2026",
+    "commits": [
+      {
+        "hash": "b3fc01a",
+        "date": "2026-03-17",
+        "message": "clean up"
+      },
+      {
+        "hash": "e22b25a",
+        "date": "2026-03-13",
+        "message": "deleted vercel.json"
+      },
+      {
+        "hash": "acbe729",
+        "date": "2026-03-13",
+        "message": "chore: add Vercel config for Storybook deployment"
+      },
+      {
+        "hash": "b992bcb",
+        "date": "2026-03-13",
+        "message": "chore: remove node_modules and debug log from tracking"
+      },
+      {
+        "hash": "093839a",
+        "date": "2026-03-13",
+        "message": "all components"
+      },
+      {
+        "hash": "7a0f047",
+        "date": "2026-03-13",
+        "message": "added all components"
+      },
+      {
+        "hash": "7d48b30",
+        "date": "2026-03-09",
+        "message": "added components"
+      },
+      {
+        "hash": "29a4814",
+        "date": "2026-03-06",
+        "message": "updated index file, added button"
+      },
+      {
+        "hash": "ef17505",
+        "date": "2026-03-04",
+        "message": "added alert, accordeon, avatar. alert dialog"
+      },
+      {
+        "hash": "d62c393",
+        "date": "2026-03-04",
+        "message": "added  skills, command, hook, replaced claude md"
+      },
+      {
+        "hash": "ce064eb",
+        "date": "2026-03-04",
+        "message": "figma variqbles files"
+      },
+      {
+        "hash": "18663f2",
+        "date": "2026-03-04",
+        "message": "claude md update"
+      },
+      {
+        "hash": "4808a0a",
+        "date": "2026-03-03",
+        "message": "typography styles, backdrop, border-radiuses additional semantic tokens"
+      }
+    ]
+  },
+  {
+    "month": "February 2026",
+    "commits": [
+      {
+        "hash": "a92ae17",
+        "date": "2026-02-26",
+        "message": "outline, ghost, dotted and link buttons bg for states"
+      },
+      {
+        "hash": "4dab026",
+        "date": "2026-02-26",
+        "message": "updated focus state for buttons, added component border-radous"
+      },
+      {
+        "hash": "b32e782",
+        "date": "2026-02-25",
+        "message": "update tokens"
+      },
+      {
+        "hash": "b2b1b4d",
+        "date": "2026-02-24",
+        "message": "added files"
+      }
+    ]
+  }
+]

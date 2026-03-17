@@ -54,12 +54,29 @@ const AlignRightIcon = () => (
   </svg>
 );
 
-const ListIcon = () => (
+const ListBulletIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M9 6H20M9 12H20M9 18H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     <circle cx="5" cy="6" r="1" fill="currentColor" />
     <circle cx="5" cy="12" r="1" fill="currentColor" />
     <circle cx="5" cy="18" r="1" fill="currentColor" />
+  </svg>
+);
+
+const ListNumberedIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 6H20M10 12H20M10 18H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M5 5V9M5 5L4 6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M4 15C4 13.8954 4.89543 13 6 13C7.10457 13 7 14.5 5 16H7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const ListCheckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 6H20M10 12H20M10 18H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M4 6L5.5 7.5L8 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M4 12L5.5 13.5L8 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M4 18L5.5 19.5L8 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -70,11 +87,11 @@ const LinkIcon = () => (
   </svg>
 );
 
-const StrikethroughIcon = () => (
+const MoreIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 12H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M16 7C16 5.34315 14.2091 4 12 4C9.79086 4 8 5.34315 8 7C8 8 8.5 9 10 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M8 17C8 18.6569 9.79086 20 12 20C14.2091 20 16 18.6569 16 17C16 16 15.5 15 14 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <circle cx="6" cy="12" r="1.5" fill="currentColor" />
+    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+    <circle cx="18" cy="12" r="1.5" fill="currentColor" />
   </svg>
 );
 
@@ -111,7 +128,7 @@ export const Playground: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// Comment toolbar (full)
+// Comment toolbar (matches Figma: B I U | align×3 | list×3 | link | more)
 // ---------------------------------------------------------------------------
 
 export const CommentToolbar: Story = {
@@ -129,21 +146,17 @@ export const CommentToolbar: Story = {
         <ToolbarButton aria-label="Align left"><AlignLeftIcon /></ToolbarButton>
         <ToolbarButton aria-label="Align center"><AlignCenterIcon /></ToolbarButton>
         <ToolbarButton aria-label="Align right"><AlignRightIcon /></ToolbarButton>
-        <ToolbarTextButton label="Button" iconStart={<HeadingIcon />} iconEnd={<ChevronDownIcon />} aria-label="Heading" />
-        <ToolbarButton aria-label="List"><ListIcon /></ToolbarButton>
       </ToolbarGroup>
       <ToolbarSeparator />
       <ToolbarGroup>
-        <ToolbarButton aria-label="Align left"><AlignLeftIcon /></ToolbarButton>
-        <ToolbarButton aria-label="Align center"><AlignCenterIcon /></ToolbarButton>
-        <ToolbarButton aria-label="Align right"><AlignRightIcon /></ToolbarButton>
-        <ToolbarTextButton label="Button" iconStart={<HeadingIcon />} iconEnd={<ChevronDownIcon />} aria-label="Heading" />
-        <ToolbarButton aria-label="List"><ListIcon /></ToolbarButton>
+        <ToolbarButton aria-label="Bulleted list"><ListBulletIcon /></ToolbarButton>
+        <ToolbarButton aria-label="Numbered list"><ListNumberedIcon /></ToolbarButton>
+        <ToolbarButton aria-label="Checklist"><ListCheckIcon /></ToolbarButton>
       </ToolbarGroup>
       <ToolbarSeparator />
       <ToolbarButton aria-label="Link"><LinkIcon /></ToolbarButton>
       <ToolbarSeparator />
-      <ToolbarButton aria-label="Strikethrough"><StrikethroughIcon /></ToolbarButton>
+      <ToolbarButton aria-label="More"><MoreIcon /></ToolbarButton>
     </Toolbar>
   ),
 };
@@ -167,13 +180,17 @@ export const Sticky: Story = {
         <ToolbarButton aria-label="Align left"><AlignLeftIcon /></ToolbarButton>
         <ToolbarButton aria-label="Align center"><AlignCenterIcon /></ToolbarButton>
         <ToolbarButton aria-label="Align right"><AlignRightIcon /></ToolbarButton>
-        <ToolbarTextButton label="Button" iconStart={<HeadingIcon />} iconEnd={<ChevronDownIcon />} aria-label="Heading" />
-        <ToolbarButton aria-label="List"><ListIcon /></ToolbarButton>
+      </ToolbarGroup>
+      <ToolbarSeparator />
+      <ToolbarGroup>
+        <ToolbarButton aria-label="Bulleted list"><ListBulletIcon /></ToolbarButton>
+        <ToolbarButton aria-label="Numbered list"><ListNumberedIcon /></ToolbarButton>
+        <ToolbarButton aria-label="Checklist"><ListCheckIcon /></ToolbarButton>
       </ToolbarGroup>
       <ToolbarSeparator />
       <ToolbarButton aria-label="Link"><LinkIcon /></ToolbarButton>
       <ToolbarSeparator />
-      <ToolbarButton aria-label="Strikethrough"><StrikethroughIcon /></ToolbarButton>
+      <ToolbarButton aria-label="More"><MoreIcon /></ToolbarButton>
     </Toolbar>
   ),
 };
@@ -214,4 +231,25 @@ export const WithActiveButtons: Story = {
       </Toolbar>
     );
   },
+};
+
+// ---------------------------------------------------------------------------
+// With text button
+// ---------------------------------------------------------------------------
+
+export const WithTextButton: Story = {
+  args: {
+    sticky: false,
+    children: null,
+  },
+  render: () => (
+    <Toolbar>
+      <ToolbarButton aria-label="Bold"><BoldIcon /></ToolbarButton>
+      <ToolbarButton aria-label="Italic"><ItalicIcon /></ToolbarButton>
+      <ToolbarSeparator />
+      <ToolbarTextButton label="Heading" iconStart={<HeadingIcon />} iconEnd={<ChevronDownIcon />} aria-label="Heading" />
+      <ToolbarSeparator />
+      <ToolbarButton aria-label="Link"><LinkIcon /></ToolbarButton>
+    </Toolbar>
+  ),
 };

@@ -1,5 +1,8 @@
 import React from 'react';
 import './context-menu.css';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
+import { Kbd } from '../kbd/Kbd';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -15,7 +18,7 @@ export interface ContextMenuItemProps extends React.ButtonHTMLAttributes<HTMLBut
   icon?: React.ReactNode;
   /** Item label */
   label: string;
-  /** Keyboard shortcut keys (rendered as <kbd>) */
+  /** Keyboard shortcut keys (rendered via Kbd component) */
   shortcut?: string[];
   /** Disabled state */
   disabled?: boolean;
@@ -47,49 +50,49 @@ const ChevronRight = () => (
 );
 
 /* ---------------------------------------------------------------------------
-   ContextMenu — container
+   ContextMenu — wraps List with menu role + shadow
    --------------------------------------------------------------------------- */
 
 export const ContextMenu = React.forwardRef<HTMLDivElement, ContextMenuProps>(
   ({ children, className }, ref) => (
-    <div
+    <List
       ref={ref}
       className={['dls-context-menu', className].filter(Boolean).join(' ')}
-      role="menu"
     >
       {children}
-    </div>
+    </List>
   ),
 );
 
 ContextMenu.displayName = 'ContextMenu';
 
 /* ---------------------------------------------------------------------------
-   ContextMenuItem — clickable row
+   ContextMenuItem — wraps ListItem with-slots + Kbd shortcut
    --------------------------------------------------------------------------- */
 
 export const ContextMenuItem = React.forwardRef<HTMLButtonElement, ContextMenuItemProps>(
-  ({ icon, label, shortcut, disabled, className, ...rest }, ref) => (
-    <button
-      ref={ref}
-      type="button"
-      className={['dls-context-menu__item', className].filter(Boolean).join(' ')}
-      role="menuitem"
-      data-disabled={disabled ? '' : undefined}
-      disabled={disabled}
-      {...rest}
-    >
-      {icon && <span className="dls-context-menu__item-icon">{icon}</span>}
-      <span className="dls-context-menu__item-label">{label}</span>
-      {shortcut && shortcut.length > 0 && (
-        <span className="dls-context-menu__item-shortcut">
-          {shortcut.map((key) => (
-            <kbd key={key} className="dls-context-menu__kbd">{key}</kbd>
-          ))}
-        </span>
-      )}
-    </button>
-  ),
+  ({ icon, label, shortcut, disabled, className, ...rest }, ref) => {
+    const shortcutSlot = shortcut && shortcut.length > 0 ? (
+      <span className="dls-context-menu__shortcut">
+        {shortcut.map((key) => (
+          <Kbd key={key}>{key}</Kbd>
+        ))}
+      </span>
+    ) : undefined;
+
+    return (
+      <ListItem
+        ref={ref as React.Ref<HTMLDivElement>}
+        type="with-slots"
+        text={label}
+        iconStart={icon}
+        slotRight={shortcutSlot}
+        disabled={disabled}
+        onClick={rest.onClick}
+        className={className}
+      />
+    );
+  },
 );
 
 ContextMenuItem.displayName = 'ContextMenuItem';
@@ -112,19 +115,13 @@ export const ContextMenuSubmenu: React.FC<ContextMenuSubmenuProps> = ({
       onMouseEnter={() => !disabled && setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      <button
-        type="button"
-        className="dls-context-menu__item"
-        role="menuitem"
-        aria-haspopup="menu"
-        aria-expanded={open}
-        data-disabled={disabled ? '' : undefined}
+      <ListItem
+        type="with-slots"
+        text={label}
+        iconStart={icon}
+        iconEnd={<ChevronRight />}
         disabled={disabled}
-      >
-        {icon && <span className="dls-context-menu__item-icon">{icon}</span>}
-        <span className="dls-context-menu__item-label">{label}</span>
-        <span className="dls-context-menu__item-chevron"><ChevronRight /></span>
-      </button>
+      />
 
       {open && (
         <div className="dls-context-menu__submenu-content">
@@ -138,21 +135,21 @@ export const ContextMenuSubmenu: React.FC<ContextMenuSubmenuProps> = ({
 ContextMenuSubmenu.displayName = 'ContextMenuSubmenu';
 
 /* ---------------------------------------------------------------------------
-   ContextMenuDivider
+   ContextMenuDivider — wraps ListItem divider type
    --------------------------------------------------------------------------- */
 
 export const ContextMenuDivider: React.FC = () => (
-  <div className="dls-context-menu__divider" role="separator" />
+  <ListItem type="divider" />
 );
 
 ContextMenuDivider.displayName = 'ContextMenuDivider';
 
 /* ---------------------------------------------------------------------------
-   ContextMenuLabel — section heading
+   ContextMenuLabel — wraps ListItem label type
    --------------------------------------------------------------------------- */
 
 export const ContextMenuLabel: React.FC<ContextMenuLabelProps> = ({ children }) => (
-  <div className="dls-context-menu__label">{children}</div>
+  <ListItem type="label" text={typeof children === 'string' ? children : undefined} />
 );
 
 ContextMenuLabel.displayName = 'ContextMenuLabel';

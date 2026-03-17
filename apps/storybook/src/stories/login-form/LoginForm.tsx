@@ -1,5 +1,7 @@
 import React from 'react';
 import './login-form.css';
+import { Button } from '../Button';
+import { InputField } from '../input-field/InputField';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -84,10 +86,15 @@ const FormContent = ({
       {/* Social buttons first (type 3 pattern) */}
       {showOrDivider && showSocialLogin && (
         <div className="dls-login__social">
-          <button type="button" className="dls-login__btn-outline">
-            {socialLoginIcon || <GoogleIcon />}
+          <Button
+            variant="outline"
+            intent="neutral"
+            size="m"
+            icon={socialLoginIcon || <GoogleIcon />}
+            style={{ width: '100%' }}
+          >
             {socialLoginLabel || 'Login with Google'}
-          </button>
+          </Button>
         </div>
       )}
 
@@ -95,29 +102,21 @@ const FormContent = ({
 
       {/* Form fields */}
       <form className="dls-login__form" onSubmit={handleSubmit}>
-        <div className="dls-login__field">
-          <label className="dls-login__label">Email</label>
-          <input
-            className="dls-login__input"
-            type="email"
-            placeholder="m@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="email"
-          />
-        </div>
+        <InputField
+          label="Email"
+          type="email"
+          placeholder="m@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
         <div className="dls-login__password-group">
-          <div className="dls-login__field">
-            <label className="dls-login__label">Password</label>
-            <input
-              className="dls-login__input"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-            />
-          </div>
+          <InputField
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           {showForgotPassword && (
             <button
               type="button"
@@ -136,18 +135,25 @@ const FormContent = ({
       {/* Footer */}
       <div className="dls-login__footer">
         <div className="dls-login__buttons">
-          <button
-            type="submit"
-            className="dls-login__btn-primary"
+          <Button
+            variant="filled"
+            intent="neutral"
+            size="m"
             onClick={() => onSubmit?.(email, password)}
+            style={{ width: '100%' }}
           >
             {primaryButtonLabel || 'Login'}
-          </button>
+          </Button>
           {!showOrDivider && showSocialLogin && (
-            <button type="button" className="dls-login__btn-outline">
-              {socialLoginIcon || <GoogleIcon />}
+            <Button
+              variant="outline"
+              intent="neutral"
+              size="m"
+              icon={socialLoginIcon || <GoogleIcon />}
+              style={{ width: '100%' }}
+            >
               {socialLoginLabel || 'Login with Google'}
-            </button>
+            </Button>
           )}
         </div>
         {bottomText && (

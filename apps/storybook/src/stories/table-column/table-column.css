@@ -17,28 +17,11 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Avatar stub (for user / two-line+avatar columns)
+   Avatar override (uses shared Avatar component)
    --------------------------------------------------------------------------- */
 
 .dls-table-column__avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  border-radius: var(--dls-radius-full);
-  background: var(--dls-color-surface-muted);
-  font-size: var(--dls-text-xs-font-size);
-  font-weight: var(--dls-font-weight-semibold);
-  color: var(--dls-color-text-secondary);
-  overflow: hidden;
-}
-
-.dls-table-column__avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* ---------------------------------------------------------------------------

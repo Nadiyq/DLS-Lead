@@ -1,5 +1,9 @@
 import React from 'react';
 import './contact-form.css';
+import { Button } from '../Button';
+import { InputField } from '../input-field/InputField';
+import { Textarea } from '../textarea/Textarea';
+import { Checkbox } from '../checkbox/Checkbox';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -42,16 +46,6 @@ export interface ContactFormProps {
   }) => void;
   className?: string;
 }
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const CheckIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Component
@@ -100,31 +94,22 @@ export const ContactForm = React.forwardRef<HTMLDivElement, ContactFormProps>(
 
         {/* Form */}
         <div className="dls-contact-form__form">
-          {/* Full name */}
-          <div className="dls-contact-form__field">
-            <label className="dls-contact-form__label">{nameLabel}</label>
-            <input
-              type="text"
-              className="dls-contact-form__input"
-              placeholder="Your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
+          <InputField
+            label={nameLabel}
+            placeholder="Your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-          {/* Email */}
-          <div className="dls-contact-form__field">
-            <label className="dls-contact-form__label">{emailLabel}</label>
-            <input
-              type="email"
-              className="dls-contact-form__input"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          <InputField
+            label={emailLabel}
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-          {/* Topic */}
+          {/* Topic — no DLS Select component yet */}
           <div className="dls-contact-form__field">
             <label className="dls-contact-form__label">{topicLabel}</label>
             <select
@@ -139,57 +124,42 @@ export const ContactForm = React.forwardRef<HTMLDivElement, ContactFormProps>(
             </select>
           </div>
 
-          {/* Message */}
-          <div className="dls-contact-form__field">
-            <label className="dls-contact-form__label">{messageLabel}</label>
-            <textarea
-              className="dls-contact-form__textarea"
-              placeholder={messagePlaceholder}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-          </div>
+          <Textarea
+            label={messageLabel}
+            placeholder={messagePlaceholder}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
 
-          {/* Checkbox */}
           {showCheckbox && (
-            <label className="dls-contact-form__checkbox-row">
-              <span
-                className="dls-contact-form__checkbox"
-                role="checkbox"
-                aria-checked={optIn}
-                data-checked={optIn || undefined}
-                onClick={() => setOptIn(!optIn)}
-                onKeyDown={(e) => {
-                  if (e.key === ' ' || e.key === 'Enter') {
-                    e.preventDefault();
-                    setOptIn(!optIn);
-                  }
-                }}
-                tabIndex={0}
-              >
-                {optIn && <CheckIcon />}
-              </span>
-              <span className="dls-contact-form__checkbox-text">{checkboxLabel}</span>
-            </label>
+            <Checkbox
+              checked={optIn}
+              onChange={(val) => setOptIn(val)}
+              label={checkboxLabel}
+            />
           )}
         </div>
 
         {/* Footer */}
         <div className="dls-contact-form__footer">
-          <button
-            type="button"
-            className="dls-contact-form__btn-secondary"
+          <Button
+            variant="soft"
+            intent="neutral"
+            size="m"
             onClick={onCancel}
+            style={{ flex: 1 }}
           >
             {cancelLabel}
-          </button>
-          <button
-            type="button"
-            className="dls-contact-form__btn-primary"
+          </Button>
+          <Button
+            variant="filled"
+            intent="neutral"
+            size="m"
             onClick={handleSubmit}
+            style={{ flex: 1 }}
           >
             {submitLabel}
-          </button>
+          </Button>
         </div>
       </div>
     );

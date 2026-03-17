@@ -1,0 +1,37 @@
+---
+description: Figma ↔ Code sync protocol using figma-console-mcp Desktop Bridge
+alwaysApply: false
+---
+
+# Figma Sync
+
+Uses `figma-console-mcp` (Desktop Bridge plugin). Key tools:
+
+| Tool | Purpose |
+|------|---------|
+| `figma_get_selection` | Read selected frame — start any build-component flow here |
+| `figma_get_variables` | Extract all design tokens from file |
+| `figma_execute` | Run Figma Plugin API code (create, modify, rebind) |
+| `figma_take_screenshot` | Capture canvas for visual validation |
+| `figma_check_design_parity` | Compare Figma spec against code |
+| `figma_batch_create_variables` | Bulk token operations |
+
+## Sync Protocol
+
+1. Design changes are made in Figma first
+2. Use `figma_get_selection` + `figma_get_variables` to extract current state
+3. `tokens/tokens.json` is updated as source of truth
+4. Regenerate `tokens.css`, `tokens.scss`, `tokens.ts`
+5. Push back to Figma via `figma_execute` running `figma-sync-4layer.js` functions
+
+## Build Component from Selection
+
+1. Select component frame in Figma (Desktop Bridge running)
+2. Call `figma_get_selection` → read frame structure
+3. Call `figma_get_variables` → read token bindings
+4. Compare against `tokens/tokens.json`
+5. Scaffold component with correct token references
+
+## Parity Rule
+
+Token names map 1:1 between Figma variables and CSS custom properties.

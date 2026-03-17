@@ -79,38 +79,11 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Close button
+   Close button (uses shared Button ghost component)
    --------------------------------------------------------------------------- */
 
 .dls-dialog__close {
-  all: unset;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--dls-radius-component-button);
-  color: var(--dls-color-text-primary);
-  cursor: pointer;
-}
-
-.dls-dialog__close:hover:not(:disabled) {
-  background: var(--dls-state-hover-overlay);
-}
-
-.dls-dialog__close:active:not(:disabled) {
-  background: var(--dls-state-pressed-overlay);
-}
-
-.dls-dialog__close:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-.dls-dialog__close svg {
-  width: 16px;
-  height: 16px;
 }
 
 /* ---------------------------------------------------------------------------

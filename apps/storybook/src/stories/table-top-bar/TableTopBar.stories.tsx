@@ -4,6 +4,8 @@ import { TableTopBar } from './TableTopBar';
 import { Filters } from '../filters/Filters';
 import type { FilterGroup } from '../filters/Filters';
 import { ChipFilter } from '../chip/ChipFilter';
+import { Button } from '../Button';
+import { InputField } from '../input-field/InputField';
 
 const meta = {
   title: 'Components/TableTopBar',
@@ -26,36 +28,18 @@ type Story = StoryObj<typeof meta>;
 // Helper components — lightweight stubs for story demos
 // ---------------------------------------------------------------------------
 
-const SearchInput = () => (
-  <div style={{
-    display: 'flex', alignItems: 'center', gap: 8, flex: '1 1 0%',
-    height: 32, padding: '0 10px', borderRadius: 'var(--dls-radius-component-input)',
-    border: '1px solid var(--dls-color-border-base)', background: 'var(--dls-color-surface-base)',
-    fontFamily: 'var(--dls-font-family)', fontSize: 'var(--dls-text-m-font-size)',
-    color: 'var(--dls-color-text-placeholder)',
-  }}>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.33" />
-      <path d="M11 11L14 14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-    </svg>
-    Search...
-  </div>
+const SearchIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.33" />
+    <path d="M11 11L14 14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
+  </svg>
 );
 
-const IconButton = ({ children, label }: { children: React.ReactNode; label: string }) => (
-  <button
-    type="button"
-    aria-label={label}
-    style={{
-      all: 'unset', boxSizing: 'border-box', cursor: 'pointer',
-      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-      width: 32, height: 32, borderRadius: 'var(--dls-radius-component-button)',
-      background: 'var(--dls-color-intent-neutral-subtle)', border: '1px solid var(--dls-color-border-base)',
-      color: 'var(--dls-color-text-secondary)',
-    }}
-  >
-    {children}
-  </button>
+const SearchInput = () => (
+  <InputField
+    placeholder="Search..."
+    iconStart={<SearchIcon />}
+  />
 );
 
 const FilterIcon = () => (
@@ -71,22 +55,6 @@ const SettingsIcon = () => (
   </svg>
 );
 
-const ActionButton = ({ children }: { children: React.ReactNode }) => (
-  <button
-    type="button"
-    style={{
-      all: 'unset', boxSizing: 'border-box', cursor: 'pointer',
-      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-      height: 32, padding: '0 12px', borderRadius: 'var(--dls-radius-component-button)',
-      background: 'var(--dls-color-intent-neutral-base)', color: 'var(--dls-color-intent-neutral-on-base)',
-      fontFamily: 'var(--dls-font-family)', fontSize: 'var(--dls-text-m-font-size)',
-      fontWeight: 'var(--dls-font-weight-medium)',
-    }}
-  >
-    {children}
-  </button>
-);
-
 // ---------------------------------------------------------------------------
 // Playground
 // ---------------------------------------------------------------------------
@@ -97,13 +65,13 @@ export const Playground: Story = {
     slotLeft: (
       <>
         <SearchInput />
-        <IconButton label="Filter"><FilterIcon /></IconButton>
+        <Button variant="soft" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filter" />
       </>
     ),
     slotRight: (
       <>
-        <ActionButton>Export</ActionButton>
-        <IconButton label="Settings"><SettingsIcon /></IconButton>
+        <Button variant="filled" intent="neutral" size="m">Export</Button>
+        <Button variant="soft" intent="neutral" size="m" icon={<SettingsIcon />} iconOnly aria-label="Settings" />
       </>
     ),
   },
@@ -119,13 +87,13 @@ export const WithoutFilters: Story = {
     slotLeft: (
       <>
         <SearchInput />
-        <IconButton label="Filter"><FilterIcon /></IconButton>
+        <Button variant="soft" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filter" />
       </>
     ),
     slotRight: (
       <>
-        <ActionButton>Export</ActionButton>
-        <IconButton label="Settings"><SettingsIcon /></IconButton>
+        <Button variant="filled" intent="neutral" size="m">Export</Button>
+        <Button variant="soft" intent="neutral" size="m" icon={<SettingsIcon />} iconOnly aria-label="Settings" />
       </>
     ),
   },
@@ -139,20 +107,20 @@ export const WithFilters: Story = {
   args: {
     showFilters: false,
     slotLeft: <SearchInput />,
-    slotRight: <ActionButton>Export</ActionButton>,
+    slotRight: <Button variant="filled" intent="neutral" size="m">Export</Button>,
   },
   render: () => (
     <TableTopBar
       slotLeft={
         <>
           <SearchInput />
-          <IconButton label="Filter"><FilterIcon /></IconButton>
+          <Button variant="soft" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filter" />
         </>
       }
       slotRight={
         <>
-          <ActionButton>Export</ActionButton>
-          <IconButton label="Settings"><SettingsIcon /></IconButton>
+          <Button variant="filled" intent="neutral" size="m">Export</Button>
+          <Button variant="soft" intent="neutral" size="m" icon={<SettingsIcon />} iconOnly aria-label="Settings" />
         </>
       }
       showFilters
@@ -195,7 +163,7 @@ export const Interactive: Story = {
   args: {
     showFilters: false,
     slotLeft: <SearchInput />,
-    slotRight: <ActionButton>Export</ActionButton>,
+    slotRight: <Button variant="filled" intent="neutral" size="m">Export</Button>,
   },
   render: () => {
     const [showFilters, setShowFilters] = React.useState(false);
@@ -241,20 +209,13 @@ export const Interactive: Story = {
           slotLeft={
             <>
               <SearchInput />
-              <IconButton label="Toggle filters">
-                <span
-                  onClick={(e) => { e.stopPropagation(); setShowFilters(v => !v); }}
-                  style={{ display: 'contents' }}
-                >
-                  <FilterIcon />
-                </span>
-              </IconButton>
+              <Button variant="soft" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Toggle filters" onClick={() => setShowFilters(v => !v)} />
             </>
           }
           slotRight={
             <>
-              <ActionButton>Export</ActionButton>
-              <IconButton label="Settings"><SettingsIcon /></IconButton>
+              <Button variant="filled" intent="neutral" size="m">Export</Button>
+              <Button variant="soft" intent="neutral" size="m" icon={<SettingsIcon />} iconOnly aria-label="Settings" />
             </>
           }
           showFilters={showFilters}

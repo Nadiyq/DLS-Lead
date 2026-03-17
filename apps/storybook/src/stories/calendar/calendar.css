@@ -1,6 +1,6 @@
 /* ==========================================================================
-   DLS Calendar — date/month/year picker panel
-   Views: date | month | year
+   DLS Calendar — date picker panel
+   States: normal | today | selected | in-range | outside | disabled
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
@@ -12,13 +12,13 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  width: 276px;
+  width: 290px;
   padding: var(--dls-spacing-3);
   background: var(--dls-color-surface-base);
   border: 1px solid var(--dls-color-border-subtle);
-  border-radius: var(--dls-radius-component-calendar);
+  border-radius: var(--dls-radius-component-list);
   font-family: var(--dls-font-family);
-  box-shadow: 0 4px 12px var(--dls-color-overlay-scrim);
+  box-shadow: var(--dls-shadow-surface-md);
 }
 
 /* ---------------------------------------------------------------------------
@@ -56,6 +56,7 @@
 }
 
 .dls-calendar__nav:focus-visible {
+  outline: none;
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
   z-index: 1;
   position: relative;
@@ -64,6 +65,7 @@
 .dls-calendar__nav:disabled {
   color: var(--dls-color-text-disabled);
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .dls-calendar__nav svg {
@@ -77,18 +79,11 @@
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-medium);
-  color: var(--dls-color-text-secondary);
-  cursor: pointer;
-  border-radius: var(--dls-radius-component-button);
-  padding: var(--dls-spacing-1) 0;
-}
-
-.dls-calendar__title:hover:not(:disabled) {
-  background: var(--dls-state-hover-overlay);
+  color: var(--dls-color-text-primary);
 }
 
 /* ---------------------------------------------------------------------------
-   Weekday header row (date view)
+   Weekday header row
    --------------------------------------------------------------------------- */
 
 .dls-calendar__weekdays {
@@ -108,7 +103,7 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Grids — date (7 col), month (3 col), year (4 col)
+   Day grid — 7 columns × 6 rows
    --------------------------------------------------------------------------- */
 
 .dls-calendar__grid {
@@ -116,12 +111,67 @@
   grid-template-columns: repeat(7, 1fr);
 }
 
-.dls-calendar__grid--months {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+/* ---------------------------------------------------------------------------
+   Day cell — 32×32 button
+   --------------------------------------------------------------------------- */
+
+.dls-calendar__day {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  border-radius: var(--dls-radius-component-button);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+  cursor: pointer;
 }
 
-.dls-calendar__grid--years {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+/* Outside current month — muted text */
+.dls-calendar__day[data-outside] {
+  color: var(--dls-color-text-disabled);
+}
+
+/* Hover */
+.dls-calendar__day:hover:not(:disabled):not([data-selected]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+/* Today — info text color (blue/primary) */
+.dls-calendar__day[data-today]:not([data-selected]) {
+  color: var(--dls-color-intent-info-text);
+  font-weight: var(--dls-font-weight-semibold);
+}
+
+/* In-range (between value and valueEnd) */
+.dls-calendar__day[data-in-range]:not([data-selected]) {
+  background: var(--dls-color-intent-neutral-subtle);
+  border-radius: 0;
+}
+
+/* Selected — dark bg, white text, rounded */
+.dls-calendar__day[data-selected] {
+  background: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+}
+
+/* Disabled */
+.dls-calendar__day:disabled {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Focus */
+.dls-calendar__day:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+  position: relative;
 }

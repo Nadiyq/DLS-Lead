@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Tooltip } from './Tooltip';
+import { Kbd, KbdGroup } from '../kbd/Kbd';
 
 const meta = {
   title: 'Components/Tooltip',
@@ -128,21 +129,10 @@ export const WithShortcut: Story = {
           text="Tooltip text"
           orientation="top-center"
           slotContent={
-            <kbd style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 4,
-              padding: '2px 4px',
-              fontSize: 'var(--dls-text-s-font-size)',
-              lineHeight: 'var(--dls-text-s-line-height)',
-              fontWeight: 'var(--dls-font-weight-medium)',
-              fontFamily: 'var(--dls-font-family)',
-              color: 'var(--dls-color-text-secondary)',
-              background: 'var(--dls-color-surface-muted)',
-              borderRadius: 'var(--dls-radius-component-kbd)',
-            }}>
-              Ctrl+S
-            </kbd>
+            <KbdGroup type="separated">
+              <Kbd>Ctrl</Kbd>
+              <Kbd>S</Kbd>
+            </KbdGroup>
           }
         />
       </Section>
@@ -151,23 +141,7 @@ export const WithShortcut: Story = {
           type="error"
           text="Invalid input"
           orientation="top-center"
-          slotContent={
-            <kbd style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 4,
-              padding: '2px 4px',
-              fontSize: 'var(--dls-text-s-font-size)',
-              lineHeight: 'var(--dls-text-s-line-height)',
-              fontWeight: 'var(--dls-font-weight-medium)',
-              fontFamily: 'var(--dls-font-family)',
-              color: 'var(--dls-color-text-secondary)',
-              background: 'var(--dls-color-surface-muted)',
-              borderRadius: 'var(--dls-radius-component-kbd)',
-            }}>
-              Esc
-            </kbd>
-          }
+          slotContent={<Kbd>Esc</Kbd>}
         />
       </Section>
     </div>

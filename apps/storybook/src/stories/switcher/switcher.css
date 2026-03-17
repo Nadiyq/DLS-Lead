@@ -12,7 +12,7 @@
   all: unset;
   box-sizing: border-box;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--dls-spacing-2);
   cursor: pointer;
   font-family: var(--dls-font-family);
@@ -158,8 +158,7 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding-top: 1px;
-  padding-bottom: 1px;
+  height: var(--dls-text-m-line-height);
 }
 
 /* ---------------------------------------------------------------------------

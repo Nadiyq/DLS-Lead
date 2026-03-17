@@ -1,21 +1,7 @@
 import React from 'react';
+import { Avatar } from '../Avatar';
+import { XIcon, ChevronDown } from './chip-icons';
 import './chip.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const XIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronDown = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Types
@@ -56,6 +42,16 @@ export interface ChipProps {
 }
 
 /* ---------------------------------------------------------------------------
+   Size map: chip size → avatar size token
+   --------------------------------------------------------------------------- */
+
+const AVATAR_SIZE_MAP: Record<ChipSize, '24' | '20'> = {
+  m: '24',
+  s: '20',
+  xs: '20',
+};
+
+/* ---------------------------------------------------------------------------
    Component
    --------------------------------------------------------------------------- */
 
@@ -81,16 +77,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
     const hasAvatar = !!(avatar || stackedAvatars);
     const isInteractive = !!onClick;
     const isIconOnly = !label && !secondaryLabel && (!!onRemove || !!chevron);
-
-    const renderAvatar = (av: ChipAvatar, key?: string | number) => (
-      <span key={key} className="dls-chip__avatar">
-        {av.src ? (
-          <img src={av.src} alt="" />
-        ) : (
-          av.initials
-        )}
-      </span>
-    );
+    const avatarSize = AVATAR_SIZE_MAP[size];
 
     return (
       <div
@@ -119,13 +106,28 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
         {/* Leading: icon */}
         {leadingIcon && <span className="dls-chip__icon">{leadingIcon}</span>}
 
-        {/* Leading: single avatar */}
-        {avatar && renderAvatar(avatar)}
+        {/* Leading: single avatar — uses DLS Avatar component */}
+        {avatar && (
+          <Avatar
+            size={avatarSize}
+            src={avatar.src}
+            initials={avatar.initials}
+            className="dls-chip__avatar"
+          />
+        )}
 
-        {/* Leading: stacked avatars */}
+        {/* Leading: stacked avatars — uses DLS Avatar component */}
         {stackedAvatars && stackedAvatars.length > 0 && (
           <span className="dls-chip__stacked">
-            {stackedAvatars.map((av, i) => renderAvatar(av, i))}
+            {stackedAvatars.map((av, i) => (
+              <Avatar
+                key={i}
+                size={avatarSize}
+                src={av.src}
+                initials={av.initials}
+                className="dls-chip__avatar"
+              />
+            ))}
           </span>
         )}
 

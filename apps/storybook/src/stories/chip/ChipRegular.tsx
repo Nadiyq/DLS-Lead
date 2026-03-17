@@ -1,28 +1,13 @@
 import React from 'react';
+import { XIcon, ChevronDown } from './chip-icons';
 import './chip-regular.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const XIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronDown = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Types
    --------------------------------------------------------------------------- */
 
 export type ChipRegularVariant = 'filled' | 'outline' | 'soft' | 'dot';
-export type ChipRegularIntent = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+export type ChipRegularIntent = 'neutral' | 'primary' | 'info' | 'success' | 'warning' | 'danger';
 export type ChipRegularSize = 'xs' | 's' | 'm';
 
 export interface ChipRegularProps {

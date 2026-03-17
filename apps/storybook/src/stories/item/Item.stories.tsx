@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Item } from './Item';
+import { Button } from '../Button';
+import { IconShape } from '../icon-shape/IconShape';
 
 const meta = {
   title: 'Components/Item',
@@ -32,97 +34,20 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 );
 
-const IconShape = ({ intent = 'neutral' }: { intent?: string }) => (
-  <div
-    style={{
-      width: 40,
-      height: 40,
-      borderRadius: 'var(--dls-radius-component-icon-shape)',
-      background: `var(--dls-color-intent-${intent}-subtle)`,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexShrink: 0,
-    }}
-  >
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M12 2L2 7L12 12L22 7L12 2Z"
-        stroke={`var(--dls-color-intent-${intent}-text)`}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      <path
-        d="M2 17L12 22L22 17"
-        stroke={`var(--dls-color-intent-${intent}-text)`}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      <path
-        d="M2 12L12 17L22 12"
-        stroke={`var(--dls-color-intent-${intent}-text)`}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  </div>
+const LayersIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+  </svg>
 );
 
-const SoftButton = ({ label }: { label: string }) => (
-  <button
-    type="button"
-    style={{
-      all: 'unset',
-      boxSizing: 'border-box',
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: 32,
-      padding: '0 10px',
-      gap: 8,
-      borderRadius: 'var(--dls-radius-component-button)',
-      fontSize: 'var(--dls-text-m-font-size)',
-      lineHeight: 'var(--dls-text-m-line-height)',
-      fontWeight: 'var(--dls-font-weight-medium)',
-      fontFamily: 'var(--dls-font-family)',
-      cursor: 'pointer',
-      background: 'var(--dls-color-intent-neutral-subtle)',
-      color: 'var(--dls-color-intent-neutral-text)',
-      border: '1px solid var(--dls-color-border-base)',
-    }}
-  >
-    {label}
-  </button>
-);
-
-const GhostIconButton = () => (
-  <button
-    type="button"
-    style={{
-      all: 'unset',
-      boxSizing: 'border-box',
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: 32,
-      height: 32,
-      borderRadius: 'var(--dls-radius-component-button)',
-      cursor: 'pointer',
-      color: 'var(--dls-color-text-secondary)',
-    }}
-  >
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="8" cy="3" r="1.2" fill="currentColor" />
-      <circle cx="8" cy="8" r="1.2" fill="currentColor" />
-      <circle cx="8" cy="13" r="1.2" fill="currentColor" />
-    </svg>
-  </button>
+const MoreIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="8" cy="3" r="1.2" fill="currentColor" />
+    <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+    <circle cx="8" cy="13" r="1.2" fill="currentColor" />
+  </svg>
 );
 
 /* ---------------------------------------------------------------------------
@@ -134,11 +59,15 @@ export const Playground: Story = {
     type: 'regular',
     title: 'Title',
     description: 'Description',
-    media: <IconShape />,
+    media: (
+      <IconShape intent="neutral">
+        <LayersIcon />
+      </IconShape>
+    ),
     controls: (
       <>
-        <SoftButton label="Button" />
-        <GhostIconButton />
+        <Button variant="soft" intent="neutral" size="m">Button</Button>
+        <Button variant="ghost" intent="neutral" size="m" icon={<MoreIcon />} iconOnly aria-label="More" />
       </>
     ),
   },
@@ -154,13 +83,13 @@ export const AllTypes: Story = {
       <Section title="Regular (no background, no border)">
         <Item
           type="regular"
-          media={<IconShape />}
+          media={<IconShape intent="neutral"><LayersIcon /></IconShape>}
           title="Title"
           description="Description"
           controls={
             <>
-              <SoftButton label="Button" />
-              <GhostIconButton />
+              <Button variant="soft" intent="neutral" size="m">Button</Button>
+              <Button variant="ghost" intent="neutral" size="m" icon={<MoreIcon />} iconOnly aria-label="More" />
             </>
           }
         />
@@ -168,13 +97,13 @@ export const AllTypes: Story = {
       <Section title="Outline (border only)">
         <Item
           type="outline"
-          media={<IconShape />}
+          media={<IconShape intent="neutral"><LayersIcon /></IconShape>}
           title="Title"
           description="Description"
           controls={
             <>
-              <SoftButton label="Button" />
-              <GhostIconButton />
+              <Button variant="soft" intent="neutral" size="m">Button</Button>
+              <Button variant="ghost" intent="neutral" size="m" icon={<MoreIcon />} iconOnly aria-label="More" />
             </>
           }
         />
@@ -182,13 +111,13 @@ export const AllTypes: Story = {
       <Section title="Muted (filled background + subtle border)">
         <Item
           type="muted"
-          media={<IconShape />}
+          media={<IconShape intent="neutral"><LayersIcon /></IconShape>}
           title="Title"
           description="Description"
           controls={
             <>
-              <SoftButton label="Button" />
-              <GhostIconButton />
+              <Button variant="soft" intent="neutral" size="m">Button</Button>
+              <Button variant="ghost" intent="neutral" size="m" icon={<MoreIcon />} iconOnly aria-label="More" />
             </>
           }
         />
@@ -205,12 +134,12 @@ export const ContentVariations: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       <Section title="Title only">
-        <Item type="outline" media={<IconShape />} title="Title" />
+        <Item type="outline" media={<IconShape intent="neutral"><LayersIcon /></IconShape>} title="Title" />
       </Section>
       <Section title="Title + description">
         <Item
           type="outline"
-          media={<IconShape />}
+          media={<IconShape intent="neutral"><LayersIcon /></IconShape>}
           title="Project settings"
           description="Manage your project configuration and permissions."
         />
@@ -220,13 +149,13 @@ export const ContentVariations: Story = {
           type="outline"
           title="Notification preferences"
           description="Choose how you want to be notified."
-          controls={<SoftButton label="Edit" />}
+          controls={<Button variant="soft" intent="neutral" size="m">Edit</Button>}
         />
       </Section>
       <Section title="With inner content">
         <Item
           type="outline"
-          media={<IconShape intent="primary" />}
+          media={<IconShape intent="primary"><LayersIcon /></IconShape>}
           title="Storage usage"
           description="2.4 GB of 10 GB used"
           innerContent={
@@ -248,7 +177,7 @@ export const ContentVariations: Story = {
               />
             </div>
           }
-          controls={<SoftButton label="Upgrade" />}
+          controls={<Button variant="soft" intent="neutral" size="m">Upgrade</Button>}
         />
       </Section>
     </div>
@@ -267,21 +196,21 @@ export const Interactive: Story = {
           <Item
             type="regular"
             interactive
-            media={<IconShape intent="primary" />}
+            media={<IconShape intent="primary"><LayersIcon /></IconShape>}
             title="Account settings"
             description="Update your profile and preferences"
           />
           <Item
             type="regular"
             interactive
-            media={<IconShape intent="info" />}
+            media={<IconShape intent="info"><LayersIcon /></IconShape>}
             title="Billing"
             description="Manage subscription and payment methods"
           />
           <Item
             type="regular"
             interactive
-            media={<IconShape intent="success" />}
+            media={<IconShape intent="success"><LayersIcon /></IconShape>}
             title="Integrations"
             description="Connect with third-party services"
           />
@@ -302,10 +231,10 @@ export const WithIntents: Story = {
         <Item
           key={intent}
           type="outline"
-          media={<IconShape intent={intent} />}
+          media={<IconShape intent={intent}><LayersIcon /></IconShape>}
           title={`${intent.charAt(0).toUpperCase() + intent.slice(1)} intent`}
           description={`Item with ${intent} icon shape`}
-          controls={<GhostIconButton />}
+          controls={<Button variant="ghost" intent="neutral" size="m" icon={<MoreIcon />} iconOnly aria-label="More" />}
         />
       ))}
     </div>

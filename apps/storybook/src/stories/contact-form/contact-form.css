@@ -56,7 +56,7 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Form fields
+   Form fields (uses DLS InputField, Textarea, Checkbox)
    --------------------------------------------------------------------------- */
 
 .dls-contact-form__form {
@@ -65,6 +65,7 @@
   gap: var(--dls-spacing-4);
 }
 
+/* Topic select — no DLS Select component yet */
 .dls-contact-form__field {
   display: flex;
   flex-direction: column;
@@ -78,33 +79,6 @@
   color: var(--dls-color-text-secondary);
 }
 
-.dls-contact-form__input {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 32px;
-  padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
-  border-radius: var(--dls-radius-component-input);
-  border: 1px solid var(--dls-color-border-base);
-  background: var(--dls-color-surface-base);
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  color: var(--dls-color-text-primary);
-}
-
-.dls-contact-form__input::placeholder {
-  color: var(--dls-color-text-disabled);
-}
-
-.dls-contact-form__input:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-  border-color: var(--dls-color-border-strong);
-}
-
-/* Select (topic dropdown) */
 .dls-contact-form__select {
   all: unset;
   box-sizing: border-box;
@@ -129,132 +103,11 @@
   border-color: var(--dls-color-border-strong);
 }
 
-/* Textarea */
-.dls-contact-form__textarea {
-  all: unset;
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 98px;
-  padding: var(--dls-spacing-2) var(--dls-spacing-3);
-  border-radius: var(--dls-radius-component-input);
-  border: 1px solid var(--dls-color-border-base);
-  background: var(--dls-color-surface-base);
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  color: var(--dls-color-text-primary);
-  resize: vertical;
-}
-
-.dls-contact-form__textarea::placeholder {
-  color: var(--dls-color-text-disabled);
-}
-
-.dls-contact-form__textarea:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-  border-color: var(--dls-color-border-strong);
-}
-
 /* ---------------------------------------------------------------------------
-   Checkbox row
-   --------------------------------------------------------------------------- */
-
-.dls-contact-form__checkbox-row {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--dls-spacing-2);
-  cursor: pointer;
-}
-
-.dls-contact-form__checkbox {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-  margin-top: 1px;
-  border-radius: var(--dls-radius-component-checkbox);
-  border: 1px solid var(--dls-color-border-strong);
-  background: var(--dls-color-surface-base);
-  color: var(--dls-color-intent-neutral-on-base);
-  transition: background-color 100ms ease, border-color 100ms ease;
-}
-
-.dls-contact-form__checkbox[data-checked] {
-  background: var(--dls-color-intent-neutral-base);
-  border-color: var(--dls-color-intent-neutral-base);
-}
-
-.dls-contact-form__checkbox-text {
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-normal);
-  color: var(--dls-color-text-primary);
-}
-
-/* ---------------------------------------------------------------------------
-   Footer — Cancel + Submit side by side
+   Footer — uses DLS Button components, layout only
    --------------------------------------------------------------------------- */
 
 .dls-contact-form__footer {
   display: flex;
   gap: var(--dls-spacing-3);
-}
-
-.dls-contact-form__btn-secondary {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  height: 32px;
-  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
-  border-radius: var(--dls-radius-component-button);
-  background: var(--dls-color-intent-neutral-subtle);
-  border: 1px solid var(--dls-color-border-base);
-  color: var(--dls-color-intent-neutral-text);
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-medium);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-contact-form__btn-secondary:hover:not(:disabled) {
-  background: var(--dls-state-hover-overlay);
-}
-
-.dls-contact-form__btn-secondary:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-.dls-contact-form__btn-primary {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  height: 32px;
-  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
-  border-radius: var(--dls-radius-component-button);
-  background: var(--dls-color-intent-neutral-base);
-  color: var(--dls-color-intent-neutral-on-base);
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-medium);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-contact-form__btn-primary:hover:not(:disabled) {
-  background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-hover)) c h);
-}
-
-.dls-contact-form__btn-primary:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }

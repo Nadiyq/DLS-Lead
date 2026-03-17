@@ -41,6 +41,7 @@
 /* Segmented bar has no background — segments handle their own fills */
 
 .dls-progress-bar[data-type="segmented"] .dls-progress-bar__bar {
+  flex: none;
   background: transparent;
   overflow: visible;
   display: flex;

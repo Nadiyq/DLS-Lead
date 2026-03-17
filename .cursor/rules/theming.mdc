@@ -1,0 +1,35 @@
+---
+description: DLS theming — dark mode, brand overrides, override strategy
+globs: "**/*.css"
+alwaysApply: false
+---
+
+# Theming
+
+## Override Strategy
+
+| Scope | Override target | Selector |
+|-------|----------------|----------|
+| Dark/light theme | Layer-2 semantic tokens | `[data-theme="dark"]` on `:root` |
+| Brand | Layer-1 primitive scales | `[data-brand="X"]` on `:root` |
+| Component type | Layer-4 tokens | `.dls-button { --dls-radius-component-button: 0; }` |
+| Single instance | Internal variables | `.my-btn { --_base: var(--dls-color-danger-600); }` |
+
+## Dark Theme
+
+Override all layer-2 semantic tokens. Primitives stay unchanged.
+
+```css
+[data-theme="dark"] {
+  --dls-color-surface-base: var(--dls-color-neutral-900);
+  --dls-color-text-primary: var(--dls-color-neutral-0);
+  --dls-color-border-base: var(--dls-color-neutral-700);
+}
+```
+
+## Anti-Patterns
+
+- Theme via class: `.dark-mode .dls-button { background: #333; }`
+- Override primitives for one component: `.dls-card { --dls-color-neutral-50: #111; }`
+- Inline hardcoded: `style="background: #F9F5FF"`
+- Use semantic tokens — they auto-switch with theme

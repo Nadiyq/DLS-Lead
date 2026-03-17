@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "DLS Design System — Design Tokens",
   "scripts": {
-    "start": "node server.js"
+    "start": "node scripts/generate-changelog.mjs --write && node server.js",
+    "changelog": "node scripts/generate-changelog.mjs --write",
+    "sync-components": "node scripts/sync-components.mjs --check"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

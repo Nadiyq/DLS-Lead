@@ -1,5 +1,8 @@
 import React from 'react';
 import './dropdown-account.css';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
+import { Avatar } from '../Avatar';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -85,19 +88,11 @@ const LogOutIcon = () => (
    Sub-components
    --------------------------------------------------------------------------- */
 
-const Avatar = ({ initials, src }: { initials?: string; src?: string }) => (
-  <span className="dls-dropdown-account__avatar">
-    {src ? <img src={src} alt="" /> : initials || '?'}
-  </span>
-);
-
-const Logo = ({ initials, src }: { initials?: string; src?: string }) => (
+const CompanyLogo = ({ initials, src }: { initials?: string; src?: string }) => (
   <span className="dls-dropdown-account__logo">
     {src ? <img src={src} alt="" /> : initials || '?'}
   </span>
 );
-
-const Divider = () => <div className="dls-dropdown-account__divider" />;
 
 /* ---------------------------------------------------------------------------
    Renderers per type
@@ -114,29 +109,32 @@ const renderMenu = (props: DropdownAccountProps) => {
     <>
       {user && (
         <>
-          <div className="dls-dropdown-account__row" data-user="" role="menuitem" tabIndex={0}>
-            <Avatar initials={user.initials} src={user.avatarSrc} />
-            <span className="dls-dropdown-account__text">
-              <span className="dls-dropdown-account__name">{user.name}</span>
-              <span className="dls-dropdown-account__email">{user.email}</span>
-            </span>
-          </div>
-          <Divider />
+          <ListItem
+            type="two-line-slots"
+            slotLeft={
+              <Avatar
+                size="32"
+                circle
+                src={user.avatarSrc}
+                initials={user.initials || '?'}
+              />
+            }
+            text={user.name}
+            secondaryText={user.email}
+            onClick={() => {}}
+          />
+          <ListItem type="divider" />
         </>
       )}
       {defaultActions.map((action, i) => (
         <React.Fragment key={i}>
-          {i > 0 && i === defaultActions.length - 1 && <Divider />}
-          <div
-            className="dls-dropdown-account__row"
-            role="menuitem"
-            tabIndex={0}
+          {i > 0 && i === defaultActions.length - 1 && <ListItem type="divider" />}
+          <ListItem
+            type="with-slots"
+            iconStart={action.icon}
+            text={action.label}
             onClick={action.onClick}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); action.onClick?.(); } }}
-          >
-            {action.icon && <span className="dls-dropdown-account__icon">{action.icon}</span>}
-            <span className="dls-dropdown-account__label">{action.label}</span>
-          </div>
+          />
         </React.Fragment>
       ))}
     </>
@@ -148,40 +146,36 @@ const renderSwitchAccount = (props: DropdownAccountProps) => {
 
   return (
     <>
-      <div className="dls-dropdown-account__header">Switch account</div>
+      <ListItem type="label" text="Switch account" />
       {accounts.map((account, i) => (
-        <div
+        <ListItem
           key={i}
-          className="dls-dropdown-account__row"
-          data-user=""
-          role="menuitem"
-          tabIndex={0}
+          type="two-line-slots"
+          slotLeft={
+            <Avatar
+              size="32"
+              circle
+              src={account.avatarSrc}
+              initials={account.initials || '?'}
+            />
+          }
+          text={account.name}
+          secondaryText={account.email}
+          selected={i === currentAccountIndex}
           onClick={() => onSelectAccount?.(i)}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelectAccount?.(i); } }}
-          aria-current={i === currentAccountIndex ? 'true' : undefined}
-        >
-          <Avatar initials={account.initials} src={account.avatarSrc} />
-          <span className="dls-dropdown-account__text">
-            <span className="dls-dropdown-account__name">{account.name}</span>
-            <span className="dls-dropdown-account__email">{account.email}</span>
-          </span>
-        </div>
+        />
       ))}
       {footerActions.length > 0 && (
         <>
-          <Divider />
+          <ListItem type="divider" />
           {footerActions.map((action, i) => (
-            <div
+            <ListItem
               key={i}
-              className="dls-dropdown-account__row"
-              role="menuitem"
-              tabIndex={0}
+              type="with-slots"
+              iconStart={action.icon}
+              text={action.label}
               onClick={action.onClick}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); action.onClick?.(); } }}
-            >
-              {action.icon && <span className="dls-dropdown-account__icon">{action.icon}</span>}
-              <span className="dls-dropdown-account__label">{action.label}</span>
-            </div>
+            />
           ))}
         </>
       )}
@@ -195,20 +189,18 @@ const renderLogOut = (props: DropdownAccountProps) => {
   return (
     <>
       {emails.map((email, i) => (
-        <div key={i} className="dls-dropdown-account__row" role="menuitem" tabIndex={0}>
-          <span className="dls-dropdown-account__label">{email}</span>
-        </div>
+        <ListItem
+          key={i}
+          type="two-line"
+          text={email}
+        />
       ))}
-      {emails.length > 0 && <Divider />}
-      <div
-        className="dls-dropdown-account__row"
-        role="menuitem"
-        tabIndex={0}
+      {emails.length > 0 && <ListItem type="divider" />}
+      <ListItem
+        type="text"
+        text="Log out of all accounts"
         onClick={onLogOutAll}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onLogOutAll?.(); } }}
-      >
-        <span className="dls-dropdown-account__label">Log out of all accounts</span>
-      </div>
+      />
     </>
   );
 };
@@ -218,36 +210,28 @@ const renderSwitchCompany = (props: DropdownAccountProps) => {
 
   return (
     <>
-      <div className="dls-dropdown-account__header">Switch company</div>
+      <ListItem type="label" text="Switch company" />
       {companies.map((company, i) => (
-        <div
+        <ListItem
           key={i}
-          className="dls-dropdown-account__row"
-          role="menuitem"
-          tabIndex={0}
+          type="with-slots"
+          slotLeft={<CompanyLogo initials={company.initials} src={company.logoSrc} />}
+          text={company.name}
+          selected={i === currentCompanyIndex}
           onClick={() => onSelectCompany?.(i)}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelectCompany?.(i); } }}
-          aria-current={i === currentCompanyIndex ? 'true' : undefined}
-        >
-          <Logo initials={company.initials} src={company.logoSrc} />
-          <span className="dls-dropdown-account__label">{company.name}</span>
-        </div>
+        />
       ))}
       {footerActions.length > 0 && (
         <>
-          <Divider />
+          <ListItem type="divider" />
           {footerActions.map((action, i) => (
-            <div
+            <ListItem
               key={i}
-              className="dls-dropdown-account__row"
-              role="menuitem"
-              tabIndex={0}
+              type="with-slots"
+              iconStart={action.icon}
+              text={action.label}
               onClick={action.onClick}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); action.onClick?.(); } }}
-            >
-              {action.icon && <span className="dls-dropdown-account__icon">{action.icon}</span>}
-              <span className="dls-dropdown-account__label">{action.label}</span>
-            </div>
+            />
           ))}
         </>
       )}
@@ -280,13 +264,12 @@ export const DropdownAccount = React.forwardRef<HTMLDivElement, DropdownAccountP
     }
 
     return (
-      <div
+      <List
         ref={ref}
         className={['dls-dropdown-account', className].filter(Boolean).join(' ')}
-        role="menu"
       >
         {content}
-      </div>
+      </List>
     );
   },
 );

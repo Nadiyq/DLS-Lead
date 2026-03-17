@@ -1,6 +1,7 @@
 import React from 'react';
 import './otp-form.css';
 import { OtpInput } from '../otp-input/OtpInput';
+import { Button } from '../Button';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -75,13 +76,15 @@ const FormContent = ({
       {slotContent}
 
       <div className="dls-otp-form__footer">
-        <button
-          type="button"
-          className="dls-otp-form__btn"
+        <Button
+          variant="filled"
+          intent="neutral"
+          size="m"
           onClick={() => onVerify?.(code)}
+          style={{ width: '100%' }}
         >
           {buttonLabel}
-        </button>
+        </Button>
         <p className="dls-otp-form__resend">
           {resendText || (
             <>Didn&apos;t receive the code?{' '}<button type="button" onClick={onResend}>Resend</button></>

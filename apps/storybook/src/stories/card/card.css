@@ -84,6 +84,12 @@
 .dls-card__content {
   display: flex;
   flex-direction: column;
+  gap: var(--dls-spacing-3);
+}
+
+.dls-card__text {
+  display: flex;
+  flex-direction: column;
   gap: var(--dls-spacing-1);
 }
 

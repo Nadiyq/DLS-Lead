@@ -108,8 +108,18 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Counter badge (+N)
+   Counter badge (+N) — clickable, sits above avatars
    --------------------------------------------------------------------------- */
+
+.dls-avatar-stack__counter-wrap {
+  position: relative;
+  z-index: 1;
+  margin-left: var(--_overlap);
+}
+
+.dls-avatar-stack__counter-wrap:first-child {
+  margin-left: 0;
+}
 
 .dls-avatar-stack__counter {
   all: unset;
@@ -126,20 +136,52 @@
   font-weight: var(--dls-font-weight-semibold);
   text-transform: uppercase;
   user-select: none;
+  cursor: pointer;
+  transition: background-color 150ms ease;
 
-  /* Size matches the avatar size — inherited from parent */
   width: var(--_size, 48px);
   height: var(--_size, 48px);
 }
 
-/* Size inheritance for counter — mirrors avatar data-size values */
-.dls-avatar-stack[data-size="88"] .dls-avatar-stack__counter { width: 88px; height: 88px; }
-.dls-avatar-stack[data-size="80"] .dls-avatar-stack__counter { width: 80px; height: 80px; }
-.dls-avatar-stack[data-size="72"] .dls-avatar-stack__counter { width: 72px; height: 72px; }
-.dls-avatar-stack[data-size="48"] .dls-avatar-stack__counter { width: 48px; height: 48px; }
-.dls-avatar-stack[data-size="40"] .dls-avatar-stack__counter { width: 40px; height: 40px; }
-.dls-avatar-stack[data-size="32"] .dls-avatar-stack__counter { width: 32px; height: 32px; }
-.dls-avatar-stack[data-size="28"] .dls-avatar-stack__counter { width: 28px; height: 28px; }
-.dls-avatar-stack[data-size="24"] .dls-avatar-stack__counter { width: 24px; height: 24px; }
-.dls-avatar-stack[data-size="20"] .dls-avatar-stack__counter { width: 20px; height: 20px; }
-.dls-avatar-stack[data-size="18"] .dls-avatar-stack__counter { width: 18px; height: 18px; }
+.dls-avatar-stack__counter:hover:not(:disabled) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-avatar-stack__counter:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Overflow dropdown — uses dls-list, positioned below the counter
+   --------------------------------------------------------------------------- */
+
+.dls-avatar-stack__dropdown.dls-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 242px;
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: var(--dls-shadow-m, 0 4px 12px rgba(0,0,0,.12));
+}
+
+.dls-avatar-stack__counter-wrap:hover .dls-avatar-stack__dropdown,
+.dls-avatar-stack__counter-wrap:focus-within .dls-avatar-stack__dropdown {
+  display: flex;
+}
+
+/* Size inheritance for counter */
+.dls-avatar-stack[data-size="88"] .dls-avatar-stack__counter { --_size: 88px; width: 88px; height: 88px; }
+.dls-avatar-stack[data-size="80"] .dls-avatar-stack__counter { --_size: 80px; width: 80px; height: 80px; }
+.dls-avatar-stack[data-size="72"] .dls-avatar-stack__counter { --_size: 72px; width: 72px; height: 72px; }
+.dls-avatar-stack[data-size="48"] .dls-avatar-stack__counter { --_size: 48px; width: 48px; height: 48px; }
+.dls-avatar-stack[data-size="40"] .dls-avatar-stack__counter { --_size: 40px; width: 40px; height: 40px; }
+.dls-avatar-stack[data-size="32"] .dls-avatar-stack__counter { --_size: 32px; width: 32px; height: 32px; }
+.dls-avatar-stack[data-size="28"] .dls-avatar-stack__counter { --_size: 28px; width: 28px; height: 28px; }
+.dls-avatar-stack[data-size="24"] .dls-avatar-stack__counter { --_size: 24px; width: 24px; height: 24px; }
+.dls-avatar-stack[data-size="20"] .dls-avatar-stack__counter { --_size: 20px; width: 20px; height: 20px; }
+.dls-avatar-stack[data-size="18"] .dls-avatar-stack__counter { --_size: 18px; width: 18px; height: 18px; }

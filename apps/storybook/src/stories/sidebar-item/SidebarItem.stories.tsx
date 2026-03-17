@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { SidebarItem } from './SidebarItem';
+import { IconShape } from '../icon-shape/IconShape';
+import { SidebarDivider } from '../sidebar/Sidebar';
+import { Submenu } from '../submenu/Submenu';
 
 const meta = {
   title: 'Components/SidebarItem',
@@ -51,16 +54,14 @@ const UsersIcon = () => (
   </svg>
 );
 
+const LogoIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none">
+    <text x="8" y="12" textAnchor="middle" fontSize="11" fontWeight="600" fill="currentColor">A</text>
+  </svg>
+);
+
 const LogoStub = () => (
-  <div style={{
-    width: 32, height: 32, borderRadius: 'var(--dls-radius-component-sidebar-item)',
-    background: 'var(--dls-color-intent-info-subtle)', display: 'flex',
-    alignItems: 'center', justifyContent: 'center',
-    fontSize: 'var(--dls-text-s-font-size)', fontWeight: 'var(--dls-font-weight-semibold)',
-    color: 'var(--dls-color-intent-info-text)', fontFamily: 'var(--dls-font-family)',
-  }}>
-    A
-  </div>
+  <IconShape intent="info" size="s"><LogoIcon /></IconShape>
 );
 
 /* ---------------------------------------------------------------------------
@@ -119,11 +120,13 @@ export const TreeType: Story = {
   args: { type: 'tree', text: 'Projects' },
   render: () => (
     <SidebarWrapper>
-      <SidebarItem type="tree" text="Projects" icon={<FolderIcon />} expanded />
-      <div style={{ paddingLeft: 'var(--dls-spacing-4)' }}>
+      <Submenu
+        expanded
+        parent={<SidebarItem type="tree" text="Projects" icon={<FolderIcon />} expanded />}
+      >
         <SidebarItem type="simple" text="Design system" icon={<FolderIcon />} active />
         <SidebarItem type="simple" text="Marketing" icon={<FolderIcon />} />
-      </div>
+      </Submenu>
       <SidebarItem type="tree" text="Archived" icon={<FolderIcon />} expanded={false} />
     </SidebarWrapper>
   ),
@@ -152,11 +155,13 @@ export const CollapsibleType: Story = {
   args: { type: 'collapsible', text: 'Settings' },
   render: () => (
     <SidebarWrapper>
-      <SidebarItem type="collapsible" text="Settings" icon={<SettingsIcon />} expanded />
-      <div style={{ paddingLeft: 'var(--dls-spacing-4)' }}>
+      <Submenu
+        expanded
+        parent={<SidebarItem type="collapsible" text="Settings" icon={<SettingsIcon />} expanded />}
+      >
         <SidebarItem type="simple" text="General" icon={<SettingsIcon />} />
         <SidebarItem type="simple" text="Members" icon={<UsersIcon />} active />
-      </div>
+      </Submenu>
       <SidebarItem type="collapsible" text="Billing" icon={<FolderIcon />} expanded={false} />
     </SidebarWrapper>
   ),
@@ -213,22 +218,26 @@ export const FullSidebar: Story = {
   render: () => (
     <SidebarWrapper>
       <SidebarItem type="big-icon" text="Acme Corp" secondaryText="admin@acmecorp.com" media={<LogoStub />} />
-      <div style={{ height: 1, background: 'var(--dls-color-border-subtle)', margin: 'var(--dls-spacing-1) 0' }} />
+      <SidebarDivider />
       <SidebarItem type="simple" text="Inbox" icon={<InboxIcon />} active badgeCount={5} />
       <SidebarItem type="simple" text="Starred" icon={<StarIcon />} />
       <SidebarItem type="option" text="Drafts" icon={<FolderIcon />} />
-      <div style={{ height: 1, background: 'var(--dls-color-border-subtle)', margin: 'var(--dls-spacing-1) 0' }} />
-      <SidebarItem type="collapsible" text="Projects" icon={<FolderIcon />} expanded />
-      <div style={{ paddingLeft: 'var(--dls-spacing-4)', display: 'flex', flexDirection: 'column', gap: 'var(--dls-spacing-1)' }}>
+      <SidebarDivider />
+      <Submenu
+        expanded
+        parent={<SidebarItem type="collapsible" text="Projects" icon={<FolderIcon />} expanded />}
+      >
         <SidebarItem type="simple" text="Design system" icon={<FolderIcon />} />
         <SidebarItem type="simple" text="Marketing" icon={<FolderIcon />} />
-      </div>
-      <SidebarItem type="tree" text="Teams" icon={<UsersIcon />} expanded />
-      <div style={{ paddingLeft: 'var(--dls-spacing-4)', display: 'flex', flexDirection: 'column', gap: 'var(--dls-spacing-1)' }}>
+      </Submenu>
+      <Submenu
+        expanded
+        parent={<SidebarItem type="tree" text="Teams" icon={<UsersIcon />} expanded />}
+      >
         <SidebarItem type="simple" text="Engineering" icon={<UsersIcon />} />
         <SidebarItem type="simple" text="Design" icon={<UsersIcon />} />
-      </div>
-      <div style={{ height: 1, background: 'var(--dls-color-border-subtle)', margin: 'var(--dls-spacing-1) 0' }} />
+      </Submenu>
+      <SidebarDivider />
       <SidebarItem type="simple" text="Settings" icon={<SettingsIcon />} />
     </SidebarWrapper>
   ),

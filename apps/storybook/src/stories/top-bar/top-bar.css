@@ -59,6 +59,13 @@
   min-width: 0;
 }
 
+.dls-top-bar__nav-list {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  flex: 1;
+}
+
 .dls-top-bar__nav-item {
   all: unset;
   box-sizing: border-box;
@@ -109,40 +116,10 @@
   justify-content: flex-end;
 }
 
-/* ---------------------------------------------------------------------------
-   Icon button (ghost 32×32)
-   --------------------------------------------------------------------------- */
-
-.dls-top-bar__icon-btn {
-  all: unset;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--dls-radius-component-button);
-  color: var(--dls-color-text-secondary);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-top-bar__icon-btn:hover:not([data-disabled]) {
-  background: var(--dls-state-hover-overlay);
-}
-
-.dls-top-bar__icon-btn:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-.dls-top-bar__icon-btn svg {
-  width: 16px;
-  height: 16px;
-}
+/* Icon buttons use DLS Button (variant="ghost" iconOnly) — no custom styles needed */
 
 /* ---------------------------------------------------------------------------
-   Notification button (with indicator dot)
+   Notification button (uses BadgeIndicator for dot)
    --------------------------------------------------------------------------- */
 
 .dls-top-bar__notification {
@@ -153,39 +130,18 @@
   position: absolute;
   top: 2px;
   right: 2px;
-  width: 8px;
-  height: 8px;
-  border-radius: var(--dls-radius-component-badge);
-  background: var(--dls-color-intent-danger-base);
   border: 2px solid var(--dls-color-surface-base);
   pointer-events: none;
 }
 
 /* ---------------------------------------------------------------------------
-   Avatar
+   Avatar wrapper (uses shared Avatar component)
    --------------------------------------------------------------------------- */
 
-.dls-top-bar__avatar {
+.dls-top-bar__avatar-wrap {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--dls-radius-full);
-  border: 1px solid var(--dls-color-border-subtle);
-  background: var(--dls-color-surface-muted);
-  font-size: var(--dls-text-xs-font-size);
-  font-weight: var(--dls-font-weight-semibold);
-  color: var(--dls-color-text-secondary);
-  overflow: hidden;
   cursor: pointer;
-}
-
-.dls-top-bar__avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* ---------------------------------------------------------------------------
@@ -221,4 +177,17 @@
   height: 16px;
   flex-shrink: 0;
   color: var(--dls-color-text-secondary);
+}
+
+.dls-top-bar__search-input {
+  all: unset;
+  flex: 1;
+  min-width: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--dls-color-text-primary);
+}
+
+.dls-top-bar__search-input::placeholder {
+  color: var(--dls-color-component-input-fg-placeholder);
 }

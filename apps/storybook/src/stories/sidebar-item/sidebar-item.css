@@ -111,38 +111,19 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Indicator dot (notification badge)
+   Indicator dot (uses BadgeIndicator component — layout helper only)
    --------------------------------------------------------------------------- */
 
 .dls-sidebar-item__indicator {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: var(--dls-radius-component-badge);
-  background: var(--dls-color-intent-danger-base);
 }
 
 /* ---------------------------------------------------------------------------
-   Number badge
+   Number badge (uses BadgeNumber component — layout helper only)
    --------------------------------------------------------------------------- */
 
 .dls-sidebar-item__badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
-  padding: var(--dls-spacing-05) var(--dls-spacing-1-5);
-  border-radius: var(--dls-radius-component-badge-number);
-  background: var(--dls-color-intent-info-subtle);
-  border: 1px solid var(--dls-color-intent-info-border);
-  font-size: var(--dls-text-s-font-size);
-  line-height: var(--dls-text-s-line-height);
-  font-weight: var(--dls-font-weight-medium);
-  color: var(--dls-color-intent-info-text);
-  min-width: var(--dls-spacing-2);
 }
 
 /* ---------------------------------------------------------------------------

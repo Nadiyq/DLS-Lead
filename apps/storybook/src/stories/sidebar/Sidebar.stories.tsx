@@ -3,6 +3,7 @@ import React from 'react';
 import { Sidebar, SidebarGroup, SidebarDivider } from './Sidebar';
 import { SidebarItem } from '../sidebar-item/SidebarItem';
 import { Submenu } from '../submenu/Submenu';
+import { IconShape } from '../icon-shape/IconShape';
 
 const meta = {
   title: 'Templates/Sidebar',
@@ -43,14 +44,14 @@ const CalendarIcon = () => (
   <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1" stroke="currentColor" strokeWidth="1.33" /><path d="M5 2V4M11 2V4M2 7H14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" /></svg>
 );
 
+const LogoIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none">
+    <text x="8" y="12" textAnchor="middle" fontSize="11" fontWeight="600" fill="currentColor">A</text>
+  </svg>
+);
+
 const LogoStub = () => (
-  <div style={{
-    width: 32, height: 32, borderRadius: 'var(--dls-radius-component-sidebar-item)',
-    background: 'var(--dls-color-intent-info-subtle)', display: 'flex',
-    alignItems: 'center', justifyContent: 'center',
-    fontSize: 'var(--dls-text-s-font-size)', fontWeight: 'var(--dls-font-weight-semibold)',
-    color: 'var(--dls-color-intent-info-text)', fontFamily: 'var(--dls-font-family)',
-  }}>A</div>
+  <IconShape intent="info" size="s"><LogoIcon /></IconShape>
 );
 
 /* ---------------------------------------------------------------------------

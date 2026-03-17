@@ -1,0 +1,49 @@
+---
+description: 4-layer token model — naming, lookup, anti-patterns
+globs: "**/tokens/**"
+alwaysApply: false
+---
+
+# Token Architecture
+
+## 4-Layer Model
+
+| Layer | Name | Purpose | Example |
+|-------|------|---------|---------|
+| 1 | Primitives | Raw values | `color.neutral.700`, `radius.m`, `spacing.4` |
+| 2 | Semantics | UI roles | `color.surface.base`, `color.intent.primary.base` |
+| 3 | State | Behavioral | `state.lDelta.hover`, `state.disabled.opacity` |
+| 4 | Component | Per-component | `color.component.button.primary.bg.base` |
+
+References flow downward only: L4→L3/L2/L1. L3→L2/L1. L2→L1. L1→raw values.
+
+## Naming Convention
+
+Token path: `category.scope.element.variant.property.state` (lowercase, dots).
+CSS variable: `--dls-{path}` with dots → hyphens.
+
+## Fixed Enums
+
+- **Intents:** primary, success, warning, danger, info, neutral
+- **States:** base, hover, pressed, focus, disabled, active, selected
+- **Sizes:** xs, s, m, l, xl, 2xl, 3xl
+
+## Component Token Template
+
+```json
+"color.component.{name}": {
+  "{variant?}.bg.{state}": "→ layer 2 or 1",
+  "{variant?}.fg.{state}": "→ layer 2 or 1",
+  "{variant?}.border.{state}": "→ layer 2 or 1"
+}
+"radius.component.{name}": "→ layer 1 radius"
+```
+
+Minimum states: base, disabled. Full set: base, hover, pressed, focus, disabled.
+
+## Anti-Patterns
+
+- `--dls-btn-bg` → no abbreviations
+- `--dls-colorIntentPrimaryBase` → no camelCase
+- `--dls-color-button-neutral-700` → no mixing layer concerns
+- L4 referencing another L4 → forbidden

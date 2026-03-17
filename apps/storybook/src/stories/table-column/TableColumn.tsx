@@ -2,6 +2,7 @@ import React from 'react';
 import './table-column.css';
 import { TableHeaderCell } from '../table-header-cell/TableHeaderCell';
 import { TableCell } from '../table-cell/TableCell';
+import { Avatar } from '../Avatar';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -139,9 +140,7 @@ const renderCell = (type: TableColumnType, row: TableColumnRow, idx: number) => 
     case 'user':
       return (
         <TableCell key={idx} type="text" text={row.text} slotLeft={
-          <span className="dls-table-column__avatar">
-            {row.avatarSrc ? <img src={row.avatarSrc} alt="" /> : row.initials}
-          </span>
+          <Avatar size="24" circle src={row.avatarSrc} initials={row.initials} className="dls-table-column__avatar" />
         } />
       );
 
@@ -149,8 +148,8 @@ const renderCell = (type: TableColumnType, row: TableColumnRow, idx: number) => 
       return (
         <TableCell key={idx} type="slot">
           <span className="dls-table-column__stacked">
-            <span className="dls-table-column__avatar">{row.initials || 'AB'}</span>
-            <span className="dls-table-column__avatar">{row.initials || 'CD'}</span>
+            <Avatar size="24" circle initials={row.initials || 'AB'} className="dls-table-column__avatar" />
+            <Avatar size="24" circle initials={row.initials || 'CD'} className="dls-table-column__avatar" />
             {(row.stackedCount ?? 0) > 0 && (
               <span className="dls-table-column__stacked-more">+{row.stackedCount}</span>
             )}
@@ -164,9 +163,7 @@ const renderCell = (type: TableColumnType, row: TableColumnRow, idx: number) => 
     case 'two-line+avatar':
       return (
         <TableCell key={idx} type="two-line" text={row.text} secondaryText={row.secondaryText} slotLeft={
-          <span className="dls-table-column__avatar">
-            {row.avatarSrc ? <img src={row.avatarSrc} alt="" /> : row.initials}
-          </span>
+          <Avatar size="24" circle src={row.avatarSrc} initials={row.initials} className="dls-table-column__avatar" />
         } />
       );
 

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { AvatarStack } from './AvatarStack';
 import { Avatar, UserIcon } from './Avatar';
-import type { AvatarStackSize } from './AvatarStack';
+import type { AvatarStackSize, OverflowUser } from './AvatarStack';
 
 const SIZES: AvatarStackSize[] = ['88', '80', '72', '48', '40', '32', '28', '24', '20', '18'];
 
@@ -29,6 +29,7 @@ const meta = {
   },
   args: {
     size: '48',
+    children: undefined as unknown as React.ReactNode,
   },
 } satisfies Meta<typeof AvatarStack>;
 
@@ -103,24 +104,38 @@ export const AllSizes: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// With counter (+N overflow)
+// With counter (+N overflow) — hover counter to see hidden users
 // ---------------------------------------------------------------------------
 
+const OVERFLOW_USERS: OverflowUser[] = [
+  { name: 'Malik Roberson', src: 'https://i.pravatar.cc/300?img=21' },
+  { name: 'Kenton Jerde', src: 'https://i.pravatar.cc/300?img=33' },
+  { name: 'Talia Kubiak', initials: 'TK' },
+  { name: 'Jayson Wintheiser', src: 'https://i.pravatar.cc/300?img=14' },
+  { name: 'Shea Trantow', src: 'https://i.pravatar.cc/300?img=9' },
+];
+
 export const WithCounter: Story = {
-  render: () => (
-    <Section title="With Counter (+N)">
-      {SIZES.map((size) => (
-        <SizeLabel key={size} size={size}>
-          <AvatarStack size={size} max={2} total={22}>
-            <Avatar src={SAMPLE_IMAGES[0]} alt="User 1" />
-            <Avatar src={SAMPLE_IMAGES[1]} alt="User 2" />
-            <Avatar src={SAMPLE_IMAGES[2]} alt="User 3" />
-            <Avatar src={SAMPLE_IMAGES[3]} alt="User 4" />
-          </AvatarStack>
-        </SizeLabel>
-      ))}
-    </Section>
-  ),
+  render: () => {
+    const [selected, setSelected] = React.useState(2);
+    return (
+      <Section title="With Counter (+N) — hover the badge">
+        <AvatarStack
+          size="48"
+          max={2}
+          total={7}
+          overflowUsers={OVERFLOW_USERS}
+          selectedIndex={selected}
+          onOverflowUserClick={(_user, i) => setSelected(i)}
+        >
+          <Avatar src={SAMPLE_IMAGES[0]} alt="User 1" />
+          <Avatar src={SAMPLE_IMAGES[1]} alt="User 2" />
+          <Avatar src={SAMPLE_IMAGES[2]} alt="User 3" />
+          <Avatar src={SAMPLE_IMAGES[3]} alt="User 4" />
+        </AvatarStack>
+      </Section>
+    );
+  },
 };
 
 // ---------------------------------------------------------------------------

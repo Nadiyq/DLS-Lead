@@ -1,0 +1,38 @@
+---
+description: DLS-Lead project overview, commands, source of truth, and critical rules
+alwaysApply: true
+---
+
+# DLS-Lead Design System
+
+Token-driven design system for SaaS products. React + Storybook + CSS custom properties.
+
+## Commands
+
+```bash
+npm start                                    # Token reference site :3000
+cd apps/storybook && npm run storybook       # Storybook :6006
+cd apps/storybook && npx tsc -b              # TypeScript check
+```
+
+## Source of Truth
+
+`tokens/tokens.json` — DTCG-compliant, 4-layer model: L1 Primitives → L2 Semantics → L3 State → L4 Component.
+Generated outputs (don't hand-edit): `tokens/tokens.css`, `tokens/tokens.scss`, `tokens/tokens.ts`.
+
+## Critical Rules
+
+- Components NEVER reference L1 primitives. Use L4 component → L2 semantic fallback.
+- Variants/intents/sizes via `data-*` attributes, never `.is-*`/`.has-*` classes.
+- Every component CSS starts with `all: unset; box-sizing: border-box;`.
+- `:hover:not(:disabled)`, `:focus-visible` (not `:focus`), focus ring via `box-shadow` (never `outline`).
+- No hardcoded colors, sizes, or radii. Use `--dls-radius-component-*`, never primitive `--dls-radius-*`.
+
+## Repo Layout
+
+```
+tokens/              → tokens.json (source), generated .css/.scss/.ts, figma-sync-4layer.js
+apps/storybook/      → React components + stories (Vite + Storybook 10)
+.claude/skills/      → Detailed instructions per domain (read these for deep guidance)
+index.html + server.js → Token reference documentation site
+```

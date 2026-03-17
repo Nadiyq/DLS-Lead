@@ -1,0 +1,39 @@
+---
+description: DLS typography system — font stack, scale, semantic categories
+globs: "**/*.css"
+alwaysApply: false
+---
+
+# Typography
+
+Font: **Inter**. Weights: 400 (normal), 500 (medium), 600 (semibold), 800 (bold), 900 (black).
+
+## Primitive Scale
+
+| Token | Size/Line-height |
+|-------|-----------------|
+| `text.xs` | 10/14 |
+| `text.s` | 12/16 |
+| `text.m` | 14/20 |
+| `text.l` | 16/24 |
+| `text.xl` | 18/26 |
+| `text.2xl` | 24/32 |
+| `text.3xl` | 32/40 |
+| `text.hero` | 36/46 |
+
+## Semantic Categories
+
+- **Headings** — hero(36/800), h1(32/600), h2(24/600), h3(18/600), h4(16/600), h5(14/600), h6(12/800)
+- **Paragraph** — 5 sizes (xl→xs) × 3 weights (light=400, medium=500, heavy=600)
+- **Button** — 4 sizes (l→xs), all weight 500
+- **Link** — 4 sizes × 3 weights
+- **Upper** — 4 sizes, weight 500, uppercase, `letter-spacing: 0.01em`
+- **Avatar** — 10 sizes (2xl→5xs), weight 600, line-height = font-size
+
+## CSS Usage
+
+```css
+font-size: var(--dls-text-heading-h2-font-size);
+line-height: var(--dls-text-heading-h2-line-height);
+font-weight: var(--dls-text-heading-h2-font-weight);
+```

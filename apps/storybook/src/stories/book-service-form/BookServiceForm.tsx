@@ -1,5 +1,8 @@
 import React from 'react';
 import './book-service-form.css';
+import { Button } from '../Button';
+import { InputField } from '../input-field/InputField';
+import { Checkbox } from '../checkbox/Checkbox';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -52,12 +55,6 @@ export interface BookServiceFormProps {
 /* ---------------------------------------------------------------------------
    Icons
    --------------------------------------------------------------------------- */
-
-const CheckIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 const CalendarIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,28 +116,21 @@ export const BookServiceForm = React.forwardRef<HTMLDivElement, BookServiceFormP
         {/* Form */}
         <div className="dls-book-service-form__form">
           {/* Name */}
-          <div className="dls-book-service-form__field">
-            <label className="dls-book-service-form__label">{nameLabel}</label>
-            <input
-              type="text"
-              className="dls-book-service-form__input"
-              placeholder={namePlaceholder}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
+          <InputField
+            label={nameLabel}
+            placeholder={namePlaceholder}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
           {/* Email */}
-          <div className="dls-book-service-form__field">
-            <label className="dls-book-service-form__label">{emailLabel}</label>
-            <input
-              type="email"
-              className="dls-book-service-form__input"
-              placeholder={emailPlaceholder}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          <InputField
+            label={emailLabel}
+            type="email"
+            placeholder={emailPlaceholder}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           {/* Service */}
           <div className="dls-book-service-form__field">
@@ -175,25 +165,11 @@ export const BookServiceForm = React.forwardRef<HTMLDivElement, BookServiceFormP
 
           {/* Checkbox */}
           {showCheckbox && (
-            <label className="dls-book-service-form__checkbox-row">
-              <span
-                className="dls-book-service-form__checkbox"
-                role="checkbox"
-                aria-checked={agreed}
-                data-checked={agreed || undefined}
-                onClick={() => setAgreed(!agreed)}
-                onKeyDown={(e) => {
-                  if (e.key === ' ' || e.key === 'Enter') {
-                    e.preventDefault();
-                    setAgreed(!agreed);
-                  }
-                }}
-                tabIndex={0}
-              >
-                {agreed && <CheckIcon />}
-              </span>
-              <span className="dls-book-service-form__checkbox-text">{checkboxLabel}</span>
-            </label>
+            <Checkbox
+              checked={agreed}
+              onChange={(val) => setAgreed(val)}
+              label={checkboxLabel}
+            />
           )}
         </div>
 
@@ -204,20 +180,24 @@ export const BookServiceForm = React.forwardRef<HTMLDivElement, BookServiceFormP
 
         {/* Footer */}
         <div className="dls-book-service-form__footer">
-          <button
-            type="button"
-            className="dls-book-service-form__btn-secondary"
+          <Button
+            variant="soft"
+            intent="neutral"
+            size="m"
             onClick={onCancel}
+            style={{ flex: 1 }}
           >
             {cancelLabel}
-          </button>
-          <button
-            type="button"
-            className="dls-book-service-form__btn-primary"
+          </Button>
+          <Button
+            variant="filled"
+            intent="neutral"
+            size="m"
             onClick={handleSubmit}
+            style={{ flex: 1 }}
           >
             {submitLabel}
-          </button>
+          </Button>
         </div>
       </div>
     );

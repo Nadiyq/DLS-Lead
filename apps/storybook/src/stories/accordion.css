@@ -28,8 +28,6 @@
   width: 100%;
 }
 
-/* No wrapping border when open — each sub-section carries its own bottom border */
-
 /* ---------------------------------------------------------------------------
    Trigger (clickable header)
    --------------------------------------------------------------------------- */
@@ -52,7 +50,10 @@
   transition: background-color 150ms ease;
 }
 
-/* When open, trigger keeps its bottom border as a divider between title and content */
+/* When open, border moves to the outer item — remove it from the trigger */
+.dls-accordion-item[data-open] .dls-accordion-item__trigger {
+  border-bottom: none;
+}
 
 /* Hover */
 .dls-accordion-item__trigger:hover:not(:disabled) {
@@ -119,5 +120,9 @@
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: var(--dls-color-component-accordion-content-fg);
+}
+
+/* When open, the bottom border sits on the item wrapper (matches Figma) */
+.dls-accordion-item[data-open] {
   border-bottom: 1px solid var(--dls-color-component-accordion-border);
 }

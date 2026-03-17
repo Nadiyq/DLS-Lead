@@ -101,33 +101,7 @@
   color: var(--dls-color-text-secondary);
 }
 
-.dls-upload-file-form__upload-btn {
-  all: unset;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--dls-spacing-2);
-  height: 32px;
-  padding: var(--dls-spacing-1-5) var(--dls-spacing-2-5);
-  border-radius: var(--dls-radius-component-button);
-  background: var(--dls-color-intent-info-strong);
-  color: var(--dls-color-intent-info-on-base);
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-medium);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-upload-file-form__upload-btn:hover:not(:disabled) {
-  background: oklch(from var(--dls-color-intent-info-strong) calc(l + var(--dls-state-l-delta-hover)) c h);
-}
-
-.dls-upload-file-form__upload-btn:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
+/* Upload button uses DLS Button (variant="filled" intent="info") — no custom styles needed */
 
 /* ---------------------------------------------------------------------------
    Slot content
@@ -251,29 +225,7 @@
   color: var(--dls-color-intent-info-text);
 }
 
-/* Delete / remove button */
-.dls-upload-file-form__item-remove {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--dls-radius-component-button);
-  color: var(--dls-color-text-secondary);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-upload-file-form__item-remove:hover:not(:disabled) {
-  background: var(--dls-state-hover-overlay);
-}
-
-.dls-upload-file-form__item-remove:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
+/* Remove button uses DLS Button (variant="ghost" iconOnly) — no custom styles needed */
 
 /* ---------------------------------------------------------------------------
    Progress bar

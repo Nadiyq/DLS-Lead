@@ -36,6 +36,8 @@ export interface ListItemProps {
   slotRight?: React.ReactNode;
   /** Children — for buttons, chips, search types */
   children?: React.ReactNode;
+  /** Persistent selected state */
+  selected?: boolean;
   /** Disabled */
   disabled?: boolean;
   /** Click handler */
@@ -59,6 +61,7 @@ export const ListItem = React.forwardRef<HTMLDivElement, ListItemProps>(
       slotLeft,
       slotRight,
       children,
+      selected,
       disabled,
       onClick,
       className,
@@ -136,6 +139,8 @@ export const ListItem = React.forwardRef<HTMLDivElement, ListItemProps>(
         ref={ref as React.Ref<HTMLButtonElement & HTMLDivElement>}
         className={['dls-list-item', className].filter(Boolean).join(' ')}
         data-type={type}
+        data-selected={selected || undefined}
+        aria-selected={selected || undefined}
         disabled={isInteractive ? disabled : undefined}
         onClick={isInteractive ? onClick : undefined}
         type={isInteractive ? 'button' : undefined}

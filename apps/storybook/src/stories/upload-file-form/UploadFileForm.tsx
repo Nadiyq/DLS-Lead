@@ -1,5 +1,6 @@
 import React from 'react';
 import './upload-file-form.css';
+import { Button } from '../Button';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -149,17 +150,18 @@ export const UploadFileForm = React.forwardRef<HTMLDivElement, UploadFileFormPro
               <p className="dls-upload-file-form__dropzone-title">{dropzoneTitle}</p>
               <p className="dls-upload-file-form__dropzone-description">{dropzoneDescription}</p>
             </div>
-            <button
-              type="button"
-              className="dls-upload-file-form__upload-btn"
+            <Button
+              variant="filled"
+              intent="info"
+              size="m"
+              icon={<UploadIcon />}
               onClick={(e) => {
                 e.stopPropagation();
                 inputRef.current?.click();
               }}
             >
-              <UploadIcon />
               {uploadLabel}
-            </button>
+            </Button>
           </div>
           <input
             ref={inputRef}
@@ -198,14 +200,15 @@ export const UploadFileForm = React.forwardRef<HTMLDivElement, UploadFileFormPro
                       )}
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    className="dls-upload-file-form__item-remove"
+                  <Button
+                    variant="ghost"
+                    intent="neutral"
+                    size="m"
+                    icon={<CloseIcon />}
+                    iconOnly
                     aria-label={`Remove ${file.name}`}
                     onClick={() => onFileRemove?.(file.id)}
-                  >
-                    <CloseIcon />
-                  </button>
+                  />
                 </div>
 
                 {file.status === 'uploading' && (

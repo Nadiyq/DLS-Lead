@@ -12,7 +12,7 @@
   all: unset;
   box-sizing: border-box;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--dls-spacing-2);
   cursor: pointer;
   font-family: var(--dls-font-family);
@@ -54,7 +54,6 @@
   border-radius: var(--dls-radius-component-radiobutton);
   background: var(--dls-color-surface-base);
   border: 1px solid var(--dls-color-border-strong);
-  transition: background 150ms ease, border-color 150ms ease;
 }
 
 /* Inner dot — hidden by default */
@@ -150,8 +149,7 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding-top: 1px;
-  padding-bottom: 1px;
+  height: var(--dls-text-m-line-height);
 }
 
 /* ---------------------------------------------------------------------------

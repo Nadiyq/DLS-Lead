@@ -24,7 +24,6 @@
   background: var(--dls-color-intent-neutral-subtle);
   color: var(--dls-color-intent-neutral-text);
   border: 1px solid var(--dls-color-border-base);
-  box-shadow: var(--dls-shadow-surface-sm);
 }
 
 /* Icon sizing */
@@ -70,7 +69,6 @@
   background: var(--dls-color-surface-disabled);
   color: var(--dls-color-text-disabled);
   border-color: var(--dls-color-border-disabled);
-  box-shadow: none;
   cursor: not-allowed;
   pointer-events: none;
 }

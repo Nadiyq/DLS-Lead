@@ -1,9 +1,5 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Overview
-
 DLS-Lead — token-driven design system for SaaS products. React + Storybook + CSS custom properties.
 
 ## Commands
@@ -15,7 +11,7 @@ cd apps/storybook && npx tsc -b              # TypeScript check
 node .claude/hooks/lint-tokens.mjs --all     # Lint component CSS
 ```
 
-No test suite yet. No token build script — generated outputs (`tokens.css`, `.scss`, `.ts`) are maintained alongside `tokens.json`.
+No test suite yet. Generated outputs (`tokens.css`, `.scss`, `.ts`) are maintained alongside `tokens.json`.
 
 ## Source of Truth
 
@@ -36,6 +32,7 @@ Generated outputs (don't hand-edit): `tokens/tokens.css`, `tokens/tokens.scss`, 
 | Task | Read first |
 |------|-----------|
 | Build / scaffold a component | `.claude/skills/component-patterns.md` |
+| Any UI work — using or composing components | `.claude/skills/dls-component-rules.md` |
 | Work with tokens (add, edit, lookup) | `.claude/skills/token-architecture.md` |
 | Theming, dark mode, brand overrides | `.claude/skills/theming.md` |
 | Typography decisions | `.claude/skills/typography.md` |
