@@ -25,10 +25,18 @@
    Sections (shared horizontal padding)
    --------------------------------------------------------------------------- */
 
-.dls-upload-file-form__header,
-.dls-upload-file-form__dropzone-wrapper,
-.dls-upload-file-form__slot,
-.dls-upload-file-form__list {
+.dls-upload-file-form__header {
+  padding: 0 var(--dls-spacing-6);
+}
+
+/* ---------------------------------------------------------------------------
+   Body — wraps dropzone + slot + list with correct gap
+   --------------------------------------------------------------------------- */
+
+.dls-upload-file-form__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-6);
   padding: 0 var(--dls-spacing-6);
 }
 

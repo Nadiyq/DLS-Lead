@@ -83,68 +83,11 @@ const FormContent = ({
         {subtitle && <p className="dls-login__subtitle">{subtitle}</p>}
       </div>
 
-      {/* Social buttons first (type 3 pattern) */}
-      {showOrDivider && showSocialLogin && (
-        <div className="dls-login__social">
-          <Button
-            variant="outline"
-            intent="neutral"
-            size="m"
-            icon={socialLoginIcon || <GoogleIcon />}
-            style={{ width: '100%' }}
-          >
-            {socialLoginLabel || 'Login with Google'}
-          </Button>
-        </div>
-      )}
-
-      {showOrDivider && <div className="dls-login__or">or</div>}
-
-      {/* Form fields */}
-      <form className="dls-login__form" onSubmit={handleSubmit}>
-        <InputField
-          label="Email"
-          type="email"
-          placeholder="m@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <div className="dls-login__password-group">
-          <InputField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {showForgotPassword && (
-            <button
-              type="button"
-              className="dls-login__forgot"
-              onClick={onForgotPassword}
-            >
-              Forgot your password?
-            </button>
-          )}
-        </div>
-      </form>
-
-      {/* Slot content */}
-      {slotContent}
-
-      {/* Footer */}
-      <div className="dls-login__footer">
-        <div className="dls-login__buttons">
-          <Button
-            variant="filled"
-            intent="neutral"
-            size="m"
-            onClick={() => onSubmit?.(email, password)}
-            style={{ width: '100%' }}
-          >
-            {primaryButtonLabel || 'Login'}
-          </Button>
-          {!showOrDivider && showSocialLogin && (
+      {/* Body: social + or + form + slot + footer */}
+      <div className="dls-login__body">
+        {/* Social buttons first (type 3 pattern) */}
+        {showOrDivider && showSocialLogin && (
+          <div className="dls-login__social">
             <Button
               variant="outline"
               intent="neutral"
@@ -154,11 +97,71 @@ const FormContent = ({
             >
               {socialLoginLabel || 'Login with Google'}
             </Button>
+          </div>
+        )}
+
+        {showOrDivider && <div className="dls-login__or">or</div>}
+
+        {/* Form fields */}
+        <form className="dls-login__form" onSubmit={handleSubmit}>
+          <InputField
+            label="Email"
+            type="email"
+            placeholder="m@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <div className="dls-login__password-group">
+            <InputField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {showForgotPassword && (
+              <button
+                type="button"
+                className="dls-login__forgot"
+                onClick={onForgotPassword}
+              >
+                Forgot your password?
+              </button>
+            )}
+          </div>
+        </form>
+
+        {/* Slot content */}
+        {slotContent}
+
+        {/* Footer */}
+        <div className="dls-login__footer">
+          <div className="dls-login__buttons">
+            <Button
+              variant="filled"
+              intent="neutral"
+              size="m"
+              onClick={() => onSubmit?.(email, password)}
+              style={{ width: '100%' }}
+            >
+              {primaryButtonLabel || 'Login'}
+            </Button>
+            {!showOrDivider && showSocialLogin && (
+              <Button
+                variant="outline"
+                intent="neutral"
+                size="m"
+                icon={socialLoginIcon || <GoogleIcon />}
+                style={{ width: '100%' }}
+              >
+                {socialLoginLabel || 'Login with Google'}
+              </Button>
+            )}
+          </div>
+          {bottomText && (
+            <p className="dls-login__bottom-text">{bottomText}</p>
           )}
         </div>
-        {bottomText && (
-          <p className="dls-login__bottom-text">{bottomText}</p>
-        )}
       </div>
     </>
   );

@@ -63,33 +63,36 @@ const FormContent = ({
         {subtitle && <p className="dls-otp-form__subtitle">{subtitle}</p>}
       </div>
 
-      <div className="dls-otp-form__content">
-        <OtpInput
-          length={length}
-          type="spacing"
-          value={code}
-          onChange={setCode}
-          hint={hint}
-        />
-      </div>
+      {/* Body: content + slot + footer */}
+      <div className="dls-otp-form__body">
+        <div className="dls-otp-form__content">
+          <OtpInput
+            length={length}
+            type="spacing"
+            value={code}
+            onChange={setCode}
+            hint={hint}
+          />
+        </div>
 
-      {slotContent}
+        {slotContent}
 
-      <div className="dls-otp-form__footer">
-        <Button
-          variant="filled"
-          intent="neutral"
-          size="m"
-          onClick={() => onVerify?.(code)}
-          style={{ width: '100%' }}
-        >
-          {buttonLabel}
-        </Button>
-        <p className="dls-otp-form__resend">
-          {resendText || (
-            <>Didn&apos;t receive the code?{' '}<button type="button" onClick={onResend}>Resend</button></>
-          )}
-        </p>
+        <div className="dls-otp-form__footer">
+          <Button
+            variant="filled"
+            intent="neutral"
+            size="m"
+            onClick={() => onVerify?.(code)}
+            style={{ width: '100%' }}
+          >
+            {buttonLabel}
+          </Button>
+          <p className="dls-otp-form__resend">
+            {resendText || (
+              <>Didn&apos;t receive the code?{' '}<button type="button" onClick={onResend}>Resend</button></>
+            )}
+          </p>
+        </div>
       </div>
     </>
   );

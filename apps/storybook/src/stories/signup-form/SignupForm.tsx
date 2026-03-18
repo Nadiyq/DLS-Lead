@@ -135,73 +135,11 @@ const FormContent = (props: SignupFormProps) => {
         {subtitle && <p className="dls-signup__subtitle">{subtitle}</p>}
       </div>
 
-      {/* Social first (types 3 & 4) */}
-      {showOrDivider && showSocialLogin && (
-        <div className="dls-signup__social">
-          <Button
-            variant="outline"
-            intent="neutral"
-            size="m"
-            icon={socialLoginIcon || <GoogleIcon />}
-            style={{ width: '100%' }}
-          >
-            {socialLoginLabel}
-          </Button>
-        </div>
-      )}
-
-      {showOrDivider && <div className="dls-signup__or">or</div>}
-
-      <form className="dls-signup__form" onSubmit={handleSubmit}>
-        <InputField
-          label="Full name"
-          placeholder="Enter..."
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-        />
-
-        <InputField
-          label="Email"
-          type="email"
-          placeholder="m@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <div className="dls-signup__password-field">
-          <InputField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            hint="Must be at least 8 characters long."
-          />
-          {showPasswordStrength && <StrengthBar password={password} />}
-        </div>
-
-        <InputField
-          label="Confirm password"
-          type="password"
-          placeholder="Enter..."
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-      </form>
-
-      {slotContent}
-
-      <div className="dls-signup__footer">
-        <div className="dls-signup__buttons">
-          <Button
-            variant="filled"
-            intent="neutral"
-            size="m"
-            onClick={() => onSubmit?.({ fullName, email, password, confirmPassword })}
-            style={{ width: '100%' }}
-          >
-            {primaryButtonLabel}
-          </Button>
-          {!showOrDivider && showSocialLogin && (
+      {/* Body: social + or + form + slot + footer */}
+      <div className="dls-signup__body">
+        {/* Social first (types 3 & 4) */}
+        {showOrDivider && showSocialLogin && (
+          <div className="dls-signup__social">
             <Button
               variant="outline"
               intent="neutral"
@@ -211,9 +149,74 @@ const FormContent = (props: SignupFormProps) => {
             >
               {socialLoginLabel}
             </Button>
-          )}
+          </div>
+        )}
+
+        {showOrDivider && <div className="dls-signup__or">or</div>}
+
+        <form className="dls-signup__form" onSubmit={handleSubmit}>
+          <InputField
+            label="Full name"
+            placeholder="Enter..."
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+
+          <InputField
+            label="Email"
+            type="email"
+            placeholder="m@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <div className="dls-signup__password-field">
+            <InputField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              hint="Must be at least 8 characters long."
+            />
+            {showPasswordStrength && <StrengthBar password={password} />}
+          </div>
+
+          <InputField
+            label="Confirm password"
+            type="password"
+            placeholder="Enter..."
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </form>
+
+        {slotContent}
+
+        <div className="dls-signup__footer">
+          <div className="dls-signup__buttons">
+            <Button
+              variant="filled"
+              intent="neutral"
+              size="m"
+              onClick={() => onSubmit?.({ fullName, email, password, confirmPassword })}
+              style={{ width: '100%' }}
+            >
+              {primaryButtonLabel}
+            </Button>
+            {!showOrDivider && showSocialLogin && (
+              <Button
+                variant="outline"
+                intent="neutral"
+                size="m"
+                icon={socialLoginIcon || <GoogleIcon />}
+                style={{ width: '100%' }}
+              >
+                {socialLoginLabel}
+              </Button>
+            )}
+          </div>
+          {bottomText && <p className="dls-signup__bottom-text">{bottomText}</p>}
         </div>
-        {bottomText && <p className="dls-signup__bottom-text">{bottomText}</p>}
       </div>
     </>
   );

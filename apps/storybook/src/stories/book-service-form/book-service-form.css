@@ -25,10 +25,18 @@
    Sections (shared horizontal padding)
    --------------------------------------------------------------------------- */
 
-.dls-book-service-form__header,
-.dls-book-service-form__form,
-.dls-book-service-form__slot,
-.dls-book-service-form__footer {
+.dls-book-service-form__header {
+  padding: 0 var(--dls-spacing-10);
+}
+
+/* ---------------------------------------------------------------------------
+   Body — wraps form + slot + footer with correct gap
+   --------------------------------------------------------------------------- */
+
+.dls-book-service-form__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-8);
   padding: 0 var(--dls-spacing-10);
 }
 
@@ -104,27 +112,7 @@
   border-color: var(--dls-color-border-strong);
 }
 
-/* Date input */
-.dls-book-service-form__date-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.dls-book-service-form__date-wrapper .dls-book-service-form__input {
-  padding-right: var(--dls-spacing-8);
-}
-
-.dls-book-service-form__date-icon {
-  position: absolute;
-  right: var(--dls-spacing-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--dls-color-text-secondary);
-  pointer-events: none;
-}
-
+/* Date uses DLS DateInput component — no custom styles needed */
 /* Checkbox uses DLS Checkbox component — no custom styles needed */
 
 /* ---------------------------------------------------------------------------

@@ -92,10 +92,18 @@
    Sections (shared padding)
    --------------------------------------------------------------------------- */
 
-.dls-login__header,
-.dls-login__form,
-.dls-login__footer,
-.dls-login__social {
+.dls-login__header {
+  padding: 0 var(--dls-spacing-10);
+}
+
+/* ---------------------------------------------------------------------------
+   Body — wraps social + or + form + slot + footer with correct gap
+   --------------------------------------------------------------------------- */
+
+.dls-login__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-8);
   padding: 0 var(--dls-spacing-10);
 }
 
@@ -176,7 +184,6 @@
   display: flex;
   align-items: center;
   gap: var(--dls-spacing-3);
-  padding: 0 var(--dls-spacing-10);
   font-size: var(--dls-text-s-font-size);
   line-height: var(--dls-text-s-line-height);
   color: var(--dls-color-text-secondary);

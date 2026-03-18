@@ -136,98 +136,101 @@ export const UploadFileForm = React.forwardRef<HTMLDivElement, UploadFileFormPro
           {subtitle && <p className="dls-upload-file-form__subtitle">{subtitle}</p>}
         </div>
 
-        {/* Drop zone */}
-        <div className="dls-upload-file-form__dropzone-wrapper">
-          <div
-            className="dls-upload-file-form__dropzone"
-            data-drag-over={dragOver || undefined}
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onClick={() => inputRef.current?.click()}
-          >
-            <div className="dls-upload-file-form__dropzone-text">
-              <p className="dls-upload-file-form__dropzone-title">{dropzoneTitle}</p>
-              <p className="dls-upload-file-form__dropzone-description">{dropzoneDescription}</p>
-            </div>
-            <Button
-              variant="filled"
-              intent="info"
-              size="m"
-              icon={<UploadIcon />}
-              onClick={(e) => {
-                e.stopPropagation();
-                inputRef.current?.click();
-              }}
+        {/* Body: dropzone + slot + file list */}
+        <div className="dls-upload-file-form__body">
+          {/* Drop zone */}
+          <div className="dls-upload-file-form__dropzone-wrapper">
+            <div
+              className="dls-upload-file-form__dropzone"
+              data-drag-over={dragOver || undefined}
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onClick={() => inputRef.current?.click()}
             >
-              {uploadLabel}
-            </Button>
-          </div>
-          <input
-            ref={inputRef}
-            type="file"
-            multiple
-            style={{ display: 'none' }}
-            onChange={handleFileInput}
-          />
-        </div>
-
-        {/* Slot content */}
-        {slotContent && (
-          <div className="dls-upload-file-form__slot">{slotContent}</div>
-        )}
-
-        {/* File list */}
-        {files.length > 0 && (
-          <div className="dls-upload-file-form__list">
-            {files.map((file) => (
-              <div key={file.id} className="dls-upload-file-form__item">
-                <div className="dls-upload-file-form__item-top">
-                  <div className="dls-upload-file-form__item-media">
-                    {file.media || <FileIcon />}
-                  </div>
-                  <div className="dls-upload-file-form__item-info">
-                    <span className="dls-upload-file-form__item-name">{file.name}</span>
-                    <div className="dls-upload-file-form__item-details">
-                      <span className="dls-upload-file-form__item-size">{file.size}</span>
-                      {file.status !== 'uploading' && (
-                        <span
-                          className="dls-upload-file-form__item-badge"
-                          data-status={file.status}
-                        >
-                          {STATUS_LABELS[file.status]}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    intent="neutral"
-                    size="m"
-                    icon={<CloseIcon />}
-                    iconOnly
-                    aria-label={`Remove ${file.name}`}
-                    onClick={() => onFileRemove?.(file.id)}
-                  />
-                </div>
-
-                {file.status === 'uploading' && (
-                  <div className="dls-upload-file-form__progress">
-                    <div className="dls-upload-file-form__progress-track">
-                      <div
-                        className="dls-upload-file-form__progress-fill"
-                        style={{ width: `${file.progress ?? 0}%` }}
-                      />
-                    </div>
-                    <span className="dls-upload-file-form__progress-label">
-                      {file.progress ?? 0}%
-                    </span>
-                  </div>
-                )}
+              <div className="dls-upload-file-form__dropzone-text">
+                <p className="dls-upload-file-form__dropzone-title">{dropzoneTitle}</p>
+                <p className="dls-upload-file-form__dropzone-description">{dropzoneDescription}</p>
               </div>
-            ))}
+              <Button
+                variant="filled"
+                intent="info"
+                size="m"
+                icon={<UploadIcon />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  inputRef.current?.click();
+                }}
+              >
+                {uploadLabel}
+              </Button>
+            </div>
+            <input
+              ref={inputRef}
+              type="file"
+              multiple
+              style={{ display: 'none' }}
+              onChange={handleFileInput}
+            />
           </div>
-        )}
+
+          {/* Slot content */}
+          {slotContent && (
+            <div className="dls-upload-file-form__slot">{slotContent}</div>
+          )}
+
+          {/* File list */}
+          {files.length > 0 && (
+            <div className="dls-upload-file-form__list">
+              {files.map((file) => (
+                <div key={file.id} className="dls-upload-file-form__item">
+                  <div className="dls-upload-file-form__item-top">
+                    <div className="dls-upload-file-form__item-media">
+                      {file.media || <FileIcon />}
+                    </div>
+                    <div className="dls-upload-file-form__item-info">
+                      <span className="dls-upload-file-form__item-name">{file.name}</span>
+                      <div className="dls-upload-file-form__item-details">
+                        <span className="dls-upload-file-form__item-size">{file.size}</span>
+                        {file.status !== 'uploading' && (
+                          <span
+                            className="dls-upload-file-form__item-badge"
+                            data-status={file.status}
+                          >
+                            {STATUS_LABELS[file.status]}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      intent="neutral"
+                      size="m"
+                      icon={<CloseIcon />}
+                      iconOnly
+                      aria-label={`Remove ${file.name}`}
+                      onClick={() => onFileRemove?.(file.id)}
+                    />
+                  </div>
+
+                  {file.status === 'uploading' && (
+                    <div className="dls-upload-file-form__progress">
+                      <div className="dls-upload-file-form__progress-track">
+                        <div
+                          className="dls-upload-file-form__progress-fill"
+                          style={{ width: `${file.progress ?? 0}%` }}
+                        />
+                      </div>
+                      <span className="dls-upload-file-form__progress-label">
+                        {file.progress ?? 0}%
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     );
   },

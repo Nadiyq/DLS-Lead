@@ -3,6 +3,7 @@ import './book-service-form.css';
 import { Button } from '../Button';
 import { InputField } from '../input-field/InputField';
 import { Checkbox } from '../checkbox/Checkbox';
+import { DateInput } from '../date-input/DateInput';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -53,19 +54,6 @@ export interface BookServiceFormProps {
 }
 
 /* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const CalendarIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
-    <path d="M2 6.5H14" stroke="currentColor" strokeWidth="1.2" />
-    <path d="M5.5 1.5V4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    <path d="M10.5 1.5V4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-  </svg>
-);
-
-/* ---------------------------------------------------------------------------
    Component
    --------------------------------------------------------------------------- */
 
@@ -95,10 +83,11 @@ export const BookServiceForm = React.forwardRef<HTMLDivElement, BookServiceFormP
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [service, setService] = React.useState('');
-    const [date, setDate] = React.useState('');
+    const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
     const [agreed, setAgreed] = React.useState(false);
 
     const handleSubmit = () => {
+      const date = selectedDate ? selectedDate.toISOString().slice(0, 10) : '';
       onSubmit?.({ name, email, service, date, agreed });
     };
 
@@ -113,91 +102,87 @@ export const BookServiceForm = React.forwardRef<HTMLDivElement, BookServiceFormP
           {subtitle && <p className="dls-book-service-form__subtitle">{subtitle}</p>}
         </div>
 
-        {/* Form */}
-        <div className="dls-book-service-form__form">
-          {/* Name */}
-          <InputField
-            label={nameLabel}
-            placeholder={namePlaceholder}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-
-          {/* Email */}
-          <InputField
-            label={emailLabel}
-            type="email"
-            placeholder={emailPlaceholder}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          {/* Service */}
-          <div className="dls-book-service-form__field">
-            <label className="dls-book-service-form__label">{serviceLabel}</label>
-            <select
-              className="dls-book-service-form__select"
-              value={service}
-              onChange={(e) => setService(e.target.value)}
-            >
-              <option value="" disabled>{servicePlaceholder}</option>
-              {serviceOptions.map((opt) => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Date */}
-          <div className="dls-book-service-form__field">
-            <label className="dls-book-service-form__label">{dateLabel}</label>
-            <div className="dls-book-service-form__date-wrapper">
-              <input
-                type="date"
-                className="dls-book-service-form__input"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
-              <span className="dls-book-service-form__date-icon">
-                <CalendarIcon />
-              </span>
-            </div>
-          </div>
-
-          {/* Checkbox */}
-          {showCheckbox && (
-            <Checkbox
-              checked={agreed}
-              onChange={(val) => setAgreed(val)}
-              label={checkboxLabel}
+        {/* Body: form + slot + footer */}
+        <div className="dls-book-service-form__body">
+          {/* Form */}
+          <div className="dls-book-service-form__form">
+            {/* Name */}
+            <InputField
+              label={nameLabel}
+              placeholder={namePlaceholder}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
+
+            {/* Email */}
+            <InputField
+              label={emailLabel}
+              type="email"
+              placeholder={emailPlaceholder}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            {/* Service */}
+            <div className="dls-book-service-form__field">
+              <label className="dls-book-service-form__label">{serviceLabel}</label>
+              <select
+                className="dls-book-service-form__select"
+                value={service}
+                onChange={(e) => setService(e.target.value)}
+              >
+                <option value="" disabled>{servicePlaceholder}</option>
+                {serviceOptions.map((opt) => (
+                  <option key={opt} value={opt}>{opt}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Date */}
+            <DateInput
+              label={dateLabel}
+              placeholder="Select a date"
+              selectedDate={selectedDate}
+              onDateSelect={(d) => setSelectedDate(d)}
+              onClear={() => setSelectedDate(undefined)}
+            />
+
+            {/* Checkbox */}
+            {showCheckbox && (
+              <Checkbox
+                checked={agreed}
+                onChange={(val) => setAgreed(val)}
+                label={checkboxLabel}
+              />
+            )}
+          </div>
+
+          {/* Slot content */}
+          {slotContent && (
+            <div className="dls-book-service-form__slot">{slotContent}</div>
           )}
-        </div>
 
-        {/* Slot content */}
-        {slotContent && (
-          <div className="dls-book-service-form__slot">{slotContent}</div>
-        )}
-
-        {/* Footer */}
-        <div className="dls-book-service-form__footer">
-          <Button
-            variant="soft"
-            intent="neutral"
-            size="m"
-            onClick={onCancel}
-            style={{ flex: 1 }}
-          >
-            {cancelLabel}
-          </Button>
-          <Button
-            variant="filled"
-            intent="neutral"
-            size="m"
-            onClick={handleSubmit}
-            style={{ flex: 1 }}
-          >
-            {submitLabel}
-          </Button>
+          {/* Footer */}
+          <div className="dls-book-service-form__footer">
+            <Button
+              variant="soft"
+              intent="neutral"
+              size="m"
+              onClick={onCancel}
+              style={{ flex: 1 }}
+            >
+              {cancelLabel}
+            </Button>
+            <Button
+              variant="filled"
+              intent="neutral"
+              size="m"
+              onClick={handleSubmit}
+              style={{ flex: 1 }}
+            >
+              {submitLabel}
+            </Button>
+          </div>
         </div>
       </div>
     );

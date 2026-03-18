@@ -90,9 +90,18 @@
    Sections
    --------------------------------------------------------------------------- */
 
-.dls-otp-form__header,
-.dls-otp-form__content,
-.dls-otp-form__footer {
+.dls-otp-form__header {
+  padding: 0 var(--dls-spacing-10);
+}
+
+/* ---------------------------------------------------------------------------
+   Body — wraps content + slot + footer with correct gap
+   --------------------------------------------------------------------------- */
+
+.dls-otp-form__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-8);
   padding: 0 var(--dls-spacing-10);
 }
 

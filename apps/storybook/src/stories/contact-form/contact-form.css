@@ -25,9 +25,18 @@
    Sections (shared padding)
    --------------------------------------------------------------------------- */
 
-.dls-contact-form__header,
-.dls-contact-form__form,
-.dls-contact-form__footer {
+.dls-contact-form__header {
+  padding: 0 var(--dls-spacing-10);
+}
+
+/* ---------------------------------------------------------------------------
+   Body — wraps form + footer with correct gap
+   --------------------------------------------------------------------------- */
+
+.dls-contact-form__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-8);
   padding: 0 var(--dls-spacing-10);
 }
 
