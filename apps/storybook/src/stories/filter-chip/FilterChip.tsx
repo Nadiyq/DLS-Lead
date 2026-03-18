@@ -169,25 +169,29 @@ export const FilterChip = React.forwardRef<HTMLDivElement, FilterChipProps>(
           </div>
 
           {/* Part 2 — Value/Summary zone */}
-          <div className="dls-filter-chip__zone dls-filter-chip__zone--value">
-            {valueSummary}
-          </div>
+          {valueSummary && (
+            <div className="dls-filter-chip__zone dls-filter-chip__zone--value">
+              {valueSummary}
+            </div>
+          )}
 
-          {/* Part 3 — Chevron zone */}
-          <button
-            type="button"
-            className="dls-filter-chip__zone dls-filter-chip__zone--chevron"
-            onClick={handleChevronClick}
-            onKeyDown={handleChevronKeyDown}
-            disabled={disabled}
-            aria-label={isOpen ? `Close ${label} filter editor` : `Open ${label} filter editor`}
-            aria-expanded={isOpen}
-            aria-haspopup="dialog"
-          >
-            <span className="dls-filter-chip__chevron">
-              <ChevronDown />
-            </span>
-          </button>
+          {/* Part 3 — Chevron zone (only when dropdown content exists) */}
+          {children && (
+            <button
+              type="button"
+              className="dls-filter-chip__zone dls-filter-chip__zone--chevron"
+              onClick={handleChevronClick}
+              onKeyDown={handleChevronKeyDown}
+              disabled={disabled}
+              aria-label={isOpen ? `Close ${label} filter editor` : `Open ${label} filter editor`}
+              aria-expanded={isOpen}
+              aria-haspopup="dialog"
+            >
+              <span className="dls-filter-chip__chevron">
+                <ChevronDown />
+              </span>
+            </button>
+          )}
         </div>
 
         {/* Dropdown panel */}

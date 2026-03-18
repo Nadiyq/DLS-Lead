@@ -27,6 +27,7 @@
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   border-radius: var(--dls-radius-component-chip);
   transition: background-color 150ms ease, border-color 150ms ease;
 }

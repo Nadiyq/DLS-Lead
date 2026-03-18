@@ -7,7 +7,7 @@ import type { TableColumnRow } from '../table-column/TableColumn';
 import { Button } from '../Button';
 import { InputField } from '../input-field/InputField';
 import { Filters } from '../filters/Filters';
-import { ChipFilter } from '../chip/ChipFilter';
+import { FilterChip } from '../filter-chip/FilterChip';
 
 const meta = {
   title: 'Templates/Table',
@@ -178,30 +178,33 @@ export const WithFilters: Story = {
                 {
                   id: 'status',
                   children: (
-                    <ChipFilter
-                      segments={[{ label: 'Status' }, { label: 'Active' }]}
-                      active
+                    <FilterChip
+                      label="Status"
+                      isVisible
                       size="m"
+                      valueSummary={<span className="dls-filter-chip__value-text">Active</span>}
                     />
                   ),
                 },
                 {
                   id: 'role',
                   children: (
-                    <ChipFilter
-                      segments={[{ label: 'Role' }, { label: 'Admin' }]}
-                      active
+                    <FilterChip
+                      label="Role"
+                      isVisible
                       size="m"
+                      valueSummary={<span className="dls-filter-chip__value-text">Admin</span>}
                     />
                   ),
                 },
                 {
                   id: 'sort',
                   children: (
-                    <ChipFilter
-                      segments={[{ label: 'Sort' }, { label: 'Name ↑' }]}
-                      active
+                    <FilterChip
+                      label="Sort"
+                      isVisible
                       size="m"
+                      valueSummary={<span className="dls-filter-chip__value-text">Name ↑</span>}
                     />
                   ),
                 },

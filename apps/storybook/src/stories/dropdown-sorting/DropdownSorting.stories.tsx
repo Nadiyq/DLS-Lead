@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { DropdownSorting } from './DropdownSorting';
 import type { SortColumn, SortDirection } from './DropdownSorting';
-import { ChipFilter } from '../chip/ChipFilter';
+import { FilterChip } from '../filter-chip/FilterChip';
 
 const meta = {
   title: 'Components/DropdownSorting',
@@ -126,11 +126,13 @@ export const InContext: Story = {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
-        <ChipFilter
-          segments={[{ label: 'Sort' }, { label: colLabel }]}
-          active
+        <FilterChip
+          label="Sort"
+          isVisible
           size="m"
-          onClick={() => setOpen(v => !v)}
+          valueSummary={<span className="dls-filter-chip__value-text">{colLabel}</span>}
+          onOpenChange={setOpen}
+          open={open}
         />
         {open && (
           <DropdownSorting

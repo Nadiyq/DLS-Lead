@@ -20,7 +20,7 @@ export type FiltersSize = 'm' | 's';
 export interface FilterGroup {
   /** Unique key for the group */
   id: string;
-  /** Content rendered inside the group (typically ChipFilter instances) */
+  /** Content rendered inside the group (typically FilterChip instances) */
   children: React.ReactNode;
 }
 

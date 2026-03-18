@@ -3,7 +3,7 @@ import React from 'react';
 import { TableTopBar } from './TableTopBar';
 import { Filters } from '../filters/Filters';
 import type { FilterGroup } from '../filters/Filters';
-import { ChipFilter } from '../chip/ChipFilter';
+import { FilterChip } from '../filter-chip/FilterChip';
 import { Button } from '../Button';
 import { InputField } from '../input-field/InputField';
 
@@ -131,20 +131,22 @@ export const WithFilters: Story = {
             {
               id: 'status',
               children: (
-                <ChipFilter
-                  segments={[{ label: 'Status' }, { label: 'Active' }]}
-                  active
+                <FilterChip
+                  label="Status"
+                  isVisible
                   size="m"
+                  valueSummary={<span className="dls-filter-chip__value-text">Active</span>}
                 />
               ),
             },
             {
               id: 'role',
               children: (
-                <ChipFilter
-                  segments={[{ label: 'Role' }, { label: 'Admin' }]}
-                  active
+                <FilterChip
+                  label="Role"
+                  isVisible
                   size="m"
+                  valueSummary={<span className="dls-filter-chip__value-text">Admin</span>}
                 />
               ),
             },
@@ -194,11 +196,12 @@ export const Interactive: Story = {
     const groups: FilterGroup[] = activeFilters.map(f => ({
       id: f.id,
       children: (
-        <ChipFilter
-          segments={[{ label: f.label }, { label: f.value }]}
-          active
+        <FilterChip
+          label={f.label}
+          isVisible
           size="m"
-          onClick={() => removeFilter(f.id)}
+          valueSummary={<span className="dls-filter-chip__value-text">{f.value}</span>}
+          onVisibilityChange={() => removeFilter(f.id)}
         />
       ),
     }));

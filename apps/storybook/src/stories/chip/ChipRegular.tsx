@@ -21,7 +21,7 @@ export interface ChipRegularProps {
   size?: ChipRegularSize;
   /** Leading icon element */
   leadingIcon?: React.ReactNode;
-  /** Show trailing chevron */
+  /** Show trailing chevron (rendered as a separate segment with divider) */
   chevron?: boolean;
   /** Remove callback — shows trailing X */
   onRemove?: React.MouseEventHandler;
@@ -53,6 +53,7 @@ export const ChipRegular = React.forwardRef<HTMLDivElement, ChipRegularProps>(
   ) => {
     const isInteractive = !!onClick;
     const isDot = variant === 'dot';
+    const hasChevron = !!chevron && !onRemove;
 
     return (
       <div
@@ -71,31 +72,27 @@ export const ChipRegular = React.forwardRef<HTMLDivElement, ChipRegularProps>(
             : undefined
         }
       >
-        {/* Dot indicator (dot variant only) */}
-        {isDot && <span className="dls-chip-regular__dot" />}
+        {/* Content segment — label, icons, remove */}
+        <span className="dls-chip-regular__segment">
+          {isDot && <span className="dls-chip-regular__dot" />}
+          {leadingIcon && <span className="dls-chip-regular__icon">{leadingIcon}</span>}
+          <span className="dls-chip-regular__label">{label}</span>
+          {onRemove && (
+            <button
+              type="button"
+              className="dls-chip-regular__action"
+              disabled={disabled}
+              onClick={(e) => { e.stopPropagation(); onRemove(e); }}
+              aria-label={`Remove ${label}`}
+            >
+              <XIcon />
+            </button>
+          )}
+        </span>
 
-        {/* Leading icon */}
-        {leadingIcon && <span className="dls-chip-regular__icon">{leadingIcon}</span>}
-
-        {/* Label */}
-        <span className="dls-chip-regular__label">{label}</span>
-
-        {/* Trailing: remove */}
-        {onRemove && (
-          <button
-            type="button"
-            className="dls-chip-regular__action"
-            disabled={disabled}
-            onClick={(e) => { e.stopPropagation(); onRemove(e); }}
-            aria-label={`Remove ${label}`}
-          >
-            <XIcon />
-          </button>
-        )}
-
-        {/* Trailing: chevron */}
-        {chevron && !onRemove && (
-          <span className="dls-chip-regular__icon">
+        {/* Chevron segment — separate zone with divider */}
+        {hasChevron && (
+          <span className="dls-chip-regular__segment dls-chip-regular__segment--chevron">
             <ChevronDown />
           </span>
         )}

@@ -24,7 +24,11 @@
       "Bash(find /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories -type d -name \"*table*\" -o -type d -name \"*Table*\" 2>/dev/null | sort)",
       "Bash(ls -la /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dropdown/ 2>/dev/null | grep -E \"\\\\.\\(tsx|css|ts\\)$\")",
       "Bash(ls -la /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/list-item/ 2>/dev/null | grep -E \"\\\\.\\(tsx|css|ts\\)$\")",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:6006)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:6006)",
+      "WebFetch(domain:localhost)",
+      "Bash(curl -s 'http://localhost:6006/iframe.html?id=components-filterchip--all-states&viewMode=story' 2>/dev/null | grep -o '<div class=\"dls-filter-chip[^\"]*\"[^>]*>.*</div>' | head -5)",
+      "Bash(curl -s 'http://localhost:6006/iframe.html?id=components-filterchip--all-states&viewMode=story' 2>/dev/null | head -100)",
+      "Bash(sleep 2 && screencapture -x /tmp/filterchip-eyetoggle.png)"
     ]
   },
   "enableAllProjectMcpServers": true,

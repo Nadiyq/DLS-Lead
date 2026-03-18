@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Filters } from './Filters';
 import type { FilterGroup } from './Filters';
-import { ChipFilter } from '../chip/ChipFilter';
+import { FilterChip } from '../filter-chip/FilterChip';
 
 const meta = {
   title: 'Components/Filters',
@@ -27,6 +27,10 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 );
 
+const Val = ({ text }: { text: string }) => (
+  <span className="dls-filter-chip__value-text">{text}</span>
+);
+
 // ---------------------------------------------------------------------------
 // Playground
 // ---------------------------------------------------------------------------
@@ -39,11 +43,7 @@ export const Playground: Story = {
       {
         id: 'status',
         children: (
-          <ChipFilter
-            segments={[{ label: 'Status' }, { label: 'Active' }]}
-            active
-            size="m"
-          />
+          <FilterChip label="Status" isVisible size="m" valueSummary={<Val text="Active" />} />
         ),
       },
     ],
@@ -62,36 +62,9 @@ export const Selected: Story = {
         <Filters
           size="m"
           groups={[
-            {
-              id: 'status',
-              children: (
-                <ChipFilter
-                  segments={[{ label: 'Status' }, { label: 'Active' }]}
-                  active
-                  size="m"
-                />
-              ),
-            },
-            {
-              id: 'role',
-              children: (
-                <ChipFilter
-                  segments={[{ label: 'Role' }, { label: 'Admin' }]}
-                  active
-                  size="m"
-                />
-              ),
-            },
-            {
-              id: 'date',
-              children: (
-                <ChipFilter
-                  segments={[{ label: 'Date' }, { label: 'Last 30 days' }]}
-                  active
-                  size="m"
-                />
-              ),
-            },
+            { id: 'status', children: <FilterChip label="Status" isVisible size="m" valueSummary={<Val text="Active" />} /> },
+            { id: 'role', children: <FilterChip label="Role" isVisible size="m" valueSummary={<Val text="Admin" />} /> },
+            { id: 'date', children: <FilterChip label="Date" isVisible size="m" valueSummary={<Val text="Last 30 days" />} /> },
           ]}
         />
       </Section>
@@ -99,26 +72,8 @@ export const Selected: Story = {
         <Filters
           size="s"
           groups={[
-            {
-              id: 'status',
-              children: (
-                <ChipFilter
-                  segments={[{ label: 'Status' }, { label: 'Active' }]}
-                  active
-                  size="s"
-                />
-              ),
-            },
-            {
-              id: 'role',
-              children: (
-                <ChipFilter
-                  segments={[{ label: 'Role' }, { label: 'Admin' }]}
-                  active
-                  size="s"
-                />
-              ),
-            },
+            { id: 'status', children: <FilterChip label="Status" isVisible size="s" valueSummary={<Val text="Active" />} /> },
+            { id: 'role', children: <FilterChip label="Role" isVisible size="s" valueSummary={<Val text="Admin" />} /> },
           ]}
         />
       </Section>
@@ -138,15 +93,7 @@ export const Unselected: Story = {
         <Filters
           size="m"
           groups={[
-            {
-              id: 'status',
-              children: (
-                <ChipFilter
-                  segments={[{ label: 'Status' }]}
-                  size="m"
-                />
-              ),
-            },
+            { id: 'status', children: <FilterChip label="Status" isVisible={false} size="m" valueSummary={<Val text="All" />} /> },
           ]}
         />
       </Section>
@@ -154,15 +101,7 @@ export const Unselected: Story = {
         <Filters
           size="s"
           groups={[
-            {
-              id: 'status',
-              children: (
-                <ChipFilter
-                  segments={[{ label: 'Status' }]}
-                  size="s"
-                />
-              ),
-            },
+            { id: 'status', children: <FilterChip label="Status" isVisible={false} size="s" valueSummary={<Val text="All" />} /> },
           ]}
         />
       </Section>
@@ -202,18 +141,19 @@ export const Interactive: Story = {
     const groups: FilterGroup[] = activeFilters.map(f => ({
       id: f.id,
       children: (
-        <ChipFilter
-          segments={[{ label: f.label }, { label: f.value }]}
-          active
+        <FilterChip
+          label={f.label}
+          isVisible
           size="m"
-          onClick={() => removeFilter(f.id)}
+          valueSummary={<Val text={f.value} />}
+          onVisibilityChange={() => removeFilter(f.id)}
         />
       ),
     }));
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <Section title="Click chip to remove, + to add">
+        <Section title="Click eye to remove, + to add">
           <Filters
             size="m"
             groups={groups}
@@ -240,26 +180,8 @@ export const SizesComparison: Story = {
   args: { size: 'm', groups: [] },
   render: () => {
     const makeGroups = (size: 'm' | 's'): FilterGroup[] => [
-      {
-        id: 'status',
-        children: (
-          <ChipFilter
-            segments={[{ label: 'Status' }, { label: 'Active' }]}
-            active
-            size={size}
-          />
-        ),
-      },
-      {
-        id: 'role',
-        children: (
-          <ChipFilter
-            segments={[{ label: 'Role' }, { label: 'Admin' }]}
-            active
-            size={size}
-          />
-        ),
-      },
+      { id: 'status', children: <FilterChip label="Status" isVisible size={size} valueSummary={<Val text="Active" />} /> },
+      { id: 'role', children: <FilterChip label="Role" isVisible size={size} valueSummary={<Val text="Admin" />} /> },
     ];
 
     return (
@@ -267,7 +189,7 @@ export const SizesComparison: Story = {
         <Section title="Size M (32px)">
           <Filters size="m" groups={makeGroups('m')} />
         </Section>
-        <Section title="Size S (24px)">
+        <Section title="Size S (28px)">
           <Filters size="s" groups={makeGroups('s')} />
         </Section>
       </div>
@@ -286,26 +208,8 @@ export const WithoutAddButton: Story = {
       size="m"
       showAdd={false}
       groups={[
-        {
-          id: 'status',
-          children: (
-            <ChipFilter
-              segments={[{ label: 'Status' }, { label: 'Active' }]}
-              active
-              size="m"
-            />
-          ),
-        },
-        {
-          id: 'role',
-          children: (
-            <ChipFilter
-              segments={[{ label: 'Role' }, { label: 'Admin' }]}
-              active
-              size="m"
-            />
-          ),
-        },
+        { id: 'status', children: <FilterChip label="Status" isVisible size="m" valueSummary={<Val text="Active" />} /> },
+        { id: 'role', children: <FilterChip label="Role" isVisible size="m" valueSummary={<Val text="Admin" />} /> },
       ]}
     />
   ),
