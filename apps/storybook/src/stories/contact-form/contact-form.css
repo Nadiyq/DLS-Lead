@@ -51,6 +51,7 @@
 }
 
 .dls-contact-form__title {
+  margin: 0;
   font-size: var(--dls-text-2xl-font-size);
   line-height: var(--dls-text-2xl-line-height);
   font-weight: var(--dls-font-weight-semibold);
@@ -58,6 +59,7 @@
 }
 
 .dls-contact-form__subtitle {
+  margin: 0;
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
