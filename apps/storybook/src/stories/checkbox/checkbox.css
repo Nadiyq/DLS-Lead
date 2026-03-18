@@ -52,17 +52,25 @@
   width: 18px;
   height: 18px;
   border-radius: var(--dls-radius-component-checkbox);
+  transition: background-color 150ms ease, border-color 150ms ease;
 
   /* Unselected base */
   background: var(--dls-color-surface-base);
   border: 1px solid var(--dls-color-border-strong);
 }
 
-/* Icon hidden by default */
+/* Icons — use opacity for smooth transitions */
 .dls-checkbox__box svg {
   width: 12px;
   height: 12px;
-  display: none;
+  opacity: 0;
+  transition: opacity 150ms ease;
+  position: absolute;
+}
+
+/* Position the box as a stacking context for the icon */
+.dls-checkbox__box {
+  position: relative;
 }
 
 /* ---------------------------------------------------------------------------
@@ -76,7 +84,7 @@
 }
 
 .dls-checkbox__input:checked + .dls-checkbox__box-wrapper .dls-checkbox__box .dls-checkbox__icon-check {
-  display: block;
+  opacity: 1;
 }
 
 /* ---------------------------------------------------------------------------
@@ -90,11 +98,11 @@
 }
 
 .dls-checkbox__input:indeterminate + .dls-checkbox__box-wrapper .dls-checkbox__box .dls-checkbox__icon-check {
-  display: none;
+  opacity: 0;
 }
 
 .dls-checkbox__input:indeterminate + .dls-checkbox__box-wrapper .dls-checkbox__box .dls-checkbox__icon-minus {
-  display: block;
+  opacity: 1;
 }
 
 /* ---------------------------------------------------------------------------
@@ -110,12 +118,10 @@
 /* Hover — selected / indeterminate */
 
 .dls-checkbox__input:checked:not(:disabled):hover + .dls-checkbox__box-wrapper .dls-checkbox__box,
-.dls-checkbox:hover .dls-checkbox__input:checked:not(:disabled) + .dls-checkbox__box,
+.dls-checkbox:hover .dls-checkbox__input:checked:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box,
 .dls-checkbox__input:indeterminate:not(:disabled):hover + .dls-checkbox__box-wrapper .dls-checkbox__box,
 .dls-checkbox:hover .dls-checkbox__input:indeterminate:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box {
-  background:
-    var(--dls-state-hover-overlay),
-    var(--dls-color-intent-neutral-base);
+  background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
 
 /* ---------------------------------------------------------------------------
@@ -131,12 +137,10 @@
 /* Pressed — selected / indeterminate */
 
 .dls-checkbox__input:checked:not(:disabled):active + .dls-checkbox__box-wrapper .dls-checkbox__box,
-.dls-checkbox:active .dls-checkbox__input:checked:not(:disabled) + .dls-checkbox__box,
+.dls-checkbox:active .dls-checkbox__input:checked:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box,
 .dls-checkbox__input:indeterminate:not(:disabled):active + .dls-checkbox__box-wrapper .dls-checkbox__box,
 .dls-checkbox:active .dls-checkbox__input:indeterminate:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box {
-  background:
-    var(--dls-state-pressed-overlay),
-    var(--dls-color-intent-neutral-base);
+  background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-pressed)) c h);
 }
 
 /* ---------------------------------------------------------------------------

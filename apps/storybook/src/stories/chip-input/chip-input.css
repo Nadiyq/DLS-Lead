@@ -113,13 +113,19 @@
 .dls-chip-input__input {
   all: unset;
   box-sizing: border-box;
-  flex: 1;
-  min-width: 60px;
+  flex: 1 1 0%;
+  min-width: 0;
+  width: 0;
   font-family: var(--dls-font-family);
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: var(--dls-color-component-input-fg-base);
+}
+
+/* When no chips, let input fill the row */
+.dls-chip-input__box:not([data-has-chips]) .dls-chip-input__input {
+  flex: 1 1 100%;
 }
 
 .dls-chip-input__input::placeholder {

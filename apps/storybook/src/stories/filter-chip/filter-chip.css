@@ -1,0 +1,319 @@
+/* ==========================================================================
+   DLS Filter Chip — compound filter with eye toggle, value summary, chevron
+   Zones: label (eye+text) | value (summary) | chevron (dropdown trigger)
+   States: active (visible) | inactive (hidden) | disabled
+   Sizes: m (32px) | s (28px)
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Wrapper — positions dropdown relative to chip
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Bar — the chip strip with 3 zones
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__bar {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--dls-radius-component-chip);
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+/* Active (visible) — surface bg, border/base */
+.dls-filter-chip[data-active] .dls-filter-chip__bar {
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-base);
+  color: var(--dls-color-intent-neutral-text);
+}
+
+/* Inactive (hidden) — disabled appearance */
+.dls-filter-chip:not([data-active]) .dls-filter-chip__bar {
+  background: var(--dls-color-surface-disabled);
+  border: 1px solid var(--dls-color-border-disabled);
+  color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Zones — shared segment layout
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__zone {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--dls-font-family);
+}
+
+/* Dividers between zones */
+.dls-filter-chip__zone--value,
+.dls-filter-chip__zone--chevron {
+  border-left: 1px solid var(--dls-color-border-base);
+}
+
+.dls-filter-chip:not([data-active]) .dls-filter-chip__zone--value,
+.dls-filter-chip:not([data-active]) .dls-filter-chip__zone--chevron {
+  border-left-color: var(--dls-color-border-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Size: M (32px)
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip,
+.dls-filter-chip[data-size="m"] {
+  --_zone-pad-v: var(--dls-spacing-1-5);
+  --_zone-pad-h: var(--dls-spacing-2);
+  --_zone-gap: var(--dls-spacing-2);
+  --_font-size: var(--dls-text-m-font-size);
+  --_line-height: var(--dls-text-m-line-height);
+}
+
+.dls-filter-chip[data-size="m"] .dls-filter-chip__bar,
+.dls-filter-chip:not([data-size]) .dls-filter-chip__bar {
+  height: 32px;
+}
+
+/* ---------------------------------------------------------------------------
+   Size: S (28px)
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip[data-size="s"] {
+  --_zone-pad-v: var(--dls-spacing-1);
+  --_zone-pad-h: var(--dls-spacing-1-5);
+  --_zone-gap: var(--dls-spacing-1-5);
+  --_font-size: var(--dls-text-m-font-size);
+  --_line-height: var(--dls-text-m-line-height);
+}
+
+.dls-filter-chip[data-size="s"] .dls-filter-chip__bar {
+  height: 28px;
+}
+
+/* ---------------------------------------------------------------------------
+   Zone padding (shared via internal vars)
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__zone {
+  padding: var(--_zone-pad-v) var(--_zone-pad-h);
+  gap: var(--_zone-gap);
+  font-size: var(--_font-size);
+  line-height: var(--_line-height);
+  font-weight: var(--dls-font-weight-normal);
+}
+
+/* ---------------------------------------------------------------------------
+   Part 1 — Label zone (eye icon + label text)
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__zone--label {
+  color: inherit;
+}
+
+.dls-filter-chip__eye {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--dls-radius-component-chip);
+  transition: color 150ms ease;
+}
+
+.dls-filter-chip__eye:hover:not(:disabled) {
+  color: var(--dls-color-text-primary);
+}
+
+.dls-filter-chip__eye:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-filter-chip__eye:disabled {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.dls-filter-chip__eye svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-filter-chip:not([data-active]) .dls-filter-chip__eye {
+  color: var(--dls-color-text-disabled);
+}
+
+.dls-filter-chip:not([data-active]) .dls-filter-chip__eye:hover:not(:disabled) {
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-filter-chip__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+   Part 2 — Value/Summary zone
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__zone--value {
+  color: inherit;
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Part 3 — Chevron zone (dropdown trigger)
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__zone--chevron {
+  cursor: pointer;
+  color: inherit;
+  transition: background-color 150ms ease;
+}
+
+.dls-filter-chip__zone--chevron:hover:not(:disabled) {
+  box-shadow: inset 0 0 0 100px var(--dls-state-hover-overlay);
+}
+
+.dls-filter-chip__zone--chevron:active:not(:disabled) {
+  box-shadow: inset 0 0 0 100px var(--dls-state-pressed-overlay);
+}
+
+.dls-filter-chip__zone--chevron:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  border-radius: 0 var(--dls-radius-component-chip) var(--dls-radius-component-chip) 0;
+  z-index: 1;
+  position: relative;
+}
+
+.dls-filter-chip__zone--chevron:disabled {
+  cursor: not-allowed;
+}
+
+.dls-filter-chip__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  transition: transform 150ms ease;
+}
+
+.dls-filter-chip__chevron svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Rotate chevron when dropdown is open */
+.dls-filter-chip[data-open] .dls-filter-chip__chevron {
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------------------------
+   Disabled
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip[data-disabled] .dls-filter-chip__bar {
+  background: var(--dls-color-surface-disabled);
+  border-color: var(--dls-color-border-disabled);
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.dls-filter-chip[data-disabled] .dls-filter-chip__zone--value,
+.dls-filter-chip[data-disabled] .dls-filter-chip__zone--chevron {
+  border-left-color: var(--dls-color-border-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Dropdown panel — anchored below the chip
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__dropdown {
+  position: absolute;
+  top: calc(100% + var(--dls-spacing-1));
+  left: 0;
+  z-index: 10;
+  min-width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Value helpers — composable classes for common value layouts
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__value-row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_zone-gap);
+  white-space: nowrap;
+}
+
+.dls-filter-chip__value-text {
+  font-size: var(--_font-size);
+  line-height: var(--_line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+   Dropdown list variants — width + shadow on DLS List
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__user-list,
+.dls-filter-chip__enum-list,
+.dls-filter-chip__date-list,
+.dls-filter-chip__numeric-list {
+  min-width: 242px;
+  max-height: 320px;
+  overflow-y: auto;
+  box-shadow: var(--dls-shadow-m);
+}
+
+/* ---------------------------------------------------------------------------
+   Number input — styled inline with DLS tokens
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__number-input {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  color: var(--dls-color-component-input-fg-base);
+  background: var(--dls-color-component-input-bg-base);
+  border: 1px solid var(--dls-color-component-input-border-base);
+  border-radius: var(--dls-radius-component-input);
+}
+
+.dls-filter-chip__number-input:focus-visible {
+  border-color: var(--dls-color-component-input-border-focus);
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+.dls-filter-chip__number-input::placeholder {
+  color: var(--dls-color-component-input-fg-placeholder);
+}

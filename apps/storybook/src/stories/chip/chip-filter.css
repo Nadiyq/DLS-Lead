@@ -80,16 +80,25 @@
 
 /* ---------------------------------------------------------------------------
    Segments — individual chip-like sections within the filter
+   Figma: each segment is a separate bordered chip instance at gap=0
    --------------------------------------------------------------------------- */
 
 .dls-chip-filter__segment {
   display: inline-flex;
   align-items: center;
-  gap: var(--dls-spacing-2);
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: inherit;
+}
+
+/* Divider between segments — left border on all but first */
+.dls-chip-filter__segment:not(:first-child) {
+  border-left: 1px solid var(--dls-color-border-base);
+}
+
+.dls-chip-filter:not([data-active]) .dls-chip-filter__segment:not(:first-child) {
+  border-left-color: var(--dls-color-border-disabled);
 }
 
 /* M segment padding */
@@ -144,6 +153,11 @@
   width: 16px;
   height: 16px;
   color: inherit;
+  border-left: 1px solid var(--dls-color-border-base);
+}
+
+.dls-chip-filter:not([data-active]) .dls-chip-filter__chevron {
+  border-left-color: var(--dls-color-border-disabled);
 }
 
 /* M chevron padding */

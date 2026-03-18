@@ -144,7 +144,11 @@
 }
 
 .dls-avatar-stack__counter:hover:not(:disabled) {
-  background: var(--dls-state-hover-overlay);
+  background: oklch(from var(--dls-color-component-avatar-counter-bg) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+
+.dls-avatar-stack__counter:active:not(:disabled) {
+  background: oklch(from var(--dls-color-component-avatar-counter-bg) calc(l + var(--dls-state-l-delta-pressed)) c h);
 }
 
 .dls-avatar-stack__counter:focus-visible {

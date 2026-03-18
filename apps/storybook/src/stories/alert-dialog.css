@@ -39,8 +39,8 @@
   --_intent: neutral;
 }
 
-/* Closed state */
-.dls-alert-dialog:not([open]) {
+/* Closed state — only hide native <dialog> elements */
+dialog.dls-alert-dialog:not([open]) {
   display: none;
 }
 

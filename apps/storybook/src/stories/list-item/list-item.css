@@ -16,6 +16,7 @@
   gap: var(--dls-spacing-2);
   padding: var(--dls-spacing-1) var(--dls-spacing-2);
   border-radius: var(--dls-radius-component-list-item);
+  border: 1px solid transparent;
   font-family: var(--dls-font-family);
   background: var(--dls-color-surface-base);
   cursor: pointer;
@@ -25,7 +26,7 @@
    States
    --------------------------------------------------------------------------- */
 
-.dls-list-item:hover:not(:disabled):not([data-type="divider"]) {
+.dls-list-item:hover:not(:disabled):not([data-type="divider"]):not([data-selected]) {
   background: var(--dls-state-hover-overlay);
 }
 
@@ -33,6 +34,10 @@
 .dls-list-item[data-selected]:not(:disabled):not([data-type="divider"]) {
   background: var(--dls-color-intent-info-subtle);
   border: 1px solid var(--dls-color-intent-info-border);
+}
+
+.dls-list-item[data-selected]:hover:not(:disabled):not([data-type="divider"]) {
+  background: oklch(from var(--dls-color-intent-info-subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
 
 .dls-list-item:focus-visible {
