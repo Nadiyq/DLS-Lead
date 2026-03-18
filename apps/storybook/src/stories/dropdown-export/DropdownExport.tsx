@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './dropdown-export.css';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
+import { Radiobutton } from '../radiobutton/Radiobutton';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -64,58 +67,42 @@ export const DropdownExport = React.forwardRef<HTMLDivElement, DropdownExportPro
     };
 
     return (
-      <div
+      <List
         ref={ref}
         className={['dls-dropdown-export', className].filter(Boolean).join(' ')}
-        role="dialog"
-        aria-label="Export settings"
       >
         {/* Scope section */}
-        <div className="dls-dropdown-export__label">Export</div>
+        <ListItem type="label" text="Export" />
 
-        <div role="radiogroup" aria-label="Export scope">
-          {scopeOptions.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              className="dls-dropdown-export__option"
-              role="radio"
-              aria-checked={scope === opt.value}
-              data-selected={scope === opt.value ? '' : undefined}
-              onClick={() => handleScope(opt.value)}
-            >
-              <span className="dls-dropdown-export__radio">
-                <span className="dls-dropdown-export__radio-dot" />
-              </span>
-              <span className="dls-dropdown-export__text">{opt.label}</span>
-            </button>
-          ))}
-        </div>
+        {scopeOptions.map((opt) => (
+          <ListItem key={opt.value} type="with-slots">
+            <Radiobutton
+              label={opt.label}
+              checked={scope === opt.value}
+              onChange={() => handleScope(opt.value)}
+              name="export-scope"
+              value={opt.value}
+            />
+          </ListItem>
+        ))}
 
-        <div className="dls-dropdown-export__divider" />
+        <ListItem type="divider" />
 
         {/* Format section */}
-        <div className="dls-dropdown-export__label">Format</div>
+        <ListItem type="label" text="Format" />
 
-        <div role="radiogroup" aria-label="Export format">
-          {formatOptions.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              className="dls-dropdown-export__option"
-              role="radio"
-              aria-checked={format === opt.value}
-              data-selected={format === opt.value ? '' : undefined}
-              onClick={() => handleFormat(opt.value)}
-            >
-              <span className="dls-dropdown-export__radio">
-                <span className="dls-dropdown-export__radio-dot" />
-              </span>
-              <span className="dls-dropdown-export__text">{opt.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+        {formatOptions.map((opt) => (
+          <ListItem key={opt.value} type="with-slots">
+            <Radiobutton
+              label={opt.label}
+              checked={format === opt.value}
+              onChange={() => handleFormat(opt.value)}
+              name="export-format"
+              value={opt.value}
+            />
+          </ListItem>
+        ))}
+      </List>
     );
   },
 );

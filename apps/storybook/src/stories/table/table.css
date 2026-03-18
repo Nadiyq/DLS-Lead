@@ -19,13 +19,25 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Columns area — horizontal row of TableColumn components
+   Columns area — CSS Grid ensures equal row heights across columns.
+   Each TableColumn uses display:contents so its cells become direct grid
+   children, which means cells in the same logical row share the same
+   grid row and therefore the same height.
    --------------------------------------------------------------------------- */
 
 .dls-table__columns {
-  display: flex;
-  flex: 1;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   min-height: 0;
+}
+
+/* Wrapper divs (legacy) become transparent to the grid.
+   When TableColumn is wrapped in a sizing div, the wrapper needs
+   display:contents so cells become direct grid participants.
+   Only target plain divs — not cells or columns themselves. */
+.dls-table__columns > :not(.dls-table-column):not(.dls-table-cell):not(.dls-table-header-cell) {
+  display: contents;
 }
 
 /* ---------------------------------------------------------------------------

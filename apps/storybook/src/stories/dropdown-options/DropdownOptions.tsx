@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './dropdown-options.css';
+import { Button } from '../Button';
 
 /* ---------------------------------------------------------------------------
    Icons
@@ -90,17 +91,18 @@ export const DropdownOptions = React.forwardRef<HTMLDivElement, DropdownOptionsP
         data-open={isOpen || undefined}
         onKeyDown={handleKeyDown}
       >
-        <button
-          type="button"
-          className="dls-dropdown-options__trigger"
+        <Button
+          variant="soft"
+          intent="neutral"
+          size="m"
+          icon={triggerIcon || <KebabIcon />}
+          iconOnly
+          aria-label={triggerLabel}
           aria-haspopup="menu"
           aria-expanded={isOpen}
-          aria-label={triggerLabel}
           disabled={disabled}
           onClick={toggle}
-        >
-          {triggerIcon || <KebabIcon />}
-        </button>
+        />
 
         <div
           className="dls-dropdown-options__panel"

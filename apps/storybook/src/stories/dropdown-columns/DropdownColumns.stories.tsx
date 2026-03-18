@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { DropdownColumns } from './DropdownColumns';
 import type { ColumnItem } from './DropdownColumns';
+import { Button } from '../Button';
 
 const meta = {
   title: 'Components/DropdownColumns',
@@ -134,20 +135,9 @@ export const InContext: Story = {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
-        <button
-          type="button"
-          onClick={() => setOpen(v => !v)}
-          style={{
-            all: 'unset', boxSizing: 'border-box', cursor: 'pointer',
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            height: 32, padding: '0 12px', borderRadius: 'var(--dls-radius-component-button)',
-            background: 'var(--dls-color-intent-neutral-subtle)', border: '1px solid var(--dls-color-border-base)',
-            fontFamily: 'var(--dls-font-family)', fontSize: 'var(--dls-text-m-font-size)',
-            color: 'var(--dls-color-text-primary)',
-          }}
-        >
+        <Button variant="soft" intent="neutral" size="m" onClick={() => setOpen(v => !v)}>
           {open ? 'Close' : 'Open'} Columns
-        </button>
+        </Button>
         {open && (
           <DropdownColumns
             shown={sampleShown}

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { DropdownSorting } from './DropdownSorting';
 import type { SortColumn, SortDirection } from './DropdownSorting';
+import { ChipFilter } from '../chip/ChipFilter';
 
 const meta = {
   title: 'Components/DropdownSorting',
@@ -125,29 +126,12 @@ export const InContext: Story = {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
-        <div
-          role="button"
-          tabIndex={0}
+        <ChipFilter
+          segments={[{ label: 'Sort' }, { label: colLabel }]}
+          active
+          size="m"
           onClick={() => setOpen(v => !v)}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(v => !v); } }}
-          style={{
-            display: 'inline-flex', alignItems: 'center', cursor: 'pointer',
-            height: 32, borderRadius: 'var(--dls-radius-component-chip)',
-            border: '1px solid var(--dls-color-border-base)', background: 'var(--dls-color-surface-base)',
-            fontFamily: 'var(--dls-font-family)', fontSize: 'var(--dls-text-m-font-size)',
-            overflow: 'hidden',
-          }}
-        >
-          <span style={{ padding: '0 8px', borderRight: '1px solid var(--dls-color-border-subtle)', color: 'var(--dls-color-text-secondary)' }}>
-            Sort
-          </span>
-          <span style={{ padding: '0 8px', color: 'var(--dls-color-text-primary)' }}>
-            {colLabel}
-          </span>
-          <span style={{ padding: '0 6px', color: 'var(--dls-color-text-secondary)' }}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </span>
-        </div>
+        />
         {open && (
           <DropdownSorting
             columns={sampleColumns}

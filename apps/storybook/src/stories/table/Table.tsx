@@ -8,8 +8,12 @@ import './table.css';
 export interface TableProps {
   /** Top bar content (TableTopBar or custom toolbar) */
   topBar?: React.ReactNode;
-  /** Column children — typically a set of TableColumn components wrapped in sizing divs */
+  /** Column children — TableColumn components (no wrapper divs needed) */
   children: React.ReactNode;
+  /** Grid column sizes (CSS grid-template-columns value, e.g. "40px 2fr 1fr 100px") */
+  columns?: string;
+  /** Number of data rows per column (used to set grid-template-rows) */
+  rowCount?: number;
   /** Whether to show pagination */
   showPagination?: boolean;
   /** Total number of items */
@@ -84,6 +88,8 @@ export const Table = React.forwardRef<HTMLDivElement, TableProps>(
     {
       topBar,
       children,
+      columns,
+      rowCount,
       showPagination = true,
       totalItems = 500,
       itemsPerPage = 10,
@@ -107,7 +113,13 @@ export const Table = React.forwardRef<HTMLDivElement, TableProps>(
         {topBar}
 
         {/* Columns area */}
-        <div className="dls-table__columns">
+        <div
+          className="dls-table__columns"
+          style={columns ? {
+            gridTemplateColumns: columns,
+            ...(rowCount ? { gridTemplateRows: `repeat(${rowCount + 1}, auto)` } : {}),
+          } as React.CSSProperties : undefined}
+        >
           {children}
         </div>
 

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { DropdownColumnActions } from './DropdownColumnActions';
 import type { SortState } from './DropdownColumnActions';
+import { TableHeaderCell } from '../table-header-cell/TableHeaderCell';
 
 const meta = {
   title: 'Components/DropdownColumnActions',
@@ -164,26 +165,12 @@ export const InContext: Story = {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'flex-start' }}>
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={() => setOpen(v => !v)}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(v => !v); } }}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 4, padding: '8px 12px',
-            background: 'var(--dls-color-intent-neutral-subtle)',
-            borderBottom: '1px solid var(--dls-color-border-subtle)',
-            fontFamily: 'var(--dls-font-family)', fontSize: 'var(--dls-text-m-font-size)',
-            color: 'var(--dls-color-text-primary)', cursor: 'pointer', minWidth: 120,
-          }}
-        >
-          Name
-          {sortState !== 'none' && (
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: sortState === 'desc' ? 'rotate(180deg)' : undefined }}>
-              <path d="M6 2.5V9.5M6 2.5L3 5.5M6 2.5L9 5.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          )}
-        </div>
+        <TableHeaderCell
+          text="Name"
+          sortable
+          sortDirection={sortState}
+          onSort={() => setOpen(v => !v)}
+        />
         {open && (
           <DropdownColumnActions
             sortState={sortState}

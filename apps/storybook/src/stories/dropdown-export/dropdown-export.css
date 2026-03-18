@@ -1,126 +1,21 @@
 /* ==========================================================================
    DLS Dropdown Export — export configuration panel for tables
-   Two radio groups: scope (all/visible columns) and format (CSV/Excel/PDF)
+   Wraps List + ListItem + Radiobutton. Container adds width + shadow.
    ========================================================================== */
 
-/* ---------------------------------------------------------------------------
-   Container — list panel style
-   --------------------------------------------------------------------------- */
-
 .dls-dropdown-export {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   width: 212px;
-  padding: var(--dls-spacing-2);
-  background: var(--dls-color-surface-base);
-  border: 1px solid var(--dls-color-border-subtle);
-  border-radius: var(--dls-radius-component-list);
   box-shadow:
     0 2px 4px -2px rgba(47, 55, 70, 0.20),
     0 4px 6px -1px rgba(47, 55, 70, 0.20);
-  font-family: var(--dls-font-family);
 }
 
-/* ---------------------------------------------------------------------------
-   Section label
-   --------------------------------------------------------------------------- */
+/* Radio list items should not have hover/selected states themselves */
 
-.dls-dropdown-export__label {
-  display: flex;
-  align-items: center;
-  padding: var(--dls-spacing-1) var(--dls-spacing-2);
-  min-height: 32px;
-  font-size: var(--dls-text-s-font-size);
-  line-height: var(--dls-text-s-line-height);
-  font-weight: var(--dls-font-weight-medium);
-  color: var(--dls-color-text-secondary);
+.dls-dropdown-export .dls-list-item[data-type="with-slots"] {
+  cursor: default;
 }
 
-/* ---------------------------------------------------------------------------
-   Radio option row
-   --------------------------------------------------------------------------- */
-
-.dls-dropdown-export__option {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  gap: var(--dls-spacing-2);
-  width: 100%;
-  padding: var(--dls-spacing-1) var(--dls-spacing-2);
-  min-height: 32px;
-  border-radius: var(--dls-radius-component-list-item);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-dropdown-export__option:hover:not([data-disabled]) {
-  background: var(--dls-state-hover-overlay);
-}
-
-.dls-dropdown-export__option[data-selected] {
-  background: var(--dls-state-pressed-overlay);
-}
-
-.dls-dropdown-export__option:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-/* ---------------------------------------------------------------------------
-   Radio circle
-   --------------------------------------------------------------------------- */
-
-.dls-dropdown-export__radio {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-  border-radius: var(--dls-radius-full);
-  border: 1px solid var(--dls-color-border-strong);
+.dls-dropdown-export .dls-list-item[data-type="with-slots"]:hover:not(:disabled) {
   background: var(--dls-color-surface-base);
-  transition: border-color 150ms ease, background-color 150ms ease;
-}
-
-.dls-dropdown-export__option[data-selected] .dls-dropdown-export__radio {
-  border-color: var(--dls-color-intent-neutral-base);
-  background: var(--dls-color-intent-neutral-base);
-}
-
-.dls-dropdown-export__radio-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: var(--dls-radius-full);
-  background: var(--dls-color-intent-neutral-on-base);
-  opacity: 0;
-  transition: opacity 150ms ease;
-}
-
-.dls-dropdown-export__option[data-selected] .dls-dropdown-export__radio-dot {
-  opacity: 1;
-}
-
-/* ---------------------------------------------------------------------------
-   Option text
-   --------------------------------------------------------------------------- */
-
-.dls-dropdown-export__text {
-  flex: 1;
-  font-size: var(--dls-text-s-font-size);
-  line-height: var(--dls-text-s-line-height);
-  font-weight: var(--dls-font-weight-medium);
-  color: var(--dls-color-text-primary);
-}
-
-/* ---------------------------------------------------------------------------
-   Divider
-   --------------------------------------------------------------------------- */
-
-.dls-dropdown-export__divider {
-  height: 1px;
-  margin: var(--dls-spacing-1) var(--dls-spacing-2);
-  background: var(--dls-color-border-base);
 }

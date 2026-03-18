@@ -21,7 +21,10 @@
       "Bash(ls /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/*.stories.tsx /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/**/*.stories.tsx 2>/dev/null | head -5)",
       "Bash(find /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/chip* -name \"*.tsx\" -type f)",
       "Bash(ls -la /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/table*/ 2>/dev/null | grep -E \"\\\\.tsx$|\\\\.css$\")",
-      "Bash(find /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories -type d -name \"*table*\" -o -type d -name \"*Table*\" 2>/dev/null | sort)"
+      "Bash(find /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories -type d -name \"*table*\" -o -type d -name \"*Table*\" 2>/dev/null | sort)",
+      "Bash(ls -la /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dropdown/ 2>/dev/null | grep -E \"\\\\.\\(tsx|css|ts\\)$\")",
+      "Bash(ls -la /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/list-item/ 2>/dev/null | grep -E \"\\\\.\\(tsx|css|ts\\)$\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:6006)"
     ]
   },
   "enableAllProjectMcpServers": true,

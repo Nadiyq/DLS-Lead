@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { TableCell } from './TableCell';
+import { Checkbox } from '../checkbox/Checkbox';
+import { Button } from '../Button';
+import '../table/table.css';
 
 const meta = {
   title: 'Components/TableCell',
@@ -32,42 +35,10 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 );
 
-const SmallCheckbox = () => (
-  <span style={{
-    display: 'inline-flex', width: 18, height: 18, borderRadius: 'var(--dls-radius-component-checkbox)',
-    border: '1px solid var(--dls-color-border-strong)', background: 'var(--dls-color-surface-base)',
-    alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-  }} />
-);
-
 const SmallIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" />
   </svg>
-);
-
-const SmallBadge = ({ children }: { children: React.ReactNode }) => (
-  <span style={{
-    display: 'inline-flex', padding: '2px 8px', fontSize: 'var(--dls-text-s-font-size)',
-    lineHeight: 'var(--dls-text-s-line-height)', fontWeight: 'var(--dls-font-weight-medium)',
-    fontFamily: 'var(--dls-font-family)', borderRadius: 'var(--dls-radius-component-badge)',
-    background: 'var(--dls-color-intent-neutral-subtle)', color: 'var(--dls-color-intent-neutral-text)',
-  }}>
-    {children}
-  </span>
-);
-
-const SmallButton = ({ children }: { children: React.ReactNode }) => (
-  <button style={{
-    all: 'unset', boxSizing: 'border-box', cursor: 'pointer',
-    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-    padding: '4px 12px', fontSize: 'var(--dls-text-s-font-size)',
-    lineHeight: 'var(--dls-text-s-line-height)', fontWeight: 'var(--dls-font-weight-medium)',
-    fontFamily: 'var(--dls-font-family)', borderRadius: 'var(--dls-radius-component-button)',
-    border: '1px solid var(--dls-color-border-base)', color: 'var(--dls-color-text-primary)',
-  }}>
-    {children}
-  </button>
 );
 
 // ---------------------------------------------------------------------------
@@ -95,7 +66,7 @@ export const TextCell: Story = {
         <TableCell type="text" text="Item text" />
       </Section>
       <Section title="With checkbox">
-        <TableCell type="text" text="Item text" slotLeft={<SmallCheckbox />} />
+        <TableCell type="text" text="Item text" slotLeft={<Checkbox />} />
       </Section>
       <Section title="With icon">
         <TableCell type="text" text="Item text" icon={<SmallIcon />} />
@@ -174,13 +145,13 @@ export const BadgeCell: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0, width: 300 }}>
       <TableCell type="badge" align="left">
-        <SmallBadge>Active</SmallBadge>
+        <Button variant="soft" intent="success" size="s">Active</Button>
       </TableCell>
       <TableCell type="badge" align="center">
-        <SmallBadge>Pending</SmallBadge>
+        <Button variant="soft" intent="warning" size="s">Pending</Button>
       </TableCell>
       <TableCell type="badge" align="right">
-        <SmallBadge>Inactive</SmallBadge>
+        <Button variant="soft" intent="danger" size="s">Inactive</Button>
       </TableCell>
     </div>
   ),
@@ -195,10 +166,10 @@ export const ButtonCell: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0, width: 300 }}>
       <TableCell type="button" align="left">
-        <SmallButton>Edit</SmallButton>
+        <Button variant="outline" intent="neutral" size="s">Edit</Button>
       </TableCell>
       <TableCell type="button" align="right">
-        <SmallButton>View</SmallButton>
+        <Button variant="outline" intent="neutral" size="s">View</Button>
       </TableCell>
     </div>
   ),
@@ -213,11 +184,11 @@ export const ActionsCell: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0, width: 300 }}>
       <TableCell type="actions" align="right">
-        <SmallButton>Edit</SmallButton>
-        <SmallButton>Delete</SmallButton>
+        <Button variant="outline" intent="neutral" size="s">Edit</Button>
+        <Button variant="outline" intent="neutral" size="s">Delete</Button>
       </TableCell>
       <TableCell type="actions" align="right">
-        <SmallButton>View</SmallButton>
+        <Button variant="outline" intent="neutral" size="s">View</Button>
       </TableCell>
     </div>
   ),
@@ -256,48 +227,27 @@ export const TableRowExample: Story = {
   args: { text: 'Item text' },
   render: () => (
     <div style={{ width: 700 }}>
-      <Section title="Example row">
-        <div style={{ display: 'flex' }}>
-          <div style={{ flex: '0 0 40px' }}>
-            <TableCell type="text" slotLeft={<SmallCheckbox />} padding={false} />
-          </div>
-          <div style={{ flex: 2 }}>
-            <TableCell type="two-line" text="John Smith" secondaryText="john@example.com" />
-          </div>
-          <div style={{ flex: 1 }}>
-            <TableCell type="badge" align="center">
-              <SmallBadge>Active</SmallBadge>
-            </TableCell>
-          </div>
-          <div style={{ flex: 1 }}>
-            <TableCell type="text" text="$12,500" align="right" />
-          </div>
-          <div style={{ flex: '0 0 120px' }}>
-            <TableCell type="actions" align="right">
-              <SmallButton>Edit</SmallButton>
-            </TableCell>
-          </div>
-        </div>
-        <div style={{ display: 'flex' }}>
-          <div style={{ flex: '0 0 40px' }}>
-            <TableCell type="text" slotLeft={<SmallCheckbox />} padding={false} />
-          </div>
-          <div style={{ flex: 2 }}>
-            <TableCell type="two-line" text="Jane Doe" secondaryText="jane@example.com" />
-          </div>
-          <div style={{ flex: 1 }}>
-            <TableCell type="badge" align="center">
-              <SmallBadge>Pending</SmallBadge>
-            </TableCell>
-          </div>
-          <div style={{ flex: 1 }}>
-            <TableCell type="text" text="$8,200" align="right" />
-          </div>
-          <div style={{ flex: '0 0 120px' }}>
-            <TableCell type="actions" align="right">
-              <SmallButton>Edit</SmallButton>
-            </TableCell>
-          </div>
+      <Section title="Example rows (grid layout — equal row heights)">
+        <div className="dls-table__columns" style={{ gridTemplateColumns: '40px 2fr 1fr 1fr 120px', gridTemplateRows: 'repeat(2, auto)' }}>
+          <TableCell type="text" slotLeft={<Checkbox />} padding={false} />
+          <TableCell type="two-line" text="John Smith" secondaryText="john@example.com" />
+          <TableCell type="badge" align="center">
+            <Button variant="soft" intent="success" size="s">Active</Button>
+          </TableCell>
+          <TableCell type="text" text="$12,500" align="right" />
+          <TableCell type="actions" align="right">
+            <Button variant="outline" intent="neutral" size="s">Edit</Button>
+          </TableCell>
+
+          <TableCell type="text" slotLeft={<Checkbox />} padding={false} />
+          <TableCell type="two-line" text="Jane Doe" secondaryText="jane@example.com" />
+          <TableCell type="badge" align="center">
+            <Button variant="soft" intent="warning" size="s">Pending</Button>
+          </TableCell>
+          <TableCell type="text" text="$8,200" align="right" />
+          <TableCell type="actions" align="right">
+            <Button variant="outline" intent="neutral" size="s">Edit</Button>
+          </TableCell>
         </div>
       </Section>
     </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 import './dropdown-filters.css';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
 import { ChipRegular } from '../chip/ChipRegular';
 
 /* ---------------------------------------------------------------------------
@@ -40,14 +42,12 @@ export const DropdownFilters = React.forwardRef<HTMLDivElement, DropdownFiltersP
     const activeSet = new Set(activeIds);
 
     return (
-      <div
+      <List
         ref={ref}
         className={['dls-dropdown-filters', className].filter(Boolean).join(' ')}
-        role="dialog"
-        aria-label="Select filters"
       >
-        <div className="dls-dropdown-filters__label">Filters</div>
-        <div className="dls-dropdown-filters__chips">
+        <ListItem type="label" text="Filters" />
+        <ListItem type="chips">
           {options.map((opt) => {
             const isActive = activeSet.has(opt.id);
             return (
@@ -61,8 +61,8 @@ export const DropdownFilters = React.forwardRef<HTMLDivElement, DropdownFiltersP
               />
             );
           })}
-        </div>
-      </div>
+        </ListItem>
+      </List>
     );
   },
 );

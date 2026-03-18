@@ -4,6 +4,10 @@ import { Table } from './Table';
 import { TableTopBar } from '../table-top-bar/TableTopBar';
 import { TableColumn } from '../table-column/TableColumn';
 import type { TableColumnRow } from '../table-column/TableColumn';
+import { Button } from '../Button';
+import { InputField } from '../input-field/InputField';
+import { Filters } from '../filters/Filters';
+import { ChipFilter } from '../chip/ChipFilter';
 
 const meta = {
   title: 'Templates/Table',
@@ -16,66 +20,24 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /* ---------------------------------------------------------------------------
-   Stub helpers — lightweight stand-ins for real components
+   Helpers
    --------------------------------------------------------------------------- */
 
-const SearchInput = () => (
-  <div style={{
-    display: 'inline-flex', alignItems: 'center', gap: 'var(--dls-spacing-2)',
-    padding: '0 var(--dls-spacing-3)', height: 32,
-    border: '1px solid var(--dls-color-border-base)', borderRadius: 'var(--dls-radius-component-input)',
-    fontFamily: 'var(--dls-font-family)', fontSize: 'var(--dls-text-m-font-size)',
-    color: 'var(--dls-color-text-secondary)', minWidth: 200,
-  }}>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.33" />
-      <path d="M11 11L14 14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-    </svg>
-    Search…
-  </div>
+const SearchIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.33" />
+    <path d="M11 11L14 14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
+  </svg>
 );
 
-const IconButton = ({ label }: { label: string }) => (
-  <button type="button" aria-label={label} style={{
-    all: 'unset', boxSizing: 'border-box', display: 'inline-flex', alignItems: 'center',
-    justifyContent: 'center', width: 32, height: 32,
-    borderRadius: 'var(--dls-radius-component-button)',
-    color: 'var(--dls-color-text-secondary)', cursor: 'pointer',
-  }}>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <circle cx="8" cy="3" r="1" fill="currentColor" />
-      <circle cx="8" cy="8" r="1" fill="currentColor" />
-      <circle cx="8" cy="13" r="1" fill="currentColor" />
-    </svg>
-  </button>
+const MoreIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <circle cx="8" cy="3" r="1" fill="currentColor" />
+    <circle cx="8" cy="8" r="1" fill="currentColor" />
+    <circle cx="8" cy="13" r="1" fill="currentColor" />
+  </svg>
 );
 
-const ActionButton = ({ children }: { children: React.ReactNode }) => (
-  <button type="button" style={{
-    all: 'unset', boxSizing: 'border-box', display: 'inline-flex', alignItems: 'center',
-    justifyContent: 'center', padding: '0 var(--dls-spacing-4)', height: 32,
-    borderRadius: 'var(--dls-radius-component-button)',
-    background: 'var(--dls-color-intent-neutral-base)',
-    color: 'var(--dls-color-intent-neutral-on-base)',
-    fontFamily: 'var(--dls-font-family)', fontSize: 'var(--dls-text-m-font-size)',
-    fontWeight: 'var(--dls-font-weight-medium)', cursor: 'pointer',
-  }}>
-    {children}
-  </button>
-);
-
-const ChipStub = ({ children }: { children: React.ReactNode }) => (
-  <span style={{
-    display: 'inline-flex', alignItems: 'center', gap: 'var(--dls-spacing-1)',
-    padding: '0 var(--dls-spacing-3)', height: 28,
-    borderRadius: 'var(--dls-radius-component-chip)',
-    border: '1px solid var(--dls-color-border-base)',
-    fontFamily: 'var(--dls-font-family)', fontSize: 'var(--dls-text-s-font-size)',
-    color: 'var(--dls-color-text-primary)',
-  }}>
-    {children}
-  </span>
-);
 
 /* ---------------------------------------------------------------------------
    Sample data
@@ -125,28 +87,18 @@ export const Playground: Story = {
     itemsPerPage: 10,
     currentPage: 1,
     totalPages: 10,
+    columns: '40px 2fr 1fr 1fr 1fr 100px',
+    rowCount: 5,
     children: null,
   },
   render: (args) => (
     <Table {...args}>
-      <div style={{ flex: '0 0 40px' }}>
-        <TableColumn type="checkbox" rows={checkboxRows} />
-      </div>
-      <div style={{ flex: 2 }}>
-        <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="badge" header="Status" rows={badgeRows} />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="date" header="Joined" rows={dateRows} sortable />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-      </div>
-      <div style={{ flex: '0 0 100px' }}>
-        <TableColumn type="actions" rows={actionsRows} />
-      </div>
+      <TableColumn type="checkbox" rows={checkboxRows} />
+      <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
+      <TableColumn type="badge" header="Status" rows={badgeRows} />
+      <TableColumn type="date" header="Joined" rows={dateRows} sortable />
+      <TableColumn type="number" header="Amount" rows={numberRows} sortable />
+      <TableColumn type="actions" rows={actionsRows} />
     </Table>
   ),
 };
@@ -162,6 +114,8 @@ export const Default: Story = {
     itemsPerPage: 10,
     currentPage: 1,
     totalPages: 10,
+    columns: '40px 2fr 1fr 1fr 1fr 100px',
+    rowCount: 5,
     children: null,
   },
   render: (args) => (
@@ -169,34 +123,22 @@ export const Default: Story = {
       {...args}
       topBar={
         <TableTopBar
-          slotLeft={<SearchInput />}
+          slotLeft={<InputField placeholder="Search..." iconStart={<SearchIcon />} />}
           slotRight={
             <div style={{ display: 'flex', gap: 'var(--dls-spacing-2)', alignItems: 'center' }}>
-              <IconButton label="Options" />
-              <ActionButton>Add new</ActionButton>
+              <Button variant="ghost" intent="neutral" size="m" icon={<MoreIcon />} iconOnly aria-label="Options" />
+              <Button variant="filled" intent="neutral" size="m">Add new</Button>
             </div>
           }
         />
       }
     >
-      <div style={{ flex: '0 0 40px' }}>
-        <TableColumn type="checkbox" rows={checkboxRows} />
-      </div>
-      <div style={{ flex: 2 }}>
-        <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="badge" header="Status" rows={badgeRows} />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="date" header="Joined" rows={dateRows} sortable />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-      </div>
-      <div style={{ flex: '0 0 100px' }}>
-        <TableColumn type="actions" rows={actionsRows} />
-      </div>
+      <TableColumn type="checkbox" rows={checkboxRows} />
+      <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
+      <TableColumn type="badge" header="Status" rows={badgeRows} />
+      <TableColumn type="date" header="Joined" rows={dateRows} sortable />
+      <TableColumn type="number" header="Amount" rows={numberRows} sortable />
+      <TableColumn type="actions" rows={actionsRows} />
     </Table>
   ),
 };
@@ -212,6 +154,8 @@ export const WithFilters: Story = {
     itemsPerPage: 10,
     currentPage: 1,
     totalPages: 10,
+    columns: '40px 2fr 1fr 1fr 1fr 100px',
+    rowCount: 5,
     children: null,
   },
   render: (args) => (
@@ -219,42 +163,60 @@ export const WithFilters: Story = {
       {...args}
       topBar={
         <TableTopBar
-          slotLeft={<SearchInput />}
+          slotLeft={<InputField placeholder="Search..." iconStart={<SearchIcon />} />}
           slotRight={
             <div style={{ display: 'flex', gap: 'var(--dls-spacing-2)', alignItems: 'center' }}>
-              <IconButton label="Options" />
-              <ActionButton>Add new</ActionButton>
+              <Button variant="ghost" intent="neutral" size="m" icon={<MoreIcon />} iconOnly aria-label="Options" />
+              <Button variant="filled" intent="neutral" size="m">Add new</Button>
             </div>
           }
           showFilters
           filters={
-            <div style={{ display: 'flex', gap: 'var(--dls-spacing-2)', alignItems: 'center' }}>
-              <ChipStub>Status: Active</ChipStub>
-              <ChipStub>Role: Admin</ChipStub>
-              <ChipStub>Sort: Name ↑</ChipStub>
-            </div>
+            <Filters
+              size="m"
+              groups={[
+                {
+                  id: 'status',
+                  children: (
+                    <ChipFilter
+                      segments={[{ label: 'Status' }, { label: 'Active' }]}
+                      active
+                      size="m"
+                    />
+                  ),
+                },
+                {
+                  id: 'role',
+                  children: (
+                    <ChipFilter
+                      segments={[{ label: 'Role' }, { label: 'Admin' }]}
+                      active
+                      size="m"
+                    />
+                  ),
+                },
+                {
+                  id: 'sort',
+                  children: (
+                    <ChipFilter
+                      segments={[{ label: 'Sort' }, { label: 'Name ↑' }]}
+                      active
+                      size="m"
+                    />
+                  ),
+                },
+              ]}
+            />
           }
         />
       }
     >
-      <div style={{ flex: '0 0 40px' }}>
-        <TableColumn type="checkbox" rows={checkboxRows} />
-      </div>
-      <div style={{ flex: 2 }}>
-        <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="badge" header="Status" rows={badgeRows} />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="date" header="Joined" rows={dateRows} sortable />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-      </div>
-      <div style={{ flex: '0 0 100px' }}>
-        <TableColumn type="actions" rows={actionsRows} />
-      </div>
+      <TableColumn type="checkbox" rows={checkboxRows} />
+      <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
+      <TableColumn type="badge" header="Status" rows={badgeRows} />
+      <TableColumn type="date" header="Joined" rows={dateRows} sortable />
+      <TableColumn type="number" header="Amount" rows={numberRows} sortable />
+      <TableColumn type="actions" rows={actionsRows} />
     </Table>
   ),
 };
@@ -266,6 +228,8 @@ export const WithFilters: Story = {
 export const NoPagination: Story = {
   args: {
     showPagination: false,
+    columns: '40px 2fr 1fr 1fr',
+    rowCount: 5,
     children: null,
   },
   render: (args) => (
@@ -273,23 +237,15 @@ export const NoPagination: Story = {
       {...args}
       topBar={
         <TableTopBar
-          slotLeft={<SearchInput />}
-          slotRight={<ActionButton>Export</ActionButton>}
+          slotLeft={<InputField placeholder="Search..." iconStart={<SearchIcon />} />}
+          slotRight={<Button variant="filled" intent="neutral" size="m">Export</Button>}
         />
       }
     >
-      <div style={{ flex: '0 0 40px' }}>
-        <TableColumn type="checkbox" rows={checkboxRows} />
-      </div>
-      <div style={{ flex: 2 }}>
-        <TableColumn type="text" header="Name" rows={userRows.map(r => ({ text: r.text }))} sortable />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="badge" header="Status" rows={badgeRows} />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-      </div>
+      <TableColumn type="checkbox" rows={checkboxRows} />
+      <TableColumn type="text" header="Name" rows={userRows.map(r => ({ text: r.text }))} sortable />
+      <TableColumn type="badge" header="Status" rows={badgeRows} />
+      <TableColumn type="number" header="Amount" rows={numberRows} sortable />
     </Table>
   ),
 };
@@ -305,6 +261,8 @@ export const InteractivePagination: Story = {
     itemsPerPage: 10,
     currentPage: 1,
     totalPages: 50,
+    columns: '40px 2fr 1fr 1fr 1fr 100px',
+    rowCount: 5,
     children: null,
   },
   render: () => {
@@ -322,31 +280,21 @@ export const InteractivePagination: Story = {
         totalPages={totalPages}
         onPageChange={setPage}
         onItemsPerPageChange={(n) => { setPerPage(n); setPage(1); }}
+        columns="40px 2fr 1fr 1fr 1fr 100px"
+        rowCount={5}
         topBar={
           <TableTopBar
-            slotLeft={<SearchInput />}
-            slotRight={<ActionButton>Add new</ActionButton>}
+            slotLeft={<InputField placeholder="Search..." iconStart={<SearchIcon />} />}
+            slotRight={<Button variant="filled" intent="neutral" size="m">Add new</Button>}
           />
         }
       >
-        <div style={{ flex: '0 0 40px' }}>
-          <TableColumn type="checkbox" rows={checkboxRows} />
-        </div>
-        <div style={{ flex: 2 }}>
-          <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
-        </div>
-        <div style={{ flex: 1 }}>
-          <TableColumn type="badge" header="Status" rows={badgeRows} />
-        </div>
-        <div style={{ flex: 1 }}>
-          <TableColumn type="date" header="Joined" rows={dateRows} sortable />
-        </div>
-        <div style={{ flex: 1 }}>
-          <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-        </div>
-        <div style={{ flex: '0 0 100px' }}>
-          <TableColumn type="actions" rows={actionsRows} />
-        </div>
+        <TableColumn type="checkbox" rows={checkboxRows} />
+        <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
+        <TableColumn type="badge" header="Status" rows={badgeRows} />
+        <TableColumn type="date" header="Joined" rows={dateRows} sortable />
+        <TableColumn type="number" header="Amount" rows={numberRows} sortable />
+        <TableColumn type="actions" rows={actionsRows} />
       </Table>
     );
   },

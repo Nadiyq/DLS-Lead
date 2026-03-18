@@ -1,5 +1,7 @@
 import React from 'react';
 import './dropdown-column-actions.css';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
 
 /* ---------------------------------------------------------------------------
    Icons
@@ -97,94 +99,67 @@ export const DropdownColumnActions = React.forwardRef<HTMLDivElement, DropdownCo
     ref,
   ) => {
     return (
-      <div
+      <List
         ref={ref}
         className={['dls-dropdown-column-actions', className].filter(Boolean).join(' ')}
-        role="menu"
-        aria-label="Column actions"
       >
         {/* Sort section */}
-        <button
-          type="button"
-          className="dls-dropdown-column-actions__item"
-          role="menuitem"
-          data-active={sortState === 'asc' ? '' : undefined}
+        <ListItem
+          type="with-slots"
+          iconStart={<ArrowDownIcon />}
+          text="Sort ascending"
+          selected={sortState === 'asc'}
           onClick={onSortAsc}
-        >
-          <span className="dls-dropdown-column-actions__icon"><ArrowDownIcon /></span>
-          Sort ascending
-        </button>
-
-        <button
-          type="button"
-          className="dls-dropdown-column-actions__item"
-          role="menuitem"
-          data-active={sortState === 'desc' ? '' : undefined}
+        />
+        <ListItem
+          type="with-slots"
+          iconStart={<ArrowUpIcon />}
+          text="Sort descending"
+          selected={sortState === 'desc'}
           onClick={onSortDesc}
-        >
-          <span className="dls-dropdown-column-actions__icon"><ArrowUpIcon /></span>
-          Sort descending
-        </button>
-
-        <button
-          type="button"
-          className="dls-dropdown-column-actions__item"
-          role="menuitem"
+        />
+        <ListItem
+          type="with-slots"
+          iconStart={<FilterIcon />}
+          text="Filter"
           onClick={onFilter}
-        >
-          <span className="dls-dropdown-column-actions__icon"><FilterIcon /></span>
-          Filter
-        </button>
+        />
 
-        <div className="dls-dropdown-column-actions__divider" />
+        <ListItem type="divider" />
 
         {/* Column management section */}
-        <button
-          type="button"
-          className="dls-dropdown-column-actions__item"
-          role="menuitem"
-          data-active={pinned ? '' : undefined}
+        <ListItem
+          type="with-slots"
+          iconStart={<PinIcon />}
+          text={pinned ? 'Unpin column' : 'Pin column'}
+          selected={pinned}
           onClick={onPin}
-        >
-          <span className="dls-dropdown-column-actions__icon"><PinIcon /></span>
-          {pinned ? 'Unpin column' : 'Pin column'}
-        </button>
-
-        <button
-          type="button"
-          className="dls-dropdown-column-actions__item"
-          role="menuitem"
-          data-disabled={!canMoveLeft || undefined}
+        />
+        <ListItem
+          type="with-slots"
+          iconStart={<ArrowLeftIcon />}
+          text="Move left"
+          disabled={!canMoveLeft}
           onClick={canMoveLeft ? onMoveLeft : undefined}
-        >
-          <span className="dls-dropdown-column-actions__icon"><ArrowLeftIcon /></span>
-          Move left
-        </button>
-
-        <button
-          type="button"
-          className="dls-dropdown-column-actions__item"
-          role="menuitem"
-          data-disabled={!canMoveRight || undefined}
+        />
+        <ListItem
+          type="with-slots"
+          iconStart={<ArrowRightIcon />}
+          text="Move right"
+          disabled={!canMoveRight}
           onClick={canMoveRight ? onMoveRight : undefined}
-        >
-          <span className="dls-dropdown-column-actions__icon"><ArrowRightIcon /></span>
-          Move right
-        </button>
+        />
 
-        <div className="dls-dropdown-column-actions__divider" />
+        <ListItem type="divider" />
 
         {/* Visibility section */}
-        <button
-          type="button"
-          className="dls-dropdown-column-actions__item"
-          role="menuitem"
+        <ListItem
+          type="with-slots"
+          iconStart={<EyeIcon />}
+          text="Hide column"
           onClick={onHide}
-        >
-          <span className="dls-dropdown-column-actions__icon"><EyeIcon /></span>
-          Hide column
-        </button>
-      </div>
+        />
+      </List>
     );
   },
 );

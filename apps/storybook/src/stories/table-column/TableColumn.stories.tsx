@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TableColumn } from './TableColumn';
 import type { TableColumnType, TableColumnRow } from './TableColumn';
+import '../table/table.css';
 
 const meta = {
   title: 'Components/TableColumn',
@@ -121,7 +122,13 @@ export const AllTypes: Story = {
     ];
 
     return (
-      <div style={{ display: 'flex', border: '1px solid var(--dls-color-border-subtle)', borderRadius: 'var(--dls-radius-component-card)', overflow: 'hidden' }}>
+      <div className="dls-table__columns" style={{
+        gridTemplateColumns: '40px repeat(7, 1fr) 100px',
+        gridTemplateRows: 'repeat(6, auto)',
+        border: '1px solid var(--dls-color-border-subtle)',
+        borderRadius: 'var(--dls-radius-component-card)',
+        overflow: 'hidden',
+      }}>
         {types.map((t, i) => (
           <TableColumn
             key={i}
@@ -208,31 +215,20 @@ export const FullTable: Story = {
     rows: textRows,
   },
   render: () => (
-    <div style={{
-      display: 'flex',
+    <div className="dls-table__columns" style={{
+      gridTemplateColumns: '40px 2fr 1fr 1fr 1fr 100px',
+      gridTemplateRows: 'repeat(6, auto)',
       border: '1px solid var(--dls-color-border-subtle)',
       borderRadius: 'var(--dls-radius-component-card)',
       overflow: 'hidden',
       width: 800,
     }}>
-      <div style={{ flex: '0 0 40px' }}>
-        <TableColumn type="checkbox" rows={checkboxRows} />
-      </div>
-      <div style={{ flex: 2 }}>
-        <TableColumn type="two-line+avatar" header="User" rows={twoLineAvatarRows} sortable />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="badge" header="Status" rows={badgeRows} />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="date" header="Joined" rows={dateRows} sortable />
-      </div>
-      <div style={{ flex: 1 }}>
-        <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-      </div>
-      <div style={{ flex: '0 0 100px' }}>
-        <TableColumn type="actions" rows={actionsRows} />
-      </div>
+      <TableColumn type="checkbox" rows={checkboxRows} />
+      <TableColumn type="two-line+avatar" header="User" rows={twoLineAvatarRows} sortable />
+      <TableColumn type="badge" header="Status" rows={badgeRows} />
+      <TableColumn type="date" header="Joined" rows={dateRows} sortable />
+      <TableColumn type="number" header="Amount" rows={numberRows} sortable />
+      <TableColumn type="actions" rows={actionsRows} />
     </div>
   ),
 };

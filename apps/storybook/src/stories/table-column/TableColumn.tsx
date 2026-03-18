@@ -3,6 +3,9 @@ import './table-column.css';
 import { TableHeaderCell } from '../table-header-cell/TableHeaderCell';
 import { TableCell } from '../table-cell/TableCell';
 import { Avatar } from '../Avatar';
+import { Button } from '../Button';
+import { Checkbox } from '../checkbox/Checkbox';
+import { IconShape } from '../icon-shape/IconShape';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -74,38 +77,17 @@ const CircleIcon = () => (
   <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.33" /></svg>
 );
 
-/* ---------------------------------------------------------------------------
-   Helper: small checkbox
-   --------------------------------------------------------------------------- */
-
-const SmallCheckbox = ({ checked }: { checked?: boolean }) => (
-  <span style={{
-    display: 'inline-flex', width: 18, height: 18, borderRadius: 'var(--dls-radius-component-checkbox)',
-    border: `1px solid ${checked ? 'var(--dls-color-intent-neutral-base)' : 'var(--dls-color-border-strong)'}`,
-    background: checked ? 'var(--dls-color-intent-neutral-base)' : 'var(--dls-color-surface-base)',
-    alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--dls-color-intent-neutral-on-base)',
-  }}>
-    {checked && (
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-        <path d="M2.5 6L5 8.5L9.5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    )}
-  </span>
-);
+/* Checkbox uses DLS Checkbox component */
 
 /* ---------------------------------------------------------------------------
-   Helper: small badge
+   Helper: status badge (no DLS text badge component exists yet)
    --------------------------------------------------------------------------- */
 
-const SmallBadge = ({ label, intent = 'neutral' }: { label: string; intent?: string }) => (
-  <span style={{
-    display: 'inline-flex', padding: '2px 8px',
-    fontSize: 'var(--dls-text-s-font-size)', lineHeight: 'var(--dls-text-s-line-height)',
-    fontWeight: 'var(--dls-font-weight-medium)', fontFamily: 'var(--dls-font-family)',
-    borderRadius: 'var(--dls-radius-component-badge)',
-    background: `var(--dls-color-intent-${intent}-subtle)`,
-    color: `var(--dls-color-intent-${intent}-text)`,
-  }}>
+const StatusBadge = ({ label, intent = 'neutral' }: { label: string; intent?: string }) => (
+  <span
+    className="dls-table-column__badge"
+    data-intent={intent}
+  >
     {label}
   </span>
 );
@@ -126,14 +108,14 @@ const renderCell = (type: TableColumnType, row: TableColumnRow, idx: number) => 
     case 'checkbox':
       return (
         <TableCell key={idx} type="slot" align="center">
-          <SmallCheckbox checked={row.checked} />
+          <Checkbox checked={row.checked} />
         </TableCell>
       );
 
     case 'badge':
       return (
         <TableCell key={idx} type="badge">
-          <SmallBadge label={row.badgeLabel || ''} intent={row.badgeIntent} />
+          <StatusBadge label={row.badgeLabel || ''} intent={row.badgeIntent} />
         </TableCell>
       );
 
@@ -170,9 +152,7 @@ const renderCell = (type: TableColumnType, row: TableColumnRow, idx: number) => 
     case 'icon-shape':
       return (
         <TableCell key={idx} type="slot">
-          <span className="dls-table-column__icon-shape">
-            {row.render || <CircleIcon />}
-          </span>
+          {row.render || <IconShape intent="neutral" size="xs"><CircleIcon /></IconShape>}
         </TableCell>
       );
 
@@ -194,8 +174,8 @@ const renderCell = (type: TableColumnType, row: TableColumnRow, idx: number) => 
         <TableCell key={idx} type="actions" align="center">
           {row.render || (
             <span className="dls-table-column__actions">
-              <button type="button" className="dls-table-column__action-btn" aria-label="Edit"><EditIcon /></button>
-              <button type="button" className="dls-table-column__action-btn" aria-label="Delete"><TrashIcon /></button>
+              <Button variant="ghost" intent="neutral" size="m" icon={<EditIcon />} iconOnly aria-label="Edit" />
+              <Button variant="ghost" intent="neutral" size="m" icon={<TrashIcon />} iconOnly aria-label="Delete" />
             </span>
           )}
         </TableCell>
@@ -265,7 +245,7 @@ export const TableColumn = React.forwardRef<HTMLDivElement, TableColumnProps>(
       >
         {type === 'checkbox' ? (
           <TableHeaderCell type="control">
-            <SmallCheckbox />
+            <Checkbox />
           </TableHeaderCell>
         ) : (
           <TableHeaderCell

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { TableHeaderCell } from './TableHeaderCell';
 import type { SortDirection } from './TableHeaderCell';
+import { Checkbox } from '../checkbox/Checkbox';
 
 const meta = {
   title: 'Components/TableHeaderCell',
@@ -33,13 +34,7 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 );
 
-const SmallCheckbox = () => (
-  <span style={{
-    display: 'inline-flex', width: 18, height: 18, borderRadius: 'var(--dls-radius-component-checkbox)',
-    border: '1px solid var(--dls-color-border-strong)', background: 'var(--dls-color-surface-base)',
-    alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-  }} />
-);
+/* Checkbox uses DLS Checkbox component */
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -119,7 +114,7 @@ export const Control: Story = {
   render: () => (
     <div style={{ width: 50 }}>
       <TableHeaderCell type="control">
-        <SmallCheckbox />
+        <Checkbox />
       </TableHeaderCell>
     </div>
   ),
@@ -186,7 +181,7 @@ export const InteractiveSorting: Story = {
         <div style={{ display: 'flex' }}>
           <div style={{ flex: '0 0 40px' }}>
             <TableHeaderCell type="control">
-              <SmallCheckbox />
+              <Checkbox />
             </TableHeaderCell>
           </div>
           <div style={{ flex: 2 }}>

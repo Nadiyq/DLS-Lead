@@ -84,8 +84,11 @@ export const TableCell = React.forwardRef<HTMLDivElement, TableCellProps>(
 
         {isTwoLine && (
           <>
-            {text && <span className="dls-table-cell__text">{text}</span>}
-            {secondaryText && <span className="dls-table-cell__secondary">{secondaryText}</span>}
+            {slotLeft && <span className="dls-table-cell__slot">{slotLeft}</span>}
+            <span className="dls-table-cell__text-group">
+              {text && <span className="dls-table-cell__text">{text}</span>}
+              {secondaryText && <span className="dls-table-cell__secondary">{secondaryText}</span>}
+            </span>
           </>
         )}
 

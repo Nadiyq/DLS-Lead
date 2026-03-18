@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import './dropdown-columns.css';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
+import { Button } from '../Button';
+import { Badge } from '../Badge';
 
 /* ---------------------------------------------------------------------------
    Icons
@@ -132,28 +136,25 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
     };
 
     return (
-      <div
+      <List
         ref={ref}
         className={['dls-dropdown-columns', className].filter(Boolean).join(' ')}
-        role="dialog"
-        aria-label="Configure columns"
       >
         {/* Title */}
-        <div className="dls-dropdown-columns__section">
-          <span className="dls-dropdown-columns__section-label" style={{ fontWeight: 'var(--dls-font-weight-medium)', color: 'var(--dls-color-text-primary)' }}>
-            Show columns
-          </span>
-        </div>
+        <ListItem type="label" text="Show columns" />
 
-        <div className="dls-dropdown-columns__divider" />
+        <ListItem type="divider" />
 
         {/* Shown section header */}
-        <div className="dls-dropdown-columns__section">
-          <span className="dls-dropdown-columns__section-label">Shown</span>
-          <span className="dls-dropdown-columns__count">{shown.length}</span>
-        </div>
+        <ListItem
+          type="with-slots"
+          text="Shown"
+          slotRight={
+            <Badge variant="soft" intent="info" size="s">{String(shown.length)}</Badge>
+          }
+        />
 
-        {/* Shown columns */}
+        {/* Shown columns — draggable rows need custom markup */}
         {shown.map((col, i) => (
           <div
             key={col.id}
@@ -167,60 +168,50 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
           >
             <span className="dls-dropdown-columns__grip"><GripIcon /></span>
             <span className="dls-dropdown-columns__row-text">{col.label}</span>
-            <button
-              type="button"
-              className="dls-dropdown-columns__action"
+            <Button
+              variant="ghost"
+              intent="neutral"
+              size="s"
+              icon={col.pinned ? <PinIcon /> : <PinOffIcon />}
+              iconOnly
               aria-label={col.pinned ? `Unpin ${col.label}` : `Pin ${col.label}`}
               onClick={() => togglePin(col.id)}
-            >
-              {col.pinned ? <PinIcon /> : <PinOffIcon />}
-            </button>
+            />
           </div>
         ))}
 
-        <div className="dls-dropdown-columns__divider" />
+        <ListItem type="divider" />
 
         {/* Hidden section header */}
-        <div className="dls-dropdown-columns__section">
-          <span className="dls-dropdown-columns__section-label">Hidden</span>
-          <span className="dls-dropdown-columns__section-icon"><EyeIcon /></span>
-        </div>
+        <ListItem
+          type="with-slots"
+          text="Hidden"
+          iconEnd={<EyeIcon />}
+        />
 
         {/* Hidden columns */}
         {hidden.map((col) => (
-          <div
+          <ListItem
             key={col.id}
-            className="dls-dropdown-columns__row"
+            type="with-slots"
+            iconStart={<GripIcon />}
+            text={col.label}
             onClick={() => showColumn(col.id)}
-            style={{ cursor: 'pointer' }}
-          >
-            <span className="dls-dropdown-columns__grip"><GripIcon /></span>
-            <span className="dls-dropdown-columns__row-text">{col.label}</span>
-          </div>
+          />
         ))}
 
-        <div className="dls-dropdown-columns__divider" />
+        <ListItem type="divider" />
 
         {/* Footer */}
-        <div className="dls-dropdown-columns__footer">
-          <button
-            type="button"
-            className="dls-dropdown-columns__btn"
-            data-variant="outline"
-            onClick={onCancel}
-          >
+        <ListItem type="buttons">
+          <Button variant="outline" intent="neutral" size="s" onClick={onCancel}>
             Cancel
-          </button>
-          <button
-            type="button"
-            className="dls-dropdown-columns__btn"
-            data-variant="filled"
-            onClick={() => onApply?.(shown, hidden)}
-          >
+          </Button>
+          <Button variant="filled" intent="neutral" size="s" onClick={() => onApply?.(shown, hidden)}>
             Apply
-          </button>
-        </div>
-      </div>
+          </Button>
+        </ListItem>
+      </List>
     );
   },
 );

@@ -8,12 +8,22 @@
    Column container — vertical stack of header + cells
    --------------------------------------------------------------------------- */
 
+/* ---------------------------------------------------------------------------
+   Column container — vertical stack of header + cells (standalone)
+   --------------------------------------------------------------------------- */
+
 .dls-table-column {
   all: unset;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   font-family: var(--dls-font-family);
+}
+
+/* Inside a Table grid, columns become transparent so cells participate
+   directly in the grid — this ensures equal row heights across columns. */
+.dls-table__columns .dls-table-column {
+  display: contents;
 }
 
 /* ---------------------------------------------------------------------------
@@ -93,7 +103,7 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Actions row
+   Actions row (uses DLS Button ghost+iconOnly — layout only)
    --------------------------------------------------------------------------- */
 
 .dls-table-column__actions {
@@ -102,51 +112,44 @@
   gap: var(--dls-spacing-2);
 }
 
-.dls-table-column__action-btn {
-  all: unset;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--dls-radius-component-button);
-  color: var(--dls-color-text-secondary);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-table-column__action-btn:hover:not(:disabled) {
-  background: var(--dls-state-hover-overlay);
-}
-
-.dls-table-column__action-btn:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-.dls-table-column__action-btn svg {
-  width: 16px;
-  height: 16px;
-}
+/* Icon shape uses DLS IconShape — no custom styles needed */
 
 /* ---------------------------------------------------------------------------
-   Icon shape stub
+   Status badge (no DLS text badge component yet)
    --------------------------------------------------------------------------- */
 
-.dls-table-column__icon-shape {
+.dls-table-column__badge {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--dls-radius-component-icon-shape);
-  background: var(--dls-color-intent-neutral-subtle);
-  color: var(--dls-color-text-secondary);
+  padding: 2px var(--dls-spacing-2);
+  border-radius: var(--dls-radius-component-badge);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
 }
 
-.dls-table-column__icon-shape svg {
-  width: 16px;
-  height: 16px;
+.dls-table-column__badge[data-intent="neutral"] {
+  background: var(--dls-color-intent-neutral-subtle);
+  color: var(--dls-color-intent-neutral-text);
+}
+
+.dls-table-column__badge[data-intent="info"] {
+  background: var(--dls-color-intent-info-subtle);
+  color: var(--dls-color-intent-info-text);
+}
+
+.dls-table-column__badge[data-intent="success"] {
+  background: var(--dls-color-intent-success-subtle);
+  color: var(--dls-color-intent-success-text);
+}
+
+.dls-table-column__badge[data-intent="warning"] {
+  background: var(--dls-color-intent-warning-subtle);
+  color: var(--dls-color-intent-warning-text);
+}
+
+.dls-table-column__badge[data-intent="danger"] {
+  background: var(--dls-color-intent-danger-subtle);
+  color: var(--dls-color-intent-danger-text);
 }
