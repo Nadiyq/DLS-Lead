@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="tokens/tokens.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <style>
 /* ── Reset ────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -27,6 +28,7 @@ ul,ol{list-style:none}
 
 /* ── Logo ─────────────────────────────────────────────── */
 .logo{font-size:0;display:flex;align-items:center;gap:6px;padding:0 0 0 0}
+.logo img{display:block;height:31px;width:auto}
 .logo-dls{display:inline-flex;align-items:center;justify-content:center;background:#1C1D1F;color:#fff;font-size:14px;font-weight:800;padding:4px 8px;border-radius:6px;letter-spacing:0.5px}
 .logo-lead{font-size:20px;font-weight:400;color:#1C1D1F;font-style:italic}
 
@@ -280,7 +282,7 @@ const ICO={
   chev:'<svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>',
   github:'<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>',
   figma:'<svg viewBox="0 0 38 57" width="16" height="16" fill="currentColor"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>',
-  storybook:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1" width="12" height="14" rx="2"/><path d="M5.5 5h5M5.5 8h5M5.5 11h3"/></svg>',
+  storybook:'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.38 0H12.6C13.37 0 14 .63 14 1.4V12.6c0 .77-.63 1.4-1.4 1.4H1.4C.63 14 0 13.37 0 12.6V1.4C0 .63.63 0 1.4 0h4.06l.143 1.219c.048.412.397.718.812.718H7.43c.415 0 .764-.306.812-.718L8.38 0Z" fill="#FF4785"/><path fill-rule="evenodd" clip-rule="evenodd" d="M9.12 5.32c0 .32.22.42.58.59.57.27.93.59.93 1.27 0 .87-.64 1.3-1.55 1.3a2.38 2.38 0 0 1-1.37-.42V7.3c.38.25.77.39 1.14.39.24 0 .41-.08.41-.27 0-.22-.15-.3-.59-.51-.58-.28-.92-.6-.92-1.28 0-.86.62-1.29 1.5-1.29.43 0 .82.1 1.14.27v.74a2.17 2.17 0 0 0-1.08-.31c-.22 0-.39.07-.39.28ZM6.97 4.34H5.8v3.45c0 .53-.04.83-.49.83-.27 0-.52-.14-.67-.3V4.34H3.47v3.54c0 .83.42 1.24 1.13 1.24.49 0 .88-.19 1.14-.58v.52H6.97V4.34Z" fill="white"/></svg>',
   linkedin:'<svg viewBox="0 0 20 20" fill="currentColor"><path d="M17.04 17.043h-2.962v-4.64c0-1.107-.023-2.531-1.544-2.531-1.544 0-1.78 1.204-1.78 2.449v4.722H7.793V7.5h2.844v1.3h.039c.397-.75 1.364-1.54 2.808-1.54 3.001 0 3.556 1.974 3.556 4.545v5.238zM4.447 6.194a1.72 1.72 0 11-.001-3.44 1.72 1.72 0 010 3.44zM5.93 17.043H2.963V7.5H5.93v9.543zM18.522 0H1.476C.66 0 0 .645 0 1.44v17.12C0 19.355.66 20 1.476 20h17.042c.815 0 1.482-.645 1.482-1.44V1.44C20 .645 19.333 0 18.518 0h.004z"/></svg>',
   instagram:'<svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.802c2.67 0 2.987.01 4.042.058 2.71.124 3.975 1.41 4.099 4.099.048 1.054.057 1.37.057 4.04 0 2.672-.01 2.988-.057 4.042-.124 2.687-1.387 3.975-4.1 4.099-1.054.048-1.37.058-4.041.058-2.67 0-2.987-.01-4.04-.058-2.718-.124-3.977-1.416-4.1-4.1-.048-1.054-.058-1.37-.058-4.041 0-2.67.01-2.986.058-4.04.124-2.69 1.387-3.977 4.1-4.1C7.013 1.812 7.33 1.802 10 1.802zM10 0C7.284 0 6.944.012 5.878.06 2.246.227.228 2.242.06 5.877.012 6.944 0 7.284 0 10s.012 3.057.06 4.123c.167 3.632 2.182 5.65 5.817 5.817C6.944 19.988 7.284 20 10 20s3.057-.012 4.123-.06c3.629-.167 5.652-2.182 5.816-5.817.05-1.066.061-1.407.061-4.123s-.012-3.056-.06-4.122C19.777 2.249 17.76.228 14.124.06 13.057.012 12.716 0 10 0zm0 4.865a5.135 5.135 0 100 10.27 5.135 5.135 0 000-10.27zm0 8.468a3.333 3.333 0 110-6.666 3.333 3.333 0 010 6.666zm5.338-9.87a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4z"/></svg>',
   file:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
@@ -905,7 +907,7 @@ function renderSidebar(){
   const sb=$('#sidebar');const route=getRoute();sb.innerHTML='';
   // Logo
   sb.appendChild(h('a',{href:'#documentation',class:'logo',style:{textDecoration:'none'}},
-    h('span',{class:'logo-dls'},'DLS'),h('span',{class:'logo-lead'},'Lead')
+    h('img',{src:'/logo.svg',alt:'DLS Lead',style:{height:'31px',width:'auto'}})
   ));
   // Nav
   const nav=h('nav');
@@ -971,7 +973,7 @@ function mkHeader(){
   bar.appendChild(themeBtn);
   bar.appendChild(h('span',{class:'header-subtitle'},'4-Layer DTCG-Compliant System'));
   const btns=h('div',{class:'header-btns'});
-  btns.appendChild(h('a',{class:'btn-outline',href:'http://localhost:6006',target:'_blank',html:ICO.storybook+' Storybook'}));
+  btns.appendChild(h('a',{class:'btn-outline',href:'https://storybook.dlslead.com/',target:'_blank',html:ICO.storybook+' Storybook'}));
   btns.appendChild(h('a',{class:'btn-outline',href:'#',html:ICO.github+' Github'}));
   btns.appendChild(h('a',{class:'btn-outline',href:'https://www.figma.com/design/YYDlN0lwscyIzk4PVHlSUI',target:'_blank',html:ICO.figma+' Figma'}));
   bar.appendChild(btns);
@@ -986,8 +988,7 @@ function mkFooter(){
     links.appendChild(h('a',{onclick:()=>hash&&navigate(hash)},label));
   }
   const logoF=h('div',{style:{marginTop:'24px'}});
-  logoF.appendChild(h('span',{class:'logo-dls',style:{fontSize:'12px',padding:'3px 6px'}},'DLS'));
-  logoF.appendChild(h('span',{class:'logo-lead',style:{fontSize:'16px',marginLeft:'4px'}},'Lead'));
+  logoF.appendChild(h('img',{src:'/logo.svg',alt:'DLS Lead',style:{height:'24px',width:'auto'}}));
   links.appendChild(logoF);
   f.appendChild(links);
   f.appendChild(h('div',{class:'footer-info',html:'Have questions? Email me<br>at nadiyqabrosimova@gmail.com<br><br>React Components version ^1.102.0<br>Last updated 04 March 2026<br>Copyright &copy; 2026 IBM'}));
@@ -1256,7 +1257,7 @@ function renderComponentDetail(slug){
     // Storybook link button
     if(data.storybook){
       const sbLink=h('a',{
-        href:'http://localhost:6006/?path=/story/'+data.storybook+'--playground',
+        href:'https://storybook.dlslead.com/?path=/story/'+data.storybook+'--playground',
         target:'_blank',
         class:'btn-outline',
         style:{display:'inline-flex',gap:'8px',marginBottom:'24px',fontSize:'13px',padding:'8px 14px'},
