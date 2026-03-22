@@ -3,6 +3,71 @@
     "month": "March 2026",
     "commits": [
       {
+        "hash": "7da94ec",
+        "date": "2026-03-21",
+        "message": "changed favicon"
+      },
+      {
+        "hash": "44e8f8d",
+        "date": "2026-03-20",
+        "message": "fix: use official Storybook icon SVG from storybook.dlslead.com favicon"
+      },
+      {
+        "hash": "8131c68",
+        "date": "2026-03-20",
+        "message": "fix: correct favicon, Storybook icon, and all story link IDs"
+      },
+      {
+        "hash": "fb7bd00",
+        "date": "2026-03-20",
+        "message": "Merge branch 'claude/reverent-goldberg'"
+      },
+      {
+        "hash": "31387da",
+        "date": "2026-03-20",
+        "message": "claude fil,es"
+      },
+      {
+        "hash": "30c84eb",
+        "date": "2026-03-20",
+        "message": "feat: update branding, Storybook links, and add official Storybook icon"
+      },
+      {
+        "hash": "3e08359",
+        "date": "2026-03-18",
+        "message": "Merge pull request #1 from Nadiyq/claude/nice-murdock"
+      },
+      {
+        "hash": "da0b8d5",
+        "date": "2026-03-18",
+        "message": "fix: reset default margins on form titles and fix input label-to-field spacing"
+      },
+      {
+        "hash": "359fd30",
+        "date": "2026-03-18",
+        "message": "fix: replace native date input with DLS DateInput and fix form spacing across all templates"
+      },
+      {
+        "hash": "65cf06a",
+        "date": "2026-03-18",
+        "message": "chips fixed"
+      },
+      {
+        "hash": "b7a4dcc",
+        "date": "2026-03-18",
+        "message": "fixing bugs"
+      },
+      {
+        "hash": "7ae54ec",
+        "date": "2026-03-18",
+        "message": "fixed tables"
+      },
+      {
+        "hash": "db6731e",
+        "date": "2026-03-17",
+        "message": "fix comopinents bug, added skills for cursor and skill for components"
+      },
+      {
         "hash": "b3fc01a",
         "date": "2026-03-17",
         "message": "clean up"
