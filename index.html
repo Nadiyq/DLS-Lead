@@ -51,9 +51,9 @@ ul,ol{list-style:none}
 .header-top{display:flex;align-items:center;gap:24px;min-height:40px}
 .header-brand{display:flex;align-items:center;flex-shrink:0}
 .header-nav{display:flex;flex:1 1 auto;align-items:center;gap:24px;min-width:0}
-.btn-outline{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1.5px solid #1C1D1F;border-radius:999px;background:#fff;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;line-height:18px;color:#1C1D1F;cursor:pointer;letter-spacing:0.01em;box-shadow:0 1px 0 rgba(28,29,31,.08);transition:background .15s,transform .15s}
-.btn-outline:hover{background:#F8F8F8;transform:translateY(-1px)}
-.btn-outline svg,.btn-outline img{width:14px;height:14px}
+.btn-outline{display:inline-flex;align-items:center;align-self:flex-start;gap:8px;padding:9px 12px;border:2px solid #1C1D1F;border-radius:8px;background:transparent;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;line-height:18px;letter-spacing:0.28px;color:#1C1D1F;cursor:pointer;box-shadow:none;transition:background .15s ease,border-color .15s ease,color .15s ease}
+.btn-outline:hover{background:#CFD0D3;transform:none}
+.btn-outline svg,.btn-outline img{width:16px;height:16px;flex-shrink:0}
 .header-subtitle{flex:1 1 auto;font-size:16px;font-weight:600;line-height:24px;color:#666970;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .header-btns{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .header-action{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:none;border-radius:8px;background:transparent;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;line-height:18px;letter-spacing:0.28px;color:#1C1D1F;cursor:pointer;transition:background .15s ease}
@@ -86,23 +86,23 @@ ul,ol{list-style:none}
 .content-aside{width:260px;flex-shrink:0}
 
 /* ── Doc sections ─────────────────────────────────────── */
-.doc-title{font-size:32px;font-weight:700;line-height:40px;margin-bottom:16px}
+.doc-title{font-size:32px;font-weight:700;line-height:40px;margin-bottom:16px;color:#1C1D1F}
 .doc-subtitle{font-size:14px;font-weight:400;line-height:18px;color:#666970;margin-bottom:0}
-.doc-section-title{font-size:24px;font-weight:500;line-height:32px;margin:24px 0 16px}
-.doc-block-title{font-size:18px;font-weight:600;line-height:26px;margin-bottom:8px;color:#181D27}
-.doc-text{font-size:14px;font-weight:400;line-height:18px;color:#1C1D1F;white-space:pre-wrap}
-.doc-rule{font-size:12px;font-weight:600;line-height:16px;color:#666970;margin-top:8px}
+.doc-section-title{font-size:24px;font-weight:500;line-height:32px;margin:24px 0 16px;color:#1C1D1F;scroll-margin-top:120px}
+.doc-block-title{font-size:18px;font-weight:600;line-height:26px;margin-bottom:8px;color:#1C1D1F}
+.doc-text{font-size:14px;font-weight:400;line-height:18px;color:#535862;white-space:pre-wrap}
+.doc-rule{font-size:12px;font-weight:600;line-height:16px;color:#717680;margin-top:8px}
 .doc-block+.doc-block{margin-top:16px}
 
 /* ── TOC sidebar ──────────────────────────────────────── */
-.toc-item{display:flex;align-items:center;padding:12px 12px 12px 16px;font-size:14px;font-weight:600;letter-spacing:0.28px;cursor:pointer;border-left:4px solid transparent;transition:background .15s}
-.toc-item:hover{background:#f5f5f5}
-.toc-item.active{background:#EAEAEC;border-left-color:#1C1D1F}
+.toc-item{display:flex;align-items:center;justify-content:flex-start;width:100%;padding:12px 12px 12px 16px;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;line-height:20px;letter-spacing:0.28px;cursor:pointer;border:none;border-left:4px solid transparent;background:transparent;color:#666970;text-align:left;appearance:none;-webkit-appearance:none;transition:background .15s,color .15s,border-color .15s}
+.toc-item:hover{background:#f5f5f5;color:#1C1D1F}
+.toc-item.active{background:#EAEAEC;border-left-color:#1C1D1F;color:#1C1D1F}
 
 /* ── Changelog ────────────────────────────────────────── */
-.changelog-entry{margin-bottom:24px}
+.changelog-entry{margin-bottom:24px;scroll-margin-top:120px}
 .changelog-date{font-size:24px;font-weight:500;line-height:32px;color:#181D27}
-.changelog-desc{font-size:14px;font-weight:400;line-height:18px;margin-top:8px}
+.changelog-desc{font-size:14px;font-weight:400;line-height:18px;margin-top:8px;color:#535862}
 .changelog-sub{font-size:18px;font-weight:600;line-height:26px;margin-top:16px}
 .changelog-list{padding-left:24px;margin-top:8px}
 .changelog-list li{list-style:disc;font-size:14px;font-weight:400;line-height:18px;margin-bottom:4px}
@@ -143,6 +143,8 @@ ul,ol{list-style:none}
 .token-page-section{display:flex;flex-direction:column;gap:24px}
 .token-page-header{display:flex;flex-direction:column;gap:16px}
 .token-table-group{display:flex;flex-direction:column;gap:16px}
+.component-page-content{display:flex;flex-direction:column;gap:32px;margin-top:40px}
+.component-preview-shell{border:2px solid #1C1D1F;border-radius:8px;background:transparent;overflow:hidden}
 .color-page-content{display:flex;flex-direction:column;gap:40px;margin-top:40px}
 .color-page-section{display:flex;flex-direction:column;gap:24px}
 .color-page-heading{display:flex;flex-direction:column;gap:16px}
@@ -222,67 +224,73 @@ ul,ol{list-style:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ── Dark mode ────────────────────────────────────────── */
-[data-theme="dark"] body{background:#181D27;color:#E9EAEB}
-[data-theme="dark"] .app-frame,[data-theme="dark"] .shell{background:#181D27}
-[data-theme="dark"] .card,[data-theme="dark"] .card-sm{background:#252B37;border-color:#535862}
-[data-theme="dark"] .nav-item{border-left-color:#414651;color:#E9EAEB}
-[data-theme="dark"] .nav-item.active{border-left-color:#E9EAEB}
+[data-theme="dark"] body{background:#1C1D1F;color:#FFFFFF}
+[data-theme="dark"] .app-frame,[data-theme="dark"] .shell{background:#1C1D1F}
+[data-theme="dark"] .card,[data-theme="dark"] .card-sm{background:#1C1D1F;border-color:#666970}
+[data-theme="dark"] .nav-item{border-left-color:#666970;color:#FFFFFF}
+[data-theme="dark"] .nav-item.active{border-left-color:#FFFFFF}
 [data-theme="dark"] .nav-item:hover{background:#252B37;border-left-color:#414651}
-[data-theme="dark"] .nav-child,[data-theme="dark"] .nav-child-component{border-color:#535862;color:#E9EAEB}
+[data-theme="dark"] .nav-child,[data-theme="dark"] .nav-child-component{border-color:#666970;color:#FFFFFF}
 [data-theme="dark"] .nav-child:hover,[data-theme="dark"] .nav-child-component:hover{background:#252B37;border-color:#535862}
-[data-theme="dark"] .nav-child.active,[data-theme="dark"] .nav-child-component.active{border-color:#E9EAEB}
+[data-theme="dark"] .nav-child.active,[data-theme="dark"] .nav-child-component.active{border-color:#FFFFFF}
 [data-theme="dark"] .nav-child.active:hover,[data-theme="dark"] .nav-child-component.active:hover{border-color:#535862}
-[data-theme="dark"] .tab{color:#B4B6BB;border-bottom-color:#414651}
-[data-theme="dark"] .tab:hover{border-bottom-color:#666970}
-[data-theme="dark"] .page-title{color:#E9EAEB}
-[data-theme="dark"] .section-heading{color:#E9EAEB}
-[data-theme="dark"] .section-desc{color:#A4A7AE}
-[data-theme="dark"] .subsection-title{border-left-color:#E9EAEB;color:#E9EAEB}
-[data-theme="dark"] .color-page-title{color:#E9EAEB}
-[data-theme="dark"] .color-page-desc{color:#A4A7AE}
-[data-theme="dark"] .token-scale-title{border-left-color:#E9EAEB;color:#E9EAEB}
-[data-theme="dark"] .token-scale-board{border-color:#B4B6BB;background:#FCFCFD}
+[data-theme="dark"] .tab{color:#FFFFFF;border-bottom-color:#1C1D1F}
+[data-theme="dark"] .tab:hover{border-bottom-color:#1C1D1F}
+[data-theme="dark"] .tab.active{color:#C9B4FF;border-bottom-color:#C9B4FF}
+[data-theme="dark"] .tab.active::before{color:#C9B4FF}
+[data-theme="dark"] .page-title{color:#FFFFFF}
+[data-theme="dark"] .section-heading{color:#FFFFFF}
+[data-theme="dark"] .section-desc{color:#FAFAFA}
+[data-theme="dark"] .subsection-title{border-left-color:#FFFFFF;color:#FFFFFF}
+[data-theme="dark"] .color-page-title{color:#FFFFFF}
+[data-theme="dark"] .color-page-desc{color:#FAFAFA}
+[data-theme="dark"] .token-scale-title{border-left-color:#FFFFFF;color:#FFFFFF}
+[data-theme="dark"] .token-scale-board{border-color:#666970;background:#FAFAFA}
+[data-theme="dark"] .component-preview-shell{border-color:#FFFFFF}
 [data-theme="dark"] .color-swatch-card{background:#FCFCFD;border-right-color:#D5D7DA;border-bottom-color:#D5D7DA}
 [data-theme="dark"] .color-swatch-meta{border-top-color:#D5D7DA;background:#FCFCFD}
 [data-theme="dark"] .color-swatch-token{color:#1C1D1F}
 [data-theme="dark"] .color-swatch-value{color:#666970}
 [data-theme="dark"] .color-swatch-surface.checker{background-color:#D5D7DA;background-image:linear-gradient(45deg,#F8F9FC 25%,transparent 25%),linear-gradient(-45deg,#F8F9FC 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#B4B6BB 75%),linear-gradient(-45deg,transparent 75%,#B4B6BB 75%);background-size:28px 28px;background-position:0 0,0 14px,14px -14px,-14px 0}
-[data-theme="dark"] .token-table.color-token-table{background:transparent;border-color:#E9EAEB}
-[data-theme="dark"] .token-table.color-token-table th{border-bottom-color:#666970;color:#E9EAEB;background:transparent}
+[data-theme="dark"] .token-table.color-token-table{background:transparent;border-color:#FFFFFF}
+[data-theme="dark"] .token-table.color-token-table th{border-bottom-color:#666970;color:#FFFFFF;background:transparent}
 [data-theme="dark"] .token-table.color-token-table td{border-bottom-color:rgba(255,255,255,.16);background:transparent;color:#CFD0D3}
 [data-theme="dark"] .token-table.color-token-table tr:hover td{background:transparent}
-[data-theme="dark"] .token-table.color-token-table .mono{color:#E9EAEB}
+[data-theme="dark"] .token-table.color-token-table .mono{color:#FFFFFF}
 [data-theme="dark"] .token-table.color-token-table .ref,[data-theme="dark"] .token-table.color-token-table .css-var,[data-theme="dark"] .token-table.color-token-table .desc{color:#CFD0D3}
 [data-theme="dark"] .token-table.color-token-table .swatch{border-color:#B4B6BB}
 [data-theme="dark"] .color-card{background:#252B37;border-color:#414651}
 [data-theme="dark"] .color-name{color:#D5D7DA}
-[data-theme="dark"] .token-table{background:transparent;border-color:#E9EAEB}
-[data-theme="dark"] .token-table th{border-bottom-color:#666970;color:#E9EAEB;background:transparent}
+[data-theme="dark"] .token-table{background:transparent;border-color:#FFFFFF}
+[data-theme="dark"] .token-table th{border-bottom-color:#666970;color:#FFFFFF;background:transparent}
 [data-theme="dark"] .token-table td{border-bottom-color:rgba(255,255,255,.16);background:transparent;color:#CFD0D3}
 [data-theme="dark"] .token-table tr:hover td{background:transparent}
-[data-theme="dark"] .token-table .mono{color:#E9EAEB}
+[data-theme="dark"] .token-table .mono{color:#FFFFFF}
 [data-theme="dark"] .token-table .css-var,[data-theme="dark"] .token-table .ref,[data-theme="dark"] .token-table .desc{color:#CFD0D3}
 [data-theme="dark"] .swatch{border-color:#B4B6BB}
-[data-theme="dark"] .doc-title,.doc-block-title{color:#E9EAEB}
-[data-theme="dark"] .toc-item.active{background:#414651}
+[data-theme="dark"] .doc-title,[data-theme="dark"] .doc-section-title,[data-theme="dark"] .doc-block-title,[data-theme="dark"] .changelog-date{color:#FFFFFF}
+[data-theme="dark"] .doc-subtitle,[data-theme="dark"] .doc-text,[data-theme="dark"] .doc-rule,[data-theme="dark"] .changelog-desc{color:#999CA3}
+[data-theme="dark"] .toc-item{color:#999CA3}
+[data-theme="dark"] .toc-item:hover{background:#252B37;color:#FFFFFF}
+[data-theme="dark"] .toc-item.active{background:#414651;color:#FFFFFF}
 [data-theme="dark"] .comp-cell:hover{background:#252B37}
 [data-theme="dark"] .code-block{background:#252B37;border-color:#414651}
-[data-theme="dark"] .code-block-header{border-bottom-color:#414651;color:#E9EAEB}
-[data-theme="dark"] .btn-outline{background:#252B37;border-color:#E9EAEB;color:#E9EAEB;box-shadow:none}
-[data-theme="dark"] .btn-outline:hover{background:#303746}
-[data-theme="dark"] .logo-meta,[data-theme="dark"] .header-subtitle{color:#A4A7AE}
-[data-theme="dark"] .header-action{color:#E9EAEB}
+[data-theme="dark"] .code-block-header{border-bottom-color:#414651;color:#FFFFFF}
+[data-theme="dark"] .btn-outline{background:transparent;border-color:#FFFFFF;color:#FFFFFF;box-shadow:none}
+[data-theme="dark"] .btn-outline:hover{background:#252B37}
+[data-theme="dark"] .logo-meta,[data-theme="dark"] .header-subtitle{color:#999CA3}
+[data-theme="dark"] .header-action{color:#FFFFFF}
 [data-theme="dark"] .header-action:hover{background:#414651}
 [data-theme="dark"] .footer{border-top-color:#535862}
-[data-theme="dark"] .footer-link,[data-theme="dark"] .footer-info{color:#A4A7AE}
-[data-theme="dark"] .footer-link:hover{color:#E9EAEB}
+[data-theme="dark"] .footer-link,[data-theme="dark"] .footer-info{color:#999CA3}
+[data-theme="dark"] .footer-link:hover{color:#FFFFFF}
 [data-theme="dark"] .footer-bottom{border-top-color:#414651}
 [data-theme="dark"] .footer-copy{color:#999CA3}
-[data-theme="dark"] .social-icon{color:#E9EAEB}
-[data-theme="dark"] .header-theme{border-color:#E9EAEB;color:#E9EAEB}
+[data-theme="dark"] .social-icon{color:#FFFFFF}
+[data-theme="dark"] .header-theme{border-color:#FFFFFF;color:#FFFFFF}
 [data-theme="dark"] .header-theme:hover{background:#252B37}
-[data-theme="dark"] .theme-knob{background:#E9EAEB;color:#181D27}
-[data-theme="dark"] .hamburger{background:#252B37;border-color:#E9EAEB;color:#E9EAEB}
+[data-theme="dark"] .theme-knob{background:#FAFAFA;color:#1C1D1F}
+[data-theme="dark"] .hamburger{background:#252B37;border-color:#FFFFFF;color:#FFFFFF}
 [data-theme="dark"] .sidebar-backdrop{background:rgba(0,0,0,.6)}
 
 /* ── Tablet (≤1024px) ─────────────────────────────────── */
@@ -1145,9 +1153,41 @@ function mkTabs(items,active){
 
 /* ═══════ Page: Documentation ═════════════════════════════ */
 /* ── doc helpers ─────────────────────────────────── */
-function docSection(card,title){card.appendChild(h('div',{class:'doc-section-title'},title))}
+function slugifyDocId(prefix,title){
+  return `${prefix}-${title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}`;
+}
+function docSection(card,title,prefix='doc'){
+  const id=slugifyDocId(prefix,title);
+  card.appendChild(h('div',{class:'doc-section-title',id},title));
+  return id;
+}
 function docBlock(card,title,text){const b=h('div',{class:'doc-block'});b.appendChild(h('div',{class:'doc-block-title'},title));b.appendChild(h('div',{class:'doc-text'},text));card.appendChild(b)}
 function docList(card,items){const ul=h('ul',{class:'changelog-list',style:{marginTop:'8px'}});items.forEach(i=>ul.appendChild(h('li',{},i)));card.appendChild(ul)}
+function setActiveTocItem(aside,id){
+  for(const item of aside.querySelectorAll('.toc-item[data-target]')){
+    item.classList.toggle('active',item.dataset.target===id);
+  }
+}
+function scrollToDocTarget(id,aside){
+  const target=document.getElementById(id);
+  if(!target)return;
+  target.scrollIntoView({behavior:'smooth',block:'start'});
+  if(aside)setActiveTocItem(aside,id);
+}
+function setupDocToc(aside){
+  const items=[...aside.querySelectorAll('.toc-item[data-target]')];
+  const targets=items.map(item=>document.getElementById(item.dataset.target)).filter(Boolean);
+  if(!items.length||!targets.length)return;
+  setActiveTocItem(aside,items[0].dataset.target);
+  const observer=new IntersectionObserver(entries=>{
+    const visible=entries
+      .filter(entry=>entry.isIntersecting)
+      .sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];
+    if(!visible)return;
+    setActiveTocItem(aside,visible.target.id);
+  },{rootMargin:'-120px 0px -65% 0px',threshold:0});
+  targets.forEach(target=>observer.observe(target));
+}
 
 function renderDocumentation(){
   const route=getRoute();
@@ -1171,19 +1211,20 @@ function renderDocumentation(){
 function renderGuides(inner){
   const row=h('div',{class:'content-row'});
   const card=h('div',{class:'card content-main'});
+  const sectionTitles=['Updates & Support','Getting Started','How to Use DLS-Lead in Your Projects (Figma)','Customization Guide','Components','Icons','How to Get New Updates'];
 
   card.appendChild(h('div',{class:'doc-title'},'Guides'));
   card.appendChild(h('div',{class:'doc-subtitle'},'This section explains how DLS-Lead works and how to use it properly \u2014 including components, styles, variables, updates, and customization rules.'));
 
   /* ── Updates & Support ─────────────── */
-  docSection(card,'Updates & Support');
+  docSection(card,'Updates & Support','guides');
   docBlock(card,'Updates (one-time purchase)','DLS-Lead is a one-time payment product and includes lifetime updates.\nNew releases may include:');
   docList(card,['new components and patterns','improvements and fixes','new variants and states','token expansions (color, spacing, typography, etc.)','documentation updates']);
   docBlock(card,'Support','If you have questions, feedback, or access issues:\n\n\u2022 Email: nadiyqabrosimova@gmail.com\n\u2022 LinkedIn DM\n\u2022 Instagram DM');
   docBlock(card,'License Agreement','Using this file means you agree to the DLS-Lead license.\nThis file is licensed for use by the purchaser only. Redistribution or resale is not allowed.');
 
   /* ── Getting Started ────────────────── */
-  docSection(card,'Getting Started');
+  docSection(card,'Getting Started','guides');
   docBlock(card,"What\u2019s Inside",'DLS-Lead is a production-ready design system built to help teams design faster, stay consistent, and scale UI across products. It comes with reusable components, a structured set of styles, and a complete library of tokens / variables for colors, typography, spacing, and more.');
   docBlock(card,'Components','Reusable UI building blocks \u2014 Buttons, Inputs, Tables, Dropdowns, Modals, Tabs, and more.\nDesigned to be consistent across screens, support real product use cases, and scale through variants, states, and nested parts.');
   docBlock(card,'Styles','Typography styles (text sizes, weights), effects (shadows), images, flags, and avatars.\nHelps keep UI consistent even when not using components.');
@@ -1192,7 +1233,7 @@ function renderGuides(inner){
   docBlock(card,'Benefits','\u2022 Speed \u2014 assemble screens using building blocks\n\u2022 Consistency \u2014 same components reused everywhere\n\u2022 Scalability \u2014 expand the system, don\u2019t redesign\n\u2022 Better design \u21D4 dev alignment\n\u2022 Easy to translate UI into code\n\u2022 Theming ready \u2014 supports light + dark, white-label setups');
 
   /* ── How to use in Figma ────────────── */
-  docSection(card,'How to Use DLS-Lead in Your Projects (Figma)');
+  docSection(card,'How to Use DLS-Lead in Your Projects (Figma)','guides');
   docBlock(card,'Step 1 \u2014 Duplicate or open the DLS-Lead file','You\u2019ll receive access to the official DLS-Lead source file. This file is your master library.');
   docBlock(card,'Step 2 \u2014 Publish the library','Open the DLS-Lead file, go to Assets \u2192 Library, select Components, Styles, Variables (recommended), and click Publish.');
   docBlock(card,'Step 3 \u2014 Enable the library in your project file','Open your project file \u2192 Assets \u2192 Library icon \u2192 Find DLS-Lead \u2192 Add to file. You can now insert components from the Assets panel.');
@@ -1200,7 +1241,7 @@ function renderGuides(inner){
   docBlock(card,'Step 5 \u2014 Use tokens / variables','Use variables for: colors (semantic tokens), spacing and layout consistency, radius and border rules, typography scale.\nThis makes your UI consistent and makes future changes easy.');
 
   /* ── Customization Guide ────────────── */
-  docSection(card,'Customization Guide');
+  docSection(card,'Customization Guide','guides');
   docBlock(card,'How colors are structured','Color Primitives \u2014 raw hex values (color.neutral.0, color.primary.700). Not used directly in UI.\nSemantic Colors \u2014 meaning-based tokens (bg.light, fg.primary, border.base). Referenced by components.\nYou can remap DLS-Lead by updating primitives or remapping semantic tokens, without touching components.');
   docBlock(card,'How to change the main brand colors','Option A \u2014 Replace primitive values (recommended):\n1. Open Variables \u2192 Color Primitives\n2. Find your main palette (primary, neutral, info)\n3. Replace the colors with your own\n4. Components update automatically through semantic mapping\n\nOption B \u2014 Remap semantic tokens (advanced):\n1. Open Variables \u2192 Color Semantic\n2. Find tokens like bg.light, fg.primary, border.base\n3. Change their mapping to different primitives');
   docBlock(card,'How to add a new theme','DLS-Lead ships with Light and Dark.\nYou can add more: High Contrast, Brand Theme, Client A, Client B.\n\nSteps:\n1. Open Variables\n2. Select the Color Semantic collection\n3. Add a new mode (example: High Contrast)\n4. For each semantic token, define values for the new mode');
@@ -1208,19 +1249,19 @@ function renderGuides(inner){
   docBlock(card,'Best practices','\u2022 Change values in variables, not inside components\n\u2022 Avoid detaching components\n\u2022 Keep semantic token naming consistent\n\u2022 Add new tokens only when they represent a reusable rule\n\u2022 Prefer adding new semantic tokens instead of hardcoded primitives\n\u2022 When adding a new theme, update semantic tokens first');
 
   /* ── Components guide ───────────────── */
-  docSection(card,'Components');
+  docSection(card,'Components','guides');
   docBlock(card,'How to use components','Insert components from the library using the Assets panel instead of copying frames.\nConfigure with properties (instead of detaching): variants, size, state, optional elements.\nAvoid detaching instances \u2014 use properties, nested overrides, and slots.');
   docBlock(card,'How to create a new component','Step 1 \u2014 Start from a clear UI purpose: what problem it solves, where it\u2019ll be used, what must be customizable.\nStep 2 \u2014 Build from existing blocks: typography styles, spacing tokens, border-radius tokens, semantic colors, existing nested components.\nStep 3 \u2014 Use variants for scale: Size, Variant, State, Icon, Layout.\nStep 4 \u2014 Use semantic tokens (not hardcoded colors).\nStep 5 \u2014 Document it: description, when to use / when not to use, properties list, examples.');
   docBlock(card,'Best practices','\u2022 Use components from the library\n\u2022 Avoid detaching instances\n\u2022 Add new variants only when they represent a real system rule\n\u2022 Define tokens first, then update components\n\u2022 Keep naming consistent and predictable');
 
   /* ── Icons ──────────────────────────── */
-  docSection(card,'Icons');
+  docSection(card,'Icons','guides');
   docBlock(card,'Icon system','DLS-Lead uses Lucide icons as the default icon set.\nLucide icons are stroke-based, clean and consistent, easy to scale, ideal for modern SaaS products.\nYou can replace Lucide with any other icon library, but it will require manual updates to icon components.');
   docBlock(card,'Icon structure','Individual icon components, consistent naming, consistent sizes.\nStroke tokens: icon.stroke-12, icon.stroke-16, icon.stroke-24.');
   docBlock(card,'How to add a new custom icon','Step 1 \u2014 Add your icon vector: paste SVG into Figma, ensure it\u2019s a clean vector, stroke-based preferred.\nStep 2 \u2014 Convert it into a component: select the icon vector, click Create Component.\n\nKeep icons consistent: avoid mixing filled and stroke, avoid random stroke widths, keep icons aligned to pixel grid.');
 
   /* ── How to get updates ─────────────── */
-  docSection(card,'How to Get New Updates');
+  docSection(card,'How to Get New Updates','guides');
   docBlock(card,'Receipt (recommended)','After purchase you receive a receipt email with access to your files.\nOpen the receipt, click Download content, save the email to your contacts.');
   docBlock(card,'How do updates work?','New components, variants, states, improvements, fixes, new tokens/variables, documentation.\nFigma updates cannot be installed automatically. Two options:\na. Swap your library (recommended)\nb. Copy only what you need (selective)');
   docBlock(card,'Updating via Swap Library','1. Open your project file \u2192 Assets \u2192 Library icon\n2. Find DLS-Lead under Libraries used in this file\n3. Click Swap Library\n4. Choose the latest DLS-Lead library file\n5. Review the list of components and styles to be replaced\n6. Click Swap Library to apply\n\nAll components will update to the latest versions.');
@@ -1230,23 +1271,27 @@ function renderGuides(inner){
 
   // TOC sidebar
   const aside=h('div',{class:'card-sm content-aside'});
-  for(const s of['Updates & Support','Getting Started','How to Use in Figma','Customization Guide','Components','Icons','How to Get Updates']){
-    aside.appendChild(h('div',{class:'toc-item'+(s==='Updates & Support'?' active':'')},s));
+  for(const [index,title] of sectionTitles.entries()){
+    const label=title==='How to Use DLS-Lead in Your Projects (Figma)'?'How to Use in Figma':title;
+    const target=slugifyDocId('guides',title);
+    aside.appendChild(h('button',{class:'toc-item'+(index===0?' active':''),type:'button','data-target':target,onclick:()=>scrollToDocTarget(target,aside)},label));
   }
   row.appendChild(aside);
   inner.appendChild(row);
+  setupDocToc(aside);
 }
 
 /* ═══════ Tab: Technical Documentation ════════════════════ */
 function renderTechnicalDocs(inner){
   const row=h('div',{class:'content-row'});
   const card=h('div',{class:'card content-main'});
+  const sectionTitles=['Token Architecture','Naming & Components','States & Theming','Typography & Extension','Governance & AI'];
 
   card.appendChild(h('div',{class:'doc-title'},'Technical Documentation'));
   card.appendChild(h('div',{class:'doc-subtitle'},'Infrastructure reference for the DLS-Lead 4-layer token system. Covers architecture, naming, components, states, theming, typography, extensions, and governance.'));
 
   /* ── Token Architecture ─────────────── */
-  docSection(card,'Token Architecture');
+  docSection(card,'Token Architecture','technical');
   docBlock(card,'4-Layer Model','DLS-Lead uses a 4-layer DTCG-compliant token system. Every visual decision is encoded as a design token. Components consume tokens \u2014 they never hardcode values.');
   docBlock(card,'Layer 1 \u2014 Primitives','Raw values: hex colors, pixel dimensions, font weights, numeric scales.\n\nExamples:\ncolor.neutral.700 \u2192 #414651\nradius.m \u2192 6px\nspacing.4 \u2192 16px\ntext.m.fontSize \u2192 14px\n\nRule: NEVER referenced directly by components.');
   docBlock(card,'Layer 2 \u2014 System Semantics','UI roles mapped from primitives. Define meaning, not appearance.\n\nExamples:\ncolor.surface.base \u2192 {color.neutral.0}\ncolor.text.primary \u2192 {color.neutral.900}\ncolor.intent.primary.base \u2192 {color.primary.700}\n\nUsed by components when no Layer 4 token exists.');
@@ -1257,7 +1302,7 @@ function renderTechnicalDocs(inner){
   docBlock(card,'Anti-Patterns','\u2717 Using #hex or rgb() values in component CSS\n\u2717 Referencing color.neutral.700 (primitive) in a component\n\u2717 Referencing color.intent.primary.base when color.component.button.primary.bg.base exists\n\u2717 Hardcoding state shift values instead of using state.lDelta tokens\n\u2717 Layer 4 token referencing another Layer 4 token');
 
   /* ── Naming & Components ────────────── */
-  docSection(card,'Naming & Components');
+  docSection(card,'Naming & Components','technical');
   docBlock(card,'Token Path Format','category.scope.element.variant.property.state\nEach segment is lowercase. Hyphens within a segment, dots between segments.\n\nCSS Variable Format:\nAll tokens expand as --dls-{path with dots replaced by hyphens}\ncolor.neutral.700 \u2192 --dls-color-neutral-700\ncolor.intent.primary.base \u2192 --dls-color-intent-primary-base');
   docBlock(card,'Fixed Enums','Intents: neutral, primary, info, success, warning, danger\nStates: base, hover, pressed, focus, disabled, active, selected\nSizes: xs, s, m, l, xl, 2xl, 3xl\nVariants: filled, outline, soft, ghost, dotted, ghost, link\n\nDo not invent new names. Use only these enums.');
   docBlock(card,'Naming Anti-Patterns','\u2717 camelCase in CSS: --dls-colorIntentPrimaryBase\n\u2717 Abbreviated scope: --dls-btn-bg\n\u2717 Mixed layer concerns: --dls-color-border-neutral-700\n\u2717 Generic names: --dls-color-1, --dls-blue\n\n\u2713 Correct: --dls-color-component-button-primary-bg-base');
@@ -1265,7 +1310,7 @@ function renderTechnicalDocs(inner){
   docBlock(card,'Attribute Model','Components use data-* attributes for all dynamic properties:\ndata-variant="filled|outline|soft|dotted|ghost|link"\ndata-intent="neutral|primary|info|success|warning|danger"\ndata-size="xs|s|m|l|xl"\ndata-icon-only (presence attribute)\n:disabled (native HTML)\n\nNo .is-* or .has-* classes. No class-based state management.');
 
   /* ── States & Theming ───────────────── */
-  docSection(card,'States & Theming');
+  docSection(card,'States & Theming','technical');
   docBlock(card,'Interaction States','Hover: OKLCH lightness shift\nbackground: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-hover)) c h)\n\nFigma: Opacity overlay layer\nstate.overlay.hover.light \u2192 rgba(0, 0, 0, 0.05)\n\nFilled/soft/ghost variants use the same formula.');
   docBlock(card,'Pressed','Code: color L-shift with state.lDelta.pressed (-0.10)\nFigma: state.overlay.pressed.light = rgba(0, 0, 0, 0.10)');
   docBlock(card,'Focus','Applied via :focus-visible only (keyboard navigation).\nBorder: 0 0 0 3px var(--dls-state-focus-ring-color)\nColor: state.focus.ring.color \u2192 {color.info.300}\n\nNon-filled variants get background: var(--dls-color-surface-base) on focus to ensure contrast.\nUse box-shadow, not outline, to respect border-radius.');
@@ -1274,7 +1319,7 @@ function renderTechnicalDocs(inner){
   docBlock(card,'Dark Theme','Applied via [data-theme="dark"] selector overriding CSS variables.\nStrategy: Override Layer 2 semantic tokens only.\n\n[data-theme="dark"] {\n  --dls-color-surface-base: var(--dls-color-neutral-900);\n  --dls-color-surface-primary: var(--dls-color-neutral-92);\n  --dls-color-border-base: var(--dls-color-neutral-700);\n}\n\nComponents auto-update because they reference semantic tokens.');
 
   /* ── Typography & Extension ─────────── */
-  docSection(card,'Typography & Extension');
+  docSection(card,'Typography & Extension','technical');
   docBlock(card,'Font Stack','Font family: Inter\nWeights: normal (400), medium (500), semibold (600), bold (800), black (900)');
   docBlock(card,'Primitive Text Scale','xs: 10/14, s: 12/16, m: 14/20, l: 16/24, xl: 18/28, 2xl: 24/32, 3xl: 32/40, hero: 36/46\n\nFormat: fontSize/lineHeight in pixels');
   docBlock(card,'Semantic Categories','Heading: hero, h1\u2013h6\nParagraph: m \u2014 light/medium/heavy\nButton: 1/m/xs (xl weight 500)\nLink: 1/m/xs \u2014 light/medium/heavy\nUpper: 1/m/xs (uppercase, 2% letter-spacing)\nItalic: 1/m/xs (font-style: italic)\nAvatar: 2xl through 5xs (line-height = font-size)');
@@ -1282,7 +1327,7 @@ function renderTechnicalDocs(inner){
   docBlock(card,'Versioning','Patch (0.0.x): Value adjustments within existing tokens\nMinor (0.x.0): New tokens, components, intents, scales. No removals.\nMajor (x.0.0): Removed tokens, renamed tokens, structural changes.\n\nBreaking Change Rules:\n\u2022 Add new + Minor (for old, action needed)\n\u2022 Change token value = Patch (document in changelog)\n\u2022 Rename token = Major (deprecate for 2 Minors first)\n\u2022 Remove token = Major (deprecate for 2 Minors first)\n\u2022 Change layer assignment = Major (full migration guide)\n\u2022 Add new variant = Minor');
 
   /* ── Governance & AI ────────────────── */
-  docSection(card,'Governance & AI');
+  docSection(card,'Governance & AI','technical');
   docBlock(card,'Token Lifecycle','Stages: PROPOSED \u2192 EXPERIMENTAL \u2192 STABLE \u2192 DEPRECATED \u2192 REMOVED\n\nProposed: Exists in discussion/Figma only. Not in tokens.json.\nExperimental: In tokens.json with [experimental] tag. May change.\nStable: At least 2 Minor versions, or documented \"used broadly\".\nDeprecated: [deprecated: use {replacement}] in $description. Must remain for 2 Minor versions.\nRemoved: Deleted. Requires major version bump.');
   docBlock(card,'Modification Rules','What You Can Do:\n\u2022 Override Layer 4 tokens per-brand\n\u2022 Add new component tokens\n\u2022 Adjust primitive values (affects entire system)\n\u2022 Add dark-mode overrides to Layer 2\n\u2022 Add new intents with full 6-property set\n\nWhat You MUST Not Do:\n\u2022 Override system-level primitives for a single component\n\u2022 Create component tokens that skip Layer 2 semantics\n\u2022 Adjust primitive values expecting local effect\n\u2022 Put dark-mode logic inside component CSS\n\u2022 Create tokens that reference higher layers');
   docBlock(card,'AI Integration Guide','How AI Should Reference Tokens:\n1. Read tokens.json before generating any CSS\n2. Identify which Layer 4 tokens exist for the target component\n3. Use CSS custom properties, never raw values\n4. Use internal variable pattern (--_base, --_on-base, etc.) for intent-driven components\n\nHow AI Should Generate Components:\n1. Parse tokens for available tokens\n2. Generate Layer 4 token entries first\n3. Generate CSS referencing only those tokens\n4. Use data-* attributes for variants/intents/sizes\n5. Start with: all: unset; box-sizing: border-box;\n6. Include all states: base, hover, pressed, focus-visible, disabled\n7. Test against all 6 intents\n\nProhibited Actions:\n\u2717 Using #hex or rgb() in component CSS\n\u2717 Using primitives (var(--dls-color-neutral-700)) in components\n\u2717 Generating inline styles with token values\n\u2717 Skipping disabled state\n\u2717 Using :focus instead of :focus-visible\n\u2717 Using outline for focus ring\n\u2717 Adding .is-* or .has-* classes\n\u2717 Deleting all: unset on new components');
@@ -1291,11 +1336,13 @@ function renderTechnicalDocs(inner){
 
   // TOC sidebar
   const aside=h('div',{class:'card-sm content-aside'});
-  for(const s of['Token Architecture','Naming & Components','States & Theming','Typography & Extension','Governance & AI']){
-    aside.appendChild(h('div',{class:'toc-item'+(s==='Token Architecture'?' active':'')},s));
+  for(const [index,title] of sectionTitles.entries()){
+    const target=slugifyDocId('technical',title);
+    aside.appendChild(h('button',{class:'toc-item'+(index===0?' active':''),type:'button','data-target':target,onclick:()=>scrollToDocTarget(target,aside)},title));
   }
   row.appendChild(aside);
   inner.appendChild(row);
+  setupDocToc(aside);
 }
 
 /* ═══════ Tab: Changelog (synced from git) ════════════════ */
@@ -1323,7 +1370,7 @@ function renderChangelog(inner){
       return;
     }
     for(const group of data){
-      const entry=h('div',{class:'changelog-entry'});
+      const entry=h('div',{class:'changelog-entry',id:slugifyDocId('changelog',group.month)});
       entry.appendChild(h('div',{class:'changelog-date'},group.month));
       const ul=h('ul',{class:'changelog-list'});
       for(const c of group.commits){
@@ -1345,11 +1392,13 @@ function renderChangelog(inner){
     aside.innerHTML='';
     if(data){
       for(let i=0;i<data.length;i++){
-        aside.appendChild(h('div',{class:'toc-item'+(i===0?' active':'')},data[i].month));
+        const target=slugifyDocId('changelog',data[i].month);
+        aside.appendChild(h('button',{class:'toc-item'+(i===0?' active':''),type:'button','data-target':target,onclick:()=>scrollToDocTarget(target,aside)},data[i].month));
       }
+      setupDocToc(aside);
     }
   });
-  aside.appendChild(h('div',{class:'toc-item active'},'Loading...'));
+  aside.appendChild(h('button',{class:'toc-item active',type:'button'},'Loading...'));
   row.appendChild(aside);
   inner.appendChild(row);
 }
@@ -1377,28 +1426,26 @@ function renderComponentDetail(slug){
   const m=$('#main');m.innerHTML='';
   const inner=h('div',{class:'main-inner'});
   inner.appendChild(h('h1',{class:'page-title'},'Components. '+name));
-  const card=h('div',{class:'card',style:{marginTop:'24px'}});
-
-  card.appendChild(h('h2',{style:{fontSize:'32px',fontWeight:700,lineHeight:'40px',marginBottom:'8px'}},name));
+  const card=h('div',{class:'component-page-content'});
+  const intro=mkTokenPageSection(name,data&&data.desc?data.desc:'');
+  card.appendChild(intro);
 
   if(data){
-    card.appendChild(h('p',{style:{fontSize:'14px',color:'#666970',marginBottom:'24px'}},data.desc));
-
     // Storybook link button
     if(data.storybook){
       const sbLink=h('a',{
         href:'https://storybook.dlslead.com/?path=/story/'+data.storybook+'--playground',
         target:'_blank',
         class:'btn-outline',
-        style:{display:'inline-flex',gap:'8px',marginBottom:'24px',fontSize:'13px',padding:'8px 14px'},
+        style:{display:'inline-flex',gap:'8px',fontSize:'13px',padding:'8px 14px'},
         html:ICO.storybook+' <span>View in Storybook</span>'
       });
-      card.appendChild(sbLink);
+      intro.appendChild(sbLink);
     }
 
     // Alert-specific visual preview
     if(slug==='alert'){
-      const preview=h('div',{class:'alert-preview',style:{background:'#fff',border:'1px solid #E9EAEB',borderRadius:'8px'}});
+      const preview=h('div',{class:'alert-preview component-preview-shell'});
       const intents=[
         {name:'neutral',bg:'#F5F5F5',fg:'#1C1D1F',btnBg:'#1C1D1F',icon:ICO.info},
         {name:'primary',bg:'#F9F5FF',fg:'#6941C6',btnBg:'#6941C6',icon:ICO.info},
@@ -1440,7 +1487,7 @@ function renderComponentDetail(slug){
       const compKey=tokenKeyMap[slug]||slug.replace(/-/g,'');
       const compTokens=tokens.color.component[compKey];
       if(compTokens){
-        card.appendChild(h('div',{class:'doc-section-title',style:{marginTop:'32px'}},'Component Tokens'));
+        const tokenSection=mkTokenPageSection('Component Tokens','Layer 4 — Override-safe tokens for this component.');
         const table=h('table',{class:'token-table'});
         table.appendChild(h('thead',{},h('tr',{},h('th',{},''),h('th',{},'Token'),h('th',{},'Reference'),h('th',{},'CSS Variable'))));
         const tbody=h('tbody');
@@ -1463,11 +1510,11 @@ function renderComponentDetail(slug){
           }
         })(compTokens,'');
         table.appendChild(tbody);
-        if(tbody.children.length>0)card.appendChild(table);
+        if(tbody.children.length>0){tokenSection.appendChild(table);card.appendChild(tokenSection);}
       }
     }
   } else {
-    card.appendChild(h('p',{style:{fontSize:'14px',color:'#666970'}},'Component documentation coming soon.'));
+    intro.appendChild(h('p',{class:'section-desc'},'Component documentation coming soon.'));
   }
 
   inner.appendChild(card);
