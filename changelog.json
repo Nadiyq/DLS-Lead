@@ -3,6 +3,16 @@
     "month": "March 2026",
     "commits": [
       {
+        "hash": "ccf191e",
+        "date": "2026-03-22",
+        "message": "Align docs and component pages with updated design styles"
+      },
+      {
+        "hash": "6d6e2a3",
+        "date": "2026-03-22",
+        "message": "doc site updates"
+      },
+      {
         "hash": "7da94ec",
         "date": "2026-03-21",
         "message": "changed favicon"
