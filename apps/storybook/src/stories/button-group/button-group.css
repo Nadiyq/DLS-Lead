@@ -9,6 +9,7 @@
   all: unset;
   box-sizing: border-box;
   display: inline-flex;
+  width: fit-content;
   border-radius: var(--dls-radius-component-button);
   overflow: hidden;
 }

@@ -9,7 +9,7 @@
   flex-direction: column;
   padding: var(--dls-spacing-2);
   background: var(--dls-color-surface-base);
-  border: 1px solid var(--dls-color-border-subtle);
+  border: 1px solid var(--dls-color-border-base);
   border-radius: var(--dls-radius-component-list);
   font-family: var(--dls-font-family);
 }

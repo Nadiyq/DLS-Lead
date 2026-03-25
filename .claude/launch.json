@@ -7,6 +7,14 @@
       "runtimeArgs": ["server.js"],
       "port": 3000,
       "autoPort": true
+    },
+    {
+      "name": "storybook",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["storybook", "dev", "--port", "${port}", "--ci"],
+      "port": 6006,
+      "autoPort": true,
+      "cwd": "apps/storybook"
     }
   ]
 }

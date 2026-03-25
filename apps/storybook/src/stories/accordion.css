@@ -116,6 +116,7 @@
 
 .dls-accordion-item__content {
   padding: var(--dls-spacing-1-5) var(--dls-spacing-2) var(--dls-spacing-3);
+  font-family: var(--dls-font-family);
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);

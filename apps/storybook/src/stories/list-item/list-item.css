@@ -14,6 +14,7 @@
   display: flex;
   align-items: center;
   gap: var(--dls-spacing-2);
+  min-height: 32px;
   padding: var(--dls-spacing-1) var(--dls-spacing-2);
   border-radius: var(--dls-radius-component-list-item);
   border: 1px solid transparent;
@@ -158,6 +159,7 @@
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: var(--dls-color-text-placeholder);
+  text-align: center;
 }
 
 /* ---------------------------------------------------------------------------

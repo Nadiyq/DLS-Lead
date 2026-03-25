@@ -143,16 +143,19 @@
   background: var(--dls-state-hover-overlay);
 }
 
-/* Today — info text color (blue/primary) */
+/* Today — primary subtle fill + border */
 .dls-calendar__day[data-today]:not([data-selected]) {
-  color: var(--dls-color-intent-info-text);
-  font-weight: var(--dls-font-weight-semibold);
+  background: var(--dls-color-intent-primary-subtle);
+  border: 1px solid var(--dls-color-intent-primary-border);
+  color: var(--dls-color-intent-primary-text);
 }
 
 /* In-range (between value and valueEnd) */
 .dls-calendar__day[data-in-range]:not([data-selected]) {
-  background: var(--dls-color-intent-neutral-subtle);
+  background: var(--dls-state-hover-overlay);
   border-radius: 0;
+  width: 100%;
+  margin: 0;
 }
 
 /* Selected — dark bg, white text, rounded */

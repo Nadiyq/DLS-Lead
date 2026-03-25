@@ -30,41 +30,7 @@
   width: 200px;
   flex-shrink: 0;
   padding: var(--dls-spacing-1-5) var(--dls-spacing-1);
-  border-right: 1px solid var(--dls-color-border-subtle);
-}
-
-/* ---------------------------------------------------------------------------
-   Period option item
-   --------------------------------------------------------------------------- */
-
-.dls-calendar-periods__option {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  padding: var(--dls-spacing-1) var(--dls-spacing-2);
-  border-radius: var(--dls-radius-component-list-item);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-normal);
-  color: var(--dls-color-intent-neutral-text);
-  cursor: pointer;
-  background: var(--dls-color-surface-base);
-}
-
-.dls-calendar-periods__option:hover:not(:disabled):not([data-selected]) {
-  background: var(--dls-state-hover-overlay);
-}
-
-.dls-calendar-periods__option[data-selected] {
-  background: var(--dls-color-intent-info-subtle);
-  color: var(--dls-color-intent-info-text);
-}
-
-.dls-calendar-periods__option:focus-visible {
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-  z-index: 1;
-  position: relative;
+  border-right: 1px solid var(--dls-color-border-base);
 }
 
 /* ---------------------------------------------------------------------------

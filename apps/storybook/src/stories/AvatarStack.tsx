@@ -88,7 +88,7 @@ export const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
                     type="with-slots"
                     text={user.name}
                     slotLeft={
-                      <Avatar size="24" circle src={user.src} initials={user.initials} dot />
+                      <Avatar size="24" circle src={user.src} initials={user.initials} />
                     }
                     selected={selectedIndex === i}
                     onClick={() => onOverflowUserClick?.(user, i)}

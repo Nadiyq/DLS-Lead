@@ -1,5 +1,6 @@
 import React from 'react';
 import { CalendarDay } from './CalendarDay';
+import { ListItem } from '../list-item/ListItem';
 import './calendar-periods.css';
 
 /* ---------------------------------------------------------------------------
@@ -183,15 +184,13 @@ export const CalendarPeriods = React.forwardRef<HTMLDivElement, CalendarPeriodsP
         {/* Sidebar — period presets */}
         <div className="dls-calendar-periods__sidebar">
           {periods.map(period => (
-            <button
+            <ListItem
               key={period.value}
-              type="button"
-              className="dls-calendar-periods__option"
-              data-selected={selectedPeriod === period.value || undefined}
+              type="text"
+              text={period.label}
+              selected={selectedPeriod === period.value}
               onClick={() => handlePeriodClick(period)}
-            >
-              {period.label}
-            </button>
+            />
           ))}
         </div>
 

@@ -166,6 +166,9 @@
 .dls-button[data-variant="soft"] {
   background: var(--_subtle);
   color: var(--_text);
+  border-color: var(--_border);
+}
+.dls-button[data-variant="soft"][data-intent="neutral"] {
   border-color: var(--dls-color-border-base);
 }
 .dls-button[data-variant="soft"]:hover:not(:disabled) {
