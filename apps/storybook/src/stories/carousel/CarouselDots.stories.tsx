@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { CarouselDots } from './CarouselDots';
+import { CarouselArrow } from './CarouselArrow';
 
 const meta = {
   title: 'Components/CarouselDots',
@@ -77,9 +78,6 @@ export const WithArrows: Story = {
   render: () => {
     const [current, setCurrent] = React.useState(0);
     const total = 5;
-
-    // Import arrow inline to avoid circular dep in stories
-    const { CarouselArrow } = require('./CarouselArrow');
 
     return (
       <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>

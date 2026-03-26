@@ -59,7 +59,7 @@
 /* Shared weekday header */
 .dls-calendar-periods__weekdays {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 36px);
 }
 
 .dls-calendar-periods__weekday {
@@ -96,7 +96,7 @@
 
 .dls-calendar-periods__grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 36px);
 }
 
 /* ---------------------------------------------------------------------------
@@ -111,7 +111,7 @@
 
 .dls-calendar-periods__separator {
   height: 1px;
-  background: var(--dls-color-border-subtle);
+  background: var(--dls-color-border-base);
 }
 
 .dls-calendar-periods__actions {

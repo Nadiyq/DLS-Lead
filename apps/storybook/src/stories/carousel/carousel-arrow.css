@@ -24,6 +24,7 @@
   background: var(--dls-color-intent-neutral-subtle);
   color: var(--dls-color-intent-neutral-text);
   border: 1px solid var(--dls-color-border-base);
+  box-shadow: 0 1px 2px var(--dls-color-overlay-scrim);
 }
 
 /* Icon sizing */
@@ -31,22 +32,6 @@
   width: 16px;
   height: 16px;
   flex-shrink: 0;
-}
-
-/* ---------------------------------------------------------------------------
-   Direction — rotate the icon via CSS
-   --------------------------------------------------------------------------- */
-
-.dls-carousel-arrow[data-direction="left"] svg {
-  transform: rotate(180deg);
-}
-
-.dls-carousel-arrow[data-direction="up"] svg {
-  transform: rotate(-90deg);
-}
-
-.dls-carousel-arrow[data-direction="down"] svg {
-  transform: rotate(90deg);
 }
 
 /* ---------------------------------------------------------------------------
@@ -69,6 +54,7 @@
   background: var(--dls-color-surface-disabled);
   color: var(--dls-color-text-disabled);
   border-color: var(--dls-color-border-disabled);
+  box-shadow: none;
   cursor: not-allowed;
   pointer-events: none;
 }

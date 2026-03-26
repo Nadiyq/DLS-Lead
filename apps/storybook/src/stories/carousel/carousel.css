@@ -14,6 +14,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--dls-spacing-3);
+  width: 100%;
   font-family: var(--dls-font-family);
 }
 
@@ -25,6 +26,7 @@
   display: flex;
   align-items: center;
   gap: var(--dls-spacing-3);
+  width: 100%;
   position: relative;
 }
 
@@ -40,6 +42,7 @@
 .dls-carousel__viewport {
   overflow: hidden;
   flex: 1 1 auto;
+  min-width: 0;
 }
 
 /* Track — slides in a row/column */
@@ -51,6 +54,11 @@
 
 .dls-carousel[data-orientation="vertical"] .dls-carousel__track {
   flex-direction: column;
+}
+
+/* Slide wrapper */
+.dls-carousel__slide {
+  flex-shrink: 0;
 }
 
 /* ---------------------------------------------------------------------------

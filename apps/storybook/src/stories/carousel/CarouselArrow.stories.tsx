@@ -30,33 +30,19 @@ export const AllDirections: Story = {
     direction: 'right',
   },
   render: () => (
-    <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '32px 32px', gap: 12, justifyItems: 'center' }}>
+      <div />
+      <div />
       <CarouselArrow direction="left" />
+      <CarouselArrow direction="right" />
       <CarouselArrow direction="up" />
       <CarouselArrow direction="down" />
-      <CarouselArrow direction="right" />
     </div>
   ),
 };
 
 // ---------------------------------------------------------------------------
-// Horizontal pair
-// ---------------------------------------------------------------------------
-
-export const HorizontalPair: Story = {
-  args: {
-    direction: 'right',
-  },
-  render: () => (
-    <div style={{ display: 'flex', gap: 200, alignItems: 'center' }}>
-      <CarouselArrow direction="left" />
-      <CarouselArrow direction="right" />
-    </div>
-  ),
-};
-
-// ---------------------------------------------------------------------------
-// Disabled
+// Disabled — all directions
 // ---------------------------------------------------------------------------
 
 export const Disabled: Story = {
@@ -66,7 +52,31 @@ export const Disabled: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
       <CarouselArrow direction="left" disabled />
-      <CarouselArrow direction="right" />
+      <CarouselArrow direction="right" disabled />
+      <CarouselArrow direction="up" disabled />
+      <CarouselArrow direction="down" disabled />
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Normal vs Disabled
+// ---------------------------------------------------------------------------
+
+export const NormalVsDisabled: Story = {
+  args: {
+    direction: 'right',
+  },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: 12 }}>
+        <CarouselArrow direction="left" />
+        <CarouselArrow direction="right" />
+      </div>
+      <div style={{ display: 'flex', gap: 12 }}>
+        <CarouselArrow direction="left" disabled />
+        <CarouselArrow direction="right" disabled />
+      </div>
     </div>
   ),
 };

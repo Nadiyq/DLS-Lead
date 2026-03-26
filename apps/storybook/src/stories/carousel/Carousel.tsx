@@ -14,6 +14,8 @@ export interface CarouselProps {
   children: React.ReactNode;
   /** Layout direction */
   orientation?: CarouselOrientation;
+  /** Number of items visible at once */
+  visibleItems?: number;
   /** Show "Slide X of Y" label */
   showLabel?: boolean;
   /** Show pagination dots */
@@ -28,6 +30,12 @@ export interface CarouselProps {
 }
 
 /* ---------------------------------------------------------------------------
+   Constants
+   --------------------------------------------------------------------------- */
+
+const GAP = 12; // matches --dls-spacing-3
+
+/* ---------------------------------------------------------------------------
    Component
    --------------------------------------------------------------------------- */
 
@@ -36,7 +44,8 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
     {
       children,
       orientation = 'horizontal',
-      showLabel = true,
+      visibleItems = 1,
+      showLabel = false,
       showDots = true,
       showArrows = true,
       current: currentProp,
@@ -47,27 +56,53 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
   ) => {
     const slides = React.Children.toArray(children);
     const total = slides.length;
+    const maxIndex = Math.max(0, total - visibleItems);
 
     const [internalIndex, setInternalIndex] = React.useState(0);
     const current = currentProp ?? internalIndex;
 
+    const isVertical = orientation === 'vertical';
+
+    const viewportRef = React.useRef<HTMLDivElement>(null);
+    const [itemSize, setItemSize] = React.useState(0);
+
+    React.useEffect(() => {
+      if (!viewportRef.current) return;
+      const firstSlide = viewportRef.current.querySelector('[aria-roledescription="slide"]');
+      if (firstSlide) {
+        const el = firstSlide as HTMLElement;
+        setItemSize(isVertical ? el.offsetHeight : el.offsetWidth);
+      }
+    }, [isVertical, children]);
+
     const goTo = (index: number) => {
-      const clamped = Math.max(0, Math.min(total - 1, index));
+      const clamped = Math.max(0, Math.min(maxIndex, index));
       setInternalIndex(clamped);
       onSlideChange?.(clamped);
     };
 
     const prev = () => goTo(current - 1);
     const next = () => goTo(current + 1);
-
-    const isVertical = orientation === 'vertical';
     const prevDir = isVertical ? 'up' : 'left';
     const nextDir = isVertical ? 'down' : 'right';
 
+    // Translate by one item + gap per step
+    const offset = itemSize ? current * (itemSize + GAP) : 0;
     const translateProp = isVertical ? 'Y' : 'X';
     const trackStyle: React.CSSProperties = {
-      transform: `translate${translateProp}(-${current * 100}%)`,
+      transform: itemSize ? `translate${translateProp}(-${offset}px)` : undefined,
     };
+
+    // Viewport size = visibleItems * itemSize + (visibleItems - 1) * gap
+    const viewportSize = itemSize
+      ? visibleItems * itemSize + (visibleItems - 1) * GAP
+      : undefined;
+
+    const viewportStyle: React.CSSProperties | undefined = viewportSize
+      ? isVertical
+        ? { height: viewportSize }
+        : { width: viewportSize }
+      : undefined;
 
     return (
       <div
@@ -86,7 +121,11 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
             />
           )}
 
-          <div className="dls-carousel__viewport">
+          <div
+            className="dls-carousel__viewport"
+            ref={viewportRef}
+            style={viewportStyle}
+          >
             <div className="dls-carousel__track" style={trackStyle}>
               {slides.map((slide, i) => (
                 <div
@@ -94,7 +133,7 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
                   role="group"
                   aria-roledescription="slide"
                   aria-label={`Slide ${i + 1} of ${total}`}
-                  style={{ flex: '0 0 100%' }}
+                  className="dls-carousel__slide"
                 >
                   {slide}
                 </div>
@@ -105,7 +144,7 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
           {showArrows && (
             <CarouselArrow
               direction={nextDir}
-              disabled={current === total - 1}
+              disabled={current >= maxIndex}
               onClick={next}
             />
           )}

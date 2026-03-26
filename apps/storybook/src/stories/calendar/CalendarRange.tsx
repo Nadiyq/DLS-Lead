@@ -1,5 +1,7 @@
 import React from 'react';
 import { CalendarDay } from './CalendarDay';
+import { Dropdown } from '../dropdown/Dropdown';
+import { Tabs } from '../tabs/Tabs';
 import './calendar-range.css';
 
 /* ---------------------------------------------------------------------------
@@ -24,6 +26,8 @@ const ChevronRight = () => (
 
 export type CalendarRangeLayout = 'horizontal' | 'vertical';
 
+export type TimePeriod = 'AM' | 'PM';
+
 export interface CalendarRangeProps {
   /** Range start date */
   startDate?: Date | null;
@@ -41,6 +45,16 @@ export interface CalendarRangeProps {
   layout?: CalendarRangeLayout;
   /** First day of the week: 0 = Sunday, 1 = Monday */
   weekStartsOn?: 0 | 1;
+  /** Show time picker in footer */
+  showTimePicker?: boolean;
+  /** Selected hour (1–12) */
+  hour?: string;
+  /** Selected minute (00–59) */
+  minute?: string;
+  /** AM or PM */
+  period?: TimePeriod;
+  /** Called when time changes */
+  onTimeChange?: (hour: string, minute: string, period: TimePeriod) => void;
   /** Footer content (e.g. action buttons) */
   footer?: React.ReactNode;
   className?: string;
@@ -102,6 +116,21 @@ function getCalendarDays(year: number, month: number, weekStartsOn: 0 | 1) {
   return days;
 }
 
+const HOUR_OPTIONS = Array.from({ length: 12 }, (_, i) => {
+  const v = String(i + 1).padStart(2, '0');
+  return { value: v, label: v };
+});
+
+const MINUTE_OPTIONS = Array.from({ length: 60 }, (_, i) => {
+  const v = String(i).padStart(2, '0');
+  return { value: v, label: v };
+});
+
+const PERIOD_ITEMS = [
+  { value: 'AM', label: 'AM' },
+  { value: 'PM', label: 'PM' },
+];
+
 function addMonths(year: number, month: number, delta: number) {
   let m = month + delta;
   let y = year;
@@ -125,6 +154,11 @@ export const CalendarRange = React.forwardRef<HTMLDivElement, CalendarRangeProps
       maxDate,
       layout = 'horizontal',
       weekStartsOn = 0,
+      showTimePicker = false,
+      hour = '09',
+      minute = '15',
+      period = 'AM',
+      onTimeChange,
       footer,
       className,
     },
@@ -237,11 +271,41 @@ export const CalendarRange = React.forwardRef<HTMLDivElement, CalendarRangeProps
           {renderMonth(right.year, right.month, false, true)}
         </div>
 
-        {footer && (
+        {(showTimePicker || footer) && (
           <div className="dls-calendar-range__footer">
             <div className="dls-calendar-range__separator" />
-            <div className="dls-calendar-range__actions">
-              {footer}
+            <div className="dls-calendar-range__controls">
+              {showTimePicker && (
+                <div className="dls-calendar-range__time-picker">
+                  <Dropdown
+                    options={HOUR_OPTIONS}
+                    value={hour}
+                    onChange={(v) => onTimeChange?.(v ?? '09', minute, period)}
+                    clearable={false}
+                    className="dls-calendar-range__time-field"
+                  />
+                  <span className="dls-calendar-range__time-colon">:</span>
+                  <Dropdown
+                    options={MINUTE_OPTIONS}
+                    value={minute}
+                    onChange={(v) => onTimeChange?.(hour, v ?? '00', period)}
+                    clearable={false}
+                    className="dls-calendar-range__time-field"
+                  />
+                  <Tabs
+                    items={PERIOD_ITEMS}
+                    value={period}
+                    onChange={(v) => onTimeChange?.(hour, minute, v as TimePeriod)}
+                    type="pill"
+                    className="dls-calendar-range__time-period"
+                  />
+                </div>
+              )}
+              {footer && (
+                <div className="dls-calendar-range__actions">
+                  {footer}
+                </div>
+              )}
             </div>
           </div>
         )}

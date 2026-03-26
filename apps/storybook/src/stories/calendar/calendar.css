@@ -1,5 +1,6 @@
 /* ==========================================================================
    DLS Calendar — date picker panel
+   Views: date | month | year
    States: normal | today | selected | in-range | outside | disabled
    ========================================================================== */
 
@@ -12,13 +13,24 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  width: 290px;
+  width: fit-content;
   padding: var(--dls-spacing-3);
   background: var(--dls-color-surface-base);
   border: 1px solid var(--dls-color-border-subtle);
-  border-radius: var(--dls-radius-component-list);
+  border-radius: var(--dls-radius-component-calendar);
   font-family: var(--dls-font-family);
-  box-shadow: var(--dls-shadow-surface-md);
+  box-shadow: 0 4px 12px var(--dls-color-overlay-scrim);
+}
+
+/* Month & year views use smaller gap */
+.dls-calendar--month,
+.dls-calendar--year {
+  gap: var(--dls-spacing-2);
+}
+
+.dls-calendar--month .dls-calendar__header,
+.dls-calendar--year .dls-calendar__header {
+  margin-bottom: 0;
 }
 
 /* ---------------------------------------------------------------------------
@@ -74,12 +86,28 @@
 }
 
 .dls-calendar__title {
+  all: unset;
+  box-sizing: border-box;
   flex: 1;
   text-align: center;
+  font-family: var(--dls-font-family);
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-medium);
-  color: var(--dls-color-text-primary);
+  color: var(--dls-color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--dls-radius-component-button);
+  padding: var(--dls-spacing-1) var(--dls-spacing-2);
+}
+
+.dls-calendar__title:hover {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-calendar__title:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+  position: relative;
 }
 
 /* ---------------------------------------------------------------------------
@@ -174,6 +202,88 @@
 /* Focus */
 .dls-calendar__day:focus-visible {
   outline: none;
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+  position: relative;
+}
+
+/* ---------------------------------------------------------------------------
+   Month grid — 3 columns × 4 rows
+   --------------------------------------------------------------------------- */
+
+.dls-calendar__month-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 84px);
+}
+
+.dls-calendar__month-cell {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: var(--dls-spacing-2);
+  border-radius: var(--dls-radius-component-calendar-day);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-intent-neutral-text);
+  cursor: pointer;
+}
+
+.dls-calendar__month-cell:hover:not([data-selected]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-calendar__month-cell[data-selected] {
+  background: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+}
+
+.dls-calendar__month-cell:focus-visible {
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  z-index: 1;
+  position: relative;
+}
+
+/* ---------------------------------------------------------------------------
+   Year grid — 4 columns × 4 rows
+   --------------------------------------------------------------------------- */
+
+.dls-calendar__year-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 63px);
+}
+
+.dls-calendar__year-cell {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: var(--dls-spacing-2);
+  border-radius: var(--dls-radius-component-calendar-day);
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-intent-neutral-text);
+  cursor: pointer;
+}
+
+.dls-calendar__year-cell:hover:not([data-selected]) {
+  background: var(--dls-state-hover-overlay);
+}
+
+.dls-calendar__year-cell[data-selected] {
+  background: var(--dls-color-intent-neutral-base);
+  color: var(--dls-color-intent-neutral-on-base);
+}
+
+.dls-calendar__year-cell:focus-visible {
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
   z-index: 1;
   position: relative;

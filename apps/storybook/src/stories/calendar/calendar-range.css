@@ -12,6 +12,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  width: fit-content;
   padding: var(--dls-spacing-3);
   background: var(--dls-color-surface-base);
   border: 1px solid var(--dls-color-border-subtle);
@@ -38,6 +39,7 @@
 /* Vertical: stacked */
 .dls-calendar-range[data-layout="vertical"] .dls-calendar-range__panels {
   flex-direction: column;
+  width: fit-content;
 }
 
 /* ---------------------------------------------------------------------------
@@ -48,8 +50,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--dls-spacing-2);
-  flex: 1;
-  min-width: 0;
+  width: fit-content;
 }
 
 /* ---------------------------------------------------------------------------
@@ -111,7 +112,7 @@
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-medium);
-  color: var(--dls-color-text-secondary);
+  color: var(--dls-color-text-primary);
 }
 
 /* ---------------------------------------------------------------------------
@@ -120,7 +121,7 @@
 
 .dls-calendar-range__weekdays {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 36px);
 }
 
 .dls-calendar-range__weekday {
@@ -140,7 +141,7 @@
 
 .dls-calendar-range__grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 36px);
 }
 
 /* ---------------------------------------------------------------------------
@@ -155,7 +156,34 @@
 
 .dls-calendar-range__separator {
   height: 1px;
-  background: var(--dls-color-border-subtle);
+  background: var(--dls-color-border-base);
+}
+
+.dls-calendar-range__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ---------------------------------------------------------------------------
+   Time picker — hour : minute + AM/PM
+   --------------------------------------------------------------------------- */
+
+.dls-calendar-range__time-picker {
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-calendar-range__time-field {
+  width: 70px;
+}
+
+.dls-calendar-range__time-colon {
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  color: var(--dls-color-text-primary);
 }
 
 .dls-calendar-range__actions {

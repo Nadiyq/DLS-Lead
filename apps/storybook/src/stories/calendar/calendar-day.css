@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 36px;
   height: 32px;
   padding: var(--dls-spacing-2);
   border-radius: var(--dls-radius-component-calendar-day);
@@ -53,6 +54,7 @@
 .dls-calendar-day:disabled {
   background: var(--dls-color-surface-disabled);
   color: var(--dls-color-text-disabled);
+  border-radius: 0;
   cursor: not-allowed;
 }
 

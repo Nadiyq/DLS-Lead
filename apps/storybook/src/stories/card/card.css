@@ -52,7 +52,7 @@
 .dls-card__header {
   display: flex;
   align-items: center;
-  gap: 0;
+  justify-content: space-between;
   min-height: 24px;
 }
 
@@ -73,7 +73,6 @@
 }
 
 .dls-card__header-content {
-  flex: 1;
   min-width: 0;
 }
 
@@ -114,5 +113,6 @@
 .dls-card__footer {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: var(--dls-spacing-2);
 }

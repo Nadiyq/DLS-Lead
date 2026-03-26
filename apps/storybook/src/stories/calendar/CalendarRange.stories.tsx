@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { CalendarRange } from './CalendarRange';
+import type { TimePeriod } from './CalendarRange';
+import { Button } from '../Button';
 
 const meta = {
   title: 'Components/CalendarRange',
@@ -26,31 +28,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 );
 
 const fixedToday = new Date(2026, 5, 15); // June 15, 2026
-
-const PlaceholderButton = ({ label, primary }: { label: string; primary?: boolean }) => (
-  <button
-    type="button"
-    style={{
-      all: 'unset',
-      boxSizing: 'border-box',
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: 32,
-      padding: '0 12px',
-      borderRadius: 6,
-      fontSize: 14,
-      fontWeight: 500,
-      fontFamily: 'var(--dls-font-family)',
-      cursor: 'pointer',
-      border: primary ? 'none' : '1px solid var(--dls-color-border-base)',
-      color: primary ? 'var(--dls-color-intent-neutral-on-base)' : 'var(--dls-color-text-primary)',
-      background: primary ? 'var(--dls-color-intent-neutral-base)' : 'var(--dls-color-surface-base)',
-    }}
-  >
-    {label}
-  </button>
-);
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -115,19 +92,29 @@ export const WithFooter: Story = {
     startDate: new Date(2026, 5, 10),
     endDate: new Date(2026, 5, 22),
   },
-  render: () => (
-    <CalendarRange
-      today={fixedToday}
-      startDate={new Date(2026, 5, 10)}
-      endDate={new Date(2026, 5, 22)}
-      footer={
-        <>
-          <PlaceholderButton label="Cancel" />
-          <PlaceholderButton label="Apply" primary />
-        </>
-      }
-    />
-  ),
+  render: () => {
+    const [hr, setHr] = React.useState('09');
+    const [min, setMin] = React.useState('15');
+    const [per, setPer] = React.useState<TimePeriod>('AM');
+    return (
+      <CalendarRange
+        today={fixedToday}
+        startDate={new Date(2026, 5, 10)}
+        endDate={new Date(2026, 5, 22)}
+        showTimePicker
+        hour={hr}
+        minute={min}
+        period={per}
+        onTimeChange={(h, m, p) => { setHr(h); setMin(m); setPer(p); }}
+        footer={
+          <>
+            <Button variant="outline" size="m">Cancel</Button>
+            <Button variant="filled" size="m">Confirm</Button>
+          </>
+        }
+      />
+    );
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -153,6 +140,9 @@ export const Interactive: Story = {
   render: () => {
     const [start, setStart] = React.useState<Date | null>(null);
     const [end, setEnd] = React.useState<Date | null>(null);
+    const [hr, setHr] = React.useState('09');
+    const [min, setMin] = React.useState('15');
+    const [per, setPer] = React.useState<TimePeriod>('AM');
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'center' }}>
         <CalendarRange
@@ -160,16 +150,21 @@ export const Interactive: Story = {
           startDate={start}
           endDate={end}
           onRangeChange={(s, e) => { setStart(s); setEnd(e); }}
+          showTimePicker
+          hour={hr}
+          minute={min}
+          period={per}
+          onTimeChange={(h, m, p) => { setHr(h); setMin(m); setPer(p); }}
           footer={
             <>
-              <PlaceholderButton label="Cancel" />
-              <PlaceholderButton label="Apply" primary />
+              <Button variant="outline" size="m">Cancel</Button>
+              <Button variant="filled" size="m">Confirm</Button>
             </>
           }
         />
         <span style={{ fontFamily: 'var(--dls-font-family)', fontSize: 13, color: 'var(--dls-color-text-secondary)' }}>
           {start && end
-            ? `${start.toLocaleDateString()} – ${end.toLocaleDateString()}`
+            ? `${start.toLocaleDateString()} – ${end.toLocaleDateString()} ${hr}:${min} ${per}`
             : start
               ? `Start: ${start.toLocaleDateString()} → pick end date`
               : 'Click to select a range'}

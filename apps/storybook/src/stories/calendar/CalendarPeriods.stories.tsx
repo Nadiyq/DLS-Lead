@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { CalendarPeriods } from './CalendarPeriods';
 import type { PeriodOption } from './CalendarPeriods';
+import { Button } from '../Button';
 
 const meta = {
   title: 'Components/CalendarPeriods',
@@ -28,31 +29,6 @@ const defaultPeriods: PeriodOption[] = [
   { value: 'all', label: 'All time' },
   { value: 'custom', label: 'Custom' },
 ];
-
-const PlaceholderButton = ({ label, primary }: { label: string; primary?: boolean }) => (
-  <button
-    type="button"
-    style={{
-      all: 'unset',
-      boxSizing: 'border-box',
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: 32,
-      padding: '0 12px',
-      borderRadius: 6,
-      fontSize: 14,
-      fontWeight: 500,
-      fontFamily: 'var(--dls-font-family)',
-      cursor: 'pointer',
-      border: primary ? 'none' : '1px solid var(--dls-color-border-base)',
-      color: primary ? 'var(--dls-color-intent-neutral-on-base)' : 'var(--dls-color-text-primary)',
-      background: primary ? 'var(--dls-color-intent-neutral-base)' : 'var(--dls-color-surface-base)',
-    }}
-  >
-    {label}
-  </button>
-);
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -85,8 +61,8 @@ export const WithFooter: Story = {
       {...args}
       footer={
         <>
-          <PlaceholderButton label="Cancel" />
-          <PlaceholderButton label="Apply" primary />
+          <Button variant="outline" size="m">Cancel</Button>
+          <Button variant="filled" size="m">Confirm</Button>
         </>
       }
     />
@@ -126,8 +102,8 @@ export const Interactive: Story = {
           today={fixedToday}
           footer={
             <>
-              <PlaceholderButton label="Cancel" />
-              <PlaceholderButton label="Apply" primary />
+              <Button variant="outline" size="m">Cancel</Button>
+              <Button variant="filled" size="m">Confirm</Button>
             </>
           }
         />
