@@ -32,12 +32,9 @@ export interface ChipProps {
   dot?: DotIntent;
   /** Show trailing chevron */
   chevron?: boolean;
-  /** Show trailing remove button / callback */
-  onRemove?: React.MouseEventHandler;
-  /** Click handler — makes chip interactive */
-  onClick?: React.MouseEventHandler;
+  /** Show trailing cross icon */
+  cross?: boolean;
   size?: ChipSize;
-  disabled?: boolean;
   className?: string;
 }
 
@@ -66,36 +63,21 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       flag,
       dot,
       chevron,
-      onRemove,
-      onClick,
+      cross,
       size = 'm',
-      disabled = false,
       className,
     },
     ref,
   ) => {
     const hasAvatar = !!(avatar || stackedAvatars);
-    const isInteractive = !!onClick;
-    const isIconOnly = !label && !secondaryLabel && (!!onRemove || !!chevron);
     const avatarSize = AVATAR_SIZE_MAP[size];
 
     return (
       <div
         ref={ref}
         className={['dls-chip', className].filter(Boolean).join(' ')}
-        role={isInteractive ? 'button' : undefined}
-        tabIndex={isInteractive && !disabled ? 0 : undefined}
         data-size={size}
-        data-disabled={disabled || undefined}
-        data-interactive={isInteractive || undefined}
         data-has-avatar={hasAvatar || undefined}
-        data-icon-only={isIconOnly || undefined}
-        onClick={!disabled ? onClick : undefined}
-        onKeyDown={
-          isInteractive && !disabled
-            ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick?.(e as unknown as React.MouseEvent); } }
-            : undefined
-        }
       >
         {/* Leading: dot */}
         {dot && <span className="dls-chip__dot" data-intent={dot} />}
@@ -137,21 +119,15 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
         {/* Secondary label */}
         {secondaryLabel && <span className="dls-chip__secondary">{secondaryLabel}</span>}
 
-        {/* Trailing: remove (cross) */}
-        {onRemove && (
-          <button
-            type="button"
-            className="dls-chip__remove"
-            disabled={disabled}
-            onClick={(e) => { e.stopPropagation(); onRemove(e); }}
-            aria-label={label ? `Remove ${label}` : 'Remove'}
-          >
+        {/* Trailing: cross */}
+        {cross && (
+          <span className="dls-chip__icon">
             <XIcon />
-          </button>
+          </span>
         )}
 
         {/* Trailing: chevron */}
-        {chevron && !onRemove && (
+        {chevron && (
           <span className="dls-chip__icon">
             <ChevronDown />
           </span>

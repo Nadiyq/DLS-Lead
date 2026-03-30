@@ -1,12 +1,13 @@
 /* ==========================================================================
-   DLS Chip — token-driven building-block chip
-   Sizes: m | s | xs
+   DLS Chip — building-block element (no background, no border)
+   Used as atomic pieces inside ChipRegular and FilterChip.
+   Sizes: m (32px) | s (28px) | xs (24px)
    Types: text | icon+text | icon+two-text | avatar | stacked | flag | dot |
           cross | chevron
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
-   Base
+   Base — plain inline-flex container, no visual chrome
    --------------------------------------------------------------------------- */
 
 .dls-chip {
@@ -17,37 +18,14 @@
   font-family: var(--dls-font-family);
   white-space: nowrap;
   max-width: 100%;
-  background: var(--dls-color-component-chip-bg-base);
-  border: 1px solid var(--dls-color-component-chip-border-base);
-  border-radius: var(--dls-radius-component-chip);
-  color: var(--dls-color-component-chip-fg-base);
-  cursor: default;
-  transition: background-color 150ms ease, border-color 150ms ease;
-}
-
-/* Interactive chip */
-.dls-chip[data-interactive] {
-  cursor: pointer;
-}
-
-.dls-chip[data-interactive]:hover:not([data-disabled]) {
-  background: var(--dls-state-hover-overlay);
-}
-
-.dls-chip[data-interactive]:active:not([data-disabled]) {
-  background: var(--dls-state-pressed-overlay);
-}
-
-.dls-chip:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+  color: var(--dls-color-text-primary);
 }
 
 /* ---------------------------------------------------------------------------
-   Sizes
+   Sizes — padding, gap, height (from Figma building blocks)
    --------------------------------------------------------------------------- */
 
-/* M (default) — 32px height, padding 6px 8px, gap 8px */
+/* M (default) — 32px, pad 6 8, gap 8 */
 .dls-chip,
 .dls-chip[data-size="m"] {
   height: 32px;
@@ -58,13 +36,13 @@
   font-weight: var(--dls-font-weight-normal);
 }
 
-/* Avatar/stacked leading: asymmetric left padding */
+/* Avatar/stacked leading: asymmetric left padding (pad-left 6 instead of 8) */
 .dls-chip[data-has-avatar],
 .dls-chip[data-size="m"][data-has-avatar] {
   padding-left: var(--dls-spacing-1-5);
 }
 
-/* S — 28px height, padding 4px 6px, gap 6px */
+/* S — 28px, pad 4 6, gap 6 */
 .dls-chip[data-size="s"] {
   height: 28px;
   padding: var(--dls-spacing-1) var(--dls-spacing-1-5);
@@ -77,28 +55,13 @@
   padding-left: var(--dls-spacing-1);
 }
 
-/* XS — 24px height, padding 4px, gap 4px */
+/* XS — 24px, pad 4, gap 4 */
 .dls-chip[data-size="xs"] {
   height: 24px;
   padding: var(--dls-spacing-1);
   gap: var(--dls-spacing-1);
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
-}
-
-.dls-chip[data-size="xs"][data-has-avatar] {
-  padding-left: var(--dls-spacing-1);
-}
-
-/* ---------------------------------------------------------------------------
-   Disabled
-   --------------------------------------------------------------------------- */
-
-.dls-chip[data-disabled] {
-  background: var(--dls-color-component-chip-bg-disabled);
-  border-color: var(--dls-color-component-chip-border-disabled);
-  color: var(--dls-color-component-chip-fg-disabled);
-  cursor: not-allowed;
 }
 
 /* ---------------------------------------------------------------------------
@@ -122,10 +85,6 @@
   color: var(--dls-color-text-secondary);
 }
 
-.dls-chip[data-disabled] .dls-chip__secondary {
-  color: var(--dls-color-text-disabled);
-}
-
 /* ---------------------------------------------------------------------------
    Leading icon
    --------------------------------------------------------------------------- */
@@ -143,10 +102,6 @@
 .dls-chip__icon svg {
   width: 100%;
   height: 100%;
-}
-
-.dls-chip[data-disabled] .dls-chip__icon {
-  color: var(--dls-color-text-disabled);
 }
 
 /* ---------------------------------------------------------------------------
@@ -195,10 +150,6 @@
 .dls-chip__dot[data-intent="warning"] { background: var(--dls-color-intent-warning-base); }
 .dls-chip__dot[data-intent="danger"] { background: var(--dls-color-intent-danger-base); }
 
-.dls-chip[data-disabled] .dls-chip__dot {
-  background: var(--dls-color-text-disabled);
-}
-
 /* ---------------------------------------------------------------------------
    Flag (emoji)
    --------------------------------------------------------------------------- */
@@ -212,40 +163,3 @@
   line-height: 1;
 }
 
-/* ---------------------------------------------------------------------------
-   Remove / action button (cross type or trailing remove)
-   --------------------------------------------------------------------------- */
-
-.dls-chip__remove {
-  all: unset;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  color: var(--dls-color-text-secondary);
-  border-radius: var(--dls-radius-component-chip);
-}
-
-.dls-chip__remove:hover:not(:disabled) {
-  color: var(--dls-color-text-primary);
-}
-
-.dls-chip__remove:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-.dls-chip__remove svg {
-  width: 100%;
-  height: 100%;
-}
-
-.dls-chip[data-disabled] .dls-chip__remove {
-  color: var(--dls-color-text-disabled);
-  cursor: not-allowed;
-  pointer-events: none;
-}

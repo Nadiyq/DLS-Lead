@@ -1,4 +1,5 @@
 import React from 'react';
+import { Chip, type ChipSize, type DotIntent } from './Chip';
 import { XIcon, ChevronDown } from './chip-icons';
 import './chip-regular.css';
 
@@ -7,8 +8,8 @@ import './chip-regular.css';
    --------------------------------------------------------------------------- */
 
 export type ChipRegularVariant = 'filled' | 'outline' | 'soft' | 'dot';
-export type ChipRegularIntent = 'neutral' | 'primary' | 'info' | 'success' | 'warning' | 'danger';
-export type ChipRegularSize = 'xs' | 's' | 'm';
+export type ChipRegularIntent = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+export type ChipRegularSize = ChipSize;
 
 export interface ChipRegularProps {
   /** Primary label */
@@ -21,9 +22,9 @@ export interface ChipRegularProps {
   size?: ChipRegularSize;
   /** Leading icon element */
   leadingIcon?: React.ReactNode;
-  /** Show trailing chevron (rendered as a separate segment with divider) */
+  /** Show trailing chevron as second part */
   chevron?: boolean;
-  /** Remove callback — shows trailing X */
+  /** Remove callback — shows trailing cross as second part */
   onRemove?: React.MouseEventHandler;
   /** Click handler — makes chip interactive */
   onClick?: React.MouseEventHandler;
@@ -53,7 +54,7 @@ export const ChipRegular = React.forwardRef<HTMLDivElement, ChipRegularProps>(
   ) => {
     const isInteractive = !!onClick;
     const isDot = variant === 'dot';
-    const hasChevron = !!chevron && !onRemove;
+    const hasSecondPart = !!chevron || !!onRemove;
 
     return (
       <div
@@ -72,29 +73,25 @@ export const ChipRegular = React.forwardRef<HTMLDivElement, ChipRegularProps>(
             : undefined
         }
       >
-        {/* Content segment — label, icons, remove */}
-        <span className="dls-chip-regular__segment">
-          {isDot && <span className="dls-chip-regular__dot" />}
-          {leadingIcon && <span className="dls-chip-regular__icon">{leadingIcon}</span>}
-          <span className="dls-chip-regular__label">{label}</span>
-          {onRemove && (
-            <button
-              type="button"
-              className="dls-chip-regular__action"
-              disabled={disabled}
-              onClick={(e) => { e.stopPropagation(); onRemove(e); }}
-              aria-label={`Remove ${label}`}
-            >
-              <XIcon />
-            </button>
-          )}
-        </span>
+        {/* Part 1: content — Chip building block */}
+        <Chip
+          label={label}
+          dot={isDot ? (intent as DotIntent) : undefined}
+          leadingIcon={leadingIcon}
+          size={size}
+        />
 
-        {/* Chevron segment — separate zone with divider */}
-        {hasChevron && (
-          <span className="dls-chip-regular__segment dls-chip-regular__segment--chevron">
-            <ChevronDown />
-          </span>
+        {/* Part 2: action — chevron or cross */}
+        {hasSecondPart && (
+          <button
+            type="button"
+            className="dls-chip-regular__action"
+            disabled={disabled}
+            onClick={onRemove ? (e) => { e.stopPropagation(); onRemove(e); } : undefined}
+            aria-label={onRemove ? `Remove ${label}` : undefined}
+          >
+            {onRemove ? <XIcon /> : <ChevronDown />}
+          </button>
         )}
       </div>
     );

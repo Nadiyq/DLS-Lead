@@ -1,20 +1,20 @@
 /* ==========================================================================
-   DLS Chip Regular — styled chip with variant × intent
-   Figma structure: [content-segment] | [chevron-segment] at gap=0
+   DLS Chip Regular — styled chip composing Chip building blocks
+   Figma structure: [Chip instance (content)] [Chip instance (action)] at gap=0
    Variants: filled | outline | soft | dot
-   Intents:  neutral | primary | info | success | warning | danger
+   Intents:  neutral | info | success | warning | danger
    Sizes:    m | s | xs
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
-   Base container — gap=0, no padding (padding lives on segments)
+   Base container — gap=0, no padding (Chip building blocks provide padding)
    --------------------------------------------------------------------------- */
 
 .dls-chip-regular {
   all: unset;
   box-sizing: border-box;
   display: inline-flex;
-  align-items: center;
+  align-items: stretch;
   font-family: var(--dls-font-family);
   white-space: nowrap;
   max-width: 100%;
@@ -34,16 +34,21 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Intent overrides
+   Chip building block inside ChipRegular — inherit color, auto height
    --------------------------------------------------------------------------- */
 
-.dls-chip-regular[data-intent="primary"] {
-  --_base: var(--dls-color-intent-primary-base);
-  --_on-base: var(--dls-color-intent-primary-on-base);
-  --_subtle: var(--dls-color-intent-primary-subtle);
-  --_text: var(--dls-color-intent-primary-text);
-  --_border: var(--dls-color-intent-primary-border);
+.dls-chip-regular .dls-chip {
+  color: inherit;
+  height: auto;
 }
+
+.dls-chip-regular .dls-chip__icon {
+  color: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+   Intent overrides
+   --------------------------------------------------------------------------- */
 
 .dls-chip-regular[data-intent="info"] {
   --_base: var(--dls-color-intent-info-base);
@@ -89,11 +94,6 @@
   --_divider: oklch(from var(--_on-base) l c h / 0.2);
 }
 
-.dls-chip-regular[data-variant="filled"] .dls-chip-regular__icon,
-.dls-chip-regular[data-variant="filled"] .dls-chip-regular__secondary {
-  color: var(--_on-base);
-}
-
 .dls-chip-regular[data-variant="filled"]:hover:not([data-disabled]) {
   background: var(--_base);
   box-shadow: inset 0 0 0 100px var(--dls-state-hover-overlay);
@@ -105,8 +105,9 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Variant: outline — surface bg, base border, intent text
-   Divider: border-subtle
+   Variant: outline — surface bg, intent text
+   Neutral: border/base border, border/subtle divider
+   Non-neutral: intent/border for both border and divider
    --------------------------------------------------------------------------- */
 
 .dls-chip-regular[data-variant="outline"] {
@@ -116,8 +117,9 @@
   --_divider: var(--dls-color-border-subtle);
 }
 
-.dls-chip-regular[data-variant="outline"] .dls-chip-regular__icon {
-  color: var(--_text);
+.dls-chip-regular[data-variant="outline"]:not([data-intent="neutral"]) {
+  border-color: var(--_border);
+  --_divider: var(--_border);
 }
 
 .dls-chip-regular[data-variant="outline"]:hover:not([data-disabled]) {
@@ -129,8 +131,9 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Variant: soft — subtle bg, base border, intent text
-   Divider: border-subtle
+   Variant: soft — subtle bg, intent text
+   Neutral: border/base border, border/subtle divider
+   Non-neutral: intent/border for both border and divider
    --------------------------------------------------------------------------- */
 
 .dls-chip-regular[data-variant="soft"] {
@@ -140,8 +143,9 @@
   --_divider: var(--dls-color-border-subtle);
 }
 
-.dls-chip-regular[data-variant="soft"] .dls-chip-regular__icon {
-  color: var(--_text);
+.dls-chip-regular[data-variant="soft"]:not([data-intent="neutral"]) {
+  border-color: var(--_border);
+  --_divider: var(--_border);
 }
 
 .dls-chip-regular[data-variant="soft"]:hover:not([data-disabled]) {
@@ -153,19 +157,15 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Variant: dot — surface bg, no border, intent text + dot indicator
+   Variant: dot — surface bg, no border, always neutral text + colored dot
    Divider: none (dot variant has no segment divider)
    --------------------------------------------------------------------------- */
 
 .dls-chip-regular[data-variant="dot"] {
   background: var(--dls-color-surface-base);
   border: 1px solid transparent;
-  color: var(--_text);
+  color: var(--dls-color-intent-neutral-text);
   --_divider: transparent;
-}
-
-.dls-chip-regular[data-variant="dot"] .dls-chip-regular__icon {
-  color: var(--_text);
 }
 
 .dls-chip-regular[data-variant="dot"]:hover:not([data-disabled]) {
@@ -174,16 +174,6 @@
 
 .dls-chip-regular[data-variant="dot"]:active:not([data-disabled]) {
   box-shadow: inset 0 0 0 100px var(--dls-state-pressed-overlay);
-}
-
-/* Dot indicator */
-.dls-chip-regular__dot {
-  display: inline-block;
-  flex-shrink: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--_base);
 }
 
 /* ---------------------------------------------------------------------------
@@ -195,39 +185,45 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Disabled (all variants)
+   Disabled — per-variant overrides matching Figma
    --------------------------------------------------------------------------- */
 
 .dls-chip-regular[data-disabled] {
   background: var(--dls-color-surface-disabled);
-  border-color: var(--dls-color-border-disabled);
   color: var(--dls-color-text-disabled);
   cursor: not-allowed;
+}
+
+/* Filled disabled: no border, divider = border/disabled */
+.dls-chip-regular[data-variant="filled"][data-disabled] {
+  border-color: transparent;
   --_divider: var(--dls-color-border-disabled);
 }
 
-.dls-chip-regular[data-disabled] .dls-chip-regular__icon,
-.dls-chip-regular[data-disabled] .dls-chip-regular__secondary,
-.dls-chip-regular[data-disabled] .dls-chip-regular__dot {
-  color: var(--dls-color-text-disabled);
+/* Outline disabled: border/disabled border, border/subtle divider */
+.dls-chip-regular[data-variant="outline"][data-disabled] {
+  border-color: var(--dls-color-border-disabled);
+  --_divider: var(--dls-color-border-subtle);
 }
 
-.dls-chip-regular[data-disabled] .dls-chip-regular__dot {
+/* Soft disabled: border/disabled for both border and divider */
+.dls-chip-regular[data-variant="soft"][data-disabled] {
+  border-color: var(--dls-color-border-disabled);
+  --_divider: var(--dls-color-border-disabled);
+}
+
+/* Dot disabled: no border, no divider */
+.dls-chip-regular[data-variant="dot"][data-disabled] {
+  border-color: transparent;
+  --_divider: transparent;
+}
+
+.dls-chip-regular[data-disabled] .dls-chip__dot {
   background: var(--dls-color-text-disabled);
 }
 
 /* ---------------------------------------------------------------------------
-   Segments — Figma: separate chip instances at gap=0
-   --------------------------------------------------------------------------- */
-
-.dls-chip-regular__segment {
-  display: inline-flex;
-  align-items: center;
-  color: inherit;
-}
-
-/* ---------------------------------------------------------------------------
-   Sizes — padding + gap on segments, height on container
+   Sizes — height on container, Chip building block handles its own padding
    --------------------------------------------------------------------------- */
 
 /* M (default) — 32px */
@@ -239,22 +235,11 @@
   font-weight: var(--dls-font-weight-normal);
 }
 
-.dls-chip-regular .dls-chip-regular__segment,
-.dls-chip-regular[data-size="m"] .dls-chip-regular__segment {
-  padding: var(--dls-spacing-1-5) var(--dls-spacing-2);
-  gap: var(--dls-spacing-2);
-}
-
 /* S — 28px */
 .dls-chip-regular[data-size="s"] {
   height: 28px;
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
-}
-
-.dls-chip-regular[data-size="s"] .dls-chip-regular__segment {
-  padding: var(--dls-spacing-1) var(--dls-spacing-1-5);
-  gap: var(--dls-spacing-1-5);
 }
 
 /* XS — 24px */
@@ -264,67 +249,9 @@
   line-height: var(--dls-text-m-line-height);
 }
 
-.dls-chip-regular[data-size="xs"] .dls-chip-regular__segment {
-  padding: var(--dls-spacing-1);
-  gap: var(--dls-spacing-1);
-}
-
 /* ---------------------------------------------------------------------------
-   Chevron segment — divider via border-left
-   --------------------------------------------------------------------------- */
-
-.dls-chip-regular__segment--chevron {
-  border-left: 1px solid var(--_divider);
-}
-
-.dls-chip-regular__segment--chevron svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-
-/* ---------------------------------------------------------------------------
-   Label
-   --------------------------------------------------------------------------- */
-
-.dls-chip-regular__label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* ---------------------------------------------------------------------------
-   Secondary text
-   --------------------------------------------------------------------------- */
-
-.dls-chip-regular__secondary {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: var(--dls-color-text-secondary);
-}
-
-/* ---------------------------------------------------------------------------
-   Icon
-   --------------------------------------------------------------------------- */
-
-.dls-chip-regular__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  color: var(--dls-color-text-secondary);
-}
-
-.dls-chip-regular__icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* ---------------------------------------------------------------------------
-   Trailing action (remove button)
+   Action button (part 2) — chevron or cross, divider via border-left
+   Padding matches Chip building block sizing per size
    --------------------------------------------------------------------------- */
 
 .dls-chip-regular__action {
@@ -333,25 +260,36 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
+  border-left: 1px solid var(--_divider);
+  color: inherit;
   cursor: pointer;
-  color: currentColor;
-  border-radius: var(--dls-radius-component-chip);
 }
 
-.dls-chip-regular__action:hover:not(:disabled) {
-  opacity: 0.8;
+/* M action padding */
+.dls-chip-regular__action,
+.dls-chip-regular[data-size="m"] .dls-chip-regular__action {
+  padding: var(--dls-spacing-1-5) var(--dls-spacing-2);
+}
+
+/* S action padding */
+.dls-chip-regular[data-size="s"] .dls-chip-regular__action {
+  padding: var(--dls-spacing-1) var(--dls-spacing-1-5);
+}
+
+/* XS action padding */
+.dls-chip-regular[data-size="xs"] .dls-chip-regular__action {
+  padding: var(--dls-spacing-1);
+}
+
+.dls-chip-regular__action svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .dls-chip-regular__action:focus-visible {
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-.dls-chip-regular__action svg {
-  width: 100%;
-  height: 100%;
+  border-radius: 0 var(--dls-radius-component-chip) var(--dls-radius-component-chip) 0;
 }
 
 .dls-chip-regular[data-disabled] .dls-chip-regular__action {

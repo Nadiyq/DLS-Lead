@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Chip, type ChipAvatar } from './Chip';
+import { Chip, type ChipAvatar, type ChipSize } from './Chip';
 
 const meta = {
   title: 'Components/Chip',
@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-    <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
+    <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
       {title}
     </h3>
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
@@ -27,16 +27,18 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 );
 
-const MailIcon = () => (
+const EyeIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" y="3.5" width="12" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M2 5.5L8 9L14 5.5" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M1.5 8C2.5 5 5 3 8 3C11 3 13.5 5 14.5 8C13.5 11 11 13 8 13C5 13 2.5 11 1.5 8Z" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.33" />
   </svg>
 );
 
-const avatarAlice: ChipAvatar = { initials: 'AJ' };
-const avatarBob: ChipAvatar = { initials: 'BS' };
-const avatarCarol: ChipAvatar = { initials: 'CW' };
+const avatarA: ChipAvatar = { src: 'https://i.pravatar.cc/48?u=a' };
+const avatarB: ChipAvatar = { src: 'https://i.pravatar.cc/48?u=b' };
+const avatarC: ChipAvatar = { src: 'https://i.pravatar.cc/48?u=c' };
+
+const sizes: ChipSize[] = ['m', 's', 'xs'];
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -50,7 +52,33 @@ export const Playground: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// All types
+// Building blocks — all types × all sizes (matches Figma node 7132:2616)
+// ---------------------------------------------------------------------------
+
+export const BuildingBlocks: Story = {
+  args: { label: 'text' },
+  parameters: { layout: 'padded' },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {sizes.map((size) => (
+        <div key={size} style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
+          <Chip size={size} label="text" />
+          <Chip size={size} leadingIcon={<EyeIcon />} label="text" />
+          <Chip size={size} avatar={avatarA} label="text" />
+          <Chip size={size} stackedAvatars={[avatarA, avatarB, avatarC]} label="text" />
+          <Chip size={size} flag="🇺🇸" label="text" />
+          <Chip size={size} dot="neutral" label="text" />
+          <Chip size={size} cross />
+          <Chip size={size} chevron />
+          <Chip size={size} leadingIcon={<EyeIcon />} label="text" secondaryLabel="text" />
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// All types (labeled)
 // ---------------------------------------------------------------------------
 
 export const AllTypes: Story = {
@@ -61,16 +89,16 @@ export const AllTypes: Story = {
         <Chip label="Label" />
       </Section>
       <Section title="Icon + text">
-        <Chip leadingIcon={<MailIcon />} label="Email" />
+        <Chip leadingIcon={<EyeIcon />} label="Email" />
       </Section>
       <Section title="Icon + two texts">
-        <Chip leadingIcon={<MailIcon />} label="Email" secondaryLabel="3 new" />
+        <Chip leadingIcon={<EyeIcon />} label="Email" secondaryLabel="3 new" />
       </Section>
       <Section title="Avatar">
-        <Chip avatar={avatarAlice} label="Alice" />
+        <Chip avatar={avatarA} label="Alice" />
       </Section>
       <Section title="Stacked avatars">
-        <Chip stackedAvatars={[avatarAlice, avatarBob, avatarCarol]} label="Team" />
+        <Chip stackedAvatars={[avatarA, avatarB, avatarC]} label="Team" />
       </Section>
       <Section title="Flag">
         <Chip flag="🇺🇸" label="US" />
@@ -79,7 +107,7 @@ export const AllTypes: Story = {
         <Chip dot="success" label="Active" />
       </Section>
       <Section title="Cross (icon-only)">
-        <Chip onRemove={() => {}} />
+        <Chip cross />
       </Section>
       <Section title="Chevron (icon-only)">
         <Chip chevron />
@@ -97,74 +125,19 @@ export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       <Section title="M (32px)">
-        <Chip size="m" leadingIcon={<MailIcon />} label="Medium" />
-        <Chip size="m" avatar={avatarAlice} label="Alice" />
+        <Chip size="m" leadingIcon={<EyeIcon />} label="Medium" />
+        <Chip size="m" avatar={avatarA} label="Alice" />
         <Chip size="m" dot="info" label="Info" />
       </Section>
       <Section title="S (28px)">
-        <Chip size="s" leadingIcon={<MailIcon />} label="Small" />
-        <Chip size="s" avatar={avatarAlice} label="Alice" />
+        <Chip size="s" leadingIcon={<EyeIcon />} label="Small" />
+        <Chip size="s" avatar={avatarA} label="Alice" />
         <Chip size="s" dot="info" label="Info" />
       </Section>
       <Section title="XS (24px)">
-        <Chip size="xs" leadingIcon={<MailIcon />} label="XSmall" />
-        <Chip size="xs" avatar={avatarAlice} label="Alice" />
+        <Chip size="xs" leadingIcon={<EyeIcon />} label="XSmall" />
+        <Chip size="xs" avatar={avatarA} label="Alice" />
         <Chip size="xs" dot="info" label="Info" />
-      </Section>
-    </div>
-  ),
-};
-
-// ---------------------------------------------------------------------------
-// Removable
-// ---------------------------------------------------------------------------
-
-export const Removable: Story = {
-  args: { label: 'Chip' },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="Removable chips">
-        <Chip label="Design" onRemove={() => {}} />
-        <Chip leadingIcon={<MailIcon />} label="Email" onRemove={() => {}} />
-        <Chip avatar={avatarAlice} label="Alice" onRemove={() => {}} />
-        <Chip dot="warning" label="Pending" onRemove={() => {}} />
-        <Chip flag="🇩🇪" label="Germany" onRemove={() => {}} />
-      </Section>
-    </div>
-  ),
-};
-
-// ---------------------------------------------------------------------------
-// Disabled
-// ---------------------------------------------------------------------------
-
-export const Disabled: Story = {
-  args: { label: 'Chip' },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="Disabled">
-        <Chip label="Text" disabled />
-        <Chip leadingIcon={<MailIcon />} label="Icon" disabled />
-        <Chip avatar={avatarAlice} label="Alice" disabled />
-        <Chip dot="success" label="Active" disabled />
-        <Chip label="Remove" onRemove={() => {}} disabled />
-      </Section>
-    </div>
-  ),
-};
-
-// ---------------------------------------------------------------------------
-// Interactive (clickable)
-// ---------------------------------------------------------------------------
-
-export const Interactive: Story = {
-  args: { label: 'Chip' },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="Clickable chips">
-        <Chip label="Click me" onClick={() => alert('Clicked!')} />
-        <Chip leadingIcon={<MailIcon />} label="Email" onClick={() => {}} />
-        <Chip chevron label="Expand" onClick={() => {}} />
       </Section>
     </div>
   ),

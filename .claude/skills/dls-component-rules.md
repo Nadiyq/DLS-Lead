@@ -1,16 +1,10 @@
----
-description: DLS component usage, layout, and Gestalt principles — always check library first
-globs: "**/*.tsx"
-alwaysApply: false
----
-
 # DLS Component & Layout Rules
 
 ## Component Usage
 
 1. **Always check the library first.** Before writing any UI element, check `apps/storybook/src/stories/` and Storybook. This includes dropdowns, selects, lists, avatars, chips, badges, tags, tooltips, modals, toasts, skeletons, progress bars, status indicators.
 2. **Never build from scratch if a DLS component exists.** No custom `<span>` wrappers, hand-rolled dropdowns, or inline-styled elements that duplicate existing components. Use the component's props and variant API.
-3. **If you can't find a component, stop and ask.** Say: "I need [X]. I don't see it in the DLS — should I create a new component, or is there an equivalent?"
+3. **If you can't find a component, stop and ask.** Say: "I need [X]. I don't see it in the DLS -- should I create a new component, or is there an equivalent?"
 4. **Don't re-implement interaction patterns.** Hover, focus, disabled, loading, error states already exist in DLS components. Compose; never clone behavior.
 
 ## Layout & Alignment

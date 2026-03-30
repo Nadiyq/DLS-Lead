@@ -3,7 +3,8 @@
     "allow": [
       "mcp__figma__figma_get_selection",
       "mcp__Claude_Preview__preview_start",
-      "mcp__41b14863-ce5b-4717-9cf0-183085bd0fb9__use_figma"
+      "mcp__41b14863-ce5b-4717-9cf0-183085bd0fb9__use_figma",
+      "Bash(xargs kill:*)"
     ]
   },
   "enabledMcpjsonServers": [

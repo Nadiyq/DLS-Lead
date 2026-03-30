@@ -1,9 +1,3 @@
----
-description: DLS component CSS patterns — skeleton, states, tokens, anti-patterns
-globs: "**/*.css"
-alwaysApply: false
----
-
 # Component CSS Patterns
 
 ## CSS Skeleton
@@ -30,27 +24,27 @@ alwaysApply: false
 
 ## Token Lookup Order
 
-1. `--dls-color-component-{name}-{property}-{state}` exists → use it (L4)
-2. `--dls-color-{semantic}-{role}` exists → use it (L2)
-3. No match → define a new token in tokens.json. NEVER hardcode.
+1. `--dls-color-component-{name}-{property}-{state}` exists -> use it (L4)
+2. `--dls-color-{semantic}-{role}` exists -> use it (L2)
+3. No match -> define a new token in tokens.json. NEVER hardcode.
 
 ## State Implementation
 
 ```css
-/* Hover — filled/soft: OKLCH shift */
+/* Hover -- filled/soft: OKLCH shift */
 .dls-{name}[data-variant="filled"]:hover:not(:disabled) {
   background: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
-/* Hover — transparent variants: overlay */
+/* Hover -- transparent variants: overlay */
 .dls-{name}[data-variant="outline"]:hover:not(:disabled) {
   background: var(--dls-state-hover-overlay);
 }
-/* Focus — all variants */
+/* Focus -- all variants */
 .dls-{name}:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }
-/* Disabled — all variants */
+/* Disabled -- all variants */
 .dls-{name}:disabled {
   color: var(--dls-color-text-disabled);
   cursor: not-allowed;
@@ -58,10 +52,24 @@ alwaysApply: false
 }
 ```
 
+## Component Composition
+
+Building blocks (e.g., `Chip`) are plain containers with NO visual chrome (no bg, border, states).
+Styled components (e.g., `ChipRegular`) compose building blocks and add all visual styling.
+Complex components (e.g., `FilterChip`) compose building blocks or styled components.
+
+When composing, override building block styles to inherit from parent:
+```css
+.dls-styled-component .dls-building-block {
+  color: inherit;
+  height: auto;
+}
+```
+
 ## Anti-Patterns
 
-- `background: #6941C6;` — hardcoded color
-- `border-radius: var(--dls-radius-m);` — L1 primitive in component
-- `.dls-button.is-disabled` — class-based state
-- `.dls-button:hover` — missing `:not(:disabled)`
-- `outline: 2px solid blue;` — use `box-shadow` for focus ring
+- `background: #6941C6;` -- hardcoded color
+- `border-radius: var(--dls-radius-m);` -- L1 primitive in component
+- `.dls-button.is-disabled` -- class-based state
+- `.dls-button:hover` -- missing `:not(:disabled)`
+- `outline: 2px solid blue;` -- use `box-shadow` for focus ring

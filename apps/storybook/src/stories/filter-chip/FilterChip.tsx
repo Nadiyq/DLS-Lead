@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Chip, type ChipSize } from '../chip/Chip';
 import './filter-chip.css';
 
 /* ---------------------------------------------------------------------------
@@ -31,18 +32,20 @@ const ChevronDown = () => (
    Types
    --------------------------------------------------------------------------- */
 
-export type FilterChipSize = 's' | 'm';
+export type FilterChipSize = ChipSize;
 
 export interface FilterChipProps {
   /** Filter category label (e.g. "Users", "Date", "Status") */
   label: string;
+  /** Leading icon for the label part (defaults to eye toggle) */
+  labelIcon?: React.ReactNode;
   /** Whether the filter is applied to the table */
   isVisible?: boolean;
-  /** Called when the eye icon is toggled */
+  /** Called when the label part is clicked (toggles visibility) */
   onVisibilityChange?: (visible: boolean) => void;
-  /** Summary content rendered in the value zone */
+  /** Summary content rendered in the value part */
   valueSummary?: React.ReactNode;
-  /** Dropdown panel content — rendered when open */
+  /** Dropdown panel content — rendered when value chevron is clicked */
   children?: React.ReactNode;
   /** Size */
   size?: FilterChipSize;
@@ -56,13 +59,17 @@ export interface FilterChipProps {
 }
 
 /* ---------------------------------------------------------------------------
-   Component
+   Component — Figma structure:
+   Container (outline styled bar)
+   ├── Label part (clickable): Chip building block (icon + text)
+   └── Value part: content + action button (chevron)
    --------------------------------------------------------------------------- */
 
 export const FilterChip = React.forwardRef<HTMLDivElement, FilterChipProps>(
   (
     {
       label,
+      labelIcon,
       isVisible = true,
       onVisibilityChange,
       valueSummary,
@@ -107,35 +114,15 @@ export const FilterChip = React.forwardRef<HTMLDivElement, FilterChipProps>(
       return () => document.removeEventListener('keydown', handler);
     }, [isOpen]);
 
-    const handleEyeClick = (e: React.MouseEvent) => {
-      e.stopPropagation();
+    const handleLabelClick = () => {
       if (!disabled) onVisibilityChange?.(!isVisible);
     };
 
-    const handleChevronClick = (e: React.MouseEvent) => {
-      e.stopPropagation();
+    const handleValueChevronClick = () => {
       if (!disabled) setOpen(!isOpen);
     };
 
-    const handleEyeKeyDown = (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        e.stopPropagation();
-        if (!disabled) onVisibilityChange?.(!isVisible);
-      }
-    };
-
-    const handleChevronKeyDown = (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        e.stopPropagation();
-        if (!disabled) setOpen(!isOpen);
-      }
-      if (e.key === 'Escape' && isOpen) {
-        e.stopPropagation();
-        setOpen(false);
-      }
-    };
+    const eyeIcon = labelIcon ?? (isVisible ? <EyeIcon /> : <EyeOffIcon />);
 
     return (
       <div
@@ -146,51 +133,45 @@ export const FilterChip = React.forwardRef<HTMLDivElement, FilterChipProps>(
         }}
         className={['dls-filter-chip', className].filter(Boolean).join(' ')}
         data-size={size}
-        data-active={isVisible || undefined}
         data-disabled={disabled || undefined}
         data-open={isOpen || undefined}
       >
-        {/* Chip bar */}
+        {/* Bar — outline styled container with 2 parts */}
         <div className="dls-filter-chip__bar">
-          {/* Part 1 — Label zone */}
-          <div className="dls-filter-chip__zone dls-filter-chip__zone--label">
-            <button
-              type="button"
-              className="dls-filter-chip__eye"
-              onClick={handleEyeClick}
-              onKeyDown={handleEyeKeyDown}
-              disabled={disabled}
-              aria-label={isVisible ? `Hide ${label} filter` : `Show ${label} filter`}
-              aria-pressed={isVisible}
-            >
-              {isVisible ? <EyeIcon /> : <EyeOffIcon />}
-            </button>
-            <span className="dls-filter-chip__label">{label}</span>
-          </div>
+          {/* Part 1 — Label: clickable, Chip building block (icon + text) */}
+          <button
+            type="button"
+            className="dls-filter-chip__label"
+            disabled={disabled}
+            onClick={handleLabelClick}
+            aria-label={isVisible ? `Hide ${label} filter` : `Show ${label} filter`}
+            aria-pressed={isVisible}
+          >
+            <Chip leadingIcon={eyeIcon} label={label} size={size} />
+          </button>
 
-          {/* Part 2 — Value/Summary zone */}
+          {/* Part 2 — Value: content + chevron action */}
           {valueSummary && (
-            <div className="dls-filter-chip__zone dls-filter-chip__zone--value">
-              {valueSummary}
+            <div className="dls-filter-chip__value">
+              <div className="dls-filter-chip__value-content">
+                {valueSummary}
+              </div>
+              {children && (
+                <button
+                  type="button"
+                  className="dls-filter-chip__action"
+                  disabled={disabled}
+                  onClick={handleValueChevronClick}
+                  aria-label={isOpen ? `Close ${label} filter editor` : `Open ${label} filter editor`}
+                  aria-expanded={isOpen}
+                  aria-haspopup="dialog"
+                >
+                  <span className="dls-filter-chip__chevron-icon" data-open={isOpen || undefined}>
+                    <ChevronDown />
+                  </span>
+                </button>
+              )}
             </div>
-          )}
-
-          {/* Part 3 — Chevron zone (only when dropdown content exists) */}
-          {children && (
-            <button
-              type="button"
-              className="dls-filter-chip__zone dls-filter-chip__zone--chevron"
-              onClick={handleChevronClick}
-              onKeyDown={handleChevronKeyDown}
-              disabled={disabled}
-              aria-label={isOpen ? `Close ${label} filter editor` : `Open ${label} filter editor`}
-              aria-expanded={isOpen}
-              aria-haspopup="dialog"
-            >
-              <span className="dls-filter-chip__chevron">
-                <ChevronDown />
-              </span>
-            </button>
           )}
         </div>
 

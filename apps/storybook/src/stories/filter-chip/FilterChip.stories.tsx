@@ -297,14 +297,18 @@ export const AllStates: Story = {
           label="Users"
           isVisible
           valueSummary={<span className="dls-filter-chip__value-text">3 Selected</span>}
-        />
+        >
+          <div />
+        </FilterChip>
       </Section>
       <Section title="Inactive (filter hidden)">
         <FilterChip
           label="Users"
           isVisible={false}
           valueSummary={<span className="dls-filter-chip__value-text">3 Selected</span>}
-        />
+        >
+          <div />
+        </FilterChip>
       </Section>
       <Section title="Disabled">
         <FilterChip
@@ -312,7 +316,9 @@ export const AllStates: Story = {
           isVisible
           disabled
           valueSummary={<span className="dls-filter-chip__value-text">3 Selected</span>}
-        />
+        >
+          <div />
+        </FilterChip>
       </Section>
     </div>
   ),
@@ -332,7 +338,9 @@ export const Sizes: Story = {
           size="m"
           isVisible
           valueSummary={<span className="dls-filter-chip__value-text">Active</span>}
-        />
+        >
+          <div />
+        </FilterChip>
       </Section>
       <Section title="S (28px)">
         <FilterChip
@@ -340,7 +348,9 @@ export const Sizes: Story = {
           size="s"
           isVisible
           valueSummary={<span className="dls-filter-chip__value-text">Active</span>}
-        />
+        >
+          <div />
+        </FilterChip>
       </Section>
     </div>
   ),
@@ -356,7 +366,7 @@ const EyeToggleDemo = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <span style={{ fontFamily: 'var(--dls-font-family)', fontSize: 14, color: 'var(--dls-color-text-secondary)' }}>
-        Click the eye icon to toggle visibility. State: <strong>{isVisible ? 'Visible' : 'Hidden'}</strong>
+        Click the label chevron to toggle visibility. State: <strong>{isVisible ? 'Visible' : 'Hidden'}</strong>
       </span>
       <FilterChip
         label="Users"
