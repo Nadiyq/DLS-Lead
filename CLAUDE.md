@@ -9,6 +9,7 @@ npm start                                    # Token reference site :3000
 cd apps/storybook && npm run storybook       # Storybook :6006
 cd apps/storybook && npx tsc -b              # TypeScript check
 node .claude/hooks/lint-tokens.mjs --all     # Lint component CSS
+/build-component <name>                      # Scaffold/update component from Figma
 ```
 
 No test suite yet. Generated outputs (`tokens.css`, `.scss`, `.ts`) are maintained alongside `tokens.json`.
@@ -20,12 +21,19 @@ Generated outputs (don't hand-edit): `tokens/tokens.css`, `tokens/tokens.scss`, 
 
 ## Critical Rules
 
+- **Always check the library first.** Before writing any UI element, check `apps/storybook/src/stories/` and Storybook. Never build from scratch if a DLS component exists. If you can't find a component, stop and ask.
 - Components NEVER reference L1 primitives. Use L4 component → L2 semantic fallback.
 - Variants/intents/sizes via `data-*` attributes, never `.is-*`/`.has-*` classes.
 - Every component CSS starts with `all: unset; box-sizing: border-box;`.
 - `:hover:not(:disabled)`, `:focus-visible` (not `:focus`), focus ring via `box-shadow` (never `outline`).
 - No hardcoded colors, sizes, or radii. Use `--dls-radius-component-*`, never primitive `--dls-radius-*`.
 - **Enforced by PostToolUse lint hook** (`.claude/hooks/lint-tokens.mjs`) — violations block the edit.
+
+## Figma Workflow
+
+Uses the **official Figma MCP** (authenticated via Figma MCP Auth). Key tools: `use_figma`, `get_screenshot`, `get_design_context`, `search_design_system`, `get_variable_defs`.
+
+Quick start: `/build-component <ComponentName>` with a Figma URL — reads design spec, checks library, compares tokens, scaffolds/updates the component.
 
 ## Skills (read before acting)
 
