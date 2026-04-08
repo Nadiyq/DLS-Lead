@@ -3,16 +3,16 @@
   "configurations": [
     {
       "name": "docs",
-      "runtimeExecutable": "node",
+      "runtimeExecutable": "/opt/homebrew/opt/node@24/bin/node",
       "runtimeArgs": ["server.js"],
       "port": 3000,
       "autoPort": true
     },
     {
       "name": "storybook",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["storybook", "dev", "--port", "${port}", "--ci"],
-      "port": 6006,
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-c", "export PATH=/opt/homebrew/opt/node@24/bin:$PATH && npx storybook dev --port 6007 --ci"],
+      "port": 6007,
       "autoPort": true,
       "cwd": "apps/storybook"
     }

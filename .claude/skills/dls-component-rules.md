@@ -23,6 +23,12 @@
 - **Continuity:** Clear visual columns and rows. Align baselines.
 - **Closure:** Group related content inside containers (card, section, panel).
 
+## Figma as Source of Truth
+
+- **Always check the Figma design** before building or updating a component. Use Figma MCP tools (`get_design_context`, `get_screenshot`, `search_design_system`) to understand the component's structure, variants, states, and tokens.
+- Compare your implementation against the Figma spec: which types have interactive states (hover, pressed, focus) and which don't. For example, `buttons`, `search`, `chips`, `empty-state`, `divider`, and `label` list-item types are non-interactive — they don't have hover/pressed/focus states.
+- Check which sub-elements in Figma are instances of other DLS components (Button, ChipRegular, SearchField, Badge, etc.) and use those DLS components directly — never re-implement them with custom styles.
+
 ## When to Stop and Ask
 
 - Before creating any new component not found in the library

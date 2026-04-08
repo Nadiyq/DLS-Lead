@@ -27,17 +27,20 @@
    States
    --------------------------------------------------------------------------- */
 
-.dls-list-item:hover:not(:disabled):not([data-type="divider"]):not([data-selected]) {
+/* Only interactive types get hover/active/focus states:
+   text, with-slots, two-line, two-line-slots.
+   Non-interactive: label, buttons, search, chips, empty-state, divider */
+
+.dls-list-item:hover:not([data-type="divider"]):not([data-type="label"]):not([data-type="buttons"]):not([data-type="search"]):not([data-type="chips"]):not([data-type="empty-state"]):not([data-selected]) {
   background: var(--dls-state-hover-overlay);
 }
 
-.dls-list-item:active:not(:disabled):not([data-type="divider"]),
-.dls-list-item[data-selected]:not(:disabled):not([data-type="divider"]) {
+.dls-list-item:active:not([data-type="divider"]):not([data-type="label"]):not([data-type="buttons"]):not([data-type="search"]):not([data-type="chips"]):not([data-type="empty-state"]),
+.dls-list-item[data-selected] {
   background: var(--dls-color-intent-info-subtle);
-  border: 1px solid var(--dls-color-intent-info-border);
 }
 
-.dls-list-item[data-selected]:hover:not(:disabled):not([data-type="divider"]) {
+.dls-list-item[data-selected]:hover {
   background: oklch(from var(--dls-color-intent-info-subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
 
@@ -47,9 +50,11 @@
   position: relative;
 }
 
-.dls-list-item:disabled {
-  color: var(--dls-color-text-disabled);
-  cursor: not-allowed;
+/* Non-interactive types — no pointer cursor */
+.dls-list-item[data-type="buttons"],
+.dls-list-item[data-type="search"],
+.dls-list-item[data-type="chips"] {
+  cursor: default;
 }
 
 /* ---------------------------------------------------------------------------
@@ -71,10 +76,6 @@
 
 .dls-list-item[data-type="label"] {
   cursor: default;
-}
-
-.dls-list-item[data-type="label"]:hover:not(:disabled) {
-  background: var(--dls-color-surface-base);
 }
 
 .dls-list-item__label {
@@ -149,10 +150,6 @@
   cursor: default;
 }
 
-.dls-list-item[data-type="empty-state"]:hover:not(:disabled) {
-  background: var(--dls-color-surface-base);
-}
-
 .dls-list-item__empty {
   flex: 1;
   font-size: var(--dls-text-m-font-size);
@@ -169,11 +166,7 @@
 .dls-list-item[data-type="divider"] {
   padding: var(--dls-spacing-1) var(--dls-spacing-2);
   cursor: default;
-  height: auto;
-}
-
-.dls-list-item[data-type="divider"]:hover:not(:disabled) {
-  background: var(--dls-color-surface-base);
+  min-height: 0;
 }
 
 .dls-list-item__divider {
@@ -208,7 +201,7 @@
   display: flex;
   flex: 1;
   flex-wrap: wrap;
-  gap: var(--dls-spacing-2);
+  gap: var(--dls-spacing-1);
 }
 
 /* ---------------------------------------------------------------------------

@@ -38,8 +38,6 @@ export interface ListItemProps {
   children?: React.ReactNode;
   /** Persistent selected state */
   selected?: boolean;
-  /** Disabled */
-  disabled?: boolean;
   /** Click handler */
   onClick?: React.MouseEventHandler;
   className?: string;
@@ -62,13 +60,12 @@ export const ListItem = React.forwardRef<HTMLDivElement, ListItemProps>(
       slotRight,
       children,
       selected,
-      disabled,
       onClick,
       className,
     },
     ref,
   ) => {
-    const isInteractive = type !== 'divider' && type !== 'label' && type !== 'empty-state';
+    const isInteractive = type === 'text' || type === 'with-slots' || type === 'two-line' || type === 'two-line-slots';
     const Tag = isInteractive ? 'button' : 'div';
 
     const renderContent = () => {
@@ -141,7 +138,6 @@ export const ListItem = React.forwardRef<HTMLDivElement, ListItemProps>(
         data-type={type}
         data-selected={selected || undefined}
         aria-selected={selected || undefined}
-        disabled={isInteractive ? disabled : undefined}
         onClick={isInteractive ? onClick : undefined}
         type={isInteractive ? 'button' : undefined}
       >

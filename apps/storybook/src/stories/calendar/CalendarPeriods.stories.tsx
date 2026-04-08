@@ -37,10 +37,31 @@ const defaultPeriods: PeriodOption[] = [
 export const Playground: Story = {
   args: {
     periods: defaultPeriods,
-    selectedPeriod: '7d',
-    startDate: new Date(2026, 5, 8),
-    endDate: new Date(2026, 5, 15),
     today: fixedToday,
+  },
+  render: () => {
+    const [period, setPeriod] = React.useState('7d');
+    const [start, setStart] = React.useState<Date | null>(new Date(2026, 5, 8));
+    const [end, setEnd] = React.useState<Date | null>(new Date(2026, 5, 15));
+
+    return (
+      <CalendarPeriods
+        periods={defaultPeriods}
+        selectedPeriod={period}
+        onPeriodChange={(val, s, e) => {
+          setPeriod(val);
+          if (s && e) { setStart(s); setEnd(e); }
+        }}
+        startDate={start}
+        endDate={end}
+        onRangeChange={(s, e) => {
+          setStart(s);
+          setEnd(e);
+          setPeriod('custom');
+        }}
+        today={fixedToday}
+      />
+    );
   },
 };
 

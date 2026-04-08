@@ -2,6 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { List } from './List';
 import { ListItem } from './ListItem';
+import { Button } from '../Button';
+import { ChipRegular } from '../chip/ChipRegular';
+import { SearchField } from '../search-field/SearchField';
+import { Check } from 'lucide-react';
 
 const meta = {
   title: 'Components/List',
@@ -19,23 +23,6 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-const FileIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 2H9L12 5V14H4V2Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-    <path d="M9 2V5H12" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3.5 8.5L6.5 11.5L12.5 5.5" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -56,7 +43,7 @@ export const Playground: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// With sections
+// With sections (matches Figma: label + divider + text items)
 // ---------------------------------------------------------------------------
 
 export const WithSections: Story = {
@@ -75,16 +62,35 @@ export const WithSections: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// With icons
+// With selected item (matches Figma pressed/selected state)
 // ---------------------------------------------------------------------------
 
-export const WithIcons: Story = {
+export const WithSelected: Story = {
   args: { children: null },
   render: () => (
     <List>
-      <ListItem type="with-slots" text="Document.tsx" iconStart={<FileIcon />} />
-      <ListItem type="with-slots" text="README.md" iconStart={<FileIcon />} iconEnd={<CheckIcon />} />
-      <ListItem type="with-slots" text="package.json" iconStart={<FileIcon />} />
+      <ListItem type="label" text="Label" />
+      <ListItem type="divider" />
+      <ListItem type="text" text="Text" />
+      <ListItem type="text" text="Text" selected />
+      <ListItem type="text" text="Text" />
+      <ListItem type="text" text="Text" />
+    </List>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// With slots (icon, slot content left/right)
+// ---------------------------------------------------------------------------
+
+export const WithSlots: Story = {
+  args: { children: null },
+  render: () => (
+    <List>
+      <ListItem type="text" text="Text" />
+      <ListItem type="with-slots" text="Text" iconStart={<Check size={16} />} selected />
+      <ListItem type="text" text="Text" />
+      <ListItem type="text" text="Text" />
     </List>
   ),
 };
@@ -97,9 +103,81 @@ export const TwoLine: Story = {
   args: { children: null },
   render: () => (
     <List>
-      <ListItem type="two-line-slots" text="John Doe" secondaryText="john@example.com" iconStart={<FileIcon />} />
-      <ListItem type="two-line-slots" text="Jane Smith" secondaryText="jane@example.com" iconStart={<FileIcon />} />
-      <ListItem type="two-line-slots" text="Bob Wilson" secondaryText="bob@example.com" iconStart={<FileIcon />} />
+      <ListItem type="two-line" text="Text" secondaryText="text" />
+      <ListItem type="two-line" text="Text" secondaryText="text" />
+      <ListItem type="two-line" text="Text" secondaryText="text" />
+    </List>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Two-line with slots (icon, slot content, etc.)
+// ---------------------------------------------------------------------------
+
+export const TwoLineWithSlots: Story = {
+  args: { children: null },
+  render: () => (
+    <List>
+      <ListItem type="two-line-slots" text="Text" secondaryText="text" iconStart={<Check size={16} />} />
+      <ListItem type="two-line-slots" text="Text" secondaryText="text" iconStart={<Check size={16} />} selected />
+      <ListItem type="two-line-slots" text="Text" secondaryText="text" iconStart={<Check size={16} />} />
+    </List>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// With chips (DLS ChipRegular)
+// ---------------------------------------------------------------------------
+
+export const WithChips: Story = {
+  args: { children: null },
+  render: () => (
+    <List>
+      <ListItem type="chips">
+        <ChipRegular variant="outline" label="text" chevron size="s" />
+        <ChipRegular variant="outline" label="text" chevron size="s" />
+        <ChipRegular variant="outline" label="text" chevron size="s" />
+      </ListItem>
+      <ListItem type="text" text="Option 1" />
+      <ListItem type="text" text="Option 2" selected />
+      <ListItem type="text" text="Option 3" />
+    </List>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// With search (DLS SearchField)
+// ---------------------------------------------------------------------------
+
+export const WithSearch: Story = {
+  args: { children: null },
+  render: () => (
+    <List>
+      <ListItem type="search">
+        <SearchField placeholder="Search" />
+      </ListItem>
+      <ListItem type="text" text="Option 1" />
+      <ListItem type="text" text="Option 2" />
+      <ListItem type="text" text="Option 3" />
+    </List>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// With buttons (DLS Button)
+// ---------------------------------------------------------------------------
+
+export const WithButtons: Story = {
+  args: { children: null },
+  render: () => (
+    <List>
+      <ListItem type="text" text="Option 1" />
+      <ListItem type="text" text="Option 2" />
+      <ListItem type="divider" />
+      <ListItem type="buttons">
+        <Button variant="outline" intent="neutral" size="m" style={{ flex: 1 }}>Cancel</Button>
+        <Button variant="filled" intent="neutral" size="m" style={{ flex: 1 }}>Apply</Button>
+      </ListItem>
     </List>
   ),
 };
@@ -112,7 +190,36 @@ export const EmptyState: Story = {
   args: { children: null },
   render: () => (
     <List>
-      <ListItem type="empty-state" text="No results found" />
+      <ListItem type="empty-state" text="No results found matching your search criteria" />
+    </List>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Full example (all types combined)
+// ---------------------------------------------------------------------------
+
+export const FullExample: Story = {
+  args: { children: null },
+  render: () => (
+    <List>
+      <ListItem type="chips">
+        <ChipRegular variant="outline" label="text" chevron size="s" />
+        <ChipRegular variant="outline" label="text" chevron size="s" />
+        <ChipRegular variant="outline" label="text" chevron size="s" />
+      </ListItem>
+      <ListItem type="search">
+        <SearchField placeholder="Search" />
+      </ListItem>
+      <ListItem type="text" text="Option 1" />
+      <ListItem type="text" text="Option 2" selected />
+      <ListItem type="text" text="Option 3" />
+      <ListItem type="divider" />
+      <ListItem type="buttons">
+        <Button variant="outline" intent="neutral" size="m" style={{ flex: 1 }}>Cancel</Button>
+        <Button variant="filled" intent="neutral" size="m" style={{ flex: 1 }}>Apply</Button>
+      </ListItem>
+      <ListItem type="empty-state" text="No results found matching your search criteria" />
     </List>
   ),
 };
@@ -136,7 +243,7 @@ export const Interactive: Story = {
               type="with-slots"
               text={item}
               selected={selected === item}
-              iconEnd={selected === item ? <CheckIcon /> : undefined}
+              iconEnd={selected === item ? <Check size={16} /> : undefined}
               onClick={() => setSelected(item)}
             />
           ))}

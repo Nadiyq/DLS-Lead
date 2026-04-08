@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chip, type ChipSize, type DotIntent } from './Chip';
+import { Chip, type ChipSize, type ChipAvatar, type DotIntent } from './Chip';
 import { XIcon, ChevronDown } from './chip-icons';
 import './chip-regular.css';
 
@@ -22,6 +22,8 @@ export interface ChipRegularProps {
   size?: ChipRegularSize;
   /** Leading icon element */
   leadingIcon?: React.ReactNode;
+  /** Avatar (single) */
+  avatar?: ChipAvatar;
   /** Show trailing chevron as second part */
   chevron?: boolean;
   /** Remove callback — shows trailing cross as second part */
@@ -44,6 +46,7 @@ export const ChipRegular = React.forwardRef<HTMLDivElement, ChipRegularProps>(
       intent = 'neutral',
       size = 'm',
       leadingIcon,
+      avatar,
       chevron,
       onRemove,
       onClick,
@@ -78,6 +81,7 @@ export const ChipRegular = React.forwardRef<HTMLDivElement, ChipRegularProps>(
           label={label}
           dot={isDot ? (intent as DotIntent) : undefined}
           leadingIcon={leadingIcon}
+          avatar={avatar}
           size={size}
         />
 

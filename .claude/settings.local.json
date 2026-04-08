@@ -4,7 +4,14 @@
       "mcp__figma__figma_get_selection",
       "mcp__Claude_Preview__preview_start",
       "mcp__41b14863-ce5b-4717-9cf0-183085bd0fb9__use_figma",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "Bash(npx tsc:*)",
+      "Bash(source ~/.zshrc)",
+      "Bash(lsof -ti:6006 -ti:6007)",
+      "Bash(export PATH=/opt/homebrew/opt/node@24/bin:$PATH)",
+      "Bash(npm ls:*)",
+      "Bash(export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\")",
+      "Bash(npm install:*)"
     ]
   },
   "enabledMcpjsonServers": [

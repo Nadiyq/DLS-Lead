@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { ListItem } from './ListItem';
+import { Button } from '../Button';
+import { ChipRegular } from '../chip/ChipRegular';
+import { SearchField } from '../search-field/SearchField';
+import { Badge } from '../Badge';
+import { File, Check, ChevronRight } from 'lucide-react';
 
 const meta = {
   title: 'Components/ListItem',
@@ -30,36 +35,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
     </h3>
     {children}
   </div>
-);
-
-const FileIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 2H9L12 5V14H4V2Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-    <path d="M9 2V5H12" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3.5 8.5L6.5 11.5L12.5 5.5" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronRight = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const Badge = ({ label }: { label: string }) => (
-  <span style={{
-    display: 'inline-flex', alignItems: 'center', padding: '0 6px',
-    height: 18, borderRadius: 9, fontSize: 11, fontWeight: 600,
-    background: 'var(--dls-color-intent-info-subtle)', color: 'var(--dls-color-intent-info-text)',
-    fontFamily: 'var(--dls-font-family)',
-  }}>
-    {label}
-  </span>
 );
 
 // ---------------------------------------------------------------------------
@@ -101,9 +76,9 @@ export const AllTypes: Story = {
 
       <Section title="With slots">
         <div style={{ background: 'var(--dls-color-surface-base)', borderRadius: 12, border: '1px solid var(--dls-color-border-subtle)', padding: 4, display: 'flex', flexDirection: 'column' }}>
-          <ListItem type="with-slots" text="File.tsx" iconStart={<FileIcon />} />
-          <ListItem type="with-slots" text="Selected" iconStart={<FileIcon />} iconEnd={<CheckIcon />} />
-          <ListItem type="with-slots" text="With badge" iconStart={<FileIcon />} slotRight={<Badge label="New" />} />
+          <ListItem type="with-slots" text="File.tsx" iconStart={<File size={16} />} />
+          <ListItem type="with-slots" text="Selected" iconStart={<File size={16} />} iconEnd={<Check size={16} />} />
+          <ListItem type="with-slots" text="With badge" iconStart={<File size={16} />} slotRight={<Badge variant="soft" intent="info" size="xs">New</Badge>} />
         </div>
       </Section>
 
@@ -116,14 +91,41 @@ export const AllTypes: Story = {
 
       <Section title="Two-line with slots">
         <div style={{ background: 'var(--dls-color-surface-base)', borderRadius: 12, border: '1px solid var(--dls-color-border-subtle)', padding: 4, display: 'flex', flexDirection: 'column' }}>
-          <ListItem type="two-line-slots" text="Primary text" secondaryText="Secondary text" iconStart={<FileIcon />} iconEnd={<ChevronRight />} />
-          <ListItem type="two-line-slots" text="Another item" secondaryText="Description" iconStart={<FileIcon />} slotRight={<Badge label="3" />} />
+          <ListItem type="two-line-slots" text="Primary text" secondaryText="Secondary text" iconStart={<File size={16} />} iconEnd={<ChevronRight size={16} />} />
+          <ListItem type="two-line-slots" text="Another item" secondaryText="Description" iconStart={<File size={16} />} slotRight={<Badge variant="soft" intent="info" size="xs">3</Badge>} />
+        </div>
+      </Section>
+
+      <Section title="Chips">
+        <div style={{ background: 'var(--dls-color-surface-base)', borderRadius: 12, border: '1px solid var(--dls-color-border-subtle)', padding: 4, display: 'flex', flexDirection: 'column' }}>
+          <ListItem type="chips">
+            <ChipRegular variant="outline" label="text" chevron size="s" />
+            <ChipRegular variant="outline" label="text" chevron size="s" />
+            <ChipRegular variant="outline" label="text" chevron size="s" />
+          </ListItem>
+        </div>
+      </Section>
+
+      <Section title="Search">
+        <div style={{ background: 'var(--dls-color-surface-base)', borderRadius: 12, border: '1px solid var(--dls-color-border-subtle)', padding: 4, display: 'flex', flexDirection: 'column' }}>
+          <ListItem type="search">
+            <SearchField placeholder="Search" />
+          </ListItem>
+        </div>
+      </Section>
+
+      <Section title="Buttons">
+        <div style={{ background: 'var(--dls-color-surface-base)', borderRadius: 12, border: '1px solid var(--dls-color-border-subtle)', padding: 4, display: 'flex', flexDirection: 'column' }}>
+          <ListItem type="buttons">
+            <Button variant="outline" intent="neutral" size="m" style={{ flex: 1 }}>Cancel</Button>
+            <Button variant="filled" intent="neutral" size="m" style={{ flex: 1 }}>Apply</Button>
+          </ListItem>
         </div>
       </Section>
 
       <Section title="Empty state">
         <div style={{ background: 'var(--dls-color-surface-base)', borderRadius: 12, border: '1px solid var(--dls-color-border-subtle)', padding: 4, display: 'flex', flexDirection: 'column' }}>
-          <ListItem type="empty-state" text="No results found" />
+          <ListItem type="empty-state" text="No results found matching your search criteria" />
         </div>
       </Section>
 
@@ -160,7 +162,7 @@ export const Interactive: Story = {
               type="with-slots"
               text={item}
               selected={selected === item}
-              iconEnd={selected === item ? <CheckIcon /> : undefined}
+              iconEnd={selected === item ? <Check size={16} /> : undefined}
               onClick={() => setSelected(item)}
             />
           ))}
@@ -173,14 +175,3 @@ export const Interactive: Story = {
   },
 };
 
-// ---------------------------------------------------------------------------
-// Disabled
-// ---------------------------------------------------------------------------
-
-export const Disabled: Story = {
-  args: {
-    type: 'text',
-    text: 'Disabled item',
-    disabled: true,
-  },
-};

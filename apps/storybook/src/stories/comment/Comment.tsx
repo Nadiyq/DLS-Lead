@@ -65,6 +65,31 @@ export const Comment = React.forwardRef<HTMLDivElement, CommentProps>(
     ref,
   ) => {
     const isEmail = channel === 'email';
+    const [hasSelection, setHasSelection] = React.useState(false);
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+
+    React.useEffect(() => {
+      if (!floatingToolbar) return;
+      const textarea = textareaRef.current;
+      if (!textarea) return;
+
+      const check = () => {
+        const { selectionStart, selectionEnd } = textarea;
+        setHasSelection(selectionStart !== selectionEnd);
+      };
+
+      textarea.addEventListener('select', check);
+      textarea.addEventListener('mouseup', check);
+      textarea.addEventListener('keyup', check);
+      textarea.addEventListener('blur', () => setHasSelection(false));
+
+      return () => {
+        textarea.removeEventListener('select', check);
+        textarea.removeEventListener('mouseup', check);
+        textarea.removeEventListener('keyup', check);
+        textarea.removeEventListener('blur', () => setHasSelection(false));
+      };
+    }, [floatingToolbar]);
 
     return (
       <div
@@ -112,14 +137,15 @@ export const Comment = React.forwardRef<HTMLDivElement, CommentProps>(
         {/* Text input */}
         <div className="dls-comment__input">
           <textarea
+            ref={textareaRef}
             className="dls-comment__textarea"
             placeholder={placeholder}
             value={value}
             onChange={e => onChange?.(e.target.value)}
             rows={2}
           />
-          {/* Floating toolbar — appears on text selection */}
-          {floatingToolbar && (
+          {/* Floating toolbar — only visible when text is selected */}
+          {floatingToolbar && hasSelection && (
             <div className="dls-comment__floating-toolbar">{floatingToolbar}</div>
           )}
         </div>

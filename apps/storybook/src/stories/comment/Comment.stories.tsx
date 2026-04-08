@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Comment } from './Comment';
-import { Toolbar, ToolbarButton, ToolbarSeparator, ToolbarGroup } from '../toolbar/Toolbar';
+import { Toolbar, ToolbarGroup } from '../toolbar/Toolbar';
+import { Button } from '../Button';
+import { ButtonGroup } from '../button-group/ButtonGroup';
+import { Separator } from '../separator/Separator';
 import { Tabs } from '../tabs/Tabs';
 import { ChipRegular } from '../chip/ChipRegular';
-import { Chip } from '../chip/Chip';
 import { Alert } from '../Alert';
-import { Button } from '../Button';
 
 const meta = {
   title: 'Components/Comment',
@@ -136,30 +137,30 @@ const WarningIcon = () => (
 
 const FormattingToolbar = ({ sticky }: { sticky?: boolean }) => (
   <Toolbar sticky={sticky}>
-    <ToolbarButton aria-label="Bold"><BoldIcon /></ToolbarButton>
-    <ToolbarButton aria-label="Italic"><ItalicIcon /></ToolbarButton>
-    <ToolbarButton aria-label="Underline"><UnderlineIcon /></ToolbarButton>
-    <ToolbarSeparator />
+    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<BoldIcon />} aria-label="Bold" />
+    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<ItalicIcon />} aria-label="Italic" />
+    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<UnderlineIcon />} aria-label="Underline" />
+    <Separator orientation="vertical" />
     <ToolbarGroup>
-      <ToolbarButton aria-label="Align left"><AlignLeftIcon /></ToolbarButton>
-      <ToolbarButton aria-label="Align center"><AlignCenterIcon /></ToolbarButton>
-      <ToolbarButton aria-label="Align right"><AlignRightIcon /></ToolbarButton>
+      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<AlignLeftIcon />} aria-label="Align left" />
+      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<AlignCenterIcon />} aria-label="Align center" />
+      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<AlignRightIcon />} aria-label="Align right" />
     </ToolbarGroup>
-    <ToolbarSeparator />
+    <Separator orientation="vertical" />
     <ToolbarGroup>
-      <ToolbarButton aria-label="Bulleted list"><ListBulletIcon /></ToolbarButton>
-      <ToolbarButton aria-label="Numbered list"><ListNumberedIcon /></ToolbarButton>
-      <ToolbarButton aria-label="Checklist"><ListCheckIcon /></ToolbarButton>
+      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<ListBulletIcon />} aria-label="Bulleted list" />
+      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<ListNumberedIcon />} aria-label="Numbered list" />
+      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<ListCheckIcon />} aria-label="Checklist" />
     </ToolbarGroup>
-    <ToolbarSeparator />
-    <ToolbarButton aria-label="Link"><LinkIcon /></ToolbarButton>
-    <ToolbarSeparator />
-    <ToolbarButton aria-label="More"><MoreIcon /></ToolbarButton>
+    <Separator orientation="vertical" />
+    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<LinkIcon />} aria-label="Link" />
+    <Separator orientation="vertical" />
+    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<MoreIcon />} aria-label="More" />
   </Toolbar>
 );
 
 // ---------------------------------------------------------------------------
-// Shared tab items
+// Shared slots
 // ---------------------------------------------------------------------------
 
 const channelTabs = [
@@ -167,8 +168,182 @@ const channelTabs = [
   { value: 'internal', label: 'Internal' },
 ];
 
+const statusSlot = (
+  <>
+    Channel status:{' '}
+    <ChipRegular variant="dot" intent="success" label="Open" size="s" chevron />
+  </>
+);
+
+const alertSlot = (
+  <Alert
+    intent="warning"
+    icon={<WarningIcon />}
+    description="This message will be delivered to a number associated with multiple patient records."
+  />
+);
+
+const actionsLeftSlot = (
+  <>
+    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<EmojiIcon />} aria-label="Emoji" />
+    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<AttachIcon />} aria-label="Attach" />
+  </>
+);
+
+const actionsRightSlot = (
+  <ButtonGroup variant="filled">
+    <Button variant="filled" intent="neutral" size="m">Send</Button>
+    <Button variant="filled" intent="neutral" size="m" iconOnly icon={<SendIcon />} aria-label="Send" />
+  </ButtonGroup>
+);
+
+const recipientsSlot = (
+  <>
+    <ChipRegular variant="outline" label="Anthony Bricks" avatar={{ initials: 'AB' }} chevron size="s" />
+    <ChipRegular variant="outline" label="John Smith" avatar={{ initials: 'JS' }} chevron size="s" />
+  </>
+);
+
 // ---------------------------------------------------------------------------
-// Playground
+// 1. SMS with floating toolbar (text selection) — Figma variant 1
+// ---------------------------------------------------------------------------
+
+export const SmsWithFloatingToolbar: Story = {
+  args: { channel: 'sms' },
+  render: () => (
+    <div style={{ width: 540 }}>
+      <Comment
+        channel="sms"
+        tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
+        channelStatus={statusSlot}
+        alert={alertSlot}
+        value="hello"
+        floatingToolbar={<FormattingToolbar />}
+        actionsLeft={actionsLeftSlot}
+        actionsRight={actionsRightSlot}
+      />
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// 2. SMS — status only, no tabs — Figma variant 2
+// ---------------------------------------------------------------------------
+
+export const SmsStatusOnly: Story = {
+  args: { channel: 'sms' },
+  render: () => (
+    <div style={{ width: 540 }}>
+      <Comment
+        channel="sms"
+        channelStatus={statusSlot}
+        toolbar={<FormattingToolbar sticky />}
+        actionsLeft={actionsLeftSlot}
+        actionsRight={actionsRightSlot}
+      />
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// 3. SMS — tabs only, no status — Figma variant 3
+// ---------------------------------------------------------------------------
+
+export const SmsTabsOnly: Story = {
+  args: { channel: 'sms' },
+  render: () => (
+    <div style={{ width: 540 }}>
+      <Comment
+        channel="sms"
+        tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
+        toolbar={<FormattingToolbar sticky />}
+        actionsLeft={actionsLeftSlot}
+        actionsRight={actionsRightSlot}
+      />
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// 4. Email — basic, no tabs/status — Figma variant 4
+// ---------------------------------------------------------------------------
+
+export const EmailBasic: Story = {
+  args: { channel: 'email' },
+  render: () => (
+    <div style={{ width: 540 }}>
+      <Comment
+        channel="email"
+        subject=""
+        recipients={recipientsSlot}
+        toolbar={<FormattingToolbar sticky />}
+        actionsLeft={actionsLeftSlot}
+        actionsRight={actionsRightSlot}
+      />
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// 5. Email — full (tabs + status + alert) — Figma variant 5
+// ---------------------------------------------------------------------------
+
+export const EmailFull: Story = {
+  args: { channel: 'email' },
+  render: () => (
+    <div style={{ width: 540 }}>
+      <Comment
+        channel="email"
+        tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
+        channelStatus={statusSlot}
+        alert={alertSlot}
+        subject=""
+        recipients={recipientsSlot}
+        toolbar={<FormattingToolbar sticky />}
+        actionsLeft={actionsLeftSlot}
+        actionsRight={actionsRightSlot}
+      />
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// 6. Toolbar + text + actions only — Figma variant 6
+// ---------------------------------------------------------------------------
+
+export const ToolbarOnly: Story = {
+  args: { channel: 'sms' },
+  render: () => (
+    <div style={{ width: 540 }}>
+      <Comment
+        channel="sms"
+        toolbar={<FormattingToolbar sticky />}
+        actionsLeft={actionsLeftSlot}
+        actionsRight={actionsRightSlot}
+      />
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// 7. Minimal with actions — Figma variant 7
+// ---------------------------------------------------------------------------
+
+export const MinimalWithActions: Story = {
+  args: { channel: 'sms' },
+  render: () => (
+    <div style={{ width: 540 }}>
+      <Comment
+        channel="sms"
+        actionsLeft={actionsLeftSlot}
+        actionsRight={actionsRightSlot}
+      />
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Playground (interactive)
 // ---------------------------------------------------------------------------
 
 export const Playground: Story = {
@@ -176,135 +351,8 @@ export const Playground: Story = {
     channel: 'sms',
     placeholder: 'Enter...',
   },
-  render: (args) => (
-    <div style={{ width: 540 }}>
-      <Comment
-        channel={args.channel}
-        tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
-        channelStatus={
-          <>
-            Channel status:{' '}
-            <ChipRegular variant="dot" intent="success" label="Open" size="s" chevron />
-          </>
-        }
-        toolbar={<FormattingToolbar sticky />}
-        placeholder={args.placeholder}
-        actionsLeft={
-          <>
-            <ToolbarButton aria-label="Emoji"><EmojiIcon /></ToolbarButton>
-            <ToolbarButton aria-label="Attach"><AttachIcon /></ToolbarButton>
-          </>
-        }
-        actionsRight={
-          <>
-            <Button variant="filled" intent="neutral" size="s">Send</Button>
-            <Button variant="filled" intent="neutral" size="s" icon={<SendIcon />} iconOnly aria-label="Send" />
-          </>
-        }
-      />
-    </div>
-  ),
-};
-
-// ---------------------------------------------------------------------------
-// SMS channel
-// ---------------------------------------------------------------------------
-
-export const SmsChannel: Story = {
-  args: { channel: 'sms' },
-  render: () => (
-    <div style={{ width: 540 }}>
-      <Comment
-        channel="sms"
-        tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
-        channelStatus={
-          <>
-            Channel status:{' '}
-            <ChipRegular variant="dot" intent="success" label="Open" size="s" chevron />
-          </>
-        }
-        alert={
-          <Alert
-            intent="warning"
-            icon={<WarningIcon />}
-            description="This message will be delivered to a number associated with multiple patient records."
-          />
-        }
-        toolbar={<FormattingToolbar sticky />}
-        actionsLeft={
-          <>
-            <ToolbarButton aria-label="Emoji"><EmojiIcon /></ToolbarButton>
-            <ToolbarButton aria-label="Attach"><AttachIcon /></ToolbarButton>
-          </>
-        }
-        actionsRight={
-          <>
-            <Button variant="filled" intent="neutral" size="s">Send</Button>
-            <Button variant="filled" intent="neutral" size="s" icon={<SendIcon />} iconOnly aria-label="Send" />
-          </>
-        }
-      />
-    </div>
-  ),
-};
-
-// ---------------------------------------------------------------------------
-// Email channel
-// ---------------------------------------------------------------------------
-
-export const EmailChannel: Story = {
-  args: { channel: 'email' },
-  render: () => (
-    <div style={{ width: 540 }}>
-      <Comment
-        channel="email"
-        tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
-        channelStatus={
-          <>
-            Channel status:{' '}
-            <ChipRegular variant="dot" intent="success" label="Open" size="s" chevron />
-          </>
-        }
-        alert={
-          <Alert
-            intent="warning"
-            icon={<WarningIcon />}
-            description="This message will be delivered to a number associated with multiple patient records."
-          />
-        }
-        subject=""
-        recipients={
-          <>
-            <Chip label="Anthony Bricks" avatar={{ initials: 'AB' }} chevron size="s" />
-            <Chip label="John Smith" avatar={{ initials: 'JS' }} chevron size="s" />
-          </>
-        }
-        toolbar={<FormattingToolbar sticky />}
-        actionsLeft={
-          <>
-            <ToolbarButton aria-label="Emoji"><EmojiIcon /></ToolbarButton>
-            <ToolbarButton aria-label="Attach"><AttachIcon /></ToolbarButton>
-          </>
-        }
-        actionsRight={
-          <>
-            <Button variant="filled" intent="neutral" size="s">Send</Button>
-            <Button variant="filled" intent="neutral" size="s" icon={<SendIcon />} iconOnly aria-label="Send" />
-          </>
-        }
-      />
-    </div>
-  ),
-};
-
-// ---------------------------------------------------------------------------
-// Interactive
-// ---------------------------------------------------------------------------
-
-export const Interactive: Story = {
-  args: { channel: 'sms' },
-  render: () => {
-    const [channel, setChannel] = React.useState<'sms' | 'email'>('sms');
+  render: (args) => {
+    const [channel, setChannel] = React.useState<'sms' | 'email'>(args.channel || 'sms');
     const [tab, setTab] = React.useState('internal');
     const [text, setText] = React.useState('');
     const [subject, setSubject] = React.useState('');
@@ -325,34 +373,16 @@ export const Interactive: Story = {
                 }}
               />
             }
-            channelStatus={
-              <>
-                Channel status:{' '}
-                <ChipRegular variant="dot" intent="success" label="Open" size="s" chevron />
-              </>
-            }
+            channelStatus={statusSlot}
             subject={channel === 'email' ? subject : undefined}
             onSubjectChange={setSubject}
-            recipients={
-              channel === 'email' ? (
-                <Chip label="Anthony Bricks" avatar={{ initials: 'AB' }} chevron size="s" />
-              ) : undefined
-            }
+            recipients={channel === 'email' ? recipientsSlot : undefined}
             toolbar={<FormattingToolbar sticky />}
+            placeholder={args.placeholder}
             value={text}
             onChange={setText}
-            actionsLeft={
-              <>
-                <ToolbarButton aria-label="Emoji"><EmojiIcon /></ToolbarButton>
-                <ToolbarButton aria-label="Attach"><AttachIcon /></ToolbarButton>
-              </>
-            }
-            actionsRight={
-              <>
-                <Button variant="filled" intent="neutral" size="s">Send</Button>
-                <Button variant="filled" intent="neutral" size="s" icon={<SendIcon />} iconOnly aria-label="Send" />
-              </>
-            }
+            actionsLeft={actionsLeftSlot}
+            actionsRight={actionsRightSlot}
           />
         </div>
         <span style={{ fontFamily: 'var(--dls-font-family)', fontSize: 13, color: 'var(--dls-color-text-secondary)' }}>
@@ -361,63 +391,4 @@ export const Interactive: Story = {
       </div>
     );
   },
-};
-
-// ---------------------------------------------------------------------------
-// With floating toolbar (on text selection)
-// ---------------------------------------------------------------------------
-
-export const WithFloatingToolbar: Story = {
-  args: { channel: 'sms' },
-  render: () => (
-    <div style={{ width: 540 }}>
-      <Comment
-        channel="sms"
-        tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
-        channelStatus={
-          <>
-            Channel status:{' '}
-            <ChipRegular variant="dot" intent="success" label="Open" size="s" chevron />
-          </>
-        }
-        toolbar={<FormattingToolbar sticky />}
-        value="Select some of this text to see the floating toolbar appear below."
-        floatingToolbar={<FormattingToolbar />}
-        actionsLeft={
-          <>
-            <ToolbarButton aria-label="Emoji"><EmojiIcon /></ToolbarButton>
-            <ToolbarButton aria-label="Attach"><AttachIcon /></ToolbarButton>
-          </>
-        }
-        actionsRight={
-          <>
-            <Button variant="filled" intent="neutral" size="s">Send</Button>
-            <Button variant="filled" intent="neutral" size="s" icon={<SendIcon />} iconOnly aria-label="Send" />
-          </>
-        }
-      />
-    </div>
-  ),
-};
-
-// ---------------------------------------------------------------------------
-// Minimal
-// ---------------------------------------------------------------------------
-
-export const Minimal: Story = {
-  args: { channel: 'sms' },
-  render: () => (
-    <div style={{ width: 400 }}>
-      <Comment
-        channel="sms"
-        placeholder="Type a message..."
-        actionsRight={
-          <>
-            <Button variant="filled" intent="neutral" size="s">Send</Button>
-            <Button variant="filled" intent="neutral" size="s" icon={<SendIcon />} iconOnly aria-label="Send" />
-          </>
-        }
-      />
-    </div>
-  ),
 };

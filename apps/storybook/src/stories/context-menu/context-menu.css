@@ -13,21 +13,13 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Shortcut slot — inline Kbd keys in menu items
-   --------------------------------------------------------------------------- */
-
-.dls-context-menu__shortcut {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--dls-spacing-1);
-}
-
-/* ---------------------------------------------------------------------------
    Submenu wrapper — positions nested menu relative to trigger item
    --------------------------------------------------------------------------- */
 
 .dls-context-menu__submenu {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .dls-context-menu__submenu-content {

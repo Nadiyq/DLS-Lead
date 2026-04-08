@@ -138,10 +138,7 @@ export const CalendarPeriods = React.forwardRef<HTMLDivElement, CalendarPeriodsP
 
     const handlePeriodClick = (period: PeriodOption) => {
       onPeriodChange?.(period.value, period.startDate, period.endDate);
-      if (period.startDate && period.endDate) {
-        onRangeChange?.(period.startDate, period.endDate);
-        setPicking('start');
-      }
+      setPicking('start');
     };
 
     const renderMonthGrid = (year: number, month: number) => {

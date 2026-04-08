@@ -2,7 +2,8 @@ import React from 'react';
 import './context-menu.css';
 import { List } from '../list-item/List';
 import { ListItem } from '../list-item/ListItem';
-import { Kbd } from '../kbd/Kbd';
+import { Kbd, KbdGroup } from '../kbd/Kbd';
+import { ChevronRight as ChevronRightIcon } from 'lucide-react';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -20,8 +21,6 @@ export interface ContextMenuItemProps extends React.ButtonHTMLAttributes<HTMLBut
   label: string;
   /** Keyboard shortcut keys (rendered via Kbd component) */
   shortcut?: string[];
-  /** Disabled state */
-  disabled?: boolean;
 }
 
 export interface ContextMenuSubmenuProps {
@@ -31,23 +30,11 @@ export interface ContextMenuSubmenuProps {
   label: string;
   /** Submenu content */
   children: React.ReactNode;
-  /** Disabled state */
-  disabled?: boolean;
 }
 
 export interface ContextMenuLabelProps {
   children: React.ReactNode;
 }
-
-/* ---------------------------------------------------------------------------
-   Chevron icon (for submenu triggers)
-   --------------------------------------------------------------------------- */
-
-const ChevronRight = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 8L14 12L10 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    ContextMenu — wraps List with menu role + shadow
@@ -71,13 +58,13 @@ ContextMenu.displayName = 'ContextMenu';
    --------------------------------------------------------------------------- */
 
 export const ContextMenuItem = React.forwardRef<HTMLButtonElement, ContextMenuItemProps>(
-  ({ icon, label, shortcut, disabled, className, ...rest }, ref) => {
+  ({ icon, label, shortcut, className, ...rest }, ref) => {
     const shortcutSlot = shortcut && shortcut.length > 0 ? (
-      <span className="dls-context-menu__shortcut">
+      <KbdGroup>
         {shortcut.map((key) => (
           <Kbd key={key}>{key}</Kbd>
         ))}
-      </span>
+      </KbdGroup>
     ) : undefined;
 
     return (
@@ -87,7 +74,6 @@ export const ContextMenuItem = React.forwardRef<HTMLButtonElement, ContextMenuIt
         text={label}
         iconStart={icon}
         slotRight={shortcutSlot}
-        disabled={disabled}
         onClick={rest.onClick}
         className={className}
       />
@@ -105,22 +91,20 @@ export const ContextMenuSubmenu: React.FC<ContextMenuSubmenuProps> = ({
   icon,
   label,
   children,
-  disabled,
 }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
     <div
       className="dls-context-menu__submenu"
-      onMouseEnter={() => !disabled && setOpen(true)}
+      onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
       <ListItem
         type="with-slots"
         text={label}
         iconStart={icon}
-        iconEnd={<ChevronRight />}
-        disabled={disabled}
+        iconEnd={<ChevronRightIcon size={16} />}
       />
 
       {open && (
