@@ -15,7 +15,6 @@
   gap: var(--dls-spacing-2);
   font-family: var(--dls-font-family);
   width: 100%;
-  position: relative;
 }
 
 /* ---------------------------------------------------------------------------
@@ -41,6 +40,7 @@
   display: flex;
   align-items: center;
   gap: var(--dls-spacing-1-5);
+  position: relative;
 }
 
 /* Each date field fills equally */
@@ -110,4 +110,9 @@
   left: 0;
   z-index: 10;
   margin-top: var(--dls-spacing-1);
+}
+
+.dls-date-range-input__dropdown[data-field="end"] {
+  left: auto;
+  right: 0;
 }

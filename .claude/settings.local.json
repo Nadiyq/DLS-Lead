@@ -11,11 +11,28 @@
       "Bash(export PATH=/opt/homebrew/opt/node@24/bin:$PATH)",
       "Bash(npm ls:*)",
       "Bash(export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\")",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(node .claude/hooks/lint-tokens.mjs:*)",
+      "Bash(npm run:*)",
+      "Bash(find /Users/nadaabrosimova/Documents/DLS-Lead -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" -o -name \"*.js\" -o -name \"*.jsx\" \\\\\\) ! -path \"*/node_modules/*\" ! -path \"*/.git/*\" ! -path \"*/storybook-static/*\" ! -path \"*/comment/*\" -exec grep -l \"Comment\\\\|dls-comment\" {} \\\\;)",
+      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dialog/dialog.css)"
     ]
   },
   "enabledMcpjsonServers": [
     "agentation",
     "figma"
-  ]
+  ],
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/lint-tokens.mjs $TOOL_FILE_PATH"
+          }
+        ]
+      }
+    ]
+  }
 }

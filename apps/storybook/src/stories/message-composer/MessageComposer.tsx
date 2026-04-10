@@ -1,15 +1,15 @@
 import React from 'react';
-import './comment.css';
+import './message-composer.css';
 
 /* ---------------------------------------------------------------------------
    Types
    --------------------------------------------------------------------------- */
 
-export type CommentChannel = 'sms' | 'email';
+export type MessageComposerChannel = 'sms' | 'email';
 
-export interface CommentProps {
+export interface MessageComposerProps {
   /** Channel type */
-  channel?: CommentChannel;
+  channel?: MessageComposerChannel;
   /** Tabs / channel switcher slot */
   tabs?: React.ReactNode;
   /** Channel status slot (right side of top bar) */
@@ -43,7 +43,7 @@ export interface CommentProps {
    Component
    --------------------------------------------------------------------------- */
 
-export const Comment = React.forwardRef<HTMLDivElement, CommentProps>(
+export const MessageComposer = React.forwardRef<HTMLDivElement, MessageComposerProps>(
   (
     {
       channel = 'sms',
@@ -94,28 +94,28 @@ export const Comment = React.forwardRef<HTMLDivElement, CommentProps>(
     return (
       <div
         ref={ref}
-        className={['dls-comment', className].filter(Boolean).join(' ')}
+        className={['dls-message-composer', className].filter(Boolean).join(' ')}
         data-channel={channel}
       >
         {/* Top bar */}
         {(tabs || channelStatus) && (
-          <div className="dls-comment__top">
+          <div className="dls-message-composer__top">
             <div>{tabs}</div>
             {channelStatus && (
-              <div className="dls-comment__channel-status">{channelStatus}</div>
+              <div className="dls-message-composer__channel-status">{channelStatus}</div>
             )}
           </div>
         )}
 
         {/* Alert */}
-        {alert && <div className="dls-comment__alert">{alert}</div>}
+        {alert && <div className="dls-message-composer__alert">{alert}</div>}
 
         {/* Email-only fields */}
         {isEmail && subject !== undefined && (
-          <div className="dls-comment__field-row">
-            <span className="dls-comment__field-label">Subject:</span>
+          <div className="dls-message-composer__field-row">
+            <span className="dls-message-composer__field-label">Subject:</span>
             <input
-              className="dls-comment__textarea"
+              className="dls-message-composer__textarea"
               type="text"
               value={subject}
               onChange={e => onSubjectChange?.(e.target.value)}
@@ -125,20 +125,20 @@ export const Comment = React.forwardRef<HTMLDivElement, CommentProps>(
         )}
 
         {isEmail && recipients && (
-          <div className="dls-comment__field-row">
-            <span className="dls-comment__field-label">To:</span>
-            <div className="dls-comment__field-value">{recipients}</div>
+          <div className="dls-message-composer__field-row">
+            <span className="dls-message-composer__field-label">to:</span>
+            <div className="dls-message-composer__field-value">{recipients}</div>
           </div>
         )}
 
         {/* Toolbar */}
-        {toolbar && <div className="dls-comment__toolbar">{toolbar}</div>}
+        {toolbar && <div className="dls-message-composer__toolbar">{toolbar}</div>}
 
         {/* Text input */}
-        <div className="dls-comment__input">
+        <div className="dls-message-composer__input">
           <textarea
             ref={textareaRef}
-            className="dls-comment__textarea"
+            className="dls-message-composer__textarea"
             placeholder={placeholder}
             value={value}
             onChange={e => onChange?.(e.target.value)}
@@ -146,15 +146,15 @@ export const Comment = React.forwardRef<HTMLDivElement, CommentProps>(
           />
           {/* Floating toolbar — only visible when text is selected */}
           {floatingToolbar && hasSelection && (
-            <div className="dls-comment__floating-toolbar">{floatingToolbar}</div>
+            <div className="dls-message-composer__floating-toolbar">{floatingToolbar}</div>
           )}
         </div>
 
         {/* Actions */}
         {(actionsLeft || actionsRight) && (
-          <div className="dls-comment__actions">
-            <div className="dls-comment__actions-left">{actionsLeft}</div>
-            <div className="dls-comment__actions-right">{actionsRight}</div>
+          <div className="dls-message-composer__actions">
+            <div className="dls-message-composer__actions-left">{actionsLeft}</div>
+            <div className="dls-message-composer__actions-right">{actionsRight}</div>
           </div>
         )}
       </div>
@@ -162,4 +162,4 @@ export const Comment = React.forwardRef<HTMLDivElement, CommentProps>(
   },
 );
 
-Comment.displayName = 'Comment';
+MessageComposer.displayName = 'MessageComposer';

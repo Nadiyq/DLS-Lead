@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Comment } from './Comment';
+import { MessageComposer } from './MessageComposer';
 import { Toolbar, ToolbarGroup } from '../toolbar/Toolbar';
 import { Button } from '../Button';
 import { ButtonGroup } from '../button-group/ButtonGroup';
@@ -10,11 +10,11 @@ import { ChipRegular } from '../chip/ChipRegular';
 import { Alert } from '../Alert';
 
 const meta = {
-  title: 'Components/Comment',
-  component: Comment,
+  title: 'Components/MessageComposer',
+  component: MessageComposer,
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
-} satisfies Meta<typeof Comment>;
+} satisfies Meta<typeof MessageComposer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -212,7 +212,7 @@ export const SmsWithFloatingToolbar: Story = {
   args: { channel: 'sms' },
   render: () => (
     <div style={{ width: 540 }}>
-      <Comment
+      <MessageComposer
         channel="sms"
         tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
         channelStatus={statusSlot}
@@ -234,7 +234,7 @@ export const SmsStatusOnly: Story = {
   args: { channel: 'sms' },
   render: () => (
     <div style={{ width: 540 }}>
-      <Comment
+      <MessageComposer
         channel="sms"
         channelStatus={statusSlot}
         toolbar={<FormattingToolbar sticky />}
@@ -253,7 +253,7 @@ export const SmsTabsOnly: Story = {
   args: { channel: 'sms' },
   render: () => (
     <div style={{ width: 540 }}>
-      <Comment
+      <MessageComposer
         channel="sms"
         tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
         toolbar={<FormattingToolbar sticky />}
@@ -272,7 +272,7 @@ export const EmailBasic: Story = {
   args: { channel: 'email' },
   render: () => (
     <div style={{ width: 540 }}>
-      <Comment
+      <MessageComposer
         channel="email"
         subject=""
         recipients={recipientsSlot}
@@ -292,7 +292,7 @@ export const EmailFull: Story = {
   args: { channel: 'email' },
   render: () => (
     <div style={{ width: 540 }}>
-      <Comment
+      <MessageComposer
         channel="email"
         tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
         channelStatus={statusSlot}
@@ -315,7 +315,7 @@ export const ToolbarOnly: Story = {
   args: { channel: 'sms' },
   render: () => (
     <div style={{ width: 540 }}>
-      <Comment
+      <MessageComposer
         channel="sms"
         toolbar={<FormattingToolbar sticky />}
         actionsLeft={actionsLeftSlot}
@@ -333,7 +333,7 @@ export const MinimalWithActions: Story = {
   args: { channel: 'sms' },
   render: () => (
     <div style={{ width: 540 }}>
-      <Comment
+      <MessageComposer
         channel="sms"
         actionsLeft={actionsLeftSlot}
         actionsRight={actionsRightSlot}
@@ -360,7 +360,7 @@ export const Playground: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'center' }}>
         <div style={{ width: 540 }}>
-          <Comment
+          <MessageComposer
             channel={channel}
             tabs={
               <Tabs

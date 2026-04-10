@@ -209,7 +209,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
           </span>
         </button>
 
-        {open && (
+        {open && onDateSelect && (
           <div className="dls-date-input__dropdown">
             <Calendar
               value={calendarValue}

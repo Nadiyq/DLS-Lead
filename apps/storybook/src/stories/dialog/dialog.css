@@ -115,8 +115,22 @@
   padding: var(--dls-spacing-6);
 }
 
+.dls-dialog[data-breakpoint="mobile"] .dls-dialog__top {
+  position: relative;
+}
+
+.dls-dialog[data-breakpoint="mobile"] .dls-dialog__title-block {
+  text-align: center;
+}
+
+.dls-dialog[data-breakpoint="mobile"] .dls-dialog__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .dls-dialog[data-breakpoint="mobile"] .dls-dialog__actions {
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
 .dls-dialog[data-breakpoint="mobile"] .dls-dialog__actions > * {
@@ -128,8 +142,19 @@
   .dls-dialog:not([data-breakpoint]) {
     padding: var(--dls-spacing-6);
   }
+  .dls-dialog:not([data-breakpoint]) .dls-dialog__top {
+    position: relative;
+  }
+  .dls-dialog:not([data-breakpoint]) .dls-dialog__title-block {
+    text-align: center;
+  }
+  .dls-dialog:not([data-breakpoint]) .dls-dialog__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
   .dls-dialog:not([data-breakpoint]) .dls-dialog__actions {
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
   .dls-dialog:not([data-breakpoint]) .dls-dialog__actions > * {
     width: 100%;

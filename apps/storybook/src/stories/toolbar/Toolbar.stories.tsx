@@ -144,10 +144,10 @@ export const Playground: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// Comment toolbar (matches Figma: B I U | align×3 | list×3 | link | more)
+// Message composer toolbar (matches Figma: B I U | align×3 | list×3 | link | more)
 // ---------------------------------------------------------------------------
 
-export const CommentToolbar: Story = {
+export const MessageComposerToolbar: Story = {
   args: {
     sticky: false,
     children: null,

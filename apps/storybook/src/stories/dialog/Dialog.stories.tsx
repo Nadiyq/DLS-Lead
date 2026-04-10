@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Dialog } from './Dialog';
+import { Button } from '../Button';
 
 const meta = {
   title: 'Components/Dialog',
@@ -11,86 +12,6 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-// ---------------------------------------------------------------------------
-// Helpers — inline styled buttons (same pattern as other stories)
-// ---------------------------------------------------------------------------
-
-const FilledButton = ({ label, onClick }: { label: string; onClick?: () => void }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    style={{
-      all: 'unset',
-      boxSizing: 'border-box',
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: 32,
-      padding: '0 10px',
-      borderRadius: 6,
-      fontSize: 14,
-      fontWeight: 500,
-      fontFamily: 'var(--dls-font-family)',
-      cursor: 'pointer',
-      background: 'var(--dls-color-intent-neutral-base)',
-      color: 'var(--dls-color-intent-neutral-on-base)',
-    }}
-  >
-    {label}
-  </button>
-);
-
-const OutlineButton = ({ label, onClick }: { label: string; onClick?: () => void }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    style={{
-      all: 'unset',
-      boxSizing: 'border-box',
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: 32,
-      padding: '0 10px',
-      borderRadius: 6,
-      fontSize: 14,
-      fontWeight: 500,
-      fontFamily: 'var(--dls-font-family)',
-      cursor: 'pointer',
-      background: 'transparent',
-      color: 'var(--dls-color-text-primary)',
-      border: '1px solid var(--dls-color-border-base)',
-    }}
-  >
-    {label}
-  </button>
-);
-
-const TriggerButton = ({ label, onClick }: { label: string; onClick?: () => void }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    style={{
-      all: 'unset',
-      boxSizing: 'border-box',
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: 36,
-      padding: '0 16px',
-      borderRadius: 6,
-      fontSize: 14,
-      fontWeight: 500,
-      fontFamily: 'var(--dls-font-family)',
-      cursor: 'pointer',
-      background: 'var(--dls-color-intent-neutral-base)',
-      color: 'var(--dls-color-intent-neutral-on-base)',
-    }}
-  >
-    {label}
-  </button>
-);
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -112,8 +33,8 @@ export const Playground: Story = {
       onClose={() => {}}
       actions={
         <>
-          <OutlineButton label="Cancel" />
-          <FilledButton label="Save" />
+          <Button variant="outline" intent="neutral" size="m">Cancel</Button>
+          <Button variant="filled" intent="neutral" size="m">Save</Button>
         </>
       }
     />
@@ -140,16 +61,14 @@ export const DesktopWithContent: Story = {
       onClose={() => {}}
       actions={
         <>
-          <OutlineButton label="Cancel" />
-          <FilledButton label="Save" />
+          <Button variant="outline" intent="neutral" size="m">Cancel</Button>
+          <Button variant="filled" intent="neutral" size="m">Save</Button>
         </>
       }
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div>
-          <div style={{ fontSize: 16, fontWeight: 500, color: 'var(--dls-color-text-primary)', fontFamily: 'var(--dls-font-family)' }}>Subtitle</div>
-        </div>
-        <div style={{ fontSize: 14, color: 'var(--dls-color-text-primary)', lineHeight: 1.5, fontFamily: 'var(--dls-font-family)' }}>
+      <div className="dls-dialog__content">
+        <div className="dls-dialog__title" style={{ fontSize: 'var(--dls-text-l-font-size)', lineHeight: 'var(--dls-text-l-line-height)', fontWeight: 'var(--dls-font-weight-medium)' }}>Subtitle</div>
+        <div style={{ fontSize: 'var(--dls-text-m-font-size)', color: 'var(--dls-color-text-primary)', lineHeight: 'var(--dls-text-m-line-height)', fontFamily: 'var(--dls-font-family)' }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
           ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -179,14 +98,14 @@ export const DesktopWithForm: Story = {
       onClose={() => {}}
       actions={
         <>
-          <OutlineButton label="Cancel" />
-          <FilledButton label="Save" />
+          <Button variant="outline" intent="neutral" size="m">Cancel</Button>
+          <Button variant="filled" intent="neutral" size="m">Save</Button>
         </>
       }
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <label style={{ fontSize: 12, fontWeight: 500, color: 'var(--dls-color-text-primary)', fontFamily: 'var(--dls-font-family)' }}>
+          <label style={{ fontSize: 'var(--dls-text-s-font-size)', fontWeight: 'var(--dls-font-weight-medium)', color: 'var(--dls-color-text-primary)', fontFamily: 'var(--dls-font-family)' }}>
             Name
           </label>
           <input
@@ -199,17 +118,17 @@ export const DesktopWithForm: Story = {
               width: '100%',
               height: 32,
               padding: '0 8px',
-              borderRadius: 6,
-              fontSize: 14,
+              borderRadius: 'var(--dls-radius-component-input)',
+              fontSize: 'var(--dls-text-m-font-size)',
               fontFamily: 'var(--dls-font-family)',
               border: '1px solid var(--dls-color-border-base)',
               color: 'var(--dls-color-text-primary)',
             }}
           />
-          <span style={{ fontSize: 12, color: 'var(--dls-color-text-secondary)', fontFamily: 'var(--dls-font-family)' }}>Hint</span>
+          <span style={{ fontSize: 'var(--dls-text-s-font-size)', color: 'var(--dls-color-text-secondary)', fontFamily: 'var(--dls-font-family)' }}>Hint</span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <label style={{ fontSize: 12, fontWeight: 500, color: 'var(--dls-color-text-primary)', fontFamily: 'var(--dls-font-family)' }}>
+          <label style={{ fontSize: 'var(--dls-text-s-font-size)', fontWeight: 'var(--dls-font-weight-medium)', color: 'var(--dls-color-text-primary)', fontFamily: 'var(--dls-font-family)' }}>
             Email
           </label>
           <input
@@ -222,14 +141,14 @@ export const DesktopWithForm: Story = {
               width: '100%',
               height: 32,
               padding: '0 8px',
-              borderRadius: 6,
-              fontSize: 14,
+              borderRadius: 'var(--dls-radius-component-input)',
+              fontSize: 'var(--dls-text-m-font-size)',
               fontFamily: 'var(--dls-font-family)',
               border: '1px solid var(--dls-color-border-base)',
               color: 'var(--dls-color-text-primary)',
             }}
           />
-          <span style={{ fontSize: 12, color: 'var(--dls-color-text-secondary)', fontFamily: 'var(--dls-font-family)' }}>Hint</span>
+          <span style={{ fontSize: 'var(--dls-text-s-font-size)', color: 'var(--dls-color-text-secondary)', fontFamily: 'var(--dls-font-family)' }}>Hint</span>
         </div>
       </div>
     </Dialog>
@@ -256,12 +175,12 @@ export const MobileLayout: Story = {
       onClose={() => {}}
       actions={
         <>
-          <OutlineButton label="Cancel" />
-          <FilledButton label="Save" />
+          <Button variant="filled" intent="neutral" size="m">Save</Button>
+          <Button variant="outline" intent="neutral" size="m">Cancel</Button>
         </>
       }
     >
-      <div style={{ fontSize: 14, color: 'var(--dls-color-text-primary)', lineHeight: 1.5, fontFamily: 'var(--dls-font-family)' }}>
+      <div style={{ fontSize: 'var(--dls-text-m-font-size)', color: 'var(--dls-color-text-primary)', lineHeight: 'var(--dls-text-m-line-height)', fontFamily: 'var(--dls-font-family)' }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua.
       </div>
@@ -285,7 +204,7 @@ export const Interactive: Story = {
 
     return (
       <>
-        <TriggerButton label="Open Dialog" onClick={() => setOpen(true)} />
+        <Button variant="filled" intent="neutral" size="m" onClick={() => setOpen(true)}>Open Dialog</Button>
         <Dialog
           open={open}
           breakpoint="desktop"
@@ -294,8 +213,8 @@ export const Interactive: Story = {
           onClose={() => setOpen(false)}
           actions={
             <>
-              <OutlineButton label="Cancel" onClick={() => setOpen(false)} />
-              <FilledButton label="Confirm" onClick={() => setOpen(false)} />
+              <Button variant="outline" intent="neutral" size="m" onClick={() => setOpen(false)}>Cancel</Button>
+              <Button variant="filled" intent="neutral" size="m" onClick={() => setOpen(false)}>Confirm</Button>
             </>
           }
         />
@@ -319,7 +238,7 @@ export const Minimal: Story = {
       open
       title="Simple Dialog"
       onClose={() => {}}
-      actions={<FilledButton label="OK" />}
+      actions={<Button variant="filled" intent="neutral" size="m">OK</Button>}
     />
   ),
 };

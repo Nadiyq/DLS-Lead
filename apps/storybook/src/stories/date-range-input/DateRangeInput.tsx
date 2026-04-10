@@ -183,19 +183,19 @@ export const DateRangeInput = React.forwardRef<HTMLDivElement, DateRangeInputPro
             error={hasError ? ' ' : undefined}
             disabled={disabled}
           />
-        </div>
 
-        {activeField && (
-          <div className="dls-date-range-input__dropdown">
-            <Calendar
-              value={startDate}
-              valueEnd={endDate}
-              onSelect={activeField === 'start' ? handleStartSelect : handleEndSelect}
-              min={min}
-              max={max}
-            />
-          </div>
-        )}
+          {activeField && (
+            <div className="dls-date-range-input__dropdown" data-field={activeField}>
+              <Calendar
+                value={startDate}
+                valueEnd={endDate}
+                onSelect={activeField === 'start' ? handleStartSelect : handleEndSelect}
+                min={min}
+                max={max}
+              />
+            </div>
+          )}
+        </div>
 
         {(hint || hasError) && (
           <div className="dls-date-range-input__hint" data-error={hasError || undefined}>

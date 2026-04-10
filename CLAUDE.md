@@ -8,8 +8,11 @@ DLS-Lead — token-driven design system for SaaS products. React + Storybook + C
 npm start                                    # Token reference site :3000
 cd apps/storybook && npm run storybook       # Storybook :6006
 cd apps/storybook && npx tsc -b              # TypeScript check
-node .claude/hooks/lint-tokens.mjs --all     # Lint component CSS
+node .claude/hooks/lint-tokens.mjs --all     # Lint ALL component CSS
+node .claude/hooks/lint-tokens.mjs <file>    # Lint single CSS file
 /build-component <name>                      # Scaffold/update component from Figma
+/audit-component <name|--all>                # Detect DLS violations in existing components
+/fix-component <name>                        # Fix violations using Figma as source of truth
 ```
 
 No test suite yet. Generated outputs (`tokens.css`, `.scss`, `.ts`) are maintained alongside `tokens.json`.
@@ -19,15 +22,31 @@ No test suite yet. Generated outputs (`tokens.css`, `.scss`, `.ts`) are maintain
 `tokens/tokens.json` — DTCG-compliant, 4-layer model: L1 Primitives → L2 Semantics → L3 State → L4 Component.
 Generated outputs (don't hand-edit): `tokens/tokens.css`, `tokens/tokens.scss`, `tokens/tokens.ts`.
 
-## Critical Rules
+## Critical Rules — ZERO CUSTOM CSS POLICY
 
-- **Always check the library first.** Before writing any UI element, check `apps/storybook/src/stories/` and Storybook. Never build from scratch if a DLS component exists. If you can't find a component, stop and ask.
+> **⛔ NEVER create custom CSS classes, styled components, or one-off styles.**
+> Every visual element MUST use existing DLS components and tokens.
+> Read `.claude/skills/dls-enforcement.md` before writing ANY CSS or JSX.
+
+- **Always check the library first.** Before writing any UI element, check `apps/storybook/src/stories/` and Storybook. Never build from scratch if a DLS component exists. If you can't find a component, **stop and ask**.
+- **No custom classes.** All CSS classes must be `.dls-*`. Never create `.my-*`, `.custom-*`, `.wrapper`, or any non-DLS class. The lint hook will block it.
+- **No inline styles for visual properties.** Never use `style={{ color: '...', background: '...' }}`. Use `data-intent`, `data-variant`, `data-size` attributes.
 - Components NEVER reference L1 primitives. Use L4 component → L2 semantic fallback.
 - Variants/intents/sizes via `data-*` attributes, never `.is-*`/`.has-*` classes.
 - Every component CSS starts with `all: unset; box-sizing: border-box;`.
 - `:hover:not(:disabled)`, `:focus-visible` (not `:focus`), focus ring via `box-shadow` (never `outline`).
 - No hardcoded colors, sizes, or radii. Use `--dls-radius-component-*`, never primitive `--dls-radius-*`.
-- **Enforced by PostToolUse lint hook** (`.claude/hooks/lint-tokens.mjs`) — violations block the edit.
+- **Enforced by PostToolUse lint hook** (`.claude/hooks/lint-tokens.mjs`) — violations **block the edit**.
+
+### When You Don't Find a Component
+
+1. Do NOT improvise. Ask: "No DLS component exists for [X]. Should I scaffold one via `/build-component`?"
+2. Always require a Figma URL before creating anything new.
+3. If a component exists but lacks a variant you need, extend it through proper `data-*` attributes and L4 tokens — never with overrides.
+
+### Fixing Existing Violations
+
+Run `/audit-component <name>` to detect violations, then `/fix-component <name>` with a Figma URL to correct them.
 
 ## Figma Workflow
 
@@ -39,6 +58,7 @@ Quick start: `/build-component <ComponentName>` with a Figma URL — reads desig
 
 | Task | Read first |
 |------|-----------|
+| **ANY CSS or UI work (ALWAYS read first)** | **`.claude/skills/dls-enforcement.md`** |
 | Build / scaffold a component | `.claude/skills/component-patterns.md` |
 | Any UI work — using or composing components | `.claude/skills/dls-component-rules.md` |
 | Work with tokens (add, edit, lookup) | `.claude/skills/token-architecture.md` |
