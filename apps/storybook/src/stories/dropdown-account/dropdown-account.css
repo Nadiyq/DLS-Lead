@@ -4,12 +4,21 @@
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
-   Container override — adds shadow + fixed width to List
+   Container — standalone root (not layered on .dls-list)
    --------------------------------------------------------------------------- */
 
 .dls-dropdown-account {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   width: 228px;
-  box-shadow: var(--dls-shadow-dropdown);
+  padding: var(--dls-spacing-2);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-list);
+  box-shadow: var(--dls-shadow-surface-md);
+  font-family: var(--dls-font-family);
 }
 
 /* ---------------------------------------------------------------------------

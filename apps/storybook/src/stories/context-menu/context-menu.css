@@ -1,15 +1,24 @@
 /* ==========================================================================
-   DLS Context Menu — dropdown menu built on List + ListItem
-   Adds: raised shadow, shortcut slot, submenu positioning
+   DLS Context Menu — dropdown menu composed of ListItem rows
+   Standalone root that replicates List's box styling (not layered on .dls-list)
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
-   Container override — adds shadow to List
+   Container — standalone root
    --------------------------------------------------------------------------- */
 
 .dls-context-menu {
-  box-shadow: var(--dls-shadow-surface-raised);
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   min-width: 160px;
+  padding: var(--dls-spacing-2);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-list);
+  box-shadow: var(--dls-shadow-surface-raised);
+  font-family: var(--dls-font-family);
 }
 
 /* ---------------------------------------------------------------------------

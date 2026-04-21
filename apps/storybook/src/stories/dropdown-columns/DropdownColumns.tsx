@@ -1,44 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import {
+  GripVertical as GripVerticalIcon,
+  Pin as PinIcon,
+  PinOff as PinOffIcon,
+  EyeOff as EyeOffIcon,
+} from 'lucide-react';
 import './dropdown-columns.css';
-import { List } from '../list-item/List';
 import { ListItem } from '../list-item/ListItem';
 import { Button } from '../Button';
 import { Badge } from '../Badge';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const GripIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="6" cy="4" r="1" fill="currentColor" />
-    <circle cx="10" cy="4" r="1" fill="currentColor" />
-    <circle cx="6" cy="8" r="1" fill="currentColor" />
-    <circle cx="10" cy="8" r="1" fill="currentColor" />
-    <circle cx="6" cy="12" r="1" fill="currentColor" />
-    <circle cx="10" cy="12" r="1" fill="currentColor" />
-  </svg>
-);
-
-const PinIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9.5 2.5L13.5 6.5L10.5 7.5L8 10L7 13L3 9L6 8L8.5 5.5L9.5 2.5Z" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const PinOffIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9.5 2.5L13.5 6.5L10.5 7.5L8 10L7 13L3 9L6 8L8.5 5.5L9.5 2.5Z" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
-    <path d="M2 14L14 2" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const EyeIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M1.5 8C1.5 8 4 3.5 8 3.5C12 3.5 14.5 8 14.5 8C14.5 8 12 12.5 8 12.5C4 12.5 1.5 8 1.5 8Z" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-    <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.33" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Types
@@ -85,7 +55,11 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
   ) => {
     const [shown, setShown] = useState(shownProp);
     const [hidden, setHidden] = useState(hiddenProp);
-    const [dragIdx, setDragIdx] = useState<number | null>(null);
+    // Drag source tracked via refs (not state) so the value is available
+    // synchronously in the drop handler without waiting for React to flush.
+    // dragOverIdx stays as state because it drives visual feedback (data-drag-over).
+    const dragIdxRef = useRef<number | null>(null);
+    const dragSectionRef = useRef<'shown' | 'hidden' | null>(null);
     const [dragOverIdx, setDragOverIdx] = useState<number | null>(null);
     const [dragSection, setDragSection] = useState<'shown' | 'hidden' | null>(null);
 
@@ -106,39 +80,63 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
       update([...shown, col], hidden.filter(c => c.id !== id));
     };
 
-    /* Drag & drop for shown columns reorder */
+    /* Drag & drop — reorder within a section and move items across sections.
+       dataTransfer.setData is required for the drag to initiate in Firefox. */
 
-    const handleDragStart = (idx: number, section: 'shown' | 'hidden') => {
-      setDragIdx(idx);
+    const handleDragStart = (e: React.DragEvent, idx: number, section: 'shown' | 'hidden') => {
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', String(idx));
+      dragIdxRef.current = idx;
+      dragSectionRef.current = section;
       setDragSection(section);
     };
 
     const handleDragOver = (e: React.DragEvent, idx: number) => {
       e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
       setDragOverIdx(idx);
     };
 
-    const handleDrop = (targetIdx: number) => {
-      if (dragIdx === null || dragSection !== 'shown') return;
-      const next = [...shown];
-      const [moved] = next.splice(dragIdx, 1);
-      next.splice(targetIdx, 0, moved);
-      update(next, hidden);
-      setDragIdx(null);
+    const handleDrop = (targetIdx: number, targetSection: 'shown' | 'hidden') => {
+      const dragIdx = dragIdxRef.current;
+      const sourceSection = dragSectionRef.current;
+      if (dragIdx === null || sourceSection === null) return;
+
+      if (sourceSection === targetSection) {
+        // Reorder within section
+        const list = targetSection === 'shown' ? [...shown] : [...hidden];
+        const [moved] = list.splice(dragIdx, 1);
+        list.splice(targetIdx, 0, moved);
+        if (targetSection === 'shown') update(list, hidden);
+        else update(shown, list);
+      } else {
+        // Move across sections
+        const source = sourceSection === 'shown' ? [...shown] : [...hidden];
+        const dest = targetSection === 'shown' ? [...shown] : [...hidden];
+        const [moved] = source.splice(dragIdx, 1);
+        dest.splice(targetIdx, 0, moved);
+        if (sourceSection === 'shown') update(source, dest);
+        else update(dest, source);
+      }
+
+      dragIdxRef.current = null;
+      dragSectionRef.current = null;
       setDragOverIdx(null);
       setDragSection(null);
     };
 
     const handleDragEnd = () => {
-      setDragIdx(null);
+      dragIdxRef.current = null;
+      dragSectionRef.current = null;
       setDragOverIdx(null);
       setDragSection(null);
     };
 
     return (
-      <List
+      <div
         ref={ref}
         className={['dls-dropdown-columns', className].filter(Boolean).join(' ')}
+        role="listbox"
       >
         {/* Title */}
         <ListItem type="label" text="Show columns" />
@@ -148,36 +146,43 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
         {/* Shown section header */}
         <ListItem
           type="with-slots"
+          className="dls-dropdown-columns__section-header"
           text="Shown"
           slotRight={
             <Badge variant="soft" intent="info" size="s">{String(shown.length)}</Badge>
           }
         />
 
-        {/* Shown columns — draggable rows need custom markup */}
+        {/* Shown columns — draggable list items.
+            interactive={false} so the row renders as <div>, not <button>.
+            Rendering as <button> would (a) nest the Pin <button> inside
+            another <button> (invalid HTML), and (b) break HTML5 drag
+            events which browsers swallow on nested interactive elements. */}
         {shown.map((col, i) => (
-          <div
+          <ListItem
             key={col.id}
-            className="dls-dropdown-columns__row"
+            type="with-slots"
+            interactive={false}
             draggable
             data-drag-over={dragOverIdx === i && dragSection === 'shown' ? '' : undefined}
-            onDragStart={() => handleDragStart(i, 'shown')}
-            onDragOver={(e) => handleDragOver(e, i)}
-            onDrop={() => handleDrop(i)}
+            onDragStart={(e: React.DragEvent) => handleDragStart(e, i, 'shown')}
+            onDragOver={(e: React.DragEvent) => handleDragOver(e, i)}
+            onDrop={() => handleDrop(i, 'shown')}
             onDragEnd={handleDragEnd}
-          >
-            <span className="dls-dropdown-columns__grip"><GripIcon /></span>
-            <span className="dls-dropdown-columns__row-text">{col.label}</span>
-            <Button
-              variant="ghost"
-              intent="neutral"
-              size="s"
-              icon={col.pinned ? <PinIcon /> : <PinOffIcon />}
-              iconOnly
-              aria-label={col.pinned ? `Unpin ${col.label}` : `Pin ${col.label}`}
-              onClick={() => togglePin(col.id)}
-            />
-          </div>
+            iconStart={<GripVerticalIcon />}
+            text={col.label}
+            slotRight={
+              <Button
+                variant="ghost"
+                intent="neutral"
+                size="s"
+                icon={col.pinned ? <PinIcon /> : <PinOffIcon />}
+                iconOnly
+                aria-label={col.pinned ? `Unpin ${col.label}` : `Pin ${col.label}`}
+                onClick={() => togglePin(col.id)}
+              />
+            }
+          />
         ))}
 
         <ListItem type="divider" />
@@ -185,16 +190,25 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
         {/* Hidden section header */}
         <ListItem
           type="with-slots"
+          className="dls-dropdown-columns__section-header"
           text="Hidden"
-          iconEnd={<EyeIcon />}
+          iconEnd={<EyeOffIcon />}
         />
 
-        {/* Hidden columns */}
-        {hidden.map((col) => (
+        {/* Hidden columns — draggable (drag to Shown to re-enable, or reorder within Hidden).
+            interactive={false} so drag works; click-to-show is wired onto the row div. */}
+        {hidden.map((col, i) => (
           <ListItem
             key={col.id}
             type="with-slots"
-            iconStart={<GripIcon />}
+            interactive={false}
+            draggable
+            data-drag-over={dragOverIdx === i && dragSection === 'hidden' ? '' : undefined}
+            onDragStart={(e: React.DragEvent) => handleDragStart(e, i, 'hidden')}
+            onDragOver={(e: React.DragEvent) => handleDragOver(e, i)}
+            onDrop={() => handleDrop(i, 'hidden')}
+            onDragEnd={handleDragEnd}
+            iconStart={<GripVerticalIcon />}
             text={col.label}
             onClick={() => showColumn(col.id)}
           />
@@ -204,14 +218,14 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
 
         {/* Footer */}
         <ListItem type="buttons">
-          <Button variant="outline" intent="neutral" size="s" onClick={onCancel}>
+          <Button variant="outline" intent="neutral" size="m" onClick={onCancel}>
             Cancel
           </Button>
-          <Button variant="filled" intent="neutral" size="s" onClick={() => onApply?.(shown, hidden)}>
+          <Button variant="filled" intent="neutral" size="m" onClick={() => onApply?.(shown, hidden)}>
             Apply
           </Button>
         </ListItem>
-      </List>
+      </div>
     );
   },
 );

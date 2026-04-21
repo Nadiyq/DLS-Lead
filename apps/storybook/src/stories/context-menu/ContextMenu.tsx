@@ -1,9 +1,8 @@
 import React from 'react';
+import { ChevronRight as ChevronRightIcon } from 'lucide-react';
 import './context-menu.css';
-import { List } from '../list-item/List';
 import { ListItem } from '../list-item/ListItem';
 import { Kbd, KbdGroup } from '../kbd/Kbd';
-import { ChevronRight as ChevronRightIcon } from 'lucide-react';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -42,12 +41,13 @@ export interface ContextMenuLabelProps {
 
 export const ContextMenu = React.forwardRef<HTMLDivElement, ContextMenuProps>(
   ({ children, className }, ref) => (
-    <List
+    <div
       ref={ref}
       className={['dls-context-menu', className].filter(Boolean).join(' ')}
+      role="menu"
     >
       {children}
-    </List>
+    </div>
   ),
 );
 
@@ -104,7 +104,7 @@ export const ContextMenuSubmenu: React.FC<ContextMenuSubmenuProps> = ({
         type="with-slots"
         text={label}
         iconStart={icon}
-        iconEnd={<ChevronRightIcon size={16} />}
+        iconEnd={<ChevronRightIcon />}
       />
 
       {open && (

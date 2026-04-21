@@ -49,6 +49,10 @@ Do NOT add custom CSS overrides. Instead:
 | Custom loading spinner | Use `<Spinner>` from DLS library |
 | Custom modal/dialog | Use `<Dialog>` or `<AlertDialog>` from DLS |
 | Hand-rolled dropdown | Use `<Dropdown>` from DLS library |
+| `<div className="menu-row">` inside a dropdown | Use `<ListItem type="…" />` — every row in a dropdown / menu / popover list MUST be a ListItem |
+| `.dls-{name}` layered on top of `.dls-list` | Make `.dls-{name}` a standalone root with its own `all: unset; box-sizing: border-box;` + List-equivalent styling |
+| `const SettingsIcon = () => <svg>…</svg>` | Import from `lucide-react`: `import { Settings as SettingsIcon } from 'lucide-react'` |
+| Custom icon set, hand-drawn `<path>`, Heroicons, Font Awesome | Lucide only (`lucide-react`) — aliased with `Icon` suffix |
 | Inline `border-radius: 8px` | Use `var(--dls-radius-component-{name})` |
 | `background: #F9F5FF` | Use `var(--dls-color-surface-subtle)` or L2/L4 token |
 
@@ -105,3 +109,23 @@ When the hook blocks your edit, **read the error message carefully** and fix the
 - Use `data-variant`, `data-intent`, `data-size` props — not className variants
 - Import components from the stories directory: `import { Button } from '../stories/Button'`
 - If a component doesn't accept a prop you need, check Figma and extend the component properly
+
+## Dropdowns / Menus / Popover Lists — Always List + ListItem
+
+All dropdowns, menus, context menus, select popovers, and account flyouts in this system are **wrappers of `List` with `ListItem` children**. There are no exceptions.
+
+- Every visible row inside a dropdown MUST be a `<ListItem type="…" />` — `text`, `with-slots`, `two-line`, `two-line-slots`, `label`, `divider`, `buttons`, `search`, `chips`, or `empty-state`.
+- Never write `<div className="...-row">`, `<button className="...-item">`, or raw `<li>` inside a dropdown body.
+- Drag-and-drop, keyboard handlers, `draggable`, `role`, `aria-*` etc. are passed directly to `<ListItem>` — it forwards all HTML attributes.
+- The dropdown root (e.g. `.dls-dropdown-account`) is a **standalone** class that replicates `.dls-list`'s box styling (`all: unset; box-sizing: border-box; display: flex; flex-direction: column; padding; background; border; border-radius; box-shadow; font-family`). Never layer `.dls-{name}` on top of `.dls-list`.
+- Applies to: `DropdownAccount`, `DropdownColumns`, `DropdownColumnActions`, `DropdownFilters`, `DropdownSorting`, `DropdownExport`, `DropdownOptions`, `ContextMenu`, and every future dropdown/menu.
+
+## Icons — Lucide only
+
+All icons come from **`lucide-react`**. No exceptions.
+
+- `import { Settings as SettingsIcon } from 'lucide-react';` — alias with an `Icon` suffix.
+- Pass the component directly: `iconStart={<SettingsIcon />}`, `icon={<LogOutIcon />}`.
+- Size and colour come from the parent slot's CSS (`width: 16px; height: 16px; color: var(--dls-color-text-secondary)`). Never pass `size={16}` or inline `color` props.
+- Figma `Icon / {Name}` maps 1:1 to Lucide's `{Name}`. No hand-drawn `<svg><path …/></svg>` constants in component or story files.
+- If a Figma icon has no clear Lucide match, stop and ask — don't hand-roll.

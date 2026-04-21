@@ -1,6 +1,6 @@
 import React from 'react';
+import { Settings as SettingsIcon, LogOut as LogOutIcon } from 'lucide-react';
 import './dropdown-account.css';
-import { List } from '../list-item/List';
 import { ListItem } from '../list-item/ListItem';
 import { Avatar } from '../Avatar';
 
@@ -66,23 +66,6 @@ export interface DropdownAccountProps {
 
   className?: string;
 }
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const SettingsIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M8 2V4M8 12V14M2 8H4M12 8H14M3.8 3.8L5.2 5.2M10.8 10.8L12.2 12.2M12.2 3.8L10.8 5.2M5.2 10.8L3.8 12.2" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const LogOutIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none">
-    <path d="M6 14H3C2.4 14 2 13.6 2 13V3C2 2.4 2.4 2 3 2H6M11 11L14 8L11 5M14 8H6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Sub-components
@@ -264,12 +247,13 @@ export const DropdownAccount = React.forwardRef<HTMLDivElement, DropdownAccountP
     }
 
     return (
-      <List
+      <div
         ref={ref}
         className={['dls-dropdown-account', className].filter(Boolean).join(' ')}
+        role="listbox"
       >
         {content}
-      </List>
+      </div>
     );
   },
 );

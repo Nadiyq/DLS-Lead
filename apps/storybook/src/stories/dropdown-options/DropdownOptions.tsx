@@ -1,18 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { MoreVertical as MoreVerticalIcon } from 'lucide-react';
 import './dropdown-options.css';
 import { Button } from '../Button';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const KebabIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="8" cy="3" r="1.25" fill="currentColor" />
-    <circle cx="8" cy="8" r="1.25" fill="currentColor" />
-    <circle cx="8" cy="13" r="1.25" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Types
@@ -95,7 +84,7 @@ export const DropdownOptions = React.forwardRef<HTMLDivElement, DropdownOptionsP
           variant="soft"
           intent="neutral"
           size="m"
-          icon={triggerIcon || <KebabIcon />}
+          icon={triggerIcon || <MoreVerticalIcon />}
           iconOnly
           aria-label={triggerLabel}
           aria-haspopup="menu"

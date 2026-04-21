@@ -17,7 +17,7 @@ export type ListItemType =
   | 'chips'
   | 'divider';
 
-export interface ListItemProps {
+export interface ListItemProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onClick' | 'children'> {
   /** Item type */
   type?: ListItemType;
   /** Primary text */
@@ -40,7 +40,10 @@ export interface ListItemProps {
   selected?: boolean;
   /** Click handler */
   onClick?: React.MouseEventHandler;
-  className?: string;
+  /** Force render tag — overrides type-based auto-detection. Use `false` when
+   *  the row contains its own form control (e.g. Radiobutton/Checkbox) to
+   *  avoid nesting interactive elements inside a `<button>`. */
+  interactive?: boolean;
 }
 
 /* ---------------------------------------------------------------------------
@@ -61,11 +64,14 @@ export const ListItem = React.forwardRef<HTMLDivElement, ListItemProps>(
       children,
       selected,
       onClick,
+      interactive,
       className,
+      ...rest
     },
     ref,
   ) => {
-    const isInteractive = type === 'text' || type === 'with-slots' || type === 'two-line' || type === 'two-line-slots';
+    const autoInteractive = type === 'text' || type === 'with-slots' || type === 'two-line' || type === 'two-line-slots';
+    const isInteractive = interactive ?? autoInteractive;
     const Tag = isInteractive ? 'button' : 'div';
 
     const renderContent = () => {
@@ -133,12 +139,13 @@ export const ListItem = React.forwardRef<HTMLDivElement, ListItemProps>(
 
     return (
       <Tag
+        {...rest}
         ref={ref as React.Ref<HTMLButtonElement & HTMLDivElement>}
         className={['dls-list-item', className].filter(Boolean).join(' ')}
         data-type={type}
         data-selected={selected || undefined}
         aria-selected={selected || undefined}
-        onClick={isInteractive ? onClick : undefined}
+        onClick={onClick}
         type={isInteractive ? 'button' : undefined}
       >
         {renderContent()}

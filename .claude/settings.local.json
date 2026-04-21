@@ -15,7 +15,15 @@
       "Bash(node .claude/hooks/lint-tokens.mjs:*)",
       "Bash(npm run:*)",
       "Bash(find /Users/nadaabrosimova/Documents/DLS-Lead -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" -o -name \"*.js\" -o -name \"*.jsx\" \\\\\\) ! -path \"*/node_modules/*\" ! -path \"*/.git/*\" ! -path \"*/storybook-static/*\" ! -path \"*/comment/*\" -exec grep -l \"Comment\\\\|dls-comment\" {} \\\\;)",
-      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dialog/dialog.css)"
+      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dialog/dialog.css)",
+      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dropdown-account/dropdown-account.css)",
+      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/list-item/list-item.css)",
+      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dropdown-column-actions/dropdown-column-actions.css)",
+      "mcp__41b14863-ce5b-4717-9cf0-183085bd0fb9__get_design_context",
+      "mcp__41b14863-ce5b-4717-9cf0-183085bd0fb9__get_screenshot",
+      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dropdown-columns/dropdown-columns.css)",
+      "mcp__41b14863-ce5b-4717-9cf0-183085bd0fb9__get_variable_defs",
+      "mcp__figma__figma_get_console_logs"
     ]
   },
   "enabledMcpjsonServers": [

@@ -261,6 +261,7 @@
   all: unset;
   box-sizing: border-box;
   display: none;
+  flex-direction: column;
   position: absolute;
   top: 100%;
   left: 0;
@@ -274,43 +275,19 @@
   box-shadow: var(--dls-shadow-overlay);
   max-height: 240px;
   overflow-y: auto;
-  list-style: none;
 }
 
 .dls-dropdown[data-open] .dls-dropdown__listbox {
-  display: block;
+  display: flex;
 }
 
 /* ---------------------------------------------------------------------------
-   Listbox item
+   Keyboard highlight — preview state that follows ArrowUp/ArrowDown.
+   Distinct from [data-selected] (persistent selection). Uses the same
+   neutral hover overlay so it reads as "focus within the list".
    --------------------------------------------------------------------------- */
 
-.dls-dropdown__option {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  gap: var(--dls-spacing-2);
-  width: 100%;
-  padding: var(--dls-spacing-1-5) var(--dls-spacing-2);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-normal);
-  color: var(--dls-color-component-dropdown-item-fg);
-  border-radius: var(--dls-radius-component-dropdown);
-  cursor: pointer;
-  transition: background-color 100ms ease;
-}
-
-.dls-dropdown__option:hover:not(:disabled) {
-  background: var(--dls-state-hover-overlay);
-}
-
-.dls-dropdown__option[data-selected] {
-  font-weight: var(--dls-font-weight-medium);
-}
-
-.dls-dropdown__option[data-highlighted] {
+.dls-dropdown__listbox .dls-list-item[data-highlighted] {
   background: var(--dls-state-hover-overlay);
 }
 

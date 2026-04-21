@@ -1,21 +1,37 @@
 /* ==========================================================================
    DLS Dropdown Export — export configuration panel for tables
-   Wraps List + ListItem + Radiobutton. Container adds width + shadow.
+   Composed of ListItem rows (label + divider) with Radiobutton as slotLeft.
+   Standalone root (not layered on .dls-list).
    ========================================================================== */
 
+/* ---------------------------------------------------------------------------
+   Container
+   --------------------------------------------------------------------------- */
+
 .dls-dropdown-export {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   width: 212px;
-  box-shadow:
-    0 2px 4px -2px rgba(47, 55, 70, 0.20),
-    0 4px 6px -1px rgba(47, 55, 70, 0.20);
-}
-
-/* Radio list items should not have hover/selected states themselves */
-
-.dls-dropdown-export .dls-list-item[data-type="with-slots"] {
-  cursor: default;
-}
-
-.dls-dropdown-export .dls-list-item[data-type="with-slots"]:hover:not(:disabled) {
+  padding: var(--dls-spacing-2);
   background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-list);
+  box-shadow: var(--dls-shadow-surface-md);
+  font-family: var(--dls-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   Radio rows — Radiobutton's <label> fills the row so the whole item is
+   clickable as a native form label. ListItem is a non-interactive frame.
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-export .dls-list-item[data-type="with-slots"] .dls-list-item__slot {
+  flex: 1;
+  min-width: 0;
+}
+
+.dls-dropdown-export .dls-list-item[data-type="with-slots"] .dls-radiobutton {
+  width: 100%;
 }

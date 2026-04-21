@@ -1,11 +1,18 @@
 /* ==========================================================================
    DLS Dropdown Filters — filter selection panel for tables
-   Wraps List + ListItem (label + chips) + ChipRegular.
+   Composed of ListItem rows (label + chips). Standalone root.
    ========================================================================== */
 
 .dls-dropdown-filters {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   width: 280px;
-  box-shadow:
-    0 2px 4px -2px rgba(47, 55, 70, 0.20),
-    0 4px 6px -1px rgba(47, 55, 70, 0.20);
+  padding: var(--dls-spacing-2);
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-list);
+  box-shadow: var(--dls-shadow-surface-md);
+  font-family: var(--dls-font-family);
 }

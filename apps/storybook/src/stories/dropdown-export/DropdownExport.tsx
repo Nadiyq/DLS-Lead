@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './dropdown-export.css';
-import { List } from '../list-item/List';
 import { ListItem } from '../list-item/ListItem';
 import { Radiobutton } from '../radiobutton/Radiobutton';
 
@@ -67,23 +66,31 @@ export const DropdownExport = React.forwardRef<HTMLDivElement, DropdownExportPro
     };
 
     return (
-      <List
+      <div
         ref={ref}
         className={['dls-dropdown-export', className].filter(Boolean).join(' ')}
+        role="dialog"
+        aria-label="Export settings"
       >
         {/* Scope section */}
         <ListItem type="label" text="Export" />
 
         {scopeOptions.map((opt) => (
-          <ListItem key={opt.value} type="with-slots">
-            <Radiobutton
-              label={opt.label}
-              checked={scope === opt.value}
-              onChange={() => handleScope(opt.value)}
-              name="export-scope"
-              value={opt.value}
-            />
-          </ListItem>
+          <ListItem
+            key={opt.value}
+            type="with-slots"
+            interactive={false}
+            selected={scope === opt.value}
+            slotLeft={
+              <Radiobutton
+                label={opt.label}
+                checked={scope === opt.value}
+                onChange={() => handleScope(opt.value)}
+                name="export-scope"
+                value={opt.value}
+              />
+            }
+          />
         ))}
 
         <ListItem type="divider" />
@@ -92,17 +99,23 @@ export const DropdownExport = React.forwardRef<HTMLDivElement, DropdownExportPro
         <ListItem type="label" text="Format" />
 
         {formatOptions.map((opt) => (
-          <ListItem key={opt.value} type="with-slots">
-            <Radiobutton
-              label={opt.label}
-              checked={format === opt.value}
-              onChange={() => handleFormat(opt.value)}
-              name="export-format"
-              value={opt.value}
-            />
-          </ListItem>
+          <ListItem
+            key={opt.value}
+            type="with-slots"
+            interactive={false}
+            selected={format === opt.value}
+            slotLeft={
+              <Radiobutton
+                label={opt.label}
+                checked={format === opt.value}
+                onChange={() => handleFormat(opt.value)}
+                name="export-format"
+                value={opt.value}
+              />
+            }
+          />
         ))}
-      </List>
+      </div>
     );
   },
 );

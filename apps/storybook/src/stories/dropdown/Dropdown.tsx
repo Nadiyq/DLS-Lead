@@ -1,29 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
+import {
+  ChevronDown as ChevronDownIcon,
+  X as XIcon,
+  TriangleAlert as TriangleAlertIcon,
+} from 'lucide-react';
 import './dropdown.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const ChevronDown = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const XIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const TriangleAlertIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.13 2.57L1.18 10.5A1 1 0 002.05 12h9.9a1 1 0 00.87-1.5L7.87 2.57a1 1 0 00-1.74 0z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M7 5.5V7.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    <circle cx="7" cy="9.5" r="0.5" fill="currentColor" />
-  </svg>
-);
+import { ListItem } from '../list-item/ListItem';
+import { Avatar } from '../Avatar';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -89,7 +72,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
     const [search, setSearch] = useState('');
     const [highlightedIdx, setHighlightedIdx] = useState(-1);
     const inputRef = useRef<HTMLInputElement>(null);
-    const listboxRef = useRef<HTMLUListElement>(null);
+    const listboxRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const triggerId = id || React.useId();
     const listboxId = `${triggerId}-listbox`;
@@ -250,38 +233,46 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
           )}
 
           <span className="dls-dropdown__chevron">
-            <ChevronDown />
+            <ChevronDownIcon />
           </span>
         </button>
 
-        <ul
+        <div
           ref={listboxRef}
           id={listboxId}
           className="dls-dropdown__listbox"
           role="listbox"
           aria-label={label || 'Options'}
         >
-          {filtered.map((opt, i) => (
-            <li
-              key={opt.value}
-              className="dls-dropdown__option"
-              role="option"
-              aria-selected={opt.value === value}
-              data-selected={opt.value === value || undefined}
-              data-highlighted={i === highlightedIdx || undefined}
-              onClick={() => select(opt)}
-              onMouseEnter={() => setHighlightedIdx(i)}
-            >
-              {renderLeading(opt)}
-              <span>{opt.label}</span>
-            </li>
-          ))}
+          {filtered.map((opt, i) => {
+            const avatarSlot = opt.avatarSrc || opt.avatarInitials ? (
+              <Avatar
+                size="20"
+                circle
+                src={opt.avatarSrc}
+                initials={opt.avatarInitials || '?'}
+              />
+            ) : undefined;
+            return (
+              <ListItem
+                key={opt.value}
+                type="with-slots"
+                role="option"
+                aria-selected={opt.value === value}
+                selected={opt.value === value}
+                data-highlighted={i === highlightedIdx || undefined}
+                iconStart={opt.icon}
+                slotLeft={avatarSlot}
+                text={opt.label}
+                onClick={() => select(opt)}
+                onMouseEnter={() => setHighlightedIdx(i)}
+              />
+            );
+          })}
           {filtered.length === 0 && (
-            <li className="dls-dropdown__option" style={{ color: 'var(--dls-color-text-secondary)', cursor: 'default' }}>
-              No results
-            </li>
+            <ListItem type="empty-state" text="No results" />
           )}
-        </ul>
+        </div>
 
         {(hint || hasError) && (
           <div className="dls-dropdown__hint" data-error={hasError || undefined}>

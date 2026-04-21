@@ -31,6 +31,8 @@ Generated outputs (don't hand-edit): `tokens/tokens.css`, `tokens/tokens.scss`, 
 - **Always check the library first.** Before writing any UI element, check `apps/storybook/src/stories/` and Storybook. Never build from scratch if a DLS component exists. If you can't find a component, **stop and ask**.
 - **No custom classes.** All CSS classes must be `.dls-*`. Never create `.my-*`, `.custom-*`, `.wrapper`, or any non-DLS class. The lint hook will block it.
 - **No inline styles for visual properties.** Never use `style={{ color: '...', background: '...' }}`. Use `data-intent`, `data-variant`, `data-size` attributes.
+- **Dropdowns / menus / popover lists are always `List` + `ListItem`.** Every row inside a dropdown, menu, context menu, select popover, or flyout MUST be a `<ListItem type="…" />` — never a custom `<div>`, `<button>`, or raw `<li>`. The dropdown root is a standalone `.dls-{name}` with its own reset, not `.dls-{name}` layered on top of `.dls-list`.
+- **Icons come from `lucide-react` only.** Import as `import { Settings as SettingsIcon } from 'lucide-react';` (alias with `Icon` suffix). No hand-drawn `<svg><path/></svg>` constants, no Heroicons, no custom icon sets. Size and colour come from the parent slot's CSS, never inline `size` or `color` props.
 - Components NEVER reference L1 primitives. Use L4 component → L2 semantic fallback.
 - Variants/intents/sizes via `data-*` attributes, never `.is-*`/`.has-*` classes.
 - Every component CSS starts with `all: unset; box-sizing: border-box;`.

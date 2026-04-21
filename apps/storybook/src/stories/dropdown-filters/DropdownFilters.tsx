@@ -1,6 +1,5 @@
 import React from 'react';
 import './dropdown-filters.css';
-import { List } from '../list-item/List';
 import { ListItem } from '../list-item/ListItem';
 import { ChipRegular } from '../chip/ChipRegular';
 
@@ -42,9 +41,10 @@ export const DropdownFilters = React.forwardRef<HTMLDivElement, DropdownFiltersP
     const activeSet = new Set(activeIds);
 
     return (
-      <List
+      <div
         ref={ref}
         className={['dls-dropdown-filters', className].filter(Boolean).join(' ')}
+        role="listbox"
       >
         <ListItem type="label" text="Filters" />
         <ListItem type="chips">
@@ -62,7 +62,7 @@ export const DropdownFilters = React.forwardRef<HTMLDivElement, DropdownFiltersP
             );
           })}
         </ListItem>
-      </List>
+      </div>
     );
   },
 );

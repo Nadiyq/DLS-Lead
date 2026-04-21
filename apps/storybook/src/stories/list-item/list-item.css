@@ -31,7 +31,7 @@
    text, with-slots, two-line, two-line-slots.
    Non-interactive: label, buttons, search, chips, empty-state, divider */
 
-.dls-list-item:hover:not([data-type="divider"]):not([data-type="label"]):not([data-type="buttons"]):not([data-type="search"]):not([data-type="chips"]):not([data-type="empty-state"]):not([data-selected]) {
+.dls-list-item:hover:not(:disabled):not([data-type="divider"]):not([data-type="label"]):not([data-type="buttons"]):not([data-type="search"]):not([data-type="chips"]):not([data-type="empty-state"]):not([data-selected]) {
   background: var(--dls-state-hover-overlay);
 }
 
@@ -40,7 +40,7 @@
   background: var(--dls-color-intent-info-subtle);
 }
 
-.dls-list-item[data-selected]:hover {
+.dls-list-item[data-selected]:hover:not(:disabled) {
   background: oklch(from var(--dls-color-intent-info-subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
 
@@ -104,6 +104,9 @@
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: var(--dls-color-intent-neutral-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dls-list-item__secondary {
@@ -111,6 +114,9 @@
   line-height: var(--dls-text-s-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: var(--dls-color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ---------------------------------------------------------------------------
@@ -187,6 +193,15 @@
   display: flex;
   flex: 1;
   gap: var(--dls-spacing-2);
+}
+
+/* Direct children (typically DLS Buttons) fill the row equally — matches the
+   Figma pattern of dropdown footer actions (Cancel / Apply side-by-side).
+   flex-basis: 0 so widths distribute evenly regardless of text length.
+   min-width: 0 allows shrink below intrinsic size. */
+.dls-list-item__buttons > * {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 /* ---------------------------------------------------------------------------
