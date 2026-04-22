@@ -111,9 +111,25 @@
   width: 12px;
   height: 12px;
 }
-.dls-button__icon svg {
+.dls-button__icon svg,
+.dls-button__icon-end svg {
   width: 100%;
   height: 100%;
+}
+
+.dls-button__icon-end {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.dls-button[data-size="m"] .dls-button__icon-end {
+  width: 16px;
+  height: 16px;
+}
+.dls-button[data-size="s"] .dls-button__icon-end {
+  width: 12px;
+  height: 12px;
 }
 
 /* ---------------------------------------------------------------------------

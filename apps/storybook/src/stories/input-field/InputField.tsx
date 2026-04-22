@@ -1,23 +1,6 @@
 import React from 'react';
+import { X as XIcon, TriangleAlert as TriangleAlertIcon } from 'lucide-react';
 import './input-field.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const XIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const TriangleAlertIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.13 2.57L1.18 10.5A1 1 0 002.05 12h9.9a1 1 0 00.87-1.5L7.87 2.57a1 1 0 00-1.74 0z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M7 5.5V7.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    <circle cx="7" cy="9.5" r="0.5" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Component
@@ -36,7 +19,7 @@ export interface InputFieldProps extends Omit<React.InputHTMLAttributes<HTMLInpu
   onClear?: () => void;
   /** Leading icon inside the input */
   iconStart?: React.ReactNode;
-  /** Trailing icon inside the input (replaced by clear/error icon when applicable) */
+  /** Trailing icon inside the input (replaced by clear icon when clearable + filled) */
   iconEnd?: React.ReactNode;
 }
 
@@ -61,7 +44,8 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
     const hasError = !!error;
     const hasValue = value !== undefined && value !== '';
     const showClear = clearable && hasValue && !disabled;
-    const inputId = id || React.useId();
+    const reactId = React.useId();
+    const inputId = id || reactId;
 
     return (
       <div className={['dls-input-field', className].filter(Boolean).join(' ')}>
@@ -75,26 +59,39 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
           </label>
         )}
 
-        <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+        <div
+          className="dls-input-field__field"
+          data-error={hasError || undefined}
+          data-disabled={disabled || undefined}
+        >
+          {iconStart && (
+            <span className="dls-input-field__icon-start" aria-hidden="true">
+              {iconStart}
+            </span>
+          )}
           <input
             ref={ref}
             id={inputId}
             className="dls-input-field__input"
             disabled={disabled}
             value={value}
-            data-error={hasError || undefined}
             {...props}
           />
-          {showClear && (
+          {showClear ? (
             <button
               type="button"
               className="dls-input-field__clear"
               onClick={onClear}
               aria-label="Clear input"
-              style={{ position: 'absolute', right: 12 }}
             >
               <XIcon />
             </button>
+          ) : (
+            iconEnd && (
+              <span className="dls-input-field__icon-end" aria-hidden="true">
+                {iconEnd}
+              </span>
+            )
           )}
         </div>
 
@@ -104,7 +101,7 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
             data-error={hasError || undefined}
           >
             {hasError && (
-              <span className="dls-input-field__hint-icon">
+              <span className="dls-input-field__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />
               </span>
             )}

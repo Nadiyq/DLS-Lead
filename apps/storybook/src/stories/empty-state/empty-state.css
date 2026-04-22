@@ -60,6 +60,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--dls-spacing-2);
+  width: 100%;
 }
 
 .dls-empty-state__title {
@@ -85,4 +86,5 @@
   flex-direction: column;
   align-items: center;
   gap: var(--dls-spacing-2);
+  width: 100%;
 }

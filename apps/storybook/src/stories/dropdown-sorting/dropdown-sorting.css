@@ -9,7 +9,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--dls-spacing-2);
-  width: 280px;
+  width: 360px;
   padding: var(--dls-spacing-4);
   background: var(--dls-color-surface-base);
   border: 1px solid var(--dls-color-border-subtle);

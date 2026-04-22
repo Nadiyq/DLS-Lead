@@ -10,6 +10,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   intent?: ButtonIntent;
   size?: ButtonSize;
   icon?: React.ReactNode;
+  iconEnd?: React.ReactNode;
   iconOnly?: boolean;
   children?: React.ReactNode;
 }
@@ -21,6 +22,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       intent = 'neutral',
       size = 'm',
       icon,
+      iconEnd,
       iconOnly = false,
       children,
       disabled,
@@ -43,6 +45,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {icon && <span className="dls-button__icon">{icon}</span>}
         {!iconOnly && children}
+        {iconEnd && <span className="dls-button__icon-end">{iconEnd}</span>}
       </button>
     );
   },

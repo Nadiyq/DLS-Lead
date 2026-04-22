@@ -62,7 +62,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       error,
       leadingIcon,
       disabled = false,
-      clearable = true,
+      clearable = false,
       className,
       id,
     },

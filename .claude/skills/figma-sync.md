@@ -20,6 +20,15 @@ Uses the **official Figma MCP** (authenticated via Figma MCP Auth). Key tools:
 5. **Scaffold or update** — write component at `apps/storybook/src/stories/{name}/`.
 6. **Visual validation** — start Storybook preview, take screenshot, compare against Figma screenshot. Iterate until parity is achieved.
 
+## Local Repo Helpers
+
+- `npm run figma:audit -- --token color.intent.primary.base` — show the canonical DLS token entry and CSS variable.
+- `npm run figma:audit -- --prefix color.component.button` — list all matching DLS token mappings.
+- `npm run figma:audit -- --compare /absolute/path/to/figma-vars.json` — compare MCP-exported variable names/values against `tokens/tokens.json`.
+- `npm run storybook` — launch Storybook for visual parity checks.
+- `npm run storybook:typecheck` — run TypeScript validation in Storybook.
+- `npm run tokens:lint` — lint component CSS against DLS token rules.
+
 ## Parity Rule
 
 Token names map 1:1 between Figma variables and CSS custom properties.

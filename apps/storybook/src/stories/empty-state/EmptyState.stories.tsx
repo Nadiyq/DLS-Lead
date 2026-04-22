@@ -1,5 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import {
+  MessagesSquare as MessagesSquareIcon,
+  OctagonAlert as OctagonAlertIcon,
+  Bell as BellIcon,
+  ClipboardMinus as ClipboardMinusIcon,
+  CircleHelp as CircleHelpIcon,
+  Search as SearchIcon,
+  ArrowUpRight as ArrowUpRightIcon,
+} from 'lucide-react';
 import { EmptyState } from './EmptyState';
 import { IconShape } from '../icon-shape/IconShape';
 import { Button } from '../Button';
@@ -35,19 +44,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 );
 
-const MessageIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M21 15C21 15.55 20.55 16 20 16H8L4 20V4C4 3.45 4.45 3 5 3H20C20.55 3 21 3.45 21 4V15Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    />
-  </svg>
-);
-
 /* ---------------------------------------------------------------------------
    Playground
    --------------------------------------------------------------------------- */
@@ -57,7 +53,7 @@ export const Playground: Story = {
     variant: 'borderless',
     title: 'No results found',
     description: 'Try adjusting your filters or searching with different keywords.',
-    media: <IconShape intent="primary" size="m"><MessageIcon /></IconShape>,
+    media: <IconShape intent="warning" size="s"><OctagonAlertIcon /></IconShape>,
   },
 };
 
@@ -71,7 +67,7 @@ export const Variants: Story = {
       <Section title="Borderless (default)">
         <EmptyState
           variant="borderless"
-          media={<IconShape intent="primary" size="m"><MessageIcon /></IconShape>}
+          media={<IconShape intent="warning" size="s"><OctagonAlertIcon /></IconShape>}
           title="No results found"
           description="Try adjusting your filters or searching with different keywords."
         >
@@ -85,7 +81,7 @@ export const Variants: Story = {
       <Section title="Bordered (card-like)">
         <EmptyState
           variant="bordered"
-          media={<IconShape intent="danger" size="m"><MessageIcon /></IconShape>}
+          media={<IconShape intent="danger" size="m"><MessagesSquareIcon /></IconShape>}
           title="No messages yet"
           description="When someone sends you a message, it will appear here."
         />
@@ -103,7 +99,7 @@ export const WithActions: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
       <Section title="Horizontal buttons">
         <EmptyState
-          media={<IconShape intent="primary" size="m"><MessageIcon /></IconShape>}
+          media={<IconShape intent="warning" size="s"><OctagonAlertIcon /></IconShape>}
           title="No results found"
           description="Try adjusting your filters or searching with different keywords."
         >
@@ -116,7 +112,7 @@ export const WithActions: Story = {
 
       <Section title="Vertical full-width buttons">
         <EmptyState
-          media={<IconShape intent="primary" size="m"><MessageIcon /></IconShape>}
+          media={<IconShape intent="info" size="m"><ClipboardMinusIcon /></IconShape>}
           title="No saved items"
           description="Save items to quickly access them later from this page."
         >
@@ -130,16 +126,16 @@ export const WithActions: Story = {
       <Section title="Bordered with three actions">
         <EmptyState
           variant="bordered"
-          media={<IconShape intent="primary" size="m"><MessageIcon /></IconShape>}
+          media={<IconShape intent="primary" size="m"><BellIcon /></IconShape>}
           title="You're all caught up"
           description="You don't have any new notifications right now."
         >
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
             <div style={{ display: 'flex', gap: 8 }}>
-              <Button variant="outline" intent="neutral" size="m">Settings</Button>
-              <Button variant="filled" intent="neutral" size="m">Refresh</Button>
+              <Button variant="outline" intent="neutral" size="m">Cancel</Button>
+              <Button variant="filled" intent="neutral" size="m">Button</Button>
             </div>
-            <Button variant="outline" intent="neutral" size="m">View archive</Button>
+            <Button variant="link" intent="info" size="m" iconEnd={<ArrowUpRightIcon />}>Learn more</Button>
           </div>
         </EmptyState>
       </Section>
@@ -156,7 +152,7 @@ export const ContentVariations: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
       <Section title="Icon + title + description">
         <EmptyState
-          media={<IconShape intent="primary" size="m"><MessageIcon /></IconShape>}
+          media={<IconShape intent="info" size="m"><ClipboardMinusIcon /></IconShape>}
           title="No saved items"
           description="Save items to quickly access them later from this page."
         />
@@ -175,7 +171,7 @@ export const ContentVariations: Story = {
 
       <Section title="404 page with single action">
         <EmptyState
-          media={<IconShape intent="primary" size="m"><MessageIcon /></IconShape>}
+          media={<IconShape intent="neutral" size="m"><CircleHelpIcon /></IconShape>}
           title="404 - We couldn't find that page"
           description="Check the link or return to a safe place to continue."
         >
@@ -194,15 +190,15 @@ export const BorderedWithInput: Story = {
   render: () => (
     <EmptyState
       variant="bordered"
-      media={<IconShape intent="danger" size="m"><MessageIcon /></IconShape>}
+      media={<IconShape intent="danger" size="m"><MessagesSquareIcon /></IconShape>}
       title="No messages yet"
       description="When someone sends you a message, it will appear here."
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%' }}>
         <InputField
-          label="Email"
-          placeholder="you@example.com"
-          type="email"
+          label="Label"
+          placeholder="Try searching..."
+          iconStart={<SearchIcon />}
           hint="Need help? Contact Support"
         />
       </div>

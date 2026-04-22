@@ -27,3 +27,13 @@ This means the system is **not** purely hex-based. Base tokens may be hex/rgba, 
 When describing this design system, use the following summary:
 
 > DLS-Lead uses hex/rgba primitives plus an OKLCH-based state layer for hover and pressed interactions in code, with Figma overlay equivalents for design tooling.
+
+## Figma MCP Sync
+
+The repo now includes a local companion workflow for Figma MCP sync:
+
+- MCP-side: fetch node data with `get_design_context`, `get_screenshot`, and `get_variable_defs`
+- Repo-side: audit token names and values with `npm run figma:audit`
+- Library-first: always check `apps/storybook/src/stories/` before building a new component
+
+Full workflow and examples live in [docs/figma-sync.md](docs/figma-sync.md).

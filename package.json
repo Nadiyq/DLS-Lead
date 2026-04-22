@@ -5,7 +5,11 @@
   "scripts": {
     "start": "node scripts/generate-changelog.mjs --write && node server.js",
     "changelog": "node scripts/generate-changelog.mjs --write",
-    "sync-components": "node scripts/sync-components.mjs --check"
+    "sync-components": "node scripts/sync-components.mjs --check",
+    "figma:audit": "node scripts/figma-sync-audit.mjs",
+    "storybook": "cd apps/storybook && npm run storybook",
+    "storybook:typecheck": "cd apps/storybook && npx tsc -b",
+    "tokens:lint": "node .claude/hooks/lint-tokens.mjs --all"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

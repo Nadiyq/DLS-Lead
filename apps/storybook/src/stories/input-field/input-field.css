@@ -1,6 +1,7 @@
 /* ==========================================================================
    DLS Input Field — token-driven text input with label, hint, error
    States: normal | filled | focused | disabled | error
+   Slots:  iconStart | input | (clear | iconEnd)
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
@@ -15,6 +16,7 @@
   gap: var(--dls-spacing-2);
   font-family: var(--dls-font-family);
   width: 100%;
+  text-align: left;
 }
 
 /* ---------------------------------------------------------------------------
@@ -33,72 +35,94 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Input container (the bordered box)
+   Field (the bordered box wrapping icons + input)
    --------------------------------------------------------------------------- */
 
-.dls-input-field__input {
-  all: unset;
-  box-sizing: border-box;
+.dls-input-field__field {
   display: flex;
   align-items: center;
   gap: var(--dls-spacing-2);
   width: 100%;
   min-height: 32px;
   padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-normal);
-  color: var(--dls-color-component-input-fg-base);
   background: var(--dls-color-component-input-bg-base);
   border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
   transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
 }
 
-.dls-input-field__input::placeholder {
-  color: var(--dls-color-component-input-fg-placeholder);
-}
-
-/* ---------------------------------------------------------------------------
-   State: Hover
-   --------------------------------------------------------------------------- */
-
-.dls-input-field__input:hover:not(:disabled):not([data-error]) {
+.dls-input-field__field:hover:not(:disabled):not([data-disabled]):not([data-error]) {
   border-color: var(--dls-color-component-input-border-hover);
 }
 
-/* ---------------------------------------------------------------------------
-   State: Focus
-   --------------------------------------------------------------------------- */
-
-.dls-input-field__input:focus-visible {
-  outline: none;
+.dls-input-field__field:focus-within:not(:disabled):not([data-disabled]):not([data-error]) {
   border-color: var(--dls-color-component-input-border-focus);
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }
 
-/* ---------------------------------------------------------------------------
-   State: Disabled
-   --------------------------------------------------------------------------- */
+.dls-input-field__field[data-error] {
+  background: var(--dls-color-intent-danger-subtle);
+  border-color: var(--dls-color-intent-danger-border);
+}
 
-.dls-input-field__input:disabled {
+.dls-input-field__field[data-disabled] {
   background: var(--dls-color-component-input-bg-disabled);
   border-color: var(--dls-color-component-input-border-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Input (borderless — the field wrapper carries the border)
+   --------------------------------------------------------------------------- */
+
+.dls-input-field__input {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--dls-font-family);
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-component-input-fg-base);
+}
+
+.dls-input-field__input::placeholder {
+  color: var(--dls-color-component-input-fg-placeholder);
+}
+
+.dls-input-field__input:disabled {
   color: var(--dls-color-component-input-fg-disabled);
   cursor: not-allowed;
 }
 
 /* ---------------------------------------------------------------------------
-   State: Error
+   Leading / trailing icon slots
    --------------------------------------------------------------------------- */
 
-.dls-input-field__input[data-error] {
-  background: var(--dls-color-intent-danger-subtle);
-  border-color: var(--dls-color-intent-danger-border);
+.dls-input-field__icon-start,
+.dls-input-field__icon-end {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-input-field__field[data-disabled] .dls-input-field__icon-start,
+.dls-input-field__field[data-disabled] .dls-input-field__icon-end {
+  color: var(--dls-color-text-disabled);
+}
+
+.dls-input-field__icon-start svg,
+.dls-input-field__icon-end svg {
+  width: 100%;
+  height: 100%;
 }
 
 /* ---------------------------------------------------------------------------
-   Clear button (inside the field)
+   Clear button (inside the field, trailing)
    --------------------------------------------------------------------------- */
 
 .dls-input-field__clear {
