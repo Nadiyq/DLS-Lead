@@ -1,0 +1,190 @@
+html,
+body,
+#storybook-root,
+.sb-show-main,
+.sbdocs-wrapper,
+.sbdocs-content {
+  font-family: var(--dls-font-family);
+}
+
+:root,
+body {
+  background: var(--dls-color-surface-base);
+  color: var(--dls-color-text-primary);
+}
+
+html[data-theme='dark'],
+body[data-theme='dark'] {
+  background: var(--dls-color-surface-base);
+  color: var(--dls-color-text-primary);
+  color-scheme: dark;
+}
+
+.sbdocs,
+.sbdocs-content,
+.sbdocs-preview,
+.docblock-source,
+.sb-bar,
+.sb-anchor,
+.sb-unstyled {
+  color: var(--dls-color-text-primary);
+}
+
+.sbdocs-title,
+.sbdocs-h1,
+.sbdocs-h2,
+.sbdocs-h3,
+.sbdocs-h4,
+.sbdocs-p,
+.sbdocs-li,
+.sbdocs-a {
+  color: inherit;
+}
+
+body[data-theme='dark'] #storybook-root,
+body[data-theme='dark'] .sb-show-main,
+body[data-theme='dark'] .sb-main-padded,
+body[data-theme='dark'] .sbdocs-wrapper,
+body[data-theme='dark'] .sbdocs,
+body[data-theme='dark'] .sbdocs-content,
+.sb-dls-docs-shell[data-theme='dark'] {
+  background:
+    radial-gradient(circle at top left, rgba(132, 202, 255, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 18rem),
+    var(--dls-color-surface-base) !important;
+  color: var(--dls-color-text-primary) !important;
+}
+
+body[data-theme='dark'] .sbdocs-preview,
+body[data-theme='dark'] .docs-story,
+body[data-theme='dark'] .docs-story > div,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-preview,
+.sb-dls-docs-shell[data-theme='dark'] .docs-story,
+.sb-dls-docs-shell[data-theme='dark'] .docs-story > div {
+  background: color-mix(in srgb, var(--dls-color-surface-base) 88%, transparent) !important;
+  border-color: var(--dls-color-border-subtle) !important;
+}
+
+body[data-theme='dark'] .docblock-source,
+.sb-dls-docs-shell[data-theme='dark'] .docblock-source {
+  background: var(--dls-color-surface-subtle) !important;
+  border-color: var(--dls-color-border-subtle) !important;
+}
+
+body[data-theme='dark'] .sbdocs,
+body[data-theme='dark'] .sbdocs-wrapper,
+body[data-theme='dark'] .sbdocs-content,
+body[data-theme='dark'] .sbdocs-preview,
+body[data-theme='dark'] .sbdocs-title,
+body[data-theme='dark'] .sbdocs-h1,
+body[data-theme='dark'] .sbdocs-h2,
+body[data-theme='dark'] .sbdocs-h3,
+body[data-theme='dark'] .sbdocs-h4,
+body[data-theme='dark'] .sbdocs-p,
+body[data-theme='dark'] .sbdocs-li,
+body[data-theme='dark'] .sbdocs-a,
+body[data-theme='dark'] .sbdocs code,
+body[data-theme='dark'] .docblock-argstable-head,
+body[data-theme='dark'] .docblock-argstable-body,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-wrapper,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-content,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-preview,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-title,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-h1,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-h2,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-h3,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-h4,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-p,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-li,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs-a,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs code,
+.sb-dls-docs-shell[data-theme='dark'] .docblock-argstable-head,
+.sb-dls-docs-shell[data-theme='dark'] .docblock-argstable-body {
+  color: var(--dls-color-text-primary) !important;
+}
+
+body[data-theme='dark'] .sbdocs hr,
+body[data-theme='dark'] .sbdocs table,
+body[data-theme='dark'] .sbdocs thead,
+body[data-theme='dark'] .sbdocs tbody,
+body[data-theme='dark'] .sbdocs tr,
+body[data-theme='dark'] .sbdocs td,
+body[data-theme='dark'] .sbdocs th,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs hr,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs table,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs thead,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs tbody,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs tr,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs td,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs th {
+  border-color: var(--dls-color-border-subtle) !important;
+}
+
+body[data-theme='dark'] .sbdocs code,
+body[data-theme='dark'] .sbdocs pre,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs code,
+.sb-dls-docs-shell[data-theme='dark'] .sbdocs pre {
+  background: color-mix(in srgb, var(--dls-color-surface-subtle) 92%, transparent) !important;
+}
+
+.sb-dls-shell,
+.sb-dls-docs-shell {
+  min-height: 100vh;
+  padding: 24px;
+  color: var(--dls-color-text-primary);
+  background: var(--sb-dls-preview-bg);
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.sb-dls-shell[data-theme='dark'],
+.sb-dls-docs-shell[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+.sb-dls-shell[data-surface='canvas'],
+.sb-dls-docs-shell[data-surface='canvas'] {
+  --sb-dls-preview-bg: var(--dls-color-surface-base);
+}
+
+.sb-dls-shell[data-surface='subtle'],
+.sb-dls-docs-shell[data-surface='subtle'] {
+  --sb-dls-preview-bg:
+    radial-gradient(circle at top left, rgba(105, 65, 198, 0.12), transparent 26%),
+    linear-gradient(180deg, rgba(24, 29, 39, 0.03), transparent 18rem),
+    var(--dls-color-surface-subtle);
+}
+
+.sb-dls-shell[data-surface='muted'],
+.sb-dls-docs-shell[data-surface='muted'] {
+  --sb-dls-preview-bg:
+    radial-gradient(circle at top left, rgba(105, 65, 198, 0.1), transparent 24%),
+    linear-gradient(180deg, rgba(24, 29, 39, 0.04), transparent 18rem),
+    var(--dls-color-surface-muted);
+}
+
+.sb-dls-shell[data-surface='inverse'],
+.sb-dls-docs-shell[data-surface='inverse'] {
+  --sb-dls-preview-bg:
+    radial-gradient(circle at top left, rgba(132, 202, 255, 0.18), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 18rem),
+    var(--dls-color-surface-inverse);
+  color: var(--dls-color-text-inverse);
+}
+
+.sb-dls-frame {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.sb-dls-frame[data-layout='centered'] {
+  min-height: calc(100vh - 48px);
+  display: grid;
+  place-items: center;
+}
+
+.sb-dls-frame[data-layout='fullscreen'] {
+  max-width: none;
+}

@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# DLS Storybook
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Storybook is the primary documentation and validation workspace for the DLS component library.
 
-Currently, two official plugins are available:
+## Commands
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run storybook
+npm run build-storybook
+npm run test-storybook
+npx tsc -b
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## MCP Endpoint
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This Storybook includes the official Storybook MCP addon. When the dev server is running, agents can connect to:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+http://127.0.0.1:6006/mcp
 ```
+
+Useful companion routes while debugging MCP:
+
+- `http://127.0.0.1:6006/manifests/docs.json`
+- `http://127.0.0.1:6006/manifests/components.html`
+
+## Preview Controls
+
+- **Theme**: switch between light and dark token themes
+- **Surface**: preview components on base, subtle, muted, and inverse backgrounds
+
+## Story Structure
+
+- `Foundations/*` documents tokens, typography, spacing, radius, and shared behavior
+- `Components/*` contains reusable DLS primitives and composed patterns
+- `Debug/*` is reserved for internal verification stories
+
+## Authoring Guidelines
+
+1. Prefer semantic and component tokens over raw values.
+2. Cover states, variants, sizes, and disabled behavior in stories.
+3. Add Figma parity stories when a component is synced from MCP.
+4. Keep story layout wrappers consistent and token-driven.

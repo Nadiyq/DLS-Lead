@@ -1,0 +1,35 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Overview" />
+
+# DLS Foundations
+
+This Storybook is the working surface for the DLS, not just a gallery of examples.
+
+## What lives here
+
+- **Foundations**: tokens, typography, spacing, radius, elevation, interaction states
+- **Components**: reusable DLS primitives and composed patterns
+- **Debug**: internal verification stories that help validate plumbing and token wiring
+
+## How to use the preview
+
+- Use the **Theme** toolbar to switch between light and dark token themes.
+- Use the **Surface** toolbar to check components against the surfaces they actually ship on.
+- Prefer matrix stories and state coverage over isolated happy-path examples.
+
+## DLS authoring rules
+
+1. Treat `tokens/tokens.json` as the source of truth.
+2. Validate components against semantic and component tokens, not raw values.
+3. Check the existing library before creating a new primitive.
+4. Add stories that cover variants, sizes, intents, empty states, and disabled states.
+5. Keep Storybook docs aligned with Figma and the MCP sync workflow.
+
+## Suggested workflow
+
+1. Sync the Figma node with MCP.
+2. Audit token naming and mapping.
+3. Update the existing component story set.
+4. Review parity in both light and dark themes.
+5. Run typecheck and story tests before merging.

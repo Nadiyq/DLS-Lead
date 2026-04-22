@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "dls-lead-storybook": {
+      "url": "http://127.0.0.1:6006/mcp"
+    }
+  }
+}

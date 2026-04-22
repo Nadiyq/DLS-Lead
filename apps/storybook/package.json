@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "serve-storybook-static": "node scripts/serve-storybook-static.mjs",
+    "test-storybook": "vitest run --project storybook"
   },
   "dependencies": {
     "lucide-react": "^1.7.0",
@@ -21,6 +23,7 @@
     "@eslint/js": "^9.39.1",
     "@storybook/addon-a11y": "^10.2.11",
     "@storybook/addon-docs": "^10.2.11",
+    "@storybook/addon-mcp": "^0.6.0",
     "@storybook/addon-vitest": "^10.2.11",
     "@storybook/react-vite": "^10.2.11",
     "@types/node": "^24.10.1",

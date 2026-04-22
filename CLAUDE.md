@@ -6,7 +6,7 @@ DLS-Lead — token-driven design system for SaaS products. React + Storybook + C
 
 ```bash
 npm start                                    # Token reference site :3000
-cd apps/storybook && npm run storybook       # Storybook :6006
+cd apps/storybook && npm run storybook       # Storybook :6006, MCP :6006/mcp
 cd apps/storybook && npx tsc -b              # TypeScript check
 node .claude/hooks/lint-tokens.mjs --all     # Lint ALL component CSS
 node .claude/hooks/lint-tokens.mjs <file>    # Lint single CSS file
@@ -21,6 +21,16 @@ No test suite yet. Generated outputs (`tokens.css`, `.scss`, `.ts`) are maintain
 
 `tokens/tokens.json` — DTCG-compliant, 4-layer model: L1 Primitives → L2 Semantics → L3 State → L4 Component.
 Generated outputs (don't hand-edit): `tokens/tokens.css`, `tokens/tokens.scss`, `tokens/tokens.ts`.
+
+## LLM Specs
+
+Before writing or modifying any UI code, read the relevant spec files in `specs/`.
+
+- Start with `specs/session-start.md`
+- Read `specs/tokens/token-reference.md`
+- Read the relevant files in `specs/foundations/`, `specs/patterns/`, and `specs/components/`
+
+These specs are the repo-local machine-readable design-system layer. If a spec exists, look it up instead of guessing.
 
 ## Critical Rules — ZERO CUSTOM CSS POLICY
 
@@ -56,6 +66,16 @@ Uses the **official Figma MCP** (authenticated via Figma MCP Auth). Key tools: `
 
 Quick start: `/build-component <ComponentName>` with a Figma URL — reads design spec, checks library, compares tokens, scaffolds/updates the component.
 
+## Storybook MCP
+
+When the `dls-lead-storybook` MCP server is available, use it before making UI changes:
+
+- Query Storybook docs before choosing a DLS component.
+- Never guess props or variants. Use only what Storybook documents.
+- Use story instructions and Storybook tests to validate generated UI.
+
+Project-scoped config and setup examples live in `.mcp.json`, `.cursor/mcp.json`, and `mcp/README.md`.
+
 ## Skills (read before acting)
 
 | Task | Read first |
@@ -74,6 +94,7 @@ Quick start: `/build-component <ComponentName>` with a Figma URL — reads desig
 ```
 tokens/              → tokens.json (source), generated .css/.scss/.ts, figma-sync-4layer.js
 apps/storybook/      → React components + stories (Vite + Storybook 10)
+specs/               → LLM-readable design-system specs for foundations, tokens, patterns, and core components
 .claude/skills/      → Detailed instructions per domain
 .claude/hooks/       → lint-tokens.mjs (PostToolUse CSS linter)
 index.html + server.js → Token reference documentation site

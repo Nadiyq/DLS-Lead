@@ -146,28 +146,99 @@ export const UserFilter: Story = {
 // Filter Type: Date
 // ---------------------------------------------------------------------------
 
+const DATE_FIXED_TODAY = new Date(2026, 2, 18); // March 18, 2026
+
+const formatDateRange = (start: Date, end: Date | null) => {
+  const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+  if (!end || start.getTime() === end.getTime()) return start.toLocaleDateString(undefined, opts);
+  return `${start.toLocaleDateString(undefined, opts)} – ${end.toLocaleDateString(undefined, opts)}`;
+};
+
 const DateFilterDemo = () => {
   const [isVisible, setIsVisible] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [view, setView] = useState<'picks' | 'range'>('picks');
+  const [summary, setSummary] = useState('Mar 18, 2026');
+  const [start, setStart] = useState<Date | null>(null);
+  const [end, setEnd] = useState<Date | null>(null);
+  const [draftStart, setDraftStart] = useState<Date | null>(null);
+  const [draftEnd, setDraftEnd] = useState<Date | null>(null);
+
+  const handleOpenChange = (next: boolean) => {
+    setOpen(next);
+    if (!next) setView('picks');
+  };
+
+  const applyQuickPick = (label: string) => {
+    setSummary(label);
+    setStart(null);
+    setEnd(null);
+    setOpen(false);
+  };
+
+  const openCustomRange = () => {
+    setDraftStart(start);
+    setDraftEnd(end);
+    setView('range');
+  };
+
+  const cancelRange = () => {
+    setView('picks');
+  };
+
+  const applyRange = () => {
+    if (draftStart) {
+      setStart(draftStart);
+      setEnd(draftEnd);
+      setSummary(formatDateRange(draftStart, draftEnd));
+    }
+    setOpen(false);
+    setView('picks');
+  };
 
   return (
     <FilterChip
       label="Date"
       isVisible={isVisible}
       onVisibilityChange={setIsVisible}
+      open={open}
+      onOpenChange={handleOpenChange}
       valueSummary={
-        <span className="dls-filter-chip__value-text">Mar 18, 2026</span>
+        <span className="dls-filter-chip__value-text">{summary}</span>
       }
     >
-      <List className="dls-filter-chip__date-list">
-        <ListItem type="label" text="Quick picks" />
-        <ListItem type="text" text="Today" />
-        <ListItem type="text" text="Yesterday" />
-        <ListItem type="text" text="Last 7 days" />
-        <ListItem type="text" text="Last 30 days" />
-        <ListItem type="text" text="This month" />
-        <ListItem type="divider" />
-        <ListItem type="text" text="Custom range..." />
-      </List>
+      <div className="dls-filter-chip__date-flyout">
+        <List className="dls-filter-chip__date-list">
+          <ListItem type="label" text="Quick picks" />
+          <ListItem type="text" text="Today" onClick={() => applyQuickPick('Today')} />
+          <ListItem type="text" text="Yesterday" onClick={() => applyQuickPick('Yesterday')} />
+          <ListItem type="text" text="Last 7 days" onClick={() => applyQuickPick('Last 7 days')} />
+          <ListItem type="text" text="Last 30 days" onClick={() => applyQuickPick('Last 30 days')} />
+          <ListItem type="text" text="This month" onClick={() => applyQuickPick('This month')} />
+          <ListItem type="divider" />
+          <ListItem
+            type="text"
+            text="Custom range..."
+            selected={view === 'range'}
+            onClick={openCustomRange}
+          />
+        </List>
+        {view === 'range' && (
+          <CalendarRange
+            className="dls-filter-chip__calendar-range"
+            today={DATE_FIXED_TODAY}
+            startDate={draftStart}
+            endDate={draftEnd}
+            onRangeChange={(s, e) => { setDraftStart(s); setDraftEnd(e); }}
+            footer={
+              <>
+                <Button variant="outline" intent="neutral" size="m" onClick={cancelRange}>Cancel</Button>
+                <Button variant="filled" intent="neutral" size="m" onClick={applyRange} disabled={!draftStart}>Apply</Button>
+              </>
+            }
+          />
+        )}
+      </div>
     </FilterChip>
   );
 };

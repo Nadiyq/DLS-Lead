@@ -191,4 +191,5 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--dls-spacing-2);
+  margin-left: auto;
 }

@@ -37,3 +37,24 @@ The repo now includes a local companion workflow for Figma MCP sync:
 - Library-first: always check `apps/storybook/src/stories/` before building a new component
 
 Full workflow and examples live in [docs/figma-sync.md](docs/figma-sync.md).
+
+## Storybook MCP
+
+DLS-Lead's Storybook can act as an MCP server for AI agents through the official Storybook MCP addon. Start Storybook with `npm run storybook`, then connect your agent to `http://127.0.0.1:6006/mcp`.
+
+Packaged setup files live here:
+
+- [AGENTS.md](AGENTS.md)
+- [.mcp.json](.mcp.json)
+- [.cursor/mcp.json](.cursor/mcp.json)
+- [mcp/README.md](mcp/README.md)
+
+## LLM Specs
+
+The repo now includes a repo-local `specs/` directory with structured markdown files for foundations, tokens, patterns, and core components. The intended read order for AI agents is:
+
+1. [specs/session-start.md](specs/session-start.md)
+2. [specs/tokens/token-reference.md](specs/tokens/token-reference.md)
+3. Relevant files in [specs/foundations/](specs/foundations), [specs/patterns/](specs/patterns), and [specs/components/](specs/components)
+
+This is the machine-readable design-system layer for DLS-Lead: if a spec exists, the agent should look it up instead of guessing.

@@ -283,6 +283,25 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Date flyout — quick picks list + optional CalendarRange side-by-side
+   --------------------------------------------------------------------------- */
+
+.dls-filter-chip__date-flyout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-filter-chip__date-flyout .dls-filter-chip__date-list {
+  flex-shrink: 0;
+  width: 242px;
+}
+
+.dls-filter-chip__calendar-range {
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
    Number input — styled inline with DLS tokens
    --------------------------------------------------------------------------- */
 

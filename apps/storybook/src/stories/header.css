@@ -1,32 +1,45 @@
-.storybook-header {
+.dls-header-example {
+  all: unset;
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 15px 20px;
-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  justify-content: space-between;
+  gap: var(--dls-spacing-4);
+  padding: var(--dls-spacing-4) var(--dls-spacing-5);
+  border-bottom: 1px solid var(--dls-color-border-subtle);
+  background: var(--dls-color-surface-subtle);
+  color: var(--dls-color-text-primary);
+  font-family: var(--dls-font-family);
 }
 
-.storybook-header svg {
-  display: inline-block;
-  vertical-align: top;
+.dls-header-example__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-2-5);
 }
 
-.storybook-header h1 {
-  display: inline-block;
-  vertical-align: top;
-  margin: 6px 0 6px 10px;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 1;
+.dls-header-example__brand svg {
+  display: block;
+  flex-shrink: 0;
 }
 
-.storybook-header button + button {
-  margin-left: 10px;
+.dls-header-example__brand h1 {
+  margin: 0;
+  font-size: var(--dls-text-heading-h4-font-size);
+  line-height: var(--dls-text-heading-h4-line-height);
+  font-weight: var(--dls-text-heading-h4-font-weight);
+  color: var(--dls-color-text-primary);
 }
 
-.storybook-header .welcome {
-  margin-right: 10px;
-  color: #333;
-  font-size: 14px;
+.dls-header-example__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-header-example__welcome {
+  font-size: var(--dls-text-paragraph-s-font-size);
+  line-height: var(--dls-text-paragraph-s-line-height);
+  font-weight: var(--dls-text-paragraph-s-medium-font-weight);
+  color: var(--dls-color-text-secondary);
 }

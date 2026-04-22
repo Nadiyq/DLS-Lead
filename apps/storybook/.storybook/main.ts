@@ -4,11 +4,16 @@ import { fileURLToPath } from "url";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  docs: {
+    autodocs: 'tag',
+    defaultName: 'Overview',
+  },
   addons: [
     "@chromatic-com/storybook",
     "@storybook/addon-vitest",
     "@storybook/addon-a11y",
     "@storybook/addon-docs",
+    "@storybook/addon-mcp",
   ],
   framework: "@storybook/react-vite",
 
