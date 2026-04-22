@@ -28,5 +28,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src", ".storybook/preview.ts", ".storybook/manager.ts", ".storybook/vitest.setup.ts"]
 }

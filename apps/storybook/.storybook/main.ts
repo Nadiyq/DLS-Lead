@@ -1,13 +1,9 @@
 import type { StorybookConfig } from "@storybook/react-vite";
-import path from "path";
-import { fileURLToPath } from "url";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
-  docs: {
-    autodocs: 'tag',
-    defaultName: 'Overview',
-  },
   addons: [
     "@chromatic-com/storybook",
     "@storybook/addon-vitest",

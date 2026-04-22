@@ -1,9 +1,17 @@
 import type { Preview } from '@storybook/react-vite';
-import { createElement, useEffect } from 'react';
-import { DocsContainer } from '@storybook/addon-docs/blocks';
+import { createElement, useEffect, type ComponentType, type PropsWithChildren } from 'react';
+import { DocsContainer, type DocsContainerProps } from '@storybook/addon-docs/blocks';
 import { themes } from 'storybook/theming';
 import '@tokens/tokens.css';
 import './dls-preview.css';
+
+type PreviewTheme = 'light' | 'dark';
+type DocsGlobals = {
+  globals?: {
+    theme?: unknown;
+    surface?: unknown;
+  };
+};
 
 function usePreviewTheme(theme: string, surface: string) {
   useEffect(() => {
@@ -21,14 +29,22 @@ function usePreviewTheme(theme: string, surface: string) {
   }, [surface, theme]);
 }
 
+function getPreviewTheme(value: unknown): PreviewTheme {
+  return value === 'dark' ? 'dark' : 'light';
+}
+
+function getPreviewSurface(value: unknown): string {
+  return typeof value === 'string' ? value : 'canvas';
+}
+
 function PreviewShell({
   Story,
   theme,
   surface,
   layout,
 }: {
-  Story: () => unknown;
-  theme: string;
+  Story: ComponentType;
+  theme: PreviewTheme;
   surface: string;
   layout: string;
 }) {
@@ -45,17 +61,10 @@ function PreviewShell({
   );
 }
 
-function ThemedDocsContainer(props: {
-  children: unknown;
-  context: {
-    globals?: {
-      theme?: string;
-      surface?: string;
-    };
-  };
-}) {
-  const theme = props.context.globals?.theme ?? 'light';
-  const surface = props.context.globals?.surface ?? 'canvas';
+function ThemedDocsContainer(props: PropsWithChildren<DocsContainerProps>) {
+  const globals = (props.context as DocsContainerProps['context'] & DocsGlobals).globals;
+  const theme = getPreviewTheme(globals?.theme);
+  const surface = getPreviewSurface(globals?.surface);
   const docsTheme = theme === 'dark' ? themes.dark : themes.light;
 
   usePreviewTheme(theme, surface);
@@ -104,11 +113,17 @@ const preview: Preview = {
   },
   decorators: [
     (Story, context) => {
-      const theme = context.globals.theme ?? 'light';
-      const surface = context.globals.surface ?? 'canvas';
-      const layout = context.parameters.layout ?? 'padded';
+      const theme = getPreviewTheme(context.globals.theme);
+      const surface = getPreviewSurface(context.globals.surface);
+      const layout =
+        typeof context.parameters.layout === 'string' ? context.parameters.layout : 'padded';
 
-      return createElement(PreviewShell, { Story, theme, surface, layout });
+      return createElement(PreviewShell, {
+        Story: Story as ComponentType,
+        theme,
+        surface,
+        layout,
+      });
     },
   ],
   parameters: {
