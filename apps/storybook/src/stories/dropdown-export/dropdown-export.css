@@ -35,3 +35,11 @@
 .dls-dropdown-export .dls-list-item[data-type="with-slots"] .dls-radiobutton {
   width: 100%;
 }
+
+/* ListItem's `with-slots` layout always renders a .dls-list-item__text span
+   (even when no text prop is passed). The Radiobutton carries the label, so
+   the empty text span is collapsed to avoid stealing half the row width
+   (which would force "All columns" / "Only visible columns" onto 2 lines). */
+.dls-dropdown-export .dls-list-item[data-type="with-slots"] .dls-list-item__text:empty {
+  display: none;
+}

@@ -1,6 +1,6 @@
 /* ==========================================================================
    DLS Dropdown Columns — column visibility & ordering panel for tables
-   Wraps List + ListItem + Button + Badge. Draggable rows kept custom.
+   Wraps List + ListItem + Button + Badge. Rows use pointer-based drag.
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
@@ -34,22 +34,23 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Draggable column rows
+   Pointer-draggable rows.
+   user-select: none prevents text-selection from competing with the drag
+   gesture. touch-action: none prevents browser scroll on touch drags.
    --------------------------------------------------------------------------- */
 
-/* Draggable rows — user-select: none is critical. Without it, mousedown
-   on the row text starts a text selection instead of a drag gesture,
-   so the browser never fires dragstart on real user interaction. */
-.dls-dropdown-columns .dls-list-item[draggable="true"] {
+.dls-dropdown-columns .dls-list-item[data-drag-row] {
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none;
 }
 
-.dls-dropdown-columns .dls-list-item[draggable="true"]:active {
+.dls-dropdown-columns .dls-list-item[data-drag-row][data-dragging] {
   cursor: grabbing;
+  opacity: 0.5;
 }
 
-.dls-dropdown-columns .dls-list-item[data-drag-over] {
+.dls-dropdown-columns .dls-list-item[data-drag-row][data-drag-over] {
   background: var(--dls-color-intent-info-subtle);
 }

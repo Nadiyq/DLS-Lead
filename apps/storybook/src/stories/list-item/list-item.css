@@ -198,8 +198,11 @@
 /* Direct children (typically DLS Buttons) fill the row equally — matches the
    Figma pattern of dropdown footer actions (Cancel / Apply side-by-side).
    flex-basis: 0 so widths distribute evenly regardless of text length.
-   min-width: 0 allows shrink below intrinsic size. */
-.dls-list-item__buttons > * {
+   min-width: 0 allows shrink below intrinsic size.
+   The selector deliberately uses [data-type="buttons"] to raise specificity
+   above `.dls-button { all: unset; }`, which would otherwise reset flex
+   back to the initial `0 1 auto` on every Button child. */
+.dls-list-item[data-type="buttons"] > .dls-list-item__buttons > * {
   flex: 1 1 0;
   min-width: 0;
 }

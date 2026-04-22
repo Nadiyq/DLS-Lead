@@ -1,8 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import {
+  Columns3 as Columns3Icon,
+  Filter as FilterIcon,
+  Download as DownloadIcon,
+  ChevronRight as ChevronRightIcon,
+} from 'lucide-react';
 import { DropdownOptions } from './DropdownOptions';
 import { List } from '../list-item/List';
 import { ListItem } from '../list-item/ListItem';
+import { DropdownColumns } from '../dropdown-columns/DropdownColumns';
+import { DropdownFilters } from '../dropdown-filters/DropdownFilters';
+import { DropdownExport } from '../dropdown-export/DropdownExport';
 
 const meta = {
   title: 'Components/DropdownOptions',
@@ -11,7 +20,7 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={{ minHeight: 300, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 24 }}>
+      <div style={{ minHeight: 420, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 24 }}>
         <Story />
       </div>
     ),
@@ -22,42 +31,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // ---------------------------------------------------------------------------
-// Icons
-// ---------------------------------------------------------------------------
-
-const ColumnsIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <rect x="2" y="2" width="4" height="12" rx="1" stroke="currentColor" strokeWidth="1.33" />
-    <rect x="10" y="2" width="4" height="12" rx="1" stroke="currentColor" strokeWidth="1.33" />
-  </svg>
-);
-
-const FilterIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M2 4H14M4 8H12M6 12H10" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const DownloadIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M8 2V10M8 10L5 7M8 10L11 7M3 13H13" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronRightIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-// ---------------------------------------------------------------------------
-// Playground
+// Playground — matches Figma 6122-16148
 // ---------------------------------------------------------------------------
 
 export const Playground: Story = {
@@ -71,14 +45,14 @@ export const Playground: Story = {
         <ListItem
           type="with-slots"
           text="Columns"
-          iconStart={<ColumnsIcon />}
-          iconEnd={<CheckIcon />}
+          iconStart={<Columns3Icon />}
+          iconEnd={<ChevronRightIcon />}
         />
         <ListItem
           type="with-slots"
-          text="Filter"
+          text="Filters"
           iconStart={<FilterIcon />}
-          iconEnd={<CheckIcon />}
+          iconEnd={<ChevronRightIcon />}
         />
         <ListItem type="divider" />
         <ListItem
@@ -93,51 +67,107 @@ export const Playground: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// Table toolbar example (matching Figma)
+// WithSubMenus — clicking a row swaps the panel for the sub-dropdown
+//   Columns → DropdownColumns
+//   Filters → DropdownFilters
+//   Export  → DropdownExport
 // ---------------------------------------------------------------------------
 
-export const TableToolbarExample: Story = {
+type SubMenu = 'root' | 'columns' | 'filters' | 'export';
+
+const filterOptions = [
+  { id: 'status', label: 'Status' },
+  { id: 'role', label: 'Role' },
+  { id: 'date', label: 'Date' },
+  { id: 'department', label: 'Department' },
+];
+
+const initialShown = [
+  { id: 'name', label: 'Name' },
+  { id: 'email', label: 'Email', pinned: true },
+  { id: 'role', label: 'Role' },
+];
+
+const initialHidden = [
+  { id: 'phone', label: 'Phone' },
+  { id: 'department', label: 'Department' },
+];
+
+export const WithSubMenus: Story = {
   args: {
     align: 'end',
+    side: 'bottom',
     children: <List><ListItem type="text" text="Option" /></List>,
   },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <p style={{
-        margin: 0, fontSize: 'var(--dls-text-s-font-size)',
-        fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-secondary)',
-      }}>
-        Click the kebab button to open the options menu
-      </p>
-      <DropdownOptions align="end" side="bottom">
-        <List>
-          <ListItem type="label" text="Customize" />
-          <ListItem
-            type="with-slots"
-            text="Columns"
-            iconStart={<ColumnsIcon />}
-            iconEnd={<CheckIcon />}
-            onClick={() => alert('Columns toggled')}
-          />
-          <ListItem
-            type="with-slots"
-            text="Filter"
-            iconStart={<FilterIcon />}
-            iconEnd={<CheckIcon />}
-            onClick={() => alert('Filter toggled')}
-          />
-          <ListItem type="divider" />
-          <ListItem
-            type="with-slots"
-            text="Export"
-            iconStart={<DownloadIcon />}
-            iconEnd={<ChevronRightIcon />}
-            onClick={() => alert('Export clicked')}
-          />
-        </List>
-      </DropdownOptions>
-    </div>
-  ),
+  render: () => {
+    const [menu, setMenu] = React.useState<SubMenu>('root');
+
+    const rootMenu = (
+      <List>
+        <ListItem type="label" text="Customize" />
+        <ListItem
+          type="with-slots"
+          text="Columns"
+          iconStart={<Columns3Icon />}
+          iconEnd={<ChevronRightIcon />}
+          onClick={() => setMenu('columns')}
+        />
+        <ListItem
+          type="with-slots"
+          text="Filters"
+          iconStart={<FilterIcon />}
+          iconEnd={<ChevronRightIcon />}
+          onClick={() => setMenu('filters')}
+        />
+        <ListItem type="divider" />
+        <ListItem
+          type="with-slots"
+          text="Export"
+          iconStart={<DownloadIcon />}
+          iconEnd={<ChevronRightIcon />}
+          onClick={() => setMenu('export')}
+        />
+      </List>
+    );
+
+    let submenu: React.ReactNode = null;
+    if (menu === 'columns') {
+      submenu = (
+        <DropdownColumns
+          shown={initialShown}
+          hidden={initialHidden}
+          onApply={() => setMenu('root')}
+          onCancel={() => setMenu('root')}
+        />
+      );
+    } else if (menu === 'filters') {
+      submenu = (
+        <DropdownFilters
+          options={filterOptions}
+          onSelect={() => setMenu('root')}
+        />
+      );
+    } else if (menu === 'export') {
+      submenu = <DropdownExport />;
+    }
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'center' }}>
+        <DropdownOptions align="end" side="bottom">
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--dls-spacing-2)' }}>
+            {rootMenu}
+            {submenu}
+          </div>
+        </DropdownOptions>
+        <p style={{
+          margin: 0, fontSize: 'var(--dls-text-s-font-size)',
+          fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-secondary)',
+        }}>
+          Current menu: {menu}
+        </p>
+      </div>
+    );
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -184,57 +214,5 @@ export const Disabled: Story = {
         <ListItem type="text" text="Option" />
       </List>
     ),
-  },
-};
-
-// ---------------------------------------------------------------------------
-// Interactive — with state
-// ---------------------------------------------------------------------------
-
-export const Interactive: Story = {
-  args: {
-    align: 'end',
-    children: <List><ListItem type="text" text="Option" /></List>,
-  },
-  render: () => {
-    const [columnsVisible, setColumnsVisible] = React.useState(true);
-    const [filterVisible, setFilterVisible] = React.useState(true);
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'center' }}>
-        <DropdownOptions align="end" side="bottom">
-          <List>
-            <ListItem type="label" text="Customize" />
-            <ListItem
-              type="with-slots"
-              text="Columns"
-              iconStart={<ColumnsIcon />}
-              iconEnd={columnsVisible ? <CheckIcon /> : undefined}
-              onClick={() => setColumnsVisible(v => !v)}
-            />
-            <ListItem
-              type="with-slots"
-              text="Filter"
-              iconStart={<FilterIcon />}
-              iconEnd={filterVisible ? <CheckIcon /> : undefined}
-              onClick={() => setFilterVisible(v => !v)}
-            />
-            <ListItem type="divider" />
-            <ListItem
-              type="with-slots"
-              text="Export"
-              iconStart={<DownloadIcon />}
-              iconEnd={<ChevronRightIcon />}
-            />
-          </List>
-        </DropdownOptions>
-        <p style={{
-          margin: 0, fontSize: 'var(--dls-text-s-font-size)',
-          fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-secondary)',
-        }}>
-          Columns: {columnsVisible ? 'visible' : 'hidden'} | Filter: {filterVisible ? 'visible' : 'hidden'}
-        </p>
-      </div>
-    );
   },
 };

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   GripVertical as GripVerticalIcon,
   Pin as PinIcon,
@@ -37,8 +37,21 @@ export interface DropdownColumnsProps {
   className?: string;
 }
 
+type Section = 'shown' | 'hidden';
+
+interface DragState {
+  section: Section;
+  idx: number;
+  id: string;
+}
+
 /* ---------------------------------------------------------------------------
    Component
+
+   Uses pointer events rather than HTML5 native drag-and-drop. Pointer events
+   work reliably across browsers, in sandboxed iframes (Storybook), and don't
+   compete with text selection or nested interactive elements. The pattern is
+   the same one used by Linear / Notion / Asana for row reordering.
    --------------------------------------------------------------------------- */
 
 export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsProps>(
@@ -55,13 +68,17 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
   ) => {
     const [shown, setShown] = useState(shownProp);
     const [hidden, setHidden] = useState(hiddenProp);
-    // Drag source tracked via refs (not state) so the value is available
-    // synchronously in the drop handler without waiting for React to flush.
-    // dragOverIdx stays as state because it drives visual feedback (data-drag-over).
-    const dragIdxRef = useRef<number | null>(null);
-    const dragSectionRef = useRef<'shown' | 'hidden' | null>(null);
-    const [dragOverIdx, setDragOverIdx] = useState<number | null>(null);
-    const [dragSection, setDragSection] = useState<'shown' | 'hidden' | null>(null);
+    const [drag, setDrag] = useState<DragState | null>(null);
+    const [over, setOver] = useState<{ section: Section; idx: number } | null>(null);
+
+    // Keep latest lists available to the pointermove/up handlers without
+    // re-binding listeners on every state change.
+    const shownRef = useRef(shown);
+    const hiddenRef = useRef(hidden);
+    useEffect(() => { shownRef.current = shown; }, [shown]);
+    useEffect(() => { hiddenRef.current = hidden; }, [hidden]);
+
+    const rootRef = useRef<HTMLDivElement | null>(null);
 
     const update = (nextShown: ColumnItem[], nextHidden: ColumnItem[]) => {
       setShown(nextShown);
@@ -70,71 +87,141 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
     };
 
     const togglePin = (id: string) => {
-      const next = shown.map(c => c.id === id ? { ...c, pinned: !c.pinned } : c);
+      const next = shown.map((c) => (c.id === id ? { ...c, pinned: !c.pinned } : c));
       update(next, hidden);
     };
 
     const showColumn = (id: string) => {
-      const col = hidden.find(c => c.id === id);
+      const col = hidden.find((c) => c.id === id);
       if (!col) return;
-      update([...shown, col], hidden.filter(c => c.id !== id));
+      update([...shown, col], hidden.filter((c) => c.id !== id));
     };
 
-    /* Drag & drop — reorder within a section and move items across sections.
-       dataTransfer.setData is required for the drag to initiate in Firefox. */
+    /* --- Pointer-based drag --- */
 
-    const handleDragStart = (e: React.DragEvent, idx: number, section: 'shown' | 'hidden') => {
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', String(idx));
-      dragIdxRef.current = idx;
-      dragSectionRef.current = section;
-      setDragSection(section);
-    };
-
-    const handleDragOver = (e: React.DragEvent, idx: number) => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      setDragOverIdx(idx);
-    };
-
-    const handleDrop = (targetIdx: number, targetSection: 'shown' | 'hidden') => {
-      const dragIdx = dragIdxRef.current;
-      const sourceSection = dragSectionRef.current;
-      if (dragIdx === null || sourceSection === null) return;
-
-      if (sourceSection === targetSection) {
-        // Reorder within section
-        const list = targetSection === 'shown' ? [...shown] : [...hidden];
-        const [moved] = list.splice(dragIdx, 1);
-        list.splice(targetIdx, 0, moved);
-        if (targetSection === 'shown') update(list, hidden);
-        else update(shown, list);
-      } else {
-        // Move across sections
-        const source = sourceSection === 'shown' ? [...shown] : [...hidden];
-        const dest = targetSection === 'shown' ? [...shown] : [...hidden];
-        const [moved] = source.splice(dragIdx, 1);
-        dest.splice(targetIdx, 0, moved);
-        if (sourceSection === 'shown') update(source, dest);
-        else update(dest, source);
+    const handlePointerDown = (
+      e: React.PointerEvent,
+      idx: number,
+      section: Section,
+      id: string,
+    ) => {
+      // Ignore non-primary buttons and clicks on interactive children
+      // (e.g. the Pin toggle) so they still function normally.
+      if (e.button !== 0) return;
+      const target = e.target as HTMLElement;
+      if (target.closest('button') && target.closest('.dls-list-item') !== target) {
+        // Click originated on the nested Pin <button>, let it handle the click.
+        return;
       }
-
-      dragIdxRef.current = null;
-      dragSectionRef.current = null;
-      setDragOverIdx(null);
-      setDragSection(null);
+      e.preventDefault();
+      setDrag({ section, idx, id });
     };
 
-    const handleDragEnd = () => {
-      dragIdxRef.current = null;
-      dragSectionRef.current = null;
-      setDragOverIdx(null);
-      setDragSection(null);
-    };
+    useEffect(() => {
+      if (!drag) return;
+
+      const findRowAtPoint = (x: number, y: number):
+        | { section: Section; idx: number }
+        | null => {
+        const root = rootRef.current;
+        if (!root) return null;
+        const rows = root.querySelectorAll<HTMLElement>('[data-drag-row]');
+        for (const row of Array.from(rows)) {
+          const rect = row.getBoundingClientRect();
+          if (y >= rect.top && y <= rect.bottom && x >= rect.left && x <= rect.right) {
+            return {
+              section: row.dataset.dragSection as Section,
+              idx: Number(row.dataset.dragIdx),
+            };
+          }
+        }
+        // Fallback: figure out which section the point is over (hit above/below rows).
+        const shownRows = root.querySelectorAll<HTMLElement>(
+          '[data-drag-row][data-drag-section="shown"]',
+        );
+        const hiddenRows = root.querySelectorAll<HTMLElement>(
+          '[data-drag-row][data-drag-section="hidden"]',
+        );
+        const midOfFirst = (nodes: NodeListOf<HTMLElement>) => {
+          if (!nodes.length) return null;
+          const r = nodes[0].getBoundingClientRect();
+          return r.top + r.height / 2;
+        };
+        const shownMid = midOfFirst(shownRows);
+        const hiddenMid = midOfFirst(hiddenRows);
+        if (shownMid !== null && hiddenMid !== null) {
+          const section = Math.abs(y - shownMid) < Math.abs(y - hiddenMid) ? 'shown' : 'hidden';
+          const nodes = section === 'shown' ? shownRows : hiddenRows;
+          // Pick the nearest row by y-center
+          let best = 0;
+          let bestDist = Infinity;
+          nodes.forEach((n, i) => {
+            const r = n.getBoundingClientRect();
+            const dist = Math.abs(y - (r.top + r.height / 2));
+            if (dist < bestDist) { bestDist = dist; best = i; }
+          });
+          return { section, idx: best };
+        }
+        return null;
+      };
+
+      const onMove = (e: PointerEvent) => {
+        const hit = findRowAtPoint(e.clientX, e.clientY);
+        if (hit) setOver(hit); else setOver(null);
+      };
+
+      const onUp = (e: PointerEvent) => {
+        const hit = findRowAtPoint(e.clientX, e.clientY);
+        if (hit) {
+          const sourceList = drag.section === 'shown' ? [...shownRef.current] : [...hiddenRef.current];
+          const destList = hit.section === drag.section
+            ? sourceList
+            : hit.section === 'shown' ? [...shownRef.current] : [...hiddenRef.current];
+
+          if (drag.section === hit.section) {
+            const [moved] = sourceList.splice(drag.idx, 1);
+            sourceList.splice(hit.idx, 0, moved);
+            if (drag.section === 'shown') update(sourceList, hiddenRef.current);
+            else update(shownRef.current, sourceList);
+          } else {
+            const [moved] = sourceList.splice(drag.idx, 1);
+            destList.splice(hit.idx, 0, moved);
+            if (drag.section === 'shown') update(sourceList, destList);
+            else update(destList, sourceList);
+          }
+        }
+        setDrag(null);
+        setOver(null);
+      };
+
+      document.addEventListener('pointermove', onMove);
+      document.addEventListener('pointerup', onUp);
+      return () => {
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onUp);
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [drag]);
+
+    const rowDragProps = (idx: number, section: Section, id: string) => ({
+      'data-drag-row': '',
+      'data-drag-idx': String(idx),
+      'data-drag-section': section,
+      'data-dragging': drag?.section === section && drag?.idx === idx ? '' : undefined,
+      'data-drag-over':
+        over?.section === section && over?.idx === idx && !(drag?.section === section && drag?.idx === idx)
+          ? ''
+          : undefined,
+      onPointerDown: (e: React.PointerEvent) => handlePointerDown(e, idx, section, id),
+    });
 
     return (
       <div
-        ref={ref}
+        ref={(node) => {
+          rootRef.current = node;
+          if (typeof ref === 'function') ref(node);
+          else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+        }}
         className={['dls-dropdown-columns', className].filter(Boolean).join(' ')}
         role="listbox"
       >
@@ -153,22 +240,13 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
           }
         />
 
-        {/* Shown columns — draggable list items.
-            interactive={false} so the row renders as <div>, not <button>.
-            Rendering as <button> would (a) nest the Pin <button> inside
-            another <button> (invalid HTML), and (b) break HTML5 drag
-            events which browsers swallow on nested interactive elements. */}
+        {/* Shown columns — pointer-draggable rows */}
         {shown.map((col, i) => (
           <ListItem
             key={col.id}
             type="with-slots"
             interactive={false}
-            draggable
-            data-drag-over={dragOverIdx === i && dragSection === 'shown' ? '' : undefined}
-            onDragStart={(e: React.DragEvent) => handleDragStart(e, i, 'shown')}
-            onDragOver={(e: React.DragEvent) => handleDragOver(e, i)}
-            onDrop={() => handleDrop(i, 'shown')}
-            onDragEnd={handleDragEnd}
+            {...rowDragProps(i, 'shown', col.id)}
             iconStart={<GripVerticalIcon />}
             text={col.label}
             slotRight={
@@ -195,19 +273,13 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
           iconEnd={<EyeOffIcon />}
         />
 
-        {/* Hidden columns — draggable (drag to Shown to re-enable, or reorder within Hidden).
-            interactive={false} so drag works; click-to-show is wired onto the row div. */}
+        {/* Hidden columns — pointer-draggable; click-to-show fires on pointer up without drag movement */}
         {hidden.map((col, i) => (
           <ListItem
             key={col.id}
             type="with-slots"
             interactive={false}
-            draggable
-            data-drag-over={dragOverIdx === i && dragSection === 'hidden' ? '' : undefined}
-            onDragStart={(e: React.DragEvent) => handleDragStart(e, i, 'hidden')}
-            onDragOver={(e: React.DragEvent) => handleDragOver(e, i)}
-            onDrop={() => handleDrop(i, 'hidden')}
-            onDragEnd={handleDragEnd}
+            {...rowDragProps(i, 'hidden', col.id)}
             iconStart={<GripVerticalIcon />}
             text={col.label}
             onClick={() => showColumn(col.id)}

@@ -1,6 +1,6 @@
 import React from 'react';
+import { X as XIcon, ChevronDown as ChevronDownIcon } from 'lucide-react';
 import { Avatar } from '../Avatar';
-import { XIcon, ChevronDown } from './chip-icons';
 import './chip.css';
 
 /* ---------------------------------------------------------------------------
@@ -129,7 +129,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
         {/* Trailing: chevron */}
         {chevron && (
           <span className="dls-chip__icon">
-            <ChevronDown />
+            <ChevronDownIcon />
           </span>
         )}
       </div>

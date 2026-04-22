@@ -1,6 +1,6 @@
 import React from 'react';
+import { X as XIcon, ChevronDown as ChevronDownIcon } from 'lucide-react';
 import { Chip, type ChipSize, type ChipAvatar, type DotIntent } from './Chip';
-import { XIcon, ChevronDown } from './chip-icons';
 import './chip-regular.css';
 
 /* ---------------------------------------------------------------------------
@@ -94,7 +94,7 @@ export const ChipRegular = React.forwardRef<HTMLDivElement, ChipRegularProps>(
             onClick={onRemove ? (e) => { e.stopPropagation(); onRemove(e); } : undefined}
             aria-label={onRemove ? `Remove ${label}` : undefined}
           >
-            {onRemove ? <XIcon /> : <ChevronDown />}
+            {onRemove ? <XIcon /> : <ChevronDownIcon />}
           </button>
         )}
       </div>

@@ -15,31 +15,31 @@ export interface FilterOption {
 }
 
 export interface DropdownFiltersProps {
-  /** Available filter options */
+  /** Available filter options, rendered as chevron-chips */
   options: FilterOption[];
-  /** Currently active filter ids */
-  activeIds?: string[];
-  /** Called when a filter is toggled */
-  onToggle?: (id: string, active: boolean) => void;
+  /** Called when a filter chip is clicked (to open its value picker) */
+  onSelect?: (id: string) => void;
   className?: string;
 }
 
 /* ---------------------------------------------------------------------------
    Component
+
+   Figma spec (node 6122-16482): a single label row "Filters" followed by a
+   chip row. Each chip is a ChipRegular in outline/neutral/size-s variant
+   with a trailing chevron — clicking a chip opens that filter's value
+   picker. This matches table toolbars in the reference design.
    --------------------------------------------------------------------------- */
 
 export const DropdownFilters = React.forwardRef<HTMLDivElement, DropdownFiltersProps>(
   (
     {
       options,
-      activeIds = [],
-      onToggle,
+      onSelect,
       className,
     },
     ref,
   ) => {
-    const activeSet = new Set(activeIds);
-
     return (
       <div
         ref={ref}
@@ -48,19 +48,17 @@ export const DropdownFilters = React.forwardRef<HTMLDivElement, DropdownFiltersP
       >
         <ListItem type="label" text="Filters" />
         <ListItem type="chips">
-          {options.map((opt) => {
-            const isActive = activeSet.has(opt.id);
-            return (
-              <ChipRegular
-                key={opt.id}
-                label={opt.label}
-                size="s"
-                variant={isActive ? 'filled' : 'outline'}
-                intent="neutral"
-                onClick={() => onToggle?.(opt.id, !isActive)}
-              />
-            );
-          })}
+          {options.map((opt) => (
+            <ChipRegular
+              key={opt.id}
+              label={opt.label}
+              size="s"
+              variant="outline"
+              intent="neutral"
+              chevron
+              onClick={() => onSelect?.(opt.id)}
+            />
+          ))}
         </ListItem>
       </div>
     );
