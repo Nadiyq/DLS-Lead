@@ -59,13 +59,18 @@
    --------------------------------------------------------------------------- */
 
 .dls-date-range-input__separator {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 8px;
-  height: 1px;
-  background: var(--dls-color-border-strong);
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-border-strong);
+}
+
+.dls-date-range-input__separator svg {
+  width: 100%;
+  height: 100%;
 }
 
 /* ---------------------------------------------------------------------------

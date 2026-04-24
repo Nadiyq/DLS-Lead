@@ -45,12 +45,13 @@
   align-items: center;
   gap: var(--dls-spacing-2);
   width: 100%;
-  min-height: 32px;
+  height: 32px;
   padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
   background: var(--dls-color-component-input-bg-base);
   border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
   cursor: pointer;
+  overflow: hidden;
   transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
 }
 
@@ -80,26 +81,6 @@
   height: 100%;
 }
 
-.dls-dropdown__leading-avatar {
-  width: 20px;
-  height: 20px;
-  border-radius: var(--dls-radius-component-avatar-s);
-  overflow: hidden;
-  background: var(--dls-color-surface-subtle);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--dls-text-xs-font-size);
-  font-weight: var(--dls-font-weight-semibold);
-  color: var(--dls-color-text-secondary);
-}
-
-.dls-dropdown__leading-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 /* ---------------------------------------------------------------------------
    Value / placeholder text
    --------------------------------------------------------------------------- */
@@ -118,62 +99,6 @@
 
 .dls-dropdown__value[data-placeholder] {
   color: var(--dls-color-component-input-fg-placeholder);
-}
-
-/* ---------------------------------------------------------------------------
-   Autocomplete input (replaces value text when typing)
-   --------------------------------------------------------------------------- */
-
-.dls-dropdown__input {
-  all: unset;
-  box-sizing: border-box;
-  flex: 1;
-  min-width: 0;
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-  font-weight: var(--dls-font-weight-normal);
-  color: var(--dls-color-component-input-fg-base);
-}
-
-.dls-dropdown__input::placeholder {
-  color: var(--dls-color-component-input-fg-placeholder);
-}
-
-.dls-dropdown__input:focus-visible {
-  outline: none;
-}
-
-/* ---------------------------------------------------------------------------
-   Clear button
-   --------------------------------------------------------------------------- */
-
-.dls-dropdown__clear {
-  all: unset;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  color: var(--dls-color-text-secondary);
-  border-radius: var(--dls-radius-component-input);
-}
-
-.dls-dropdown__clear:hover:not(:disabled) {
-  color: var(--dls-color-text-primary);
-}
-
-.dls-dropdown__clear:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-.dls-dropdown__clear svg {
-  width: 100%;
-  height: 100%;
 }
 
 /* ---------------------------------------------------------------------------
@@ -215,12 +140,6 @@
 .dls-dropdown__trigger:focus-visible,
 .dls-dropdown[data-open] .dls-dropdown__trigger {
   outline: none;
-  border-color: var(--dls-color-component-input-border-focus);
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
-}
-
-/* Also respond to focus-within for autocomplete mode */
-.dls-dropdown__trigger:focus-within:not(:disabled) {
   border-color: var(--dls-color-component-input-border-focus);
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }

@@ -39,6 +39,7 @@
 .dls-otp-input__field {
   display: flex;
   align-items: center;
+  width: fit-content;
 }
 
 /* Spacing type: 6px gap between individual slots */
@@ -49,9 +50,18 @@
 /* No-spacing type: no gap, outer border wraps all slots */
 .dls-otp-input__field[data-type="no-spacing"] {
   gap: 0;
-  border: 1px solid var(--dls-color-border-base);
+  border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
   overflow: hidden;
+  transition: border-color 150ms ease;
+}
+
+.dls-otp-input__field[data-type="no-spacing"]:hover:not(:disabled):not([data-disabled]):not([data-error]) {
+  border-color: var(--dls-color-component-input-border-hover);
+}
+
+.dls-otp-input__field[data-type="no-spacing"]:focus-within:not(:disabled):not([data-disabled]):not([data-error]) {
+  border-color: var(--dls-color-component-input-border-focus);
 }
 
 /* Separator types: 6px gap between groups and separators */
@@ -66,9 +76,18 @@
 
 .dls-otp-input__group {
   display: flex;
-  border: 1px solid var(--dls-color-border-base);
+  border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
   overflow: hidden;
+  transition: border-color 150ms ease;
+}
+
+.dls-otp-input__group:hover:not(:disabled):not([data-disabled]):not([data-error]) {
+  border-color: var(--dls-color-component-input-border-hover);
+}
+
+.dls-otp-input__group:focus-within:not(:disabled):not([data-disabled]):not([data-error]) {
+  border-color: var(--dls-color-component-input-border-focus);
 }
 
 /* ---------------------------------------------------------------------------
@@ -96,15 +115,19 @@
 
 /* Spacing type: each slot has its own border */
 .dls-otp-input__field[data-type="spacing"] .dls-otp-input__slot {
-  border: 1px solid var(--dls-color-border-base);
+  border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
+}
+
+.dls-otp-input__field[data-type="spacing"] .dls-otp-input__slot:hover:not(:disabled):not([data-error]) {
+  border-color: var(--dls-color-component-input-border-hover);
 }
 
 /* No-spacing type: slots share outer border, inner dividers */
 .dls-otp-input__field[data-type="no-spacing"] .dls-otp-input__slot {
   border: none;
   border-radius: 0;
-  border-right: 1px solid var(--dls-color-border-base);
+  border-right: 1px solid var(--dls-color-component-input-border-base);
 }
 
 .dls-otp-input__field[data-type="no-spacing"] .dls-otp-input__slot:last-child {
@@ -115,7 +138,7 @@
 .dls-otp-input__group .dls-otp-input__slot {
   border: none;
   border-radius: 0;
-  border-right: 1px solid var(--dls-color-border-base);
+  border-right: 1px solid var(--dls-color-component-input-border-base);
 }
 
 .dls-otp-input__group .dls-otp-input__slot:last-child {
@@ -149,16 +172,32 @@
    Slot: Error
    --------------------------------------------------------------------------- */
 
-.dls-otp-input__slot[data-error] {
-  border-color: var(--dls-color-intent-danger-base);
+/* Spacing type: each slot gets red border + red-tinted background */
+.dls-otp-input__field[data-type="spacing"] .dls-otp-input__slot[data-error] {
+  border-color: var(--dls-color-intent-danger-border);
+  background: var(--dls-color-intent-danger-subtle);
 }
 
+/* No-spacing type: outer field border + slot backgrounds + inner divider color */
 .dls-otp-input__field[data-type="no-spacing"][data-error] {
-  border-color: var(--dls-color-intent-danger-base);
+  border-color: var(--dls-color-intent-danger-border);
+  background: var(--dls-color-intent-danger-subtle);
 }
 
+.dls-otp-input__field[data-type="no-spacing"][data-error] .dls-otp-input__slot {
+  border-right-color: var(--dls-color-intent-danger-border);
+  background: var(--dls-color-intent-danger-subtle);
+}
+
+/* Grouped (separator) types: group border + slot backgrounds + inner divider color */
 .dls-otp-input__group[data-error] {
-  border-color: var(--dls-color-intent-danger-base);
+  border-color: var(--dls-color-intent-danger-border);
+  background: var(--dls-color-intent-danger-subtle);
+}
+
+.dls-otp-input__group[data-error] .dls-otp-input__slot {
+  border-right-color: var(--dls-color-intent-danger-border);
+  background: var(--dls-color-intent-danger-subtle);
 }
 
 /* ---------------------------------------------------------------------------

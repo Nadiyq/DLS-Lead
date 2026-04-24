@@ -20,6 +20,9 @@
   /* Internal intent variables — set per data-intent */
   --_subtle: var(--dls-color-intent-neutral-subtle);
   --_text: var(--dls-color-intent-neutral-text);
+
+  background: var(--_subtle);
+  color: var(--_text);
 }
 
 /* ---------------------------------------------------------------------------
@@ -54,12 +57,6 @@
 .dls-icon-shape[data-intent="neutral"] {
   --_subtle: var(--dls-color-intent-neutral-subtle);
   --_text: var(--dls-color-intent-neutral-text);
-}
-
-/* Apply intent colors */
-.dls-icon-shape {
-  background: var(--_subtle);
-  color: var(--_text);
 }
 
 /* ---------------------------------------------------------------------------

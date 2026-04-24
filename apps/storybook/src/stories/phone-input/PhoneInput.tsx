@@ -1,29 +1,10 @@
 import React from 'react';
+import {
+  ChevronDown as ChevronDownIcon,
+  X as XIcon,
+  TriangleAlert as TriangleAlertIcon,
+} from 'lucide-react';
 import './phone-input.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const ChevronDown = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const XIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const TriangleAlertIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.13 2.57L1.18 10.5A1 1 0 002.05 12h9.9a1 1 0 00.87-1.5L7.87 2.57a1 1 0 00-1.74 0z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M7 5.5V7.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    <circle cx="7" cy="9.5" r="0.5" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Country data type
@@ -115,7 +96,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           >
             <span className="dls-phone-input__flag">{country.flag}</span>
             <span className="dls-phone-input__chevron">
-              <ChevronDown />
+              <ChevronDownIcon />
             </span>
           </button>
 
@@ -150,7 +131,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             data-error={hasError || undefined}
           >
             {hasError && (
-              <span className="dls-phone-input__hint-icon">
+              <span className="dls-phone-input__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />
               </span>
             )}

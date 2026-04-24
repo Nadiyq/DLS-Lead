@@ -45,6 +45,8 @@ export const Playground: Story = {
     placeholder: 'Type...',
     maxLength: 280,
     value: '',
+    showUsedPercent: true,
+    onSend: () => alert('Send clicked'),
   },
 };
 

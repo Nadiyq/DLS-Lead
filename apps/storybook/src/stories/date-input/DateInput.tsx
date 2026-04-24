@@ -1,39 +1,12 @@
 import React from 'react';
+import {
+  Calendar as CalendarIcon,
+  ChevronDown as ChevronDownIcon,
+  X as XIcon,
+  TriangleAlert as TriangleAlertIcon,
+} from 'lucide-react';
 import './date-input.css';
 import { Calendar } from '../calendar/Calendar';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const CalendarIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M2 6.5H14" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M5.5 1.5V3.5" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-    <path d="M10.5 1.5V3.5" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const ChevronDown = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const XIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const TriangleAlertIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.13 2.57L1.18 10.5A1 1 0 002.05 12h9.9a1 1 0 00.87-1.5L7.87 2.57a1 1 0 00-1.74 0z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M7 5.5V7.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    <circle cx="7" cy="9.5" r="0.5" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Helpers
@@ -109,6 +82,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
     ref,
   ) => {
     const hasError = !!error;
+    const errorText = error?.trim();
     const displayValue = value ?? (selectedDate ? formatDate(selectedDate) : undefined);
     const hasValue = !!displayValue;
     const triggerId = id || React.useId();
@@ -182,7 +156,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
           onClick={handleTriggerClick}
         >
           <span className="dls-date-input__content">
-            <span className="dls-date-input__calendar-icon">
+            <span className="dls-date-input__calendar-icon" aria-hidden="true">
               <CalendarIcon />
             </span>
             <span
@@ -204,8 +178,8 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
             </button>
           )}
 
-          <span className="dls-date-input__chevron">
-            <ChevronDown />
+          <span className="dls-date-input__chevron" aria-hidden="true">
+            <ChevronDownIcon />
           </span>
         </button>
 
@@ -220,14 +194,14 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
           </div>
         )}
 
-        {(hint || hasError) && (
+        {(hint || errorText) && (
           <div className="dls-date-input__hint" data-error={hasError || undefined}>
-            {hasError && (
-              <span className="dls-date-input__hint-icon">
+            {errorText && (
+              <span className="dls-date-input__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />
               </span>
             )}
-            <span>{error || hint}</span>
+            <span>{errorText || hint}</span>
           </div>
         )}
       </div>

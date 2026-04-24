@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import { AtSign as AtSignIcon } from 'lucide-react';
-import { Dropdown, type DropdownOption } from './Dropdown';
+import {
+  DropdownAutocomplete,
+  type DropdownAutocompleteOption,
+} from './DropdownAutocomplete';
 
 const meta = {
-  title: 'Components/Dropdown',
-  component: Dropdown,
+  title: 'Components/DropdownAutocomplete',
+  component: DropdownAutocomplete,
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
   decorators: [
@@ -15,7 +18,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Dropdown>;
+} satisfies Meta<typeof DropdownAutocomplete>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -33,7 +36,7 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 );
 
-const textOptions: DropdownOption[] = [
+const textOptions: DropdownAutocompleteOption[] = [
   { value: 'opt1', label: 'Option one' },
   { value: 'opt2', label: 'Option two' },
   { value: 'opt3', label: 'Option three' },
@@ -41,14 +44,14 @@ const textOptions: DropdownOption[] = [
   { value: 'opt5', label: 'Fifth option' },
 ];
 
-const avatarOptions: DropdownOption[] = [
+const avatarOptions: DropdownAutocompleteOption[] = [
   { value: 'alice', label: 'Alice Johnson', avatarInitials: 'AJ' },
   { value: 'bob', label: 'Bob Smith', avatarInitials: 'BS' },
   { value: 'carol', label: 'Carol Williams', avatarInitials: 'CW' },
   { value: 'dave', label: 'Dave Brown', avatarInitials: 'DB' },
 ];
 
-const iconOptions: DropdownOption[] = [
+const iconOptions: DropdownAutocompleteOption[] = [
   { value: 'email1', label: 'user@example.com', icon: <AtSignIcon /> },
   { value: 'email2', label: 'admin@example.com', icon: <AtSignIcon /> },
   { value: 'email3', label: 'support@example.com', icon: <AtSignIcon /> },
@@ -58,12 +61,18 @@ const iconOptions: DropdownOption[] = [
 // Playground
 // ---------------------------------------------------------------------------
 
+const PlaygroundTemplate = (args: React.ComponentProps<typeof DropdownAutocomplete>) => {
+  const [value, setValue] = useState<string | undefined>(args.value);
+  return <DropdownAutocomplete {...args} value={value} onChange={setValue} />;
+};
+
 export const Playground: Story = {
   args: {
     options: textOptions,
     placeholder: 'Select',
     label: 'Label',
   },
+  render: (args) => <PlaygroundTemplate {...args} />,
 };
 
 // ---------------------------------------------------------------------------
@@ -75,16 +84,16 @@ export const AllStates: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24, width: 364 }}>
       <Section title="Normal (empty)">
-        <Dropdown options={textOptions} placeholder="Select" />
+        <DropdownAutocomplete options={textOptions} placeholder="Select" />
       </Section>
       <Section title="Filled">
-        <Dropdown options={textOptions} value="opt1" />
+        <DropdownAutocomplete options={textOptions} value="opt1" />
       </Section>
       <Section title="Disabled">
-        <Dropdown options={textOptions} value="opt1" disabled />
+        <DropdownAutocomplete options={textOptions} value="opt1" disabled />
       </Section>
       <Section title="Error">
-        <Dropdown options={textOptions} value="opt1" error="Please select a valid option." />
+        <DropdownAutocomplete options={textOptions} value="opt1" error="Please select a valid option." />
       </Section>
     </div>
   ),
@@ -94,21 +103,45 @@ export const AllStates: Story = {
 // With avatars
 // ---------------------------------------------------------------------------
 
+const AvatarTemplate = () => {
+  const [value, setValue] = useState<string | undefined>();
+  return (
+    <DropdownAutocomplete
+      options={avatarOptions}
+      value={value}
+      onChange={setValue}
+      label="Search people"
+      placeholder="Type a name..."
+    />
+  );
+};
+
 export const WithAvatars: Story = {
-  args: { options: avatarOptions, label: 'Assign to', placeholder: 'Select person' },
+  args: { options: avatarOptions },
+  render: () => <AvatarTemplate />,
 };
 
 // ---------------------------------------------------------------------------
 // With icons
 // ---------------------------------------------------------------------------
 
+const IconTemplate = () => {
+  const [value, setValue] = useState<string | undefined>();
+  return (
+    <DropdownAutocomplete
+      options={iconOptions}
+      value={value}
+      onChange={setValue}
+      label="Email"
+      placeholder="Select"
+      leadingIcon={<AtSignIcon />}
+    />
+  );
+};
+
 export const WithIcons: Story = {
-  args: {
-    options: iconOptions,
-    label: 'Email',
-    placeholder: 'Select',
-    leadingIcon: <AtSignIcon />,
-  },
+  args: { options: iconOptions },
+  render: () => <IconTemplate />,
 };
 
 // ---------------------------------------------------------------------------
@@ -118,13 +151,13 @@ export const WithIcons: Story = {
 const InteractiveTemplate = () => {
   const [value, setValue] = useState<string | undefined>();
   return (
-    <Dropdown
+    <DropdownAutocomplete
       options={textOptions}
       value={value}
       onChange={setValue}
       label="Category"
-      hint="Choose one option."
-      placeholder="Select"
+      hint="Start typing to filter."
+      placeholder="Search..."
     />
   );
 };
@@ -142,9 +175,10 @@ export const WithLabelAndHint: Story = {
   args: {
     options: textOptions,
     label: 'Category',
-    hint: 'Choose the most relevant option.',
-    placeholder: 'Select',
+    hint: 'Start typing to filter.',
+    placeholder: 'Search...',
   },
+  render: (args) => <PlaygroundTemplate {...args} />,
 };
 
 // ---------------------------------------------------------------------------
@@ -158,4 +192,5 @@ export const ErrorState: Story = {
     value: 'opt1',
     error: 'This option is no longer available.',
   },
+  render: (args) => <PlaygroundTemplate {...args} />,
 };

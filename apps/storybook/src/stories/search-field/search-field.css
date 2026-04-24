@@ -37,17 +37,17 @@
    --------------------------------------------------------------------------- */
 
 .dls-search-field__box {
-  all: unset;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: var(--dls-spacing-2);
   width: 100%;
-  min-height: 32px;
+  height: 32px;
   padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
   background: var(--dls-color-component-input-bg-base);
   border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
+  overflow: hidden;
   transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
 }
 
@@ -129,7 +129,7 @@
    State: Hover
    --------------------------------------------------------------------------- */
 
-.dls-search-field__box:hover:not([data-disabled]) {
+.dls-search-field__box:hover:not(:disabled):not([data-disabled]) {
   border-color: var(--dls-color-component-input-border-hover);
 }
 

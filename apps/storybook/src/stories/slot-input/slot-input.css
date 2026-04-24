@@ -43,8 +43,9 @@
   align-items: center;
   gap: var(--dls-spacing-2);
   width: 100%;
-  min-height: 32px;
+  height: 32px;
   padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
+  overflow: hidden;
   background: var(--dls-color-component-input-bg-base);
   border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
@@ -55,7 +56,7 @@
    State: Hover
    --------------------------------------------------------------------------- */
 
-.dls-slot-input__field:hover:not([data-disabled]):not([data-error]) {
+.dls-slot-input__field:hover:not(:disabled):not([data-disabled]):not([data-error]) {
   border-color: var(--dls-color-component-input-border-hover);
 }
 
@@ -63,7 +64,7 @@
    State: Focus
    --------------------------------------------------------------------------- */
 
-.dls-slot-input__field:focus-within:not([data-disabled]) {
+.dls-slot-input__field:focus-within:not(:disabled):not([data-disabled]):not([data-error]) {
   border-color: var(--dls-color-component-input-border-focus);
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }

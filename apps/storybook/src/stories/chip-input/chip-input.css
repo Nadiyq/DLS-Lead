@@ -18,6 +18,12 @@
   width: 100%;
 }
 
+/* Field wrapper — anchors the listbox (position relative) */
+.dls-chip-input__field {
+  position: relative;
+  width: 100%;
+}
+
 /* ---------------------------------------------------------------------------
    Label
    --------------------------------------------------------------------------- */
@@ -43,8 +49,9 @@
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 32px;
+  height: 32px;
   padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
+  overflow: hidden;
   background: var(--dls-color-component-input-bg-base);
   border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
@@ -52,9 +59,12 @@
   transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
 }
 
-/* With chips: tighter asymmetric padding (l:2 r:4 t:2 b:2) */
+/* With chips: zero vertical padding so 28px chip + 2px border = 32px total (matches Figma).
+   min-height lets the field grow when chips wrap to multiple rows. */
 .dls-chip-input__box[data-has-chips] {
-  padding: 2px 4px 2px 2px;
+  height: auto;
+  min-height: 32px;
+  padding: 0 var(--dls-spacing-1) 0 var(--dls-spacing-0-5);
 }
 
 /* ---------------------------------------------------------------------------
@@ -74,15 +84,16 @@
    State: Hover
    --------------------------------------------------------------------------- */
 
-.dls-chip-input__box:hover:not([data-disabled]):not([data-error]) {
+.dls-chip-input__box:hover:not(:disabled):not([data-disabled]):not([data-error]) {
   border-color: var(--dls-color-component-input-border-hover);
 }
 
 /* ---------------------------------------------------------------------------
-   State: Focus
+   State: Focus-within / Open
    --------------------------------------------------------------------------- */
 
-.dls-chip-input__box[data-focused]:not([data-disabled]) {
+.dls-chip-input__box:focus-within:not([data-disabled]),
+.dls-chip-input[data-open] .dls-chip-input__box:not([data-disabled]) {
   border-color: var(--dls-color-component-input-border-focus);
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }
@@ -135,6 +146,39 @@
 .dls-chip-input__input:disabled {
   color: var(--dls-color-component-input-fg-disabled);
   cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Listbox (dropdown menu for autocomplete)
+   --------------------------------------------------------------------------- */
+
+.dls-chip-input__listbox {
+  all: unset;
+  box-sizing: border-box;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  margin-top: var(--dls-spacing-1);
+  padding: var(--dls-spacing-1);
+  background: var(--dls-color-component-dropdown-bg);
+  border: 1px solid var(--dls-color-component-dropdown-border);
+  border-radius: var(--dls-radius-component-dropdown);
+  box-shadow: var(--dls-shadow-overlay);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.dls-chip-input[data-open] .dls-chip-input__listbox {
+  display: flex;
+}
+
+/* Keyboard highlight (ArrowUp/ArrowDown preview) */
+.dls-chip-input__listbox .dls-list-item[data-highlighted] {
+  background: var(--dls-state-hover-overlay);
 }
 
 /* ---------------------------------------------------------------------------

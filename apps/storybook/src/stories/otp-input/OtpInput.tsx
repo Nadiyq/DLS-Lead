@@ -1,23 +1,6 @@
 import React, { useRef, useCallback } from 'react';
+import { Minus as MinusIcon, TriangleAlert as TriangleAlertIcon } from 'lucide-react';
 import './otp-input.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const MinusIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 12H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-const TriangleAlertIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.13 2.57L1.18 10.5A1 1 0 002.05 12h9.9a1 1 0 00.87-1.5L7.87 2.57a1 1 0 00-1.74 0z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M7 5.5V7.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    <circle cx="7" cy="9.5" r="0.5" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Types
@@ -216,7 +199,7 @@ export const OtpInput = React.forwardRef<HTMLDivElement, OtpInputProps>(
         {(hint || hasError) && (
           <div className="dls-otp-input__hint" data-error={hasError || undefined}>
             {hasError && (
-              <span className="dls-otp-input__hint-icon">
+              <span className="dls-otp-input__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />
               </span>
             )}

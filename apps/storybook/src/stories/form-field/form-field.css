@@ -81,6 +81,17 @@
   height: 12px;
   color: var(--dls-color-text-secondary);
   cursor: help;
+  border-radius: var(--dls-radius-component-input);
+  transition: color 150ms ease, box-shadow 150ms ease;
+}
+
+.dls-form-field__info:hover:not(:disabled) {
+  color: var(--dls-color-text-primary);
+}
+
+.dls-form-field__info:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }
 
 .dls-form-field__info svg {

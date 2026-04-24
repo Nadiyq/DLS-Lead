@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { Star as StarIcon, Check as CheckIcon, TriangleAlert as AlertIcon, Info as InfoIcon } from 'lucide-react';
 import { IconShape } from './IconShape';
 
 const meta = {
@@ -23,32 +24,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
     </h3>
     {children}
   </div>
-);
-
-const StarIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2L14.9 8.62L22 9.27L16.67 13.97L18.18 21L12 17.27L5.82 21L7.33 13.97L2 9.27L9.1 8.62L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 13L9 17L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const AlertIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 9V13M12 17H12.01M4.93 19H19.07C20.14 19 20.84 17.85 20.3 16.93L13.23 4.44C12.69 3.52 11.31 3.52 10.77 4.44L3.7 16.93C3.16 17.85 3.86 19 4.93 19Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const InfoIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M12 11V16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="12" cy="8" r="0.75" fill="currentColor" />
-  </svg>
 );
 
 const intents = ['primary', 'success', 'warning', 'danger', 'info', 'neutral'] as const;

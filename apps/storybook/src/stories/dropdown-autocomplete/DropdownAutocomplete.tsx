@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   ChevronDown as ChevronDownIcon,
+  X as XIcon,
   TriangleAlert as TriangleAlertIcon,
 } from 'lucide-react';
-import './dropdown.css';
+import './dropdown-autocomplete.css';
 import { ListItem } from '../list-item/ListItem';
 import { Avatar } from '../Avatar';
 
@@ -11,7 +12,7 @@ import { Avatar } from '../Avatar';
    Types
    --------------------------------------------------------------------------- */
 
-export interface DropdownOption {
+export interface DropdownAutocompleteOption {
   value: string;
   label: string;
   /** Leading icon element */
@@ -22,13 +23,13 @@ export interface DropdownOption {
   avatarInitials?: string;
 }
 
-export interface DropdownProps {
+export interface DropdownAutocompleteProps {
   /** Available options */
-  options: DropdownOption[];
+  options: DropdownAutocompleteOption[];
   /** Currently selected value */
   value?: string;
   /** Callback when selection changes */
-  onChange?: (value: string) => void;
+  onChange?: (value: string | undefined) => void;
   /** Placeholder text */
   placeholder?: string;
   /** Label text */
@@ -44,7 +45,7 @@ export interface DropdownProps {
   id?: string;
 }
 
-export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
+export const DropdownAutocomplete = React.forwardRef<HTMLDivElement, DropdownAutocompleteProps>(
   (
     {
       options,
@@ -62,7 +63,9 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
     ref,
   ) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [search, setSearch] = useState('');
     const [highlightedIdx, setHighlightedIdx] = useState(-1);
+    const inputRef = useRef<HTMLInputElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const reactId = React.useId();
     const triggerId = id || reactId;
@@ -72,11 +75,16 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
     const selected = options.find((o) => o.value === value);
     const hasLeading = !!(leadingIcon || selected?.icon || selected?.avatarSrc || selected?.avatarInitials);
 
+    const filtered = search
+      ? options.filter((o) => o.label.toLowerCase().includes(search.toLowerCase()))
+      : options;
+
     useEffect(() => {
       if (!isOpen) return;
       const handler = (e: MouseEvent) => {
         if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
           setIsOpen(false);
+          setSearch('');
         }
       };
       document.addEventListener('mousedown', handler);
@@ -86,27 +94,37 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
     const open = () => {
       if (disabled) return;
       setIsOpen(true);
-      setHighlightedIdx(options.findIndex((o) => o.value === value));
+      setHighlightedIdx(-1);
+      requestAnimationFrame(() => inputRef.current?.focus());
     };
 
-    const close = () => setIsOpen(false);
+    const close = () => {
+      setIsOpen(false);
+      setSearch('');
+    };
 
-    const select = (opt: DropdownOption) => {
+    const select = (opt: DropdownAutocompleteOption) => {
       onChange?.(opt.value);
       close();
+    };
+
+    const clear = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onChange?.(undefined);
+      setSearch('');
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (e.key === 'Escape') { close(); return; }
       if (e.key === 'Enter' && isOpen && highlightedIdx >= 0) {
         e.preventDefault();
-        select(options[highlightedIdx]);
+        select(filtered[highlightedIdx]);
         return;
       }
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         if (!isOpen) { open(); return; }
-        setHighlightedIdx((i) => Math.min(i + 1, options.length - 1));
+        setHighlightedIdx((i) => Math.min(i + 1, filtered.length - 1));
       }
       if (e.key === 'ArrowUp') {
         e.preventDefault();
@@ -114,13 +132,13 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       }
     };
 
-    const renderLeading = (opt?: DropdownOption) => {
+    const renderLeading = (opt?: DropdownAutocompleteOption) => {
       if (opt?.icon) {
-        return <span className="dls-dropdown__leading dls-dropdown__leading-icon">{opt.icon}</span>;
+        return <span className="dls-dropdown-autocomplete__leading dls-dropdown-autocomplete__leading-icon">{opt.icon}</span>;
       }
       if (opt?.avatarSrc || opt?.avatarInitials) {
         return (
-          <span className="dls-dropdown__leading">
+          <span className="dls-dropdown-autocomplete__leading">
             <Avatar
               size="20"
               src={opt.avatarSrc}
@@ -130,10 +148,12 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
         );
       }
       if (leadingIcon && !opt) {
-        return <span className="dls-dropdown__leading dls-dropdown__leading-icon">{leadingIcon}</span>;
+        return <span className="dls-dropdown-autocomplete__leading dls-dropdown-autocomplete__leading-icon">{leadingIcon}</span>;
       }
       return null;
     };
+
+    const showClear = !disabled && (!!selected || (isOpen && !!search));
 
     return (
       <div
@@ -142,13 +162,13 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
           if (typeof ref === 'function') ref(node);
           else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
         }}
-        className={['dls-dropdown', className].filter(Boolean).join(' ')}
+        className={['dls-dropdown-autocomplete', className].filter(Boolean).join(' ')}
         data-open={isOpen || undefined}
         onKeyDown={handleKeyDown}
       >
         {label && (
           <label
-            className="dls-dropdown__label"
+            className="dls-dropdown-autocomplete__label"
             htmlFor={triggerId}
             data-disabled={disabled || undefined}
           >
@@ -156,39 +176,59 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
           </label>
         )}
 
-        <button
-          type="button"
-          id={triggerId}
-          className="dls-dropdown__trigger"
-          disabled={disabled}
+        <div
+          className="dls-dropdown-autocomplete__trigger"
+          data-disabled={disabled || undefined}
           data-error={hasError || undefined}
           data-has-leading={hasLeading || undefined}
-          onClick={() => (isOpen ? close() : open())}
-          aria-haspopup="listbox"
-          aria-expanded={isOpen}
-          aria-controls={isOpen ? listboxId : undefined}
+          onClick={() => {
+            if (disabled) return;
+            if (!isOpen) open();
+            inputRef.current?.focus();
+          }}
         >
           {renderLeading(selected) || renderLeading()}
 
-          <span
-            className="dls-dropdown__value"
-            data-placeholder={!selected || undefined}
-          >
-            {selected?.label || placeholder}
-          </span>
+          <input
+            ref={inputRef}
+            id={triggerId}
+            type="text"
+            className="dls-dropdown-autocomplete__input"
+            disabled={disabled}
+            value={isOpen ? search : selected?.label ?? ''}
+            placeholder={selected ? selected.label : placeholder}
+            onChange={(e) => { setSearch(e.target.value); setHighlightedIdx(0); if (!isOpen) setIsOpen(true); }}
+            onFocus={() => !isOpen && open()}
+            aria-autocomplete="list"
+            aria-controls={isOpen ? listboxId : undefined}
+            aria-expanded={isOpen}
+            role="combobox"
+          />
 
-          <span className="dls-dropdown__chevron" aria-hidden="true">
+          {showClear && (
+            <button
+              type="button"
+              className="dls-dropdown-autocomplete__clear"
+              onClick={clear}
+              aria-label="Clear selection"
+              tabIndex={-1}
+            >
+              <XIcon />
+            </button>
+          )}
+
+          <span className="dls-dropdown-autocomplete__chevron" aria-hidden="true">
             <ChevronDownIcon />
           </span>
-        </button>
+        </div>
 
         <div
           id={listboxId}
-          className="dls-dropdown__listbox"
+          className="dls-dropdown-autocomplete__listbox"
           role="listbox"
           aria-label={label || 'Options'}
         >
-          {options.map((opt, i) => {
+          {filtered.map((opt, i) => {
             const avatarSlot = opt.avatarSrc || opt.avatarInitials ? (
               <Avatar
                 size="20"
@@ -213,15 +253,15 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
               />
             );
           })}
-          {options.length === 0 && (
-            <ListItem type="empty-state" text="No options" />
+          {filtered.length === 0 && (
+            <ListItem type="empty-state" text="No results" />
           )}
         </div>
 
         {(hint || hasError) && (
-          <div className="dls-dropdown__hint" data-error={hasError || undefined}>
+          <div className="dls-dropdown-autocomplete__hint" data-error={hasError || undefined}>
             {hasError && (
-              <span className="dls-dropdown__hint-icon" aria-hidden="true">
+              <span className="dls-dropdown-autocomplete__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />
               </span>
             )}
@@ -233,4 +273,4 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
   },
 );
 
-Dropdown.displayName = 'Dropdown';
+DropdownAutocomplete.displayName = 'DropdownAutocomplete';

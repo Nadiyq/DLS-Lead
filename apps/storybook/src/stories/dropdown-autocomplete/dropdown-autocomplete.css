@@ -1,13 +1,14 @@
 /* ==========================================================================
-   DLS Date Input — token-driven date picker trigger field
+   DLS Dropdown Autocomplete — token-driven typable select with filtering
    States: normal | filled | focused | disabled | error
+   Types:  text | avatar | icon (via leading content slot)
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
-   Wrapper (vertical stack: label -> field -> hint/error)
+   Outer wrapper (vertical: label → field → hint/error)
    --------------------------------------------------------------------------- */
 
-.dls-date-input {
+.dls-dropdown-autocomplete {
   all: unset;
   box-sizing: border-box;
   display: flex;
@@ -22,23 +23,22 @@
    Label
    --------------------------------------------------------------------------- */
 
-.dls-date-input__label {
+.dls-dropdown-autocomplete__label {
   font-size: var(--dls-text-s-font-size);
   line-height: var(--dls-text-s-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: var(--dls-color-text-secondary);
 }
 
-.dls-date-input__label[data-disabled] {
+.dls-dropdown-autocomplete__label[data-disabled] {
   color: var(--dls-color-text-disabled);
 }
 
 /* ---------------------------------------------------------------------------
-   Trigger (the bordered box)
+   Trigger (bordered container — a div, since it wraps an input + buttons)
    --------------------------------------------------------------------------- */
 
-.dls-date-input__trigger {
-  all: unset;
+.dls-dropdown-autocomplete__trigger {
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -46,70 +46,70 @@
   width: 100%;
   height: 32px;
   padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
-  overflow: hidden;
   background: var(--dls-color-component-input-bg-base);
   border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
-  cursor: pointer;
+  cursor: text;
+  overflow: hidden;
   transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
 }
 
-/* ---------------------------------------------------------------------------
-   Content (calendar icon + text)
-   --------------------------------------------------------------------------- */
-
-.dls-date-input__content {
-  display: flex;
-  align-items: center;
-  gap: var(--dls-spacing-2);
-  flex: 1;
-  min-width: 0;
+.dls-dropdown-autocomplete__trigger[data-has-leading] {
+  padding-left: var(--dls-spacing-1-5);
 }
 
 /* ---------------------------------------------------------------------------
-   Leading calendar icon
+   Leading content (avatar or icon)
    --------------------------------------------------------------------------- */
 
-.dls-date-input__calendar-icon {
+.dls-dropdown-autocomplete__leading {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.dls-dropdown-autocomplete__leading-icon {
   width: 16px;
   height: 16px;
   color: var(--dls-color-text-secondary);
 }
 
-.dls-date-input__calendar-icon svg {
+.dls-dropdown-autocomplete__leading-icon svg {
   width: 100%;
   height: 100%;
 }
 
 /* ---------------------------------------------------------------------------
-   Value / placeholder text
+   Input (always rendered — drives typing + shows selected label)
    --------------------------------------------------------------------------- */
 
-.dls-date-input__value {
+.dls-dropdown-autocomplete__input {
+  all: unset;
+  box-sizing: border-box;
   flex: 1;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-family: var(--dls-font-family);
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: var(--dls-color-component-input-fg-base);
+  cursor: text;
 }
 
-.dls-date-input__value[data-placeholder] {
+.dls-dropdown-autocomplete__input::placeholder {
   color: var(--dls-color-component-input-fg-placeholder);
+}
+
+.dls-dropdown-autocomplete__input:focus-visible {
+  outline: none;
 }
 
 /* ---------------------------------------------------------------------------
    Clear button
    --------------------------------------------------------------------------- */
 
-.dls-date-input__clear {
+.dls-dropdown-autocomplete__clear {
   all: unset;
   box-sizing: border-box;
   display: inline-flex;
@@ -123,15 +123,16 @@
   border-radius: var(--dls-radius-component-input);
 }
 
-.dls-date-input__clear:hover:not(:disabled) {
+.dls-dropdown-autocomplete__clear:hover:not(:disabled) {
   color: var(--dls-color-text-primary);
 }
 
-.dls-date-input__clear:focus-visible {
+.dls-dropdown-autocomplete__clear:focus-visible {
+  outline: none;
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }
 
-.dls-date-input__clear svg {
+.dls-dropdown-autocomplete__clear svg {
   width: 100%;
   height: 100%;
 }
@@ -140,7 +141,7 @@
    Chevron icon
    --------------------------------------------------------------------------- */
 
-.dls-date-input__chevron {
+.dls-dropdown-autocomplete__chevron {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -148,26 +149,32 @@
   width: 16px;
   height: 16px;
   color: var(--dls-color-text-secondary);
+  transition: transform 150ms ease;
 }
 
-.dls-date-input__chevron svg {
+.dls-dropdown-autocomplete__chevron svg {
   width: 100%;
   height: 100%;
+}
+
+.dls-dropdown-autocomplete[data-open] .dls-dropdown-autocomplete__chevron {
+  transform: rotate(180deg);
 }
 
 /* ---------------------------------------------------------------------------
    State: Hover
    --------------------------------------------------------------------------- */
 
-.dls-date-input__trigger:hover:not(:disabled):not([data-error]) {
+.dls-dropdown-autocomplete__trigger:hover:not(:disabled):not([data-disabled]):not([data-error]) {
   border-color: var(--dls-color-component-input-border-hover);
 }
 
 /* ---------------------------------------------------------------------------
-   State: Focus
+   State: Focus-within / Open
    --------------------------------------------------------------------------- */
 
-.dls-date-input__trigger:focus-visible {
+.dls-dropdown-autocomplete__trigger:focus-within:not([data-disabled]),
+.dls-dropdown-autocomplete[data-open] .dls-dropdown-autocomplete__trigger:not([data-disabled]) {
   border-color: var(--dls-color-component-input-border-focus);
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }
@@ -176,18 +183,19 @@
    State: Disabled
    --------------------------------------------------------------------------- */
 
-.dls-date-input__trigger:disabled {
+.dls-dropdown-autocomplete__trigger[data-disabled] {
   background: var(--dls-color-component-input-bg-disabled);
   border-color: var(--dls-color-component-input-border-disabled);
   cursor: not-allowed;
 }
 
-.dls-date-input__trigger:disabled .dls-date-input__value {
+.dls-dropdown-autocomplete__trigger[data-disabled] .dls-dropdown-autocomplete__input {
   color: var(--dls-color-component-input-fg-disabled);
+  cursor: not-allowed;
 }
 
-.dls-date-input__trigger:disabled .dls-date-input__chevron,
-.dls-date-input__trigger:disabled .dls-date-input__calendar-icon {
+.dls-dropdown-autocomplete__trigger[data-disabled] .dls-dropdown-autocomplete__chevron,
+.dls-dropdown-autocomplete__trigger[data-disabled] .dls-dropdown-autocomplete__leading-icon {
   color: var(--dls-color-text-disabled);
 }
 
@@ -195,16 +203,54 @@
    State: Error
    --------------------------------------------------------------------------- */
 
-.dls-date-input__trigger[data-error] {
+.dls-dropdown-autocomplete__trigger[data-error] {
   background: var(--dls-color-intent-danger-subtle);
   border-color: var(--dls-color-intent-danger-border);
+}
+
+/* ---------------------------------------------------------------------------
+   Listbox (dropdown menu)
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-autocomplete__listbox {
+  all: unset;
+  box-sizing: border-box;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  margin-top: var(--dls-spacing-1);
+  padding: var(--dls-spacing-1);
+  background: var(--dls-color-component-dropdown-bg);
+  border: 1px solid var(--dls-color-component-dropdown-border);
+  border-radius: var(--dls-radius-component-dropdown);
+  box-shadow: var(--dls-shadow-overlay);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.dls-dropdown-autocomplete[data-open] .dls-dropdown-autocomplete__listbox {
+  display: flex;
+}
+
+/* ---------------------------------------------------------------------------
+   Keyboard highlight — preview state that follows ArrowUp/ArrowDown.
+   Distinct from [data-selected] (persistent selection). Uses the same
+   neutral hover overlay so it reads as "focus within the list".
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-autocomplete__listbox .dls-list-item[data-highlighted] {
+  background: var(--dls-state-hover-overlay);
 }
 
 /* ---------------------------------------------------------------------------
    Hint / Error message
    --------------------------------------------------------------------------- */
 
-.dls-date-input__hint {
+.dls-dropdown-autocomplete__hint {
   display: flex;
   align-items: center;
   gap: var(--dls-spacing-1-5);
@@ -214,11 +260,11 @@
   color: var(--dls-color-text-secondary);
 }
 
-.dls-date-input__hint[data-error] {
+.dls-dropdown-autocomplete__hint[data-error] {
   color: var(--dls-color-intent-danger-text);
 }
 
-.dls-date-input__hint-icon {
+.dls-dropdown-autocomplete__hint-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -227,30 +273,7 @@
   height: 14px;
 }
 
-.dls-date-input__hint-icon svg {
+.dls-dropdown-autocomplete__hint-icon svg {
   width: 100%;
   height: 100%;
-}
-
-/* ---------------------------------------------------------------------------
-   Calendar dropdown
-   --------------------------------------------------------------------------- */
-
-.dls-date-input__dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 10;
-  margin-top: var(--dls-spacing-1);
-}
-
-/* Rotate chevron when open */
-.dls-date-input__trigger[data-open] .dls-date-input__chevron {
-  transform: rotate(180deg);
-}
-
-/* Focus ring on open state */
-.dls-date-input__trigger[data-open] {
-  border-color: var(--dls-color-component-input-border-focus);
-  box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }

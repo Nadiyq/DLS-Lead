@@ -12,8 +12,8 @@
   box-sizing: border-box;
   display: inline-flex;
   align-items: stretch;
-  background: var(--dls-color-surface-base);
-  border: 1px solid var(--dls-color-border-base);
+  background: var(--dls-color-component-input-bg-base);
+  border: 1px solid var(--dls-color-component-input-border-base);
   border-radius: var(--dls-radius-component-input);
   overflow: hidden;
   font-family: var(--dls-font-family);
@@ -86,7 +86,7 @@
 
 .dls-button-input-group__button:disabled {
   color: var(--dls-color-text-disabled);
-  background: var(--dls-color-surface-disabled);
+  background: var(--dls-color-component-input-bg-disabled);
   cursor: not-allowed;
 }
 
@@ -97,7 +97,7 @@
 .dls-button-input-group__divider {
   width: 1px;
   align-self: stretch;
-  background: var(--dls-color-border-base);
+  background: var(--dls-color-component-input-border-base);
   flex-shrink: 0;
 }
 
@@ -145,5 +145,10 @@
    --------------------------------------------------------------------------- */
 
 .dls-button-input-group[data-disabled] {
-  border-color: var(--dls-color-border-disabled);
+  background: var(--dls-color-component-input-bg-disabled);
+  border-color: var(--dls-color-component-input-border-disabled);
+}
+
+.dls-button-input-group[data-disabled] .dls-button-input-group__divider {
+  background: var(--dls-color-component-input-border-disabled);
 }

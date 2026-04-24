@@ -1,19 +1,8 @@
 import React from 'react';
+import { Minus as MinusIcon, TriangleAlert as TriangleAlertIcon } from 'lucide-react';
 import { DateInput } from '../date-input/DateInput';
 import { Calendar } from '../calendar/Calendar';
 import './date-range-input.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const TriangleAlertIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.13 2.57L1.18 10.5A1 1 0 002.05 12h9.9a1 1 0 00.87-1.5L7.87 2.57a1 1 0 00-1.74 0z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M7 5.5V7.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    <circle cx="7" cy="9.5" r="0.5" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Helpers
@@ -173,7 +162,9 @@ export const DateRangeInput = React.forwardRef<HTMLDivElement, DateRangeInputPro
             disabled={disabled}
           />
 
-          <span className="dls-date-range-input__separator" />
+          <span className="dls-date-range-input__separator" aria-hidden="true">
+            <MinusIcon />
+          </span>
 
           <DateInput
             value={endDisplay}
@@ -200,7 +191,7 @@ export const DateRangeInput = React.forwardRef<HTMLDivElement, DateRangeInputPro
         {(hint || hasError) && (
           <div className="dls-date-range-input__hint" data-error={hasError || undefined}>
             {hasError && (
-              <span className="dls-date-range-input__hint-icon">
+              <span className="dls-date-range-input__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />
               </span>
             )}

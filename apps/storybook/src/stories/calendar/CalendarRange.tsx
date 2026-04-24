@@ -280,16 +280,14 @@ export const CalendarRange = React.forwardRef<HTMLDivElement, CalendarRangeProps
                   <Dropdown
                     options={HOUR_OPTIONS}
                     value={hour}
-                    onChange={(v) => onTimeChange?.(v ?? '09', minute, period)}
-                    clearable={false}
+                    onChange={(v) => onTimeChange?.(v, minute, period)}
                     className="dls-calendar-range__time-field"
                   />
                   <span className="dls-calendar-range__time-colon">:</span>
                   <Dropdown
                     options={MINUTE_OPTIONS}
                     value={minute}
-                    onChange={(v) => onTimeChange?.(hour, v ?? '00', period)}
-                    clearable={false}
+                    onChange={(v) => onTimeChange?.(hour, v, period)}
                     className="dls-calendar-range__time-field"
                   />
                   <Tabs

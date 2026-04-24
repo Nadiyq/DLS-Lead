@@ -1,17 +1,6 @@
 import React from 'react';
+import { Info as InfoIcon } from 'lucide-react';
 import './form-field.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const InfoIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2" />
-    <path d="M6 5.5V8.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    <circle cx="6" cy="3.75" r="0.5" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Types
@@ -74,7 +63,7 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
             onClick={onInfoClick}
             aria-label="More info"
           >
-            <InfoIcon />
+            <InfoIcon aria-hidden="true" />
           </span>
         )}
       </div>

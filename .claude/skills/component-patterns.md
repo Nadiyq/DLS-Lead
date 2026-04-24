@@ -30,12 +30,21 @@
 
 ## State Implementation
 
+**Golden rule: every interactive component with a base fill uses OKLCH L-shift for hover/pressed in CSS.** This applies to buttons, chips, tabs, menu items, toggles, list items, cards — any interactive component with a fill. Figma's `state/hover-overlay` / `state/pressed-overlay` tokens are **only a Figma simulation** of the OKLCH shift — NEVER port them into CSS for filled/soft/any-fill variants. Overlays are only appropriate for truly transparent variants (outline, dotted, ghost, link) where there is no base fill to shift.
+
 ```css
-/* Hover -- filled/soft: OKLCH shift */
+/* Hover -- filled / soft / any variant WITH a base fill: OKLCH L-shift */
 .dls-{name}[data-variant="filled"]:hover:not(:disabled) {
   background: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
-/* Hover -- transparent variants: overlay */
+.dls-{name}[data-variant="soft"]:hover:not(:disabled) {
+  background: oklch(from var(--_subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
+}
+/* Pressed -- same pattern, with the pressed L-delta */
+.dls-{name}[data-variant="filled"]:active:not(:disabled) {
+  background: oklch(from var(--_base) calc(l + var(--dls-state-l-delta-pressed)) c h);
+}
+/* Hover -- transparent variants ONLY (outline, dotted, ghost, link): overlay */
 .dls-{name}[data-variant="outline"]:hover:not(:disabled) {
   background: var(--dls-state-hover-overlay);
 }
