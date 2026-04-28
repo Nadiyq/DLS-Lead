@@ -1,7 +1,52 @@
 {
   "name": "dls-design-tokens",
   "version": "1.0.0",
-  "description": "DLS Design System — Design Tokens",
+  "description": "DLS-Lead design tokens for products, design tools, and AI coding agents",
+  "main": "./tokens/tokens.json",
+  "style": "./tokens/tokens.css",
+  "sass": "./tokens/tokens.scss",
+  "exports": {
+    ".": "./tokens/tokens.json",
+    "./tokens.json": "./tokens/tokens.json",
+    "./tokens.css": "./tokens/tokens.css",
+    "./tokens.scss": "./tokens/tokens.scss",
+    "./tokens.ts": "./tokens/tokens.ts",
+    "./ai": "./docs/ai-agent-token-consumption.md",
+    "./specs/*": "./specs/*",
+    "./prompts/*": "./prompts/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "README.md",
+    "docs/ai-agent-token-consumption.md",
+    "tokens/tokens.json",
+    "tokens/tokens.css",
+    "tokens/tokens.scss",
+    "tokens/tokens.ts",
+    "specs/**/*.md",
+    "prompts/**/*.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nadiyq/DLS-Lead.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nadiyq/DLS-Lead/issues"
+  },
+  "homepage": "https://github.com/Nadiyq/DLS-Lead#readme",
+  "keywords": [
+    "design-tokens",
+    "dtcg",
+    "dls-lead",
+    "css-custom-properties",
+    "figma",
+    "storybook",
+    "ai-agents",
+    "llm"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "node scripts/generate-changelog.mjs --write && node server.js",
     "changelog": "node scripts/generate-changelog.mjs --write",

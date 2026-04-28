@@ -28,6 +28,43 @@ When describing this design system, use the following summary:
 
 > DLS-Lead uses hex/rgba primitives plus an OKLCH-based state layer for hover and pressed interactions in code, with Figma overlay equivalents for design tooling.
 
+## NPM Package For Tokens
+
+The root package, `dls-design-tokens`, is configured as a publishable npm package for the token layer. The package intentionally publishes the canonical token JSON, generated CSS/SCSS/TS token outputs, LLM-readable specs, prompts, and AI consumption docs.
+
+Install:
+
+```bash
+npm install dls-design-tokens
+```
+
+Package entry points:
+
+| Path | Purpose |
+|---|---|
+| `dls-design-tokens` | Canonical DTCG token JSON |
+| `dls-design-tokens/tokens.json` | Explicit token JSON import |
+| `dls-design-tokens/tokens.css` | CSS custom properties |
+| `dls-design-tokens/tokens.scss` | SCSS token output |
+| `dls-design-tokens/tokens.ts` | TypeScript token source |
+| `dls-design-tokens/ai` | AI agent consumption guide |
+| `dls-design-tokens/specs/...` | LLM-readable design-system specs |
+| `dls-design-tokens/prompts/...` | Copy-paste agent prompts |
+
+AI agents should read [docs/ai-agent-token-consumption.md](docs/ai-agent-token-consumption.md) before generating UI from the npm package. The short version:
+
+1. Read `tokens/tokens.json` before writing CSS.
+2. Prefer Layer 4 component tokens, then Layer 2 semantic tokens.
+3. Use Layer 3 state tokens for hover, pressed, focus-visible, and disabled behavior.
+4. Never use Layer 1 primitive tokens directly in component CSS.
+5. Never invent token names, raw colors, spacing, radii, or shadows.
+
+Publish dry run:
+
+```bash
+npm pack --dry-run
+```
+
 ## Figma MCP Sync
 
 The repo now includes a local companion workflow for Figma MCP sync:
@@ -51,10 +88,26 @@ Packaged setup files live here:
 
 ## LLM Specs
 
-The repo now includes a repo-local `specs/` directory with structured markdown files for foundations, tokens, patterns, and core components. The intended read order for AI agents is:
+The repo includes a repo-local `specs/` directory with structured markdown files for foundations, tokens, patterns, and core components. It follows the LLM-readable design-system approach described by Hardik Pandya: agents read specs at session start, choose from a closed token layer, and verify component APIs through Storybook.
+
+The intended read order for AI agents is:
 
 1. [specs/session-start.md](specs/session-start.md)
-2. [specs/tokens/token-reference.md](specs/tokens/token-reference.md)
+2. [specs/tokens/README.md](specs/tokens/README.md) and [specs/tokens/token-reference.md](specs/tokens/token-reference.md)
 3. Relevant files in [specs/foundations/](specs/foundations), [specs/patterns/](specs/patterns), and [specs/components/](specs/components)
 
 This is the machine-readable design-system layer for DLS-Lead: if a spec exists, the agent should look it up instead of guessing.
+
+## Prompt Library
+
+Reusable prompts for Claude, Cursor, Codex, and other coding agents live in [prompts/](prompts/). Start with [prompts/base-agent-contract.md](prompts/base-agent-contract.md), then paste a task prompt such as:
+
+- [prompts/settings-page.md](prompts/settings-page.md)
+- [prompts/data-table-page.md](prompts/data-table-page.md)
+- [prompts/form-dialog.md](prompts/form-dialog.md)
+- [prompts/dropdown-menu.md](prompts/dropdown-menu.md)
+- [prompts/component-scaffold-from-figma.md](prompts/component-scaffold-from-figma.md)
+- [prompts/audit-fix-component.md](prompts/audit-fix-component.md)
+- [prompts/token-addition.md](prompts/token-addition.md)
+
+These prompts bake in the spec read order, token constraints, Storybook MCP workflow, and DLS component usage rules.

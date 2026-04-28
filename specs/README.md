@@ -7,19 +7,23 @@ source_of_truth:
   - tokens/tokens.json
   - apps/storybook/src/stories/
   - CLAUDE.md
+method_reference:
+  - https://hvpandya.com/llm-design-systems
 ---
 
 # DLS-Lead LLM Specs
 
 This directory is the repo-local design-system layer for AI agents. Read it before changing UI. The goal is simple: do not guess visual decisions that DLS-Lead already defines.
 
+The structure follows the LLM-readable design-system pattern from Hardik Pandya's "Expose your design system to LLMs": specs provide session memory, tokens provide a closed value layer, and Storybook provides documented component APIs.
+
 ## Read Order
 
 1. [session-start.md](session-start.md)
-2. [tokens/token-reference.md](tokens/token-reference.md)
-3. Relevant foundation specs in [`foundations/`](foundations/)
-4. Relevant pattern specs in [`patterns/`](patterns/)
-5. Relevant component specs in [`components/`](components/)
+2. [tokens/README.md](tokens/README.md) and [tokens/token-reference.md](tokens/token-reference.md)
+3. Relevant foundation specs in [foundations/](foundations/)
+4. Relevant pattern specs in [patterns/](patterns/)
+5. Relevant component specs in [components/](components/)
 
 ## Source-Of-Truth Order
 
@@ -38,7 +42,14 @@ This directory is the repo-local design-system layer for AI agents. Read it befo
 
 ## Directory Map
 
-- `foundations/`: color, spacing, typography, radius, elevation, motion
-- `tokens/`: closed token reference and lookup rules
-- `patterns/`: composition, layout, and component selection rules
-- `components/`: focused specs for core DLS building blocks
+- [foundations/](foundations/): color, spacing, typography, radius, elevation, motion, accessibility, borders, breakpoints, grid, iconography, opacity, z-index
+- [tokens/](tokens/): closed token reference and focused token lookup files
+- [patterns/](patterns/): composition, layout, and component selection rules
+- [components/](components/): focused specs for core DLS building blocks
+
+## Maintenance Rules
+
+- New component in Storybook means a matching component spec or a documented reason it is covered by an existing family spec.
+- New token family means a focused token spec plus a foundation spec update.
+- Repeated review feedback means a pattern spec update.
+- Draft foundation specs constrain current behavior but do not authorize new token families.

@@ -13,7 +13,7 @@ const config: StorybookConfig = {
   ],
   framework: "@storybook/react-vite",
   features: {
-    componentsManifest: true,
+    experimentalComponentsManifest: true,
   },
 
   viteFinal: async (viteConfig) => {

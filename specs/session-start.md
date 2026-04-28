@@ -5,6 +5,7 @@ status: active
 read_when: every_ui_task
 related:
   - README.md
+  - tokens/README.md
   - tokens/token-reference.md
   - patterns/composition.md
 ---
@@ -16,7 +17,7 @@ Use this checklist at the start of every UI task.
 ## Workflow
 
 1. Identify whether the task is foundations, composition, or a specific component.
-2. Read [tokens/token-reference.md](tokens/token-reference.md).
+2. Read [tokens/README.md](tokens/README.md) and [tokens/token-reference.md](tokens/token-reference.md).
 3. Read the relevant foundation specs before making visual decisions.
 4. Read the relevant component spec before using or editing a component.
 5. Check Storybook or the Storybook MCP server for exact props, examples, and states.
@@ -29,11 +30,15 @@ Use this checklist at the start of every UI task.
 - Layout or spacing change: [foundations/spacing.md](foundations/spacing.md)
 - Typography choice: [foundations/typography.md](foundations/typography.md)
 - Interactive states: [foundations/motion.md](foundations/motion.md)
+- Accessibility, keyboard, or ARIA: [foundations/accessibility.md](foundations/accessibility.md)
+- Icons: [foundations/iconography.md](foundations/iconography.md)
+- Responsive layout: [foundations/breakpoints.md](foundations/breakpoints.md) and [foundations/grid.md](foundations/grid.md)
 - Component styling: relevant file in [`components/`](components/)
 
 ## Hard Rules
 
 - Use only named DLS tokens. No raw hex, rgba, px, or ad hoc radii in component styles.
+- Look up focused token files before choosing color, spacing, type, elevation, or motion values.
 - Use `data-*` attributes and native states, not class-based variants.
 - Dropdowns, menus, and popovers are composed with `List` and `ListItem`.
 - Icons come from `lucide-react` only.

@@ -20,6 +20,23 @@ cd apps/storybook && npx tsc -b              # TypeScript check
 `tokens/tokens.json` — DTCG-compliant, 4-layer model: L1 Primitives → L2 Semantics → L3 State → L4 Component.
 Generated outputs (don't hand-edit): `tokens/tokens.css`, `tokens/tokens.scss`, `tokens/tokens.ts`.
 
+## LLM Specs
+
+Before writing or modifying UI code, read the repo-local specs:
+
+1. `specs/session-start.md`
+2. `specs/tokens/README.md` and `specs/tokens/token-reference.md`
+3. Relevant files in `specs/foundations/`, `specs/patterns/`, and `specs/components/`
+
+These markdown files are the machine-readable design-system layer for AI agents. If a spec exists, look it up instead of guessing.
+
+## Prompt Library
+
+Reusable prompts for DLS-safe Claude, Cursor, Codex, and other coding-agent workflows live in `prompts/`.
+
+- Start with `prompts/base-agent-contract.md`
+- Use task prompts such as `prompts/settings-page.md`, `prompts/data-table-page.md`, `prompts/form-dialog.md`, `prompts/dropdown-menu.md`, `prompts/component-scaffold-from-figma.md`, `prompts/audit-fix-component.md`, and `prompts/token-addition.md`
+
 ## Critical Rules
 
 - **Always check the library first.** Before writing any UI element, check `apps/storybook/src/stories/` and Storybook. Never build from scratch if a DLS component exists. If you can't find a component, stop and ask.
@@ -38,6 +55,8 @@ Uses the **official Figma MCP** (authenticated via Figma MCP Auth). Key tools: `
 ```
 tokens/              → tokens.json (source), generated .css/.scss/.ts, figma-sync-4layer.js
 apps/storybook/      → React components + stories (Vite + Storybook 10)
+specs/               → LLM-readable foundation, token, pattern, and component specs
+prompts/             → Copy-paste prompt library for DLS-safe agent workflows
 .claude/skills/      → Detailed instructions per domain (read these for deep guidance)
 index.html + server.js → Token reference documentation site
 ```

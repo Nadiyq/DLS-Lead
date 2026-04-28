@@ -3,8 +3,10 @@
 When working on UI components in this repo, read the repo-local specs first and then use the `dls-lead-storybook` MCP server before answering or making component changes.
 
 - Start with `specs/session-start.md`.
+- Read `specs/tokens/README.md` for the token spec map.
 - Read `specs/tokens/token-reference.md` before choosing tokens.
 - Read the relevant files in `specs/foundations/`, `specs/patterns/`, and `specs/components/` before changing UI.
+- Reusable copy-paste prompts for DLS-safe UI work live in `prompts/`. Start with `prompts/base-agent-contract.md` when a session needs prompt scaffolding.
 
 - Run `list-all-documentation` first to discover existing DLS components and docs pages.
 - Run `get-documentation` before using a component so you only rely on documented props, variants, sizes, and examples.
@@ -19,3 +21,4 @@ Operational notes:
 - The DLS Lead Storybook MCP endpoint runs at `http://127.0.0.1:6006/mcp`.
 - The server name is standardized across configs as `dls-lead-storybook`.
 - The `specs/` directory is the repo-local LLM-readable design-system layer. Do not guess around it.
+- The `prompts/` directory is the repo-local prompt library for Claude, Cursor, Codex, and other coding agents.

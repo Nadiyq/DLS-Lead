@@ -16,10 +16,11 @@ This is the everyday token map for AI agents. For exhaustive canonical definitio
 
 ## Lookup Order
 
-1. Layer 4 component tokens
-2. Layer 2 semantic tokens
-3. Layer 3 state tokens for behavior
-4. Layer 1 primitives only when editing the token system itself
+1. Read the focused token spec for the category: color, spacing, typography, elevation, or motion.
+2. Use Layer 4 component tokens when styling an existing component.
+3. Use Layer 2 semantic tokens when no component token exists.
+4. Use Layer 3 state tokens for hover, pressed, focus, and disabled behavior.
+5. Use Layer 1 primitives only when editing the token system itself.
 
 ## Layer Model
 
@@ -215,6 +216,12 @@ Common examples:
 
 ## Cross-References
 
+- [README.md](README.md)
+- [color-tokens.md](color-tokens.md)
+- [spacing-tokens.md](spacing-tokens.md)
+- [typography-tokens.md](typography-tokens.md)
+- [elevation-tokens.md](elevation-tokens.md)
+- [motion-tokens.md](motion-tokens.md)
 - [../session-start.md](../session-start.md)
 - [../foundations/color.md](../foundations/color.md)
 - [../patterns/composition.md](../patterns/composition.md)

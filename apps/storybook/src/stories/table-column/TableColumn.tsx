@@ -1,4 +1,5 @@
 import React from 'react';
+import { Pencil as PencilIcon, Trash2 as TrashIcon, Circle as CircleIcon } from 'lucide-react';
 import './table-column.css';
 import { TableHeaderCell } from '../table-header-cell/TableHeaderCell';
 import { TableCell } from '../table-cell/TableCell';
@@ -6,6 +7,7 @@ import { Avatar } from '../Avatar';
 import { Button } from '../Button';
 import { Checkbox } from '../checkbox/Checkbox';
 import { IconShape } from '../icon-shape/IconShape';
+import { mastercardLogo } from '../assets/brand-logos';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -61,23 +63,7 @@ export interface TableColumnRow {
   render?: React.ReactNode;
 }
 
-/* ---------------------------------------------------------------------------
-   Helper icons
-   --------------------------------------------------------------------------- */
-
-const EditIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none"><path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" /></svg>
-);
-
-const TrashIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none"><path d="M2 4H14M5 4V2H11V4M6 7V12M10 7V12M3 4L4 14H12L13 4" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" /></svg>
-);
-
-const CircleIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.33" /></svg>
-);
-
-/* Checkbox uses DLS Checkbox component */
+/* Lucide icons (Pencil, Trash2, Circle) imported above. Checkbox uses DLS Checkbox component. */
 
 /* ---------------------------------------------------------------------------
    Helper: status badge (no DLS text badge component exists yet)
@@ -160,7 +146,9 @@ const renderCell = (type: TableColumnType, row: TableColumnRow, idx: number) => 
       return (
         <TableCell key={idx} type="slot">
           <span className="dls-table-column__card">
-            <span className="dls-table-column__card-icon" />
+            <span className="dls-table-column__card-icon">
+              <img src={mastercardLogo} alt="Mastercard" />
+            </span>
             <span className="dls-table-column__card-number">
               <span className="dls-table-column__card-dots">••••</span>
               <span>{row.cardLast4 || '1234'}</span>
@@ -174,7 +162,7 @@ const renderCell = (type: TableColumnType, row: TableColumnRow, idx: number) => 
         <TableCell key={idx} type="actions" align="center">
           {row.render || (
             <span className="dls-table-column__actions">
-              <Button variant="ghost" intent="neutral" size="m" icon={<EditIcon />} iconOnly aria-label="Edit" />
+              <Button variant="ghost" intent="neutral" size="m" icon={<PencilIcon />} iconOnly aria-label="Edit" />
               <Button variant="ghost" intent="neutral" size="m" icon={<TrashIcon />} iconOnly aria-label="Delete" />
             </span>
           )}

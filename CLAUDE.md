@@ -27,10 +27,19 @@ Generated outputs (don't hand-edit): `tokens/tokens.css`, `tokens/tokens.scss`, 
 Before writing or modifying any UI code, read the relevant spec files in `specs/`.
 
 - Start with `specs/session-start.md`
-- Read `specs/tokens/token-reference.md`
+- Read `specs/tokens/README.md` and `specs/tokens/token-reference.md`
 - Read the relevant files in `specs/foundations/`, `specs/patterns/`, and `specs/components/`
 
 These specs are the repo-local machine-readable design-system layer. If a spec exists, look it up instead of guessing.
+
+## Prompt Library
+
+Reusable prompts for Claude, Cursor, Codex, and other coding agents live in `prompts/`.
+
+- Start a DLS UI session with `prompts/base-agent-contract.md`
+- Use task prompts such as `prompts/settings-page.md`, `prompts/data-table-page.md`, `prompts/form-dialog.md`, `prompts/dropdown-menu.md`, `prompts/component-scaffold-from-figma.md`, `prompts/audit-fix-component.md`, and `prompts/token-addition.md`
+
+These prompts bake in the spec read order, token constraints, Storybook MCP workflow, and official Figma MCP requirement.
 
 ## Critical Rules — ZERO CUSTOM CSS POLICY
 
@@ -95,6 +104,7 @@ Project-scoped config and setup examples live in `.mcp.json`, `.cursor/mcp.json`
 tokens/              → tokens.json (source), generated .css/.scss/.ts, figma-sync-4layer.js
 apps/storybook/      → React components + stories (Vite + Storybook 10)
 specs/               → LLM-readable design-system specs for foundations, tokens, patterns, and core components
+prompts/             → Copy-paste prompt library for DLS-safe agent workflows
 .claude/skills/      → Detailed instructions per domain
 .claude/hooks/       → lint-tokens.mjs (PostToolUse CSS linter)
 index.html + server.js → Token reference documentation site

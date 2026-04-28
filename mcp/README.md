@@ -87,7 +87,7 @@ Codex uses shared MCP config in `~/.codex/config.toml`, so this repo includes an
 You can add the server with the CLI:
 
 ```bash
-codex mcp add dlsLeadStorybook --url http://127.0.0.1:6006/mcp
+codex mcp add dls-lead-storybook --url http://127.0.0.1:6006/mcp
 ```
 
 Or copy the example block into `~/.codex/config.toml`.

@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Check as CheckIcon, User as UserIcon, Pencil as PencilIcon, Copy as CopyIcon, Trash2 as TrashIcon, MoreHorizontal as MoreHorizontalIcon, Plus as PlusIcon } from 'lucide-react';
+import { Check as CheckIcon, User as UserIcon, Pencil as PencilIcon, Copy as CopyIcon, Trash2 as TrashIcon, MoreHorizontal as MoreHorizontalIcon, Plus as PlusIcon, TrendingUp as TrendingUpIcon, TrendingDown as TrendingDownIcon } from 'lucide-react';
 import { TableCell } from './TableCell';
+import { TableHeaderCell } from '../table-header-cell/TableHeaderCell';
 import { Checkbox } from '../checkbox/Checkbox';
 import { Button } from '../Button';
 import { Badge } from '../Badge';
 import { Avatar } from '../Avatar';
 import { AvatarStack } from '../AvatarStack';
+import { mastercardLogo } from '../assets/brand-logos';
 import '../table/table.css';
 
 const SAMPLE_USERS = [
@@ -286,29 +288,13 @@ export const UsersStackedCell: Story = {
 // ---------------------------------------------------------------------------
 
 const MastercardMark = () => (
-  <span
-    aria-label="Mastercard"
-    style={{
-      display: 'inline-flex',
-      alignItems: 'center',
-      flexShrink: 0,
-      width: 32,
-      height: 20,
-      position: 'relative',
-    }}
-  >
-    <span style={{
-      position: 'absolute', left: 0, top: 0,
-      width: 20, height: 20, borderRadius: '50%',
-      background: '#EB001B',
-    }} />
-    <span style={{
-      position: 'absolute', right: 0, top: 0,
-      width: 20, height: 20, borderRadius: '50%',
-      background: '#F79E1B',
-      mixBlendMode: 'multiply',
-    }} />
-  </span>
+  <img
+    src={mastercardLogo}
+    alt="Mastercard"
+    width={32}
+    height={20}
+    style={{ display: 'inline-block', flexShrink: 0 }}
+  />
 );
 
 const CardDigits = ({ last4 }: { last4: string }) => (
@@ -344,6 +330,50 @@ export const CreditCardCell: Story = {
 };
 
 // ---------------------------------------------------------------------------
+// Trend cell — sparkline-style icon + percentage with intent color
+// Direction: up = success, down = danger.
+// ---------------------------------------------------------------------------
+
+type TrendDirection = 'up' | 'down';
+
+const Trend = ({ value, direction }: { value: string; direction: TrendDirection }) => {
+  const Glyph = direction === 'up' ? TrendingUpIcon : TrendingDownIcon;
+  const color = direction === 'up'
+    ? 'var(--dls-color-intent-success-text)'
+    : 'var(--dls-color-intent-danger-text)';
+  return (
+    <span
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 'var(--dls-spacing-1)',
+        color,
+        fontFamily: 'var(--dls-font-family)',
+        fontSize: 'var(--dls-text-s-font-size)',
+        lineHeight: 'var(--dls-text-s-line-height)',
+        fontWeight: 'var(--dls-font-weight-medium)',
+      }}
+    >
+      <Glyph style={{ width: 16, height: 16 }} />
+      {value}
+    </span>
+  );
+};
+
+export const TrendCell: Story = {
+  args: { text: 'Item text' },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 0, width: 300 }}>
+      <TableCell type="trend" align="left"><Trend value="5%" direction="up" /></TableCell>
+      <TableCell type="trend" align="center"><Trend value="5%" direction="up" /></TableCell>
+      <TableCell type="trend" align="right"><Trend value="5%" direction="up" /></TableCell>
+      <TableCell type="trend" align="left"><Trend value="2.4%" direction="down" /></TableCell>
+      <TableCell type="trend" align="right"><Trend value="2.4%" direction="down" /></TableCell>
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
 // Slot cell (generic content)
 // ---------------------------------------------------------------------------
 
@@ -351,18 +381,11 @@ export const SlotCell: Story = {
   args: { text: 'Item text' },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0, width: 300 }}>
-      <TableCell type="slot" align="left">
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: 8,
-          fontFamily: 'var(--dls-font-family)', fontSize: 'var(--dls-text-s-font-size)',
-          color: 'var(--dls-color-text-secondary)',
-        }}>
-          <div style={{
-            width: 28, height: 28, borderRadius: 'var(--dls-radius-full)',
-            background: 'var(--dls-color-surface-muted)',
-          }} />
-          Custom content
-        </div>
+      <TableCell type="slot" align="center">
+        <Checkbox />
+      </TableCell>
+      <TableCell type="slot" align="center">
+        <Checkbox />
       </TableCell>
     </div>
   ),
@@ -374,26 +397,48 @@ export const SlotCell: Story = {
 
 export const TableRowExample: Story = {
   args: { text: 'Item text' },
+  parameters: { layout: 'padded' },
   render: () => (
-    <div style={{ width: 700 }}>
-      <Section title="Example rows (grid layout — equal row heights)">
-        <div className="dls-table__columns" style={{ gridTemplateColumns: '40px 2fr 1fr 1fr 120px', gridTemplateRows: 'repeat(2, auto)' }}>
-          <TableCell type="text" slotLeft={<Checkbox />} padding={false} />
+    <div style={{ width: 720 }}>
+      <Section title="Example rows (column-first grid)">
+        <div
+          className="dls-table__columns"
+          style={{
+            gridTemplateColumns: '40px 2fr 1fr 1fr 120px',
+            gridTemplateRows: 'repeat(3, auto)',
+          }}
+        >
+          {/* Column 1 — checkbox */}
+          <TableHeaderCell type="control">
+            <Checkbox />
+          </TableHeaderCell>
+          <TableCell type="slot" align="center"><Checkbox /></TableCell>
+          <TableCell type="slot" align="center"><Checkbox /></TableCell>
+
+          {/* Column 2 — user (two-line) */}
+          <TableHeaderCell text="User" sortable />
           <TableCell type="two-line" text="John Smith" secondaryText="john@example.com" />
+          <TableCell type="two-line" text="Jane Doe" secondaryText="jane@example.com" />
+
+          {/* Column 3 — status (badge) */}
+          <TableHeaderCell text="Status" align="center" sortable />
           <TableCell type="badge" align="center">
             <Badge variant="soft" intent="success" size="m">Active</Badge>
           </TableCell>
-          <TableCell type="text" text="$12,500" align="right" />
-          <TableCell type="actions" align="right">
-            <Button variant="outline" intent="neutral" size="s">Edit</Button>
-          </TableCell>
-
-          <TableCell type="text" slotLeft={<Checkbox />} padding={false} />
-          <TableCell type="two-line" text="Jane Doe" secondaryText="jane@example.com" />
           <TableCell type="badge" align="center">
             <Badge variant="soft" intent="warning" size="m">Pending</Badge>
           </TableCell>
+
+          {/* Column 4 — amount */}
+          <TableHeaderCell text="Amount" align="right" sortable />
+          <TableCell type="text" text="$12,500" align="right" />
           <TableCell type="text" text="$8,200" align="right" />
+
+          {/* Column 5 — actions */}
+          <TableHeaderCell text="" />
+          <TableCell type="actions" align="right">
+            <Button variant="outline" intent="neutral" size="s">Edit</Button>
+          </TableCell>
           <TableCell type="actions" align="right">
             <Button variant="outline" intent="neutral" size="s">Edit</Button>
           </TableCell>
