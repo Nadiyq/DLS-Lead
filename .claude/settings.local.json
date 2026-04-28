@@ -40,7 +40,14 @@
       "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/slot-input/slot-input.css)",
       "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/form-field/form-field.css)",
       "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/button-input-group/button-input-group.css)",
-      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/button.css)"
+      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/button.css)",
+      "Bash(curl -s -o /tmp/dotted-figma.png \"https://www.figma.com/api/mcp/asset/24142445-6182-456a-8794-57e3d04f78fe\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /tmp/ghost-figma.png \"https://www.figma.com/api/mcp/asset/14eca069-3f85-4d2c-b377-3d5dbe3ba8ce\")",
+      "Bash(curl -s -o /tmp/link-figma.png \"https://www.figma.com/api/mcp/asset/02901d40-7fb6-405b-8079-6e6b6e618863\")",
+      "Bash(node -e \"const l = require\\('lucide-react'\\); console.log\\('Info:', !!l.Info\\); console.log\\('CheckCircle:', !!l.CheckCircle\\); console.log\\('CircleCheck:', !!l.CircleCheck\\); console.log\\('AlertTriangle:', !!l.AlertTriangle\\); console.log\\('TriangleAlert:', !!l.TriangleAlert\\); console.log\\('XCircle:', !!l.XCircle\\); console.log\\('CircleX:', !!l.CircleX\\);\")",
+      "Bash(curl -s -o /tmp/tab-figma.png \"https://www.figma.com/api/mcp/asset/9a8e7079-1491-44ef-ac9b-227b1a947de6\")",
+      "Bash(curl -s -o /tmp/tab-group-figma.png \"https://www.figma.com/api/mcp/asset/d14ad6f0-2e63-4ecd-93a9-64face39acd0\")"
     ]
   },
   "enabledMcpjsonServers": [

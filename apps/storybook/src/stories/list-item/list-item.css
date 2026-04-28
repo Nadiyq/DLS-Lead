@@ -20,6 +20,7 @@
   border: 1px solid transparent;
   font-family: var(--dls-font-family);
   background: var(--dls-color-surface-base);
+  text-align: left;
   cursor: pointer;
 }
 
@@ -145,6 +146,13 @@
 .dls-list-item__slot {
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
+}
+
+.dls-list-item__slot > svg {
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
   flex-shrink: 0;
 }
 

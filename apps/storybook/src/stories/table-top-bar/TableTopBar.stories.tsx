@@ -1,11 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { Search as SearchIcon, ListFilter as FilterIcon, Settings as SettingsIcon, Trash2 as TrashIcon } from 'lucide-react';
 import { TableTopBar } from './TableTopBar';
 import { Filters } from '../filters/Filters';
 import type { FilterGroup } from '../filters/Filters';
 import { FilterChip } from '../filter-chip/FilterChip';
 import { Button } from '../Button';
 import { InputField } from '../input-field/InputField';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
+
+const FILTER_OPTIONS: Record<string, string[]> = {
+  Status: ['Active', 'Inactive', 'Pending', 'Archived'],
+  Role: ['Admin', 'Editor', 'Viewer'],
+  Date: ['Today', 'Yesterday', 'Last 7 days', 'Last 30 days'],
+  Department: ['Engineering', 'Design', 'Sales', 'Support'],
+};
 
 const meta = {
   title: 'Components/TableTopBar',
@@ -28,31 +38,11 @@ type Story = StoryObj<typeof meta>;
 // Helper components — lightweight stubs for story demos
 // ---------------------------------------------------------------------------
 
-const SearchIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M11 11L14 14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
 const SearchInput = () => (
   <InputField
     placeholder="Search..."
     iconStart={<SearchIcon />}
   />
-);
-
-const FilterIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M2 4H14M4 8H12M6 12H10" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const SettingsIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M8 2V4M8 12V14M2 8H4M12 8H14M3.76 3.76L5.17 5.17M10.83 10.83L12.24 12.24M12.24 3.76L10.83 5.17M5.17 10.83L3.76 12.24" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
 );
 
 // ---------------------------------------------------------------------------
@@ -169,10 +159,10 @@ export const Interactive: Story = {
   },
   render: () => {
     const [showFilters, setShowFilters] = React.useState(false);
-    const availableFilters = ['Status', 'Role', 'Date', 'Department'];
+    const availableFilters = Object.keys(FILTER_OPTIONS);
     const [activeFilters, setActiveFilters] = React.useState<
-      { id: string; label: string; value: string }[]
-    >([{ id: 'status', label: 'Status', value: 'Active' }]);
+      { id: string; label: string; value: string; isVisible: boolean }[]
+    >([{ id: 'status', label: 'Status', value: 'Active', isVisible: true }]);
 
     const addFilter = () => {
       const used = new Set(activeFilters.map(f => f.label));
@@ -180,7 +170,7 @@ export const Interactive: Story = {
       if (next) {
         setActiveFilters(prev => [
           ...prev,
-          { id: next.toLowerCase(), label: next, value: 'All' },
+          { id: next.toLowerCase(), label: next, value: 'All', isVisible: true },
         ]);
       }
     };
@@ -193,16 +183,43 @@ export const Interactive: Story = {
       });
     };
 
+    const setVisibility = (id: string, isVisible: boolean) => {
+      setActiveFilters(prev => prev.map(f => f.id === id ? { ...f, isVisible } : f));
+    };
+
+    const setValue = (id: string, value: string) => {
+      setActiveFilters(prev => prev.map(f => f.id === id ? { ...f, value } : f));
+    };
+
     const groups: FilterGroup[] = activeFilters.map(f => ({
       id: f.id,
       children: (
         <FilterChip
           label={f.label}
-          isVisible
+          isVisible={f.isVisible}
           size="m"
           valueSummary={<span className="dls-filter-chip__value-text">{f.value}</span>}
-          onVisibilityChange={() => removeFilter(f.id)}
-        />
+          onVisibilityChange={(v) => setVisibility(f.id, v)}
+        >
+          <List className="dls-filter-chip__enum-list">
+            {(FILTER_OPTIONS[f.label] ?? []).map((opt) => (
+              <ListItem
+                key={opt}
+                type="text"
+                text={opt}
+                selected={f.value === opt}
+                onClick={() => setValue(f.id, opt)}
+              />
+            ))}
+            <ListItem type="divider" />
+            <ListItem
+              type="with-slots"
+              text="Remove filter"
+              slotLeft={<TrashIcon />}
+              onClick={() => removeFilter(f.id)}
+            />
+          </List>
+        </FilterChip>
       ),
     }));
 
@@ -235,7 +252,7 @@ export const Interactive: Story = {
           margin: '0 16px', fontSize: 'var(--dls-text-s-font-size)',
           fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-secondary)',
         }}>
-          Click the filter icon to toggle the filters row. Click chips to remove, + to add.
+          Click the filter icon to toggle the filters row. Eye = hide/show; chevron opens options + remove filter.
         </p>
       </div>
     );

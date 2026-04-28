@@ -86,19 +86,11 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Variant: Ghost (no container styling)
+   Variant: Ghost (no container, no dividers — buttons stand alone)
    --------------------------------------------------------------------------- */
 
 .dls-button-group[data-variant="ghost"] {
   background: transparent;
-}
-
-/* Dividers between ghost buttons */
-.dls-button-group[data-variant="ghost"][data-orientation="horizontal"] > .dls-button + .dls-button {
-  border-left: 1px solid var(--dls-color-border-subtle);
-}
-.dls-button-group[data-variant="ghost"][data-orientation="vertical"] > .dls-button + .dls-button {
-  border-top: 1px solid var(--dls-color-border-subtle);
 }
 
 /* ---------------------------------------------------------------------------

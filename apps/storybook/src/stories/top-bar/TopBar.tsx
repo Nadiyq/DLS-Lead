@@ -1,8 +1,8 @@
 import React from 'react';
+import { Menu as MenuIcon, Search as SearchIcon, Bell as BellIcon, HelpCircle as HelpIcon } from 'lucide-react';
 import './top-bar.css';
 import { Avatar } from '../Avatar';
 import { Button } from '../Button';
-import { BadgeIndicator } from '../badge/indicator/BadgeIndicator';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -39,8 +39,6 @@ export interface TopBarProps {
   onSearchClick?: () => void;
   /** Show notification bell */
   showNotifications?: boolean;
-  /** Whether there are unread notifications */
-  hasNotifications?: boolean;
   /** Notification click handler */
   onNotificationClick?: () => void;
   /** Show help button */
@@ -55,38 +53,6 @@ export interface TopBarProps {
   onAvatarClick?: () => void;
   className?: string;
 }
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const MenuIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none">
-    <path d="M2 4H14M2 8H14M2 12H14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const SearchIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none">
-    <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M11 11L14 14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const BellIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none">
-    <path d="M4 6C4 3.8 5.8 2 8 2C10.2 2 12 3.8 12 6V9L13 11H3L4 9V6Z" stroke="currentColor" strokeWidth="1.33" strokeLinejoin="round" />
-    <path d="M6.5 11V12C6.5 12.8 7.2 13.5 8 13.5C8.8 13.5 9.5 12.8 9.5 12V11" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const HelpIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M6 6C6 4.9 6.9 4 8 4C9.1 4 10 4.9 10 6C10 7 9 7 8 8V9" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-    <circle cx="8" cy="11.5" r="0.75" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Component
@@ -106,7 +72,6 @@ export const TopBar = React.forwardRef<HTMLDivElement, TopBarProps>(
       showSearch = true,
       onSearchClick,
       showNotifications = true,
-      hasNotifications = false,
       onNotificationClick,
       showHelp = true,
       onHelpClick,
@@ -118,18 +83,15 @@ export const TopBar = React.forwardRef<HTMLDivElement, TopBarProps>(
     ref,
   ) => {
     const NotificationBtn = () => (
-      <span className="dls-top-bar__notification">
-        <Button
-          variant="ghost"
-          intent="neutral"
-          size="m"
-          icon={<BellIcon />}
-          iconOnly
-          aria-label="Notifications"
-          onClick={onNotificationClick}
-        />
-        {hasNotifications && <BadgeIndicator size="xs" intent="danger" className="dls-top-bar__notification-dot" />}
-      </span>
+      <Button
+        variant="ghost"
+        intent="neutral"
+        size="m"
+        icon={<BellIcon />}
+        iconOnly
+        aria-label="Notifications"
+        onClick={onNotificationClick}
+      />
     );
 
     const AvatarEl = () => (

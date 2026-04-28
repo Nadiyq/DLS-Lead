@@ -117,6 +117,11 @@
   margin-left: var(--_overlap);
 }
 
+.dls-avatar-stack__counter-wrap:hover,
+.dls-avatar-stack__counter-wrap:focus-within {
+  z-index: 100;
+}
+
 .dls-avatar-stack__counter-wrap:first-child {
   margin-left: 0;
 }

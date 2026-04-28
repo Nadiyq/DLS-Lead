@@ -1,15 +1,6 @@
 import React from 'react';
+import { Plus as PlusIcon } from 'lucide-react';
 import './filters.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const PlusIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Types

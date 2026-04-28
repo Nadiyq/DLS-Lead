@@ -21,7 +21,6 @@ export const Playground: Story = {
     type: '1',
     showSearch: true,
     showNotifications: true,
-    hasNotifications: true,
     showHelp: true,
     avatarInitials: 'AS',
   },
@@ -36,7 +35,6 @@ export const Type1Minimal: Story = {
     type: '1',
     showSearch: true,
     showNotifications: true,
-    hasNotifications: true,
     showHelp: true,
     avatarInitials: 'AS',
   },
@@ -51,7 +49,6 @@ export const Type2Search: Story = {
     type: '2',
     searchPlaceholder: 'Search anything…',
     showNotifications: true,
-    hasNotifications: false,
     showHelp: true,
     avatarInitials: 'AS',
   },
@@ -70,7 +67,6 @@ export const Type3NavTabs: Story = {
       { label: 'Team members' },
     ],
     showNotifications: true,
-    hasNotifications: true,
     avatarInitials: 'AS',
   },
 };
@@ -84,7 +80,6 @@ export const NoNotifications: Story = {
     type: '1',
     showSearch: true,
     showNotifications: true,
-    hasNotifications: false,
     showHelp: true,
     avatarInitials: 'JD',
   },
@@ -112,7 +107,6 @@ export const InteractiveSearch: Story = {
           searchValue={search}
           onSearchChange={setSearch}
           showNotifications
-          hasNotifications={search.length > 0}
           showHelp
           avatarInitials="AS"
         />
@@ -155,7 +149,6 @@ export const InteractiveNav: Story = {
             onClick: () => setActiveTab(t),
           }))}
           showNotifications
-          hasNotifications
           avatarInitials="AS"
         />
         <div style={{
@@ -179,7 +172,6 @@ export const WithSidebarLayout: Story = {
   args: {
     type: '1',
     showNotifications: true,
-    hasNotifications: true,
     showHelp: true,
     avatarInitials: 'AS',
   },
@@ -189,7 +181,6 @@ export const WithSidebarLayout: Story = {
         type="1"
         showSearch
         showNotifications
-        hasNotifications
         showHelp
         avatarInitials="AS"
       />

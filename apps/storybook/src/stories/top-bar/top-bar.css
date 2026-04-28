@@ -85,7 +85,7 @@
   transition: background-color 100ms ease, color 100ms ease;
 }
 
-.dls-top-bar__nav-item:hover:not([data-disabled]) {
+.dls-top-bar__nav-item:hover:not(:disabled) {
   background: var(--dls-state-hover-overlay);
   color: var(--dls-color-text-primary);
 }
@@ -117,22 +117,6 @@
 }
 
 /* Icon buttons use DLS Button (variant="ghost" iconOnly) — no custom styles needed */
-
-/* ---------------------------------------------------------------------------
-   Notification button (uses BadgeIndicator for dot)
-   --------------------------------------------------------------------------- */
-
-.dls-top-bar__notification {
-  position: relative;
-}
-
-.dls-top-bar__notification-dot {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  border: 2px solid var(--dls-color-surface-base);
-  pointer-events: none;
-}
 
 /* ---------------------------------------------------------------------------
    Avatar wrapper (uses shared Avatar component)

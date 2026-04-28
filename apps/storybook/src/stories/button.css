@@ -287,6 +287,7 @@
 .dls-button[data-variant="soft"]:disabled {
   background: var(--dls-color-surface-disabled);
   color: var(--dls-color-text-disabled);
+  border-color: var(--dls-color-border-disabled);
 }
 
 .dls-button[data-variant="ghost"]:disabled {

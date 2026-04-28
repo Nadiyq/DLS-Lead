@@ -12,6 +12,9 @@ const config: StorybookConfig = {
     "@storybook/addon-mcp",
   ],
   framework: "@storybook/react-vite",
+  features: {
+    componentsManifest: true,
+  },
 
   viteFinal: async (viteConfig) => {
     // ✅ ESM-safe dirname

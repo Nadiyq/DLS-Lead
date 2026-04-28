@@ -35,7 +35,7 @@
    Hover
    --------------------------------------------------------------------------- */
 
-.dls-table-header-cell[data-sortable]:hover:not([data-disabled]) {
+.dls-table-header-cell[data-sortable]:hover:not(:disabled):not([data-disabled]) {
   cursor: pointer;
   background: oklch(from var(--dls-color-intent-neutral-subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
@@ -94,12 +94,6 @@
 
 .dls-table-header-cell__sort[data-active] {
   color: var(--dls-color-text-primary);
-}
-
-/* Descending — flip arrow */
-
-.dls-table-header-cell__sort[data-direction="desc"] {
-  transform: rotate(180deg);
 }
 
 /* ---------------------------------------------------------------------------

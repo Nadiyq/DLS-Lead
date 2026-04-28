@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowUpDown as ArrowUpDownIcon, ArrowUp as ArrowUpIcon, ArrowDown as ArrowDownIcon } from 'lucide-react';
 import './table-header-cell.css';
 
 /* ---------------------------------------------------------------------------
@@ -28,16 +29,6 @@ export interface TableHeaderCellProps {
   children?: React.ReactNode;
   className?: string;
 }
-
-/* ---------------------------------------------------------------------------
-   Sort icon — up arrow (rotated for desc)
-   --------------------------------------------------------------------------- */
-
-const SortIcon = () => (
-  <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 2.5V9.5M6 2.5L3 5.5M6 2.5L9 5.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Component
@@ -71,13 +62,17 @@ export const TableHeaderCell = React.forwardRef<HTMLDivElement, TableHeaderCellP
 
     const isActive = sortDirection !== 'none';
 
+    const SortGlyph =
+      sortDirection === 'asc' ? ArrowUpIcon :
+      sortDirection === 'desc' ? ArrowDownIcon :
+      ArrowUpDownIcon;
+
     const sortIcon = sortable ? (
       <span
         className="dls-table-header-cell__sort"
         data-active={isActive ? '' : undefined}
-        data-direction={sortDirection !== 'none' ? sortDirection : undefined}
       >
-        <SortIcon />
+        <SortGlyph />
       </span>
     ) : null;
 

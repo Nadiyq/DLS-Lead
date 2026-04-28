@@ -1,32 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Eye as EyeIcon, EyeOff as EyeOffIcon, ChevronDown as ChevronDownIcon } from 'lucide-react';
 import { Chip, type ChipSize } from '../chip/Chip';
 import './filter-chip.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const EyeIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M1.5 8C2.5 5 5 3 8 3C11 3 13.5 5 14.5 8C13.5 11 11 13 8 13C5 13 2.5 11 1.5 8Z" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-    <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.33" />
-  </svg>
-);
-
-const EyeOffIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 2L14 14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-    <path d="M6.5 6.8C6.2 7.1 6 7.5 6 8C6 9.1 6.9 10 8 10C8.5 10 8.9 9.8 9.2 9.5" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-    <path d="M3.5 5.5C2.5 6.5 1.8 7.5 1.5 8C2.5 11 5 13 8 13C9 13 9.9 12.7 10.7 12.3" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M11.5 10C13 9 14.2 7.5 14.5 8C14.5 8 14.5 7.8 14.5 8C13.5 5 11 3 8 3C7.5 3 7 3.1 6.5 3.2" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronDown = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Types
@@ -167,7 +142,7 @@ export const FilterChip = React.forwardRef<HTMLDivElement, FilterChipProps>(
                   aria-haspopup="dialog"
                 >
                   <span className="dls-filter-chip__chevron-icon" data-open={isOpen || undefined}>
-                    <ChevronDown />
+                    <ChevronDownIcon />
                   </span>
                 </button>
               )}
