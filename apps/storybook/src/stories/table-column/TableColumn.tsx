@@ -4,6 +4,7 @@ import './table-column.css';
 import { TableHeaderCell } from '../table-header-cell/TableHeaderCell';
 import { TableCell } from '../table-cell/TableCell';
 import { Avatar } from '../Avatar';
+import { AvatarStack } from '../AvatarStack';
 import { Button } from '../Button';
 import { Checkbox } from '../checkbox/Checkbox';
 import { IconShape } from '../icon-shape/IconShape';
@@ -53,8 +54,10 @@ export interface TableColumnRow {
   initials?: string;
   /** Avatar image src */
   avatarSrc?: string;
-  /** Stacked avatar count */
+  /** Stacked avatar count (legacy — used when no users array provided) */
   stackedCount?: number;
+  /** Full list of users for users-stacked column. First two are shown as avatars; the rest populate the +N hover dropdown. */
+  users?: { name: string; initials?: string; src?: string }[];
   /** Card last 4 digits */
   cardLast4?: string;
   /** Checkbox checked state */
@@ -112,18 +115,24 @@ const renderCell = (type: TableColumnType, row: TableColumnRow, idx: number) => 
         } />
       );
 
-    case 'users-stacked':
+    case 'users-stacked': {
+      const users = row.users && row.users.length > 0
+        ? row.users
+        : [
+            { name: row.initials || 'AB', initials: row.initials || 'AB' },
+            { name: row.initials || 'CD', initials: row.initials || 'CD' },
+          ];
+      const total = users.length + (row.users ? 0 : (row.stackedCount ?? 0));
       return (
         <TableCell key={idx} type="slot">
-          <span className="dls-table-column__stacked">
-            <Avatar size="24" circle initials={row.initials || 'AB'} className="dls-table-column__avatar" />
-            <Avatar size="24" circle initials={row.initials || 'CD'} className="dls-table-column__avatar" />
-            {(row.stackedCount ?? 0) > 0 && (
-              <span className="dls-table-column__stacked-more">+{row.stackedCount}</span>
-            )}
-          </span>
+          <AvatarStack size="24" max={2} total={total}>
+            {users.map((u, i) => (
+              <Avatar key={i} src={u.src} initials={u.initials} alt={u.name} />
+            ))}
+          </AvatarStack>
         </TableCell>
       );
+    }
 
     case 'two-line':
       return <TableCell key={idx} type="two-line" text={row.text} secondaryText={row.secondaryText} />;

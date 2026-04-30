@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChevronDown as ChevronIcon, MoreHorizontal as EllipsisIcon } from 'lucide-react';
 import './sidebar-item.css';
 import { BadgeNumber } from '../badge/number/BadgeNumber';
 import { BadgeIndicator } from '../badge/indicator/BadgeIndicator';
@@ -42,31 +43,6 @@ export interface SidebarItemProps {
 }
 
 /* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const ChevronIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none">
-    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const EllipsisIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none">
-    <circle cx="4" cy="8" r="1" fill="currentColor" />
-    <circle cx="8" cy="8" r="1" fill="currentColor" />
-    <circle cx="12" cy="8" r="1" fill="currentColor" />
-  </svg>
-);
-
-const DefaultIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none">
-    <rect x="2" y="3" width="12" height="10" rx="1" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M2 6H14" stroke="currentColor" strokeWidth="1.33" />
-  </svg>
-);
-
-/* ---------------------------------------------------------------------------
    Component
    --------------------------------------------------------------------------- */
 
@@ -99,7 +75,8 @@ export const SidebarItem = React.forwardRef<HTMLDivElement, SidebarItemProps>(
     if (disabled) attrs['data-disabled'] = '';
     if ((type === 'tree' || type === 'collapsible') && expanded) attrs['data-expanded'] = '';
 
-    const iconSlot = icon || <DefaultIcon />;
+    // Icon is optional — submenu children typically have no icon
+    const iconSlot = icon ?? null;
 
     return (
       <div
@@ -132,15 +109,19 @@ export const SidebarItem = React.forwardRef<HTMLDivElement, SidebarItemProps>(
           </span>
         )}
 
-        {/* Icon or media */}
+        {/* Icon or media — only render if we have content */}
         {type === 'big-icon' ? (
-          <span className="dls-sidebar-item__media">
-            {media || iconSlot}
-          </span>
+          (media || iconSlot) && (
+            <span className="dls-sidebar-item__media">
+              {media || iconSlot}
+            </span>
+          )
         ) : (
-          <span className="dls-sidebar-item__icon">
-            {iconSlot}
-          </span>
+          iconSlot && (
+            <span className="dls-sidebar-item__icon">
+              {iconSlot}
+            </span>
+          )
         )}
 
         {/* Indicator dot */}
@@ -169,7 +150,7 @@ export const SidebarItem = React.forwardRef<HTMLDivElement, SidebarItemProps>(
           <BadgeNumber
             value={badgeCount}
             variant="soft"
-            intent="info"
+            intent="neutral"
             size="s"
             className="dls-sidebar-item__badge"
           />

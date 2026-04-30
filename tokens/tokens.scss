@@ -381,7 +381,7 @@ $dls-component-tab-border-active: $dls-color-intent-primary-base;
 $dls-component-pagination-fg: (base: $dls-color-text-primary, disabled: $dls-color-text-disabled);
 $dls-component-pagination-bg: (base: transparent, active: $dls-color-surface-muted);
 
-$dls-component-avatar: (bg: $dls-color-surface-subtle, border: $dls-color-border-subtle, fg: $dls-color-text-primary, icon-fg: $dls-color-text-secondary, dot: $dls-color-success-500, dot-border: $dls-color-surface-base, stack-border: $dls-color-surface-base, counter-bg: $dls-color-intent-primary-base, counter-fg: $dls-color-intent-primary-on-base, remove-btn-bg: $dls-color-surface-base, remove-btn-fg: $dls-color-text-primary);
+$dls-component-avatar: (bg: $dls-color-surface-subtle, border: $dls-color-border-subtle, fg: $dls-color-text-primary, icon-fg: $dls-color-text-secondary, dot: $dls-color-success-500, dot-border: $dls-color-surface-base, stack-border: $dls-color-border-inverse, counter-bg: $dls-color-intent-primary-base, counter-fg: $dls-color-intent-primary-on-base, remove-btn-bg: $dls-color-surface-base, remove-btn-fg: $dls-color-text-primary);
 $dls-component-alert-neutral: (bg: $dls-color-surface-muted, fg: $dls-color-text-primary, border: $dls-color-border-base);
 $dls-component-alert-primary: (bg: $dls-color-intent-primary-subtle, fg: $dls-color-intent-primary-text, border: $dls-color-intent-primary-border);
 $dls-component-alert-success: (bg: $dls-color-intent-success-subtle, fg: $dls-color-intent-success-text, border: $dls-color-intent-success-border);
@@ -519,6 +519,9 @@ $dls-radius-component-avatar-xl: $dls-radius-xl;
 $dls-radius-component-avatar-l: $dls-radius-l;
 $dls-radius-component-avatar-m: $dls-radius-m;
 $dls-radius-component-avatar-s: $dls-radius-s;
+$dls-radius-component-avatar-circle: $dls-radius-full;
+$dls-radius-component-avatar-dot: $dls-radius-full;
+$dls-radius-component-avatar-remove-btn: $dls-radius-full;
 $dls-radius-component-badge: $dls-radius-full;
 $dls-radius-component-badge-number: $dls-radius-m;
 $dls-radius-component-breadcrumb: $dls-radius-s;

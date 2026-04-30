@@ -1,5 +1,7 @@
 import React from 'react';
+import { User as UserIcon, X as XIcon } from 'lucide-react';
 import './avatar.css';
+export { UserIcon };
 
 export type AvatarSize = '144' | '88' | '80' | '72' | '48' | '40' | '32' | '28' | '24' | '20' | '18';
 
@@ -64,10 +66,7 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
             aria-label="Remove"
             type="button"
           >
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <circle cx="8" cy="8" r="6" fill="var(--dls-color-component-avatar-remove-btn-bg)" />
-              <path d="M5.5 5.5L10.5 10.5M10.5 5.5L5.5 10.5" stroke="var(--dls-color-component-avatar-remove-btn-fg)" strokeWidth="1.33" strokeLinecap="round" />
-            </svg>
+            <XIcon />
           </button>
         )}
       </div>
@@ -76,11 +75,3 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
 );
 
 Avatar.displayName = 'Avatar';
-
-/** Default user icon for the "icon" content type */
-export const UserIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-    <circle cx="12" cy="7" r="4" />
-  </svg>
-);

@@ -1,9 +1,12 @@
 import React from 'react';
+import { ChevronDown as ChevronDownIcon } from 'lucide-react';
 import './book-service-form.css';
 import { Button } from '../Button';
 import { InputField } from '../input-field/InputField';
 import { Checkbox } from '../checkbox/Checkbox';
 import { DateInput } from '../date-input/DateInput';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -83,8 +86,29 @@ export const BookServiceForm = React.forwardRef<HTMLDivElement, BookServiceFormP
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [service, setService] = React.useState('');
+    const [serviceOpen, setServiceOpen] = React.useState(false);
+    const serviceWrapRef = React.useRef<HTMLDivElement>(null);
     const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
     const [agreed, setAgreed] = React.useState(false);
+
+    // Close service dropdown on outside click / Escape
+    React.useEffect(() => {
+      if (!serviceOpen) return;
+      const onClick = (e: MouseEvent) => {
+        if (serviceWrapRef.current && !serviceWrapRef.current.contains(e.target as Node)) {
+          setServiceOpen(false);
+        }
+      };
+      const onKey = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setServiceOpen(false);
+      };
+      document.addEventListener('mousedown', onClick);
+      document.addEventListener('keydown', onKey);
+      return () => {
+        document.removeEventListener('mousedown', onClick);
+        document.removeEventListener('keydown', onKey);
+      };
+    }, [serviceOpen]);
 
     const handleSubmit = () => {
       const date = selectedDate ? selectedDate.toISOString().slice(0, 10) : '';
@@ -124,18 +148,34 @@ export const BookServiceForm = React.forwardRef<HTMLDivElement, BookServiceFormP
             />
 
             {/* Service */}
-            <div className="dls-book-service-form__field">
+            <div className="dls-book-service-form__field" ref={serviceWrapRef}>
               <label className="dls-book-service-form__label">{serviceLabel}</label>
-              <select
+              <button
+                type="button"
                 className="dls-book-service-form__select"
-                value={service}
-                onChange={(e) => setService(e.target.value)}
+                onClick={() => setServiceOpen((o) => !o)}
+                aria-haspopup="listbox"
+                aria-expanded={serviceOpen}
+                data-placeholder={!service || undefined}
               >
-                <option value="" disabled>{servicePlaceholder}</option>
-                {serviceOptions.map((opt) => (
-                  <option key={opt} value={opt}>{opt}</option>
-                ))}
-              </select>
+                <span>{service || servicePlaceholder}</span>
+                <span className="dls-book-service-form__select-chevron" data-open={serviceOpen || undefined}>
+                  <ChevronDownIcon />
+                </span>
+              </button>
+              {serviceOpen && (
+                <List className="dls-book-service-form__service-list" role="listbox">
+                  {serviceOptions.map((opt) => (
+                    <ListItem
+                      key={opt}
+                      type="text"
+                      text={opt}
+                      selected={opt === service}
+                      onClick={() => { setService(opt); setServiceOpen(false); }}
+                    />
+                  ))}
+                </List>
+              )}
             </div>
 
             {/* Date */}
@@ -165,7 +205,7 @@ export const BookServiceForm = React.forwardRef<HTMLDivElement, BookServiceFormP
           {/* Footer */}
           <div className="dls-book-service-form__footer">
             <Button
-              variant="soft"
+              variant="outline"
               intent="neutral"
               size="m"
               onClick={onCancel}

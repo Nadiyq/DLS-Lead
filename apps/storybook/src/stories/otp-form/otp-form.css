@@ -34,7 +34,7 @@
   background: var(--dls-color-surface-base);
   border: 1px solid var(--dls-color-border-subtle);
   box-shadow: var(--dls-shadow-dropdown);
-  width: 416px;
+  width: 360px;
 }
 
 .dls-otp-form[data-type="2"] .dls-otp-form__card,
@@ -112,7 +112,9 @@
 .dls-otp-form__header {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--dls-spacing-2);
+  text-align: center;
 }
 
 .dls-otp-form__title {
@@ -138,7 +140,9 @@
 .dls-otp-form__content {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--dls-spacing-4);
+  text-align: center;
 }
 
 /* ---------------------------------------------------------------------------
@@ -159,6 +163,7 @@
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
   color: var(--dls-color-text-secondary);
+  text-align: center;
 }
 
 .dls-otp-form__resend a,

@@ -168,6 +168,8 @@ Common examples:
 - `--dls-radius-component-button`
 - `--dls-radius-component-input`
 - `--dls-radius-component-card`
+- `--dls-radius-component-avatar-circle`
+- `--dls-radius-component-avatar-dot`
 - `--dls-radius-component-chip`
 - `--dls-radius-component-list`
 - `--dls-radius-component-list-item`

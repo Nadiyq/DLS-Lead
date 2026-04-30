@@ -1,4 +1,7 @@
 import React from 'react';
+import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon, ChevronDown as ChevronDownIcon } from 'lucide-react';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
 import './pagination.css';
 
 /* ===========================================================================
@@ -21,18 +24,6 @@ export interface PageButtonProps {
   className?: string;
 }
 
-const ChevronLeft = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronRight = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 export const PageButton = React.forwardRef<HTMLButtonElement, PageButtonProps>(
   (
     {
@@ -50,7 +41,7 @@ export const PageButton = React.forwardRef<HTMLButtonElement, PageButtonProps>(
         case 'previous':
           return (
             <>
-              <span className="dls-page-button__icon"><ChevronLeft /></span>
+              <span className="dls-page-button__icon"><ChevronLeftIcon /></span>
               Previous
             </>
           );
@@ -58,7 +49,7 @@ export const PageButton = React.forwardRef<HTMLButtonElement, PageButtonProps>(
           return (
             <>
               Next
-              <span className="dls-page-button__icon"><ChevronRight /></span>
+              <span className="dls-page-button__icon"><ChevronRightIcon /></span>
             </>
           );
         case 'more':
@@ -104,44 +95,77 @@ export interface ItemsPerPageProps {
   className?: string;
 }
 
-const ChevronDown = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 export const ItemsPerPage = React.forwardRef<HTMLDivElement, ItemsPerPageProps>(
-  ({ value, total, options = [10, 25, 50, 100], onChange, className }, ref) => (
-    <div
-      ref={ref}
-      className={['dls-items-per-page', className].filter(Boolean).join(' ')}
-    >
-      <span>Items per page</span>
-      <label className="dls-items-per-page__select">
-        <select
-          value={value}
-          onChange={(e) => onChange?.(Number(e.target.value))}
-          style={{
-            all: 'unset',
-            fontFamily: 'inherit',
-            fontSize: 'inherit',
-            lineHeight: 'inherit',
-            color: 'inherit',
-            cursor: 'pointer',
-            appearance: 'none',
-          }}
+  ({ value, total, options = [5, 10, 20, 50, 100], onChange, className }, ref) => {
+    const [open, setOpen] = React.useState(false);
+    const wrapperRef = React.useRef<HTMLDivElement>(null);
+
+    // Close on outside click
+    React.useEffect(() => {
+      if (!open) return;
+      const handler = (e: MouseEvent) => {
+        if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+          setOpen(false);
+        }
+      };
+      document.addEventListener('mousedown', handler);
+      return () => document.removeEventListener('mousedown', handler);
+    }, [open]);
+
+    // Close on Escape
+    React.useEffect(() => {
+      if (!open) return;
+      const handler = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setOpen(false);
+      };
+      document.addEventListener('keydown', handler);
+      return () => document.removeEventListener('keydown', handler);
+    }, [open]);
+
+    const handleSelect = (opt: number) => {
+      onChange?.(opt);
+      setOpen(false);
+    };
+
+    return (
+      <div
+        ref={(node) => {
+          (wrapperRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+          if (typeof ref === 'function') ref(node);
+          else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+        }}
+        className={['dls-items-per-page', className].filter(Boolean).join(' ')}
+      >
+        <span>Items per page</span>
+        <button
+          type="button"
+          className="dls-items-per-page__trigger"
+          onClick={() => setOpen((o) => !o)}
+          aria-haspopup="listbox"
+          aria-expanded={open}
         >
-          {options.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
-            </option>
-          ))}
-        </select>
-        <span className="dls-items-per-page__select-icon"><ChevronDown /></span>
-      </label>
-      <span>of {total}</span>
-    </div>
-  ),
+          {value}
+          <span className="dls-items-per-page__select-icon" data-open={open || undefined}>
+            <ChevronDownIcon />
+          </span>
+        </button>
+        {open && (
+          <List className="dls-items-per-page__dropdown" role="listbox">
+            {options.map((opt) => (
+              <ListItem
+                key={opt}
+                type="text"
+                text={String(opt)}
+                selected={opt === value}
+                onClick={() => handleSelect(opt)}
+              />
+            ))}
+          </List>
+        )}
+        <span>of {total}</span>
+      </div>
+    );
+  },
 );
 
 ItemsPerPage.displayName = 'ItemsPerPage';

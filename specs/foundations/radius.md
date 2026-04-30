@@ -37,6 +37,7 @@ DLS-Lead separates raw radius primitives from component radii. Agents should use
 | Input / dropdown / tab | `--dls-radius-component-input` / `tab` / `dropdown` | `6px` |
 | Card / table / list / modal / empty state | component radius | `12px` |
 | Chip | `--dls-radius-component-chip` | `6px` |
+| Avatar circle / dot | `--dls-radius-component-avatar-circle` / `avatar-dot` | `full` |
 | Badge / progress / round controls | component radius | `full` |
 | Checkbox / list item / breadcrumb | component radius | `4px` |
 

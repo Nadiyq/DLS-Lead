@@ -145,7 +145,7 @@ export const ContactForm = React.forwardRef<HTMLDivElement, ContactFormProps>(
           {/* Footer */}
           <div className="dls-contact-form__footer">
             <Button
-              variant="soft"
+              variant="outline"
               intent="neutral"
               size="m"
               onClick={onCancel}

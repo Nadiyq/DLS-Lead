@@ -79,7 +79,7 @@
   text-align: center;
   gap: var(--dls-spacing-4);
   padding: var(--dls-spacing-10) var(--dls-spacing-6);
-  border-radius: var(--dls-radius-xl);
+  border-radius: var(--dls-radius-component-card);
   background: var(--dls-color-intent-info-subtle);
   border: 1px dashed var(--dls-color-intent-info-border);
   cursor: pointer;
@@ -98,6 +98,7 @@
 }
 
 .dls-upload-file-form__dropzone-title {
+  margin: 0;
   font-size: var(--dls-text-l-font-size);
   line-height: var(--dls-text-l-line-height);
   font-weight: var(--dls-font-weight-medium);
@@ -105,6 +106,7 @@
 }
 
 .dls-upload-file-form__dropzone-description {
+  margin: 0;
   font-size: var(--dls-text-m-font-size);
   line-height: var(--dls-text-m-line-height);
   font-weight: var(--dls-font-weight-normal);
@@ -250,14 +252,14 @@
 .dls-upload-file-form__progress-track {
   flex: 1;
   height: 6px;
-  border-radius: var(--dls-radius-full);
+  border-radius: var(--dls-radius-component-progress-bar);
   background: var(--dls-color-surface-muted);
   overflow: hidden;
 }
 
 .dls-upload-file-form__progress-fill {
   height: 100%;
-  border-radius: var(--dls-radius-full);
+  border-radius: var(--dls-radius-component-progress-bar);
   background: var(--dls-color-intent-success-base);
   transition: width 200ms ease;
 }

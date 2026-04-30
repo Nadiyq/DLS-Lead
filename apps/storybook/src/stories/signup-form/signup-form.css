@@ -165,7 +165,7 @@
 
 .dls-signup__strength-segment {
   flex: 1;
-  border-radius: var(--dls-radius-full);
+  border-radius: var(--dls-radius-component-progress-bar);
   background: var(--dls-color-border-subtle);
   transition: background-color 200ms ease;
 }

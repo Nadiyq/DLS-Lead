@@ -112,7 +112,7 @@ export const ItemsPerPageStory: PBStory = {
         <ItemsPerPage
           value={size}
           total={500}
-          options={[10, 25, 50, 100]}
+          options={[5, 10, 20, 50, 100]}
           onChange={setSize}
         />
       );

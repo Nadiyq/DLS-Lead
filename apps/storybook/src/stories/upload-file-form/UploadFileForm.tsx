@@ -1,4 +1,5 @@
 import React from 'react';
+import { Upload as UploadIcon, X as CloseIcon, FileText as FileIcon } from 'lucide-react';
 import './upload-file-form.css';
 import { Button } from '../Button';
 
@@ -44,30 +45,6 @@ export interface UploadFileFormProps {
   onFileRemove?: (id: string) => void;
   className?: string;
 }
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const UploadIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8 10V2M8 2L5 5M8 2L11 5" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M2 10V13H14V10" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const CloseIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const FileIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 2H12L16 6V18H4V2Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-    <path d="M12 2V6H16" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Status label map

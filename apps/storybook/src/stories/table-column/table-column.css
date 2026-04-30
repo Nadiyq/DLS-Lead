@@ -28,44 +28,12 @@
 
 /* ---------------------------------------------------------------------------
    Avatar override (uses shared Avatar component)
+   Stacked avatars now use the DLS AvatarStack component directly — no custom
+   CSS needed for overlap, ring, or counter.
    --------------------------------------------------------------------------- */
 
 .dls-table-column__avatar {
   flex-shrink: 0;
-}
-
-/* ---------------------------------------------------------------------------
-   Stacked avatars
-   --------------------------------------------------------------------------- */
-
-.dls-table-column__stacked {
-  display: flex;
-  align-items: center;
-}
-
-.dls-table-column__stacked .dls-table-column__avatar {
-  margin-left: -6px;
-  border: 2px solid var(--dls-color-surface-base);
-}
-
-.dls-table-column__stacked .dls-table-column__avatar:first-child {
-  margin-left: 0;
-}
-
-.dls-table-column__stacked-more {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: -6px;
-  min-width: 24px;
-  height: 24px;
-  padding: 0 4px;
-  border-radius: var(--dls-radius-component-badge);
-  background: var(--dls-color-surface-muted);
-  border: 2px solid var(--dls-color-surface-base);
-  font-size: var(--dls-text-xs-font-size);
-  font-weight: var(--dls-font-weight-medium);
-  color: var(--dls-color-text-secondary);
 }
 
 /* ---------------------------------------------------------------------------

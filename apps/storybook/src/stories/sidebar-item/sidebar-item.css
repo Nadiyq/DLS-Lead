@@ -163,20 +163,23 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 16px;
+  width: 0;
   height: 16px;
   color: var(--dls-color-text-secondary);
   opacity: 0;
-  transition: opacity 100ms ease;
+  overflow: hidden;
+  transition: opacity 100ms ease, width 100ms ease;
 }
 
 .dls-sidebar-item__action svg {
   width: 16px;
   height: 16px;
+  flex-shrink: 0;
 }
 
-.dls-sidebar-item:hover:not([data-disabled]) .dls-sidebar-item__action {
+.dls-sidebar-item:hover:not(:disabled):not([data-disabled]) .dls-sidebar-item__action {
   opacity: 1;
+  width: 16px;
 }
 
 /* ---------------------------------------------------------------------------
@@ -184,7 +187,7 @@
    --------------------------------------------------------------------------- */
 
 /* Hover */
-.dls-sidebar-item:hover:not([data-disabled]):not([data-active]) {
+.dls-sidebar-item:hover:not(:disabled):not([data-disabled]):not([data-active]) {
   background: var(--dls-state-hover-overlay);
 }
 
@@ -223,6 +226,9 @@
 .dls-sidebar-item[data-collapsed] {
   padding: var(--dls-spacing-2-5);
   justify-content: center;
+  width: max-content;
+  flex-shrink: 0;
+  align-self: center;
 }
 
 .dls-sidebar-item[data-collapsed] .dls-sidebar-item__text,

@@ -27,12 +27,13 @@
   --_size: 48px;
   --_radius: var(--dls-radius-component-avatar-xl);
   --_stroke: 1px;
-  --_font-size: var(--dls-text-avatar-m-font-size, 20px);
-  --_line-height: var(--dls-text-avatar-m-line-height, 20px);
+  --_font-size: var(--dls-text-avatar-m-font-size);
+  --_line-height: var(--dls-text-avatar-m-line-height);
+  --_font-weight: var(--dls-text-avatar-m-font-weight);
   --_dot-size: 16px;
   --_dot-stroke: 1px;
-  --_dot-offset: -2px;
-  --_icon-size: 28px;
+  --_dot-offset: -3px;
+  --_icon-size: 32px;
   --_remove-size: 16px;
 
   width: var(--_size);
@@ -41,7 +42,7 @@
 
 /* Circle shape */
 .dls-avatar[data-circle] {
-  border-radius: var(--dls-radius-full);
+  border-radius: var(--dls-radius-component-avatar-circle);
 }
 
 /* ---------------------------------------------------------------------------
@@ -52,11 +53,12 @@
   --_size: 144px;
   --_radius: var(--dls-radius-component-avatar-2xl);
   --_stroke: 2px;
-  --_font-size: 64px;
-  --_line-height: 64px;
+  --_font-size: var(--dls-text-avatar-2xl-font-size);
+  --_line-height: var(--dls-text-avatar-2xl-line-height);
+  --_font-weight: var(--dls-text-avatar-2xl-font-weight);
   --_dot-size: 28px;
   --_dot-stroke: 2px;
-  --_dot-offset: 4px;
+  --_dot-offset: 6px;
   --_icon-size: 80px;
   --_remove-size: 24px;
 }
@@ -65,11 +67,12 @@
   --_size: 88px;
   --_radius: var(--dls-radius-component-avatar-2xl);
   --_stroke: 2px;
-  --_font-size: 40px;
-  --_line-height: 40px;
-  --_dot-size: 24px;
+  --_font-size: var(--dls-text-avatar-xl-font-size);
+  --_line-height: var(--dls-text-avatar-xl-line-height);
+  --_font-weight: var(--dls-text-avatar-xl-font-weight);
+  --_dot-size: 20px;
   --_dot-stroke: 2px;
-  --_dot-offset: 0px;
+  --_dot-offset: 2px;
   --_icon-size: 48px;
   --_remove-size: 24px;
 }
@@ -78,12 +81,13 @@
   --_size: 80px;
   --_radius: var(--dls-radius-component-avatar-2xl);
   --_stroke: 2px;
-  --_font-size: 30px;
-  --_line-height: 30px;
+  --_font-size: var(--dls-text-avatar-xl-font-size);
+  --_line-height: var(--dls-text-avatar-xl-line-height);
+  --_font-weight: var(--dls-text-avatar-xl-font-weight);
   --_dot-size: 20px;
   --_dot-stroke: 2px;
-  --_dot-offset: 0px;
-  --_icon-size: 44px;
+  --_dot-offset: 2px;
+  --_icon-size: 40px;
   --_remove-size: 24px;
 }
 
@@ -91,11 +95,12 @@
   --_size: 72px;
   --_radius: var(--dls-radius-component-avatar-xl);
   --_stroke: 2px;
-  --_font-size: 30px;
-  --_line-height: 30px;
+  --_font-size: var(--dls-text-avatar-l-font-size);
+  --_line-height: var(--dls-text-avatar-l-line-height);
+  --_font-weight: var(--dls-text-avatar-l-font-weight);
   --_dot-size: 20px;
   --_dot-stroke: 2px;
-  --_dot-offset: -2px;
+  --_dot-offset: 2px;
   --_icon-size: 40px;
   --_remove-size: 24px;
 }
@@ -104,23 +109,25 @@
   --_size: 48px;
   --_radius: var(--dls-radius-component-avatar-xl);
   --_stroke: 1px;
-  --_font-size: 20px;
-  --_line-height: 20px;
+  --_font-size: var(--dls-text-avatar-m-font-size);
+  --_line-height: var(--dls-text-avatar-m-line-height);
+  --_font-weight: var(--dls-text-avatar-m-font-weight);
   --_dot-size: 16px;
   --_dot-stroke: 1px;
-  --_dot-offset: -2px;
-  --_icon-size: 28px;
+  --_dot-offset: -3px;
+  --_icon-size: 32px;
 }
 
 .dls-avatar[data-size="40"] {
   --_size: 40px;
   --_radius: var(--dls-radius-component-avatar-l);
   --_stroke: 1px;
-  --_font-size: 18px;
-  --_line-height: 18px;
+  --_font-size: var(--dls-text-avatar-s-font-size);
+  --_line-height: var(--dls-text-avatar-s-line-height);
+  --_font-weight: var(--dls-text-avatar-s-font-weight);
   --_dot-size: 12px;
   --_dot-stroke: 1px;
-  --_dot-offset: -2px;
+  --_dot-offset: -3px;
   --_icon-size: 24px;
 }
 
@@ -128,23 +135,25 @@
   --_size: 32px;
   --_radius: var(--dls-radius-component-avatar-l);
   --_stroke: 1px;
-  --_font-size: 14px;
-  --_line-height: 14px;
+  --_font-size: var(--dls-text-avatar-xs-font-size);
+  --_line-height: var(--dls-text-avatar-xs-line-height);
+  --_font-weight: var(--dls-text-avatar-xs-font-weight);
   --_dot-size: 12px;
   --_dot-stroke: 1px;
-  --_dot-offset: -2px;
-  --_icon-size: 16px;
+  --_dot-offset: -3px;
+  --_icon-size: 20px;
 }
 
 .dls-avatar[data-size="28"] {
   --_size: 28px;
   --_radius: var(--dls-radius-component-avatar-m);
   --_stroke: 1px;
-  --_font-size: 12px;
-  --_line-height: 12px;
+  --_font-size: var(--dls-text-avatar-2xs-font-size);
+  --_line-height: var(--dls-text-avatar-2xs-line-height);
+  --_font-weight: var(--dls-text-avatar-2xs-font-weight);
   --_dot-size: 12px;
   --_dot-stroke: 1px;
-  --_dot-offset: -2px;
+  --_dot-offset: -3px;
   --_icon-size: 16px;
 }
 
@@ -152,12 +161,13 @@
   --_size: 24px;
   --_radius: var(--dls-radius-component-avatar-m);
   --_stroke: 1px;
-  --_font-size: 10px;
-  --_line-height: 10px;
+  --_font-size: var(--dls-text-avatar-3xs-font-size);
+  --_line-height: var(--dls-text-avatar-3xs-line-height);
+  --_font-weight: var(--dls-text-avatar-3xs-font-weight);
   --_dot-size: 10px;
   --_dot-stroke: 1px;
-  --_dot-offset: -2px;
-  --_icon-size: 12px;
+  --_dot-offset: -3px;
+  --_icon-size: 16px;
   --_remove-size: 12px;
 }
 
@@ -165,12 +175,13 @@
   --_size: 20px;
   --_radius: var(--dls-radius-component-avatar-s);
   --_stroke: 1px;
-  --_font-size: 8px;
-  --_line-height: 10px;
+  --_font-size: var(--dls-text-avatar-4xs-font-size);
+  --_line-height: var(--dls-text-avatar-4xs-line-height);
+  --_font-weight: var(--dls-text-avatar-4xs-font-weight);
   --_dot-size: 8px;
   --_dot-stroke: 1px;
-  --_dot-offset: -2px;
-  --_icon-size: 10px;
+  --_dot-offset: -3px;
+  --_icon-size: 12px;
   --_remove-size: 12px;
 }
 
@@ -178,12 +189,13 @@
   --_size: 18px;
   --_radius: var(--dls-radius-component-avatar-s);
   --_stroke: 1px;
-  --_font-size: 8px;
-  --_line-height: 10px;
+  --_font-size: var(--dls-text-avatar-4xs-font-size);
+  --_line-height: var(--dls-text-avatar-4xs-line-height);
+  --_font-weight: var(--dls-text-avatar-4xs-font-weight);
   --_dot-size: 8px;
   --_dot-stroke: 1px;
-  --_dot-offset: -2px;
-  --_icon-size: 10px;
+  --_dot-offset: -3px;
+  --_icon-size: 12px;
   --_remove-size: 12px;
 }
 
@@ -194,7 +206,7 @@
 .dls-avatar__initials {
   font-size: var(--_font-size);
   line-height: var(--_line-height);
-  font-weight: var(--dls-font-weight-semibold);
+  font-weight: var(--_font-weight);
   color: var(--dls-color-component-avatar-fg);
   text-align: center;
   text-transform: uppercase;
@@ -240,7 +252,7 @@
   right: var(--_dot-offset);
   width: var(--_dot-size);
   height: var(--_dot-size);
-  border-radius: var(--dls-radius-full);
+  border-radius: var(--dls-radius-component-avatar-dot);
   background: var(--dls-color-component-avatar-dot);
   border: var(--_dot-stroke) solid var(--dls-color-component-avatar-dot-border);
   box-sizing: border-box;
@@ -262,10 +274,13 @@
   width: var(--_remove-size);
   height: var(--_remove-size);
   cursor: pointer;
-  border-radius: var(--dls-radius-full);
+  border-radius: var(--dls-radius-component-avatar-remove-btn);
+  background: var(--dls-color-component-avatar-remove-btn-bg);
+  color: var(--dls-color-component-avatar-remove-btn-fg);
+  padding: 2px;
 }
 
-.dls-avatar:hover > .dls-avatar__remove,
+.dls-avatar:hover:not(:disabled) > .dls-avatar__remove,
 .dls-avatar:focus-within > .dls-avatar__remove {
   display: inline-flex;
 }

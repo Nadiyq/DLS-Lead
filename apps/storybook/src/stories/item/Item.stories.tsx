@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { Layers as LayersIcon, MoreVertical as MoreIcon } from 'lucide-react';
 import { Item } from './Item';
 import { Button } from '../Button';
 import { IconShape } from '../icon-shape/IconShape';
@@ -34,21 +35,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 );
 
-const LayersIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-  </svg>
-);
-
-const MoreIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="8" cy="3" r="1.2" fill="currentColor" />
-    <circle cx="8" cy="8" r="1.2" fill="currentColor" />
-    <circle cx="8" cy="13" r="1.2" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Playground

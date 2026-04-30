@@ -14,5 +14,6 @@
 import mastercardLogo from './mastercard.svg';
 import visaLogo from './visa.svg';
 import paypalLogo from './paypal.svg';
+import googleLogo from './google.svg';
 
-export { mastercardLogo, visaLogo, paypalLogo };
+export { mastercardLogo, visaLogo, paypalLogo, googleLogo };

@@ -80,6 +80,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--dls-spacing-2);
+  position: relative;
 }
 
 .dls-book-service-form__label {
@@ -89,12 +90,13 @@
   color: var(--dls-color-text-secondary);
 }
 
-/* Select (service dropdown) */
+/* Select (service dropdown — opens DLS List) */
 .dls-book-service-form__select {
   all: unset;
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   height: 32px;
   padding: var(--dls-spacing-1-5) var(--dls-spacing-3);
@@ -106,12 +108,48 @@
   line-height: var(--dls-text-m-line-height);
   color: var(--dls-color-text-primary);
   cursor: pointer;
-  appearance: none;
+}
+
+.dls-book-service-form__select[data-placeholder] {
+  color: var(--dls-color-text-placeholder);
+}
+
+.dls-book-service-form__select:hover:not(:disabled) {
+  border-color: var(--dls-color-border-strong);
 }
 
 .dls-book-service-form__select:focus-visible {
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
   border-color: var(--dls-color-border-strong);
+}
+
+.dls-book-service-form__select-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--dls-color-text-secondary);
+  transition: transform 150ms ease;
+}
+
+.dls-book-service-form__select-chevron[data-open] {
+  transform: rotate(180deg);
+}
+
+.dls-book-service-form__select-chevron svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dls-list.dls-book-service-form__service-list {
+  position: absolute;
+  top: calc(100% + var(--dls-spacing-1));
+  left: 0;
+  right: 0;
+  z-index: 10;
+  box-shadow: var(--dls-shadow-surface-md);
 }
 
 /* Date uses DLS DateInput component — no custom styles needed */

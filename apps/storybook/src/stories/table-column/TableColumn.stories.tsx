@@ -69,12 +69,37 @@ const twoLineAvatarRows: TableColumnRow[] = [
   { text: 'Tom Lee', secondaryText: 'tom@gmail.com', initials: 'TL' },
 ];
 
+const TEAM_POOL = [
+  { name: 'Malik Roberson', initials: 'MR', src: 'https://i.pravatar.cc/48?u=malik' },
+  { name: 'Kenton Jerde', initials: 'KJ', src: 'https://i.pravatar.cc/48?u=kenton' },
+  { name: 'Talia Kubiak', initials: 'TK', src: 'https://i.pravatar.cc/48?u=talia' },
+  { name: 'Jayson Wintheiser', initials: 'JW', src: 'https://i.pravatar.cc/48?u=jayson' },
+  { name: 'Shea Trantow', initials: 'ST', src: 'https://i.pravatar.cc/48?u=shea' },
+  { name: 'Casey Miller', initials: 'CM', src: 'https://i.pravatar.cc/48?u=casey' },
+  { name: 'Alex Cooper', initials: 'AC', src: 'https://i.pravatar.cc/48?u=alex' },
+  { name: 'Bria Watsica', initials: 'BW', src: 'https://i.pravatar.cc/48?u=bria' },
+  { name: 'Devon Lubowitz', initials: 'DL', src: 'https://i.pravatar.cc/48?u=devon' },
+  { name: 'Elias Toure', initials: 'ET', src: 'https://i.pravatar.cc/48?u=elias' },
+  { name: 'Fiona Padberg', initials: 'FP', src: 'https://i.pravatar.cc/48?u=fiona' },
+  { name: 'Gabe Howell', initials: 'GH', src: 'https://i.pravatar.cc/48?u=gabe' },
+  { name: 'Hana Schmitt', initials: 'HS', src: 'https://i.pravatar.cc/48?u=hana' },
+  { name: 'Iris Cole', initials: 'IC', src: 'https://i.pravatar.cc/48?u=iris' },
+  { name: 'Jamal Weaver', initials: 'JW', src: 'https://i.pravatar.cc/48?u=jamal' },
+  { name: 'Kiana Gallegos', initials: 'KG', src: 'https://i.pravatar.cc/48?u=kiana' },
+  { name: 'Liam Bartell', initials: 'LB', src: 'https://i.pravatar.cc/48?u=liam' },
+  { name: 'Maya Ortiz', initials: 'MO', src: 'https://i.pravatar.cc/48?u=maya' },
+  { name: 'Noah Funk', initials: 'NF', src: 'https://i.pravatar.cc/48?u=noah' },
+  { name: 'Olive Reed', initials: 'OR', src: 'https://i.pravatar.cc/48?u=olive' },
+  { name: 'Priya Shah', initials: 'PS', src: 'https://i.pravatar.cc/48?u=priya' },
+  { name: 'Quinn Roberts', initials: 'QR', src: 'https://i.pravatar.cc/48?u=quinn' },
+];
+
 const stackedRows: TableColumnRow[] = [
-  { initials: 'JS', stackedCount: 3 },
-  { initials: 'AB', stackedCount: 20 },
-  { initials: 'CD', stackedCount: 5 },
-  { initials: 'EF', stackedCount: 0 },
-  { initials: 'GH', stackedCount: 12 },
+  { users: TEAM_POOL.slice(0, 5) },   // 2 visible + 3 in dropdown
+  { users: TEAM_POOL.slice(0, 22) },  // 2 visible + 20 in dropdown
+  { users: TEAM_POOL.slice(0, 7) },   // 2 visible + 5 in dropdown
+  { users: TEAM_POOL.slice(0, 2) },   // just 2 visible, no overflow
+  { users: TEAM_POOL.slice(0, 14) },  // 2 visible + 12 in dropdown
 ];
 
 const cardRows: TableColumnRow[] = [

@@ -58,6 +58,6 @@
    Hover — thumb becomes slightly more visible
    --------------------------------------------------------------------------- */
 
-.dls-scroll:hover .dls-scroll__thumb {
+.dls-scroll:hover:not(:disabled) .dls-scroll__thumb {
   opacity: 0.8;
 }

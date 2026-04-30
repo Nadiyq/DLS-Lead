@@ -13,6 +13,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--dls-spacing-2);
   font-family: var(--dls-font-family);
 }

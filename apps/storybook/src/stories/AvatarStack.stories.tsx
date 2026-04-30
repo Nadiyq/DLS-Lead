@@ -138,6 +138,22 @@ export const WithCounter: Story = {
   },
 };
 
+export const AllSizesWithCounter: Story = {
+  render: () => (
+    <Section title="All Sizes — 2 Avatars + Counter">
+      {SIZES.map((size) => (
+        <SizeLabel key={size} size={size}>
+          <AvatarStack size={size} max={2} total={22}>
+            <Avatar src={SAMPLE_IMAGES[0]} alt="User 1" />
+            <Avatar src={SAMPLE_IMAGES[1]} alt="User 2" />
+            <Avatar src={SAMPLE_IMAGES[2]} alt="User 3" />
+          </AvatarStack>
+        </SizeLabel>
+      ))}
+    </Section>
+  ),
+};
+
 // ---------------------------------------------------------------------------
 // Max visible (3 of 5, auto-counted)
 // ---------------------------------------------------------------------------
