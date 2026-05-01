@@ -164,7 +164,7 @@ export const BookServiceForm = React.forwardRef<HTMLDivElement, BookServiceFormP
                 </span>
               </button>
               {serviceOpen && (
-                <List className="dls-book-service-form__service-list" role="listbox">
+                <List className="dls-book-service-form__service-list">
                   {serviceOptions.map((opt) => (
                     <ListItem
                       key={opt}

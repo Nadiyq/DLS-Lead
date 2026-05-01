@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { Search as SearchIcon, Filter as FilterIcon, MoreHorizontal as MoreIcon, Plus as PlusIcon } from 'lucide-react';
 import { Table } from './Table';
 import { TableTopBar } from '../table-top-bar/TableTopBar';
 import { TableColumn } from '../table-column/TableColumn';
@@ -18,26 +19,6 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-/* ---------------------------------------------------------------------------
-   Helpers
-   --------------------------------------------------------------------------- */
-
-const SearchIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M11 11L14 14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const MoreIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="3" r="1" fill="currentColor" />
-    <circle cx="8" cy="8" r="1" fill="currentColor" />
-    <circle cx="8" cy="13" r="1" fill="currentColor" />
-  </svg>
-);
-
 
 /* ---------------------------------------------------------------------------
    Sample data
@@ -92,7 +73,27 @@ export const Playground: Story = {
     children: null,
   },
   render: (args) => (
-    <Table {...args}>
+    <Table
+      {...args}
+      topBar={
+        <TableTopBar
+          slotLeft={
+            <>
+              <div style={{ width: 320 }}>
+                <InputField placeholder="Search..." iconStart={<SearchIcon />} />
+              </div>
+              <Button variant="soft" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filter" />
+            </>
+          }
+          slotRight={
+            <>
+              <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Button</Button>
+              <Button variant="soft" intent="neutral" size="m" icon={<MoreIcon />} iconOnly aria-label="More" />
+            </>
+          }
+        />
+      }
+    >
       <TableColumn type="checkbox" rows={checkboxRows} />
       <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
       <TableColumn type="badge" header="Status" rows={badgeRows} />

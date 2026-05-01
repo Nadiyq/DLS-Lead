@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Search as SearchIcon, ListFilter as FilterIcon, Settings as SettingsIcon, Trash2 as TrashIcon } from 'lucide-react';
+import { Search as SearchIcon, Filter as FilterIcon, Settings as SettingsIcon, Trash2 as TrashIcon, Plus as PlusIcon, MoreHorizontal as MoreIcon } from 'lucide-react';
 import { TableTopBar } from './TableTopBar';
 import { Filters } from '../filters/Filters';
 import type { FilterGroup } from '../filters/Filters';
@@ -39,10 +39,12 @@ type Story = StoryObj<typeof meta>;
 // ---------------------------------------------------------------------------
 
 const SearchInput = () => (
-  <InputField
-    placeholder="Search..."
-    iconStart={<SearchIcon />}
-  />
+  <div style={{ width: 320 }}>
+    <InputField
+      placeholder="Search..."
+      iconStart={<SearchIcon />}
+    />
+  </div>
 );
 
 // ---------------------------------------------------------------------------
@@ -60,8 +62,8 @@ export const Playground: Story = {
     ),
     slotRight: (
       <>
-        <Button variant="filled" intent="neutral" size="m">Export</Button>
-        <Button variant="soft" intent="neutral" size="m" icon={<SettingsIcon />} iconOnly aria-label="Settings" />
+        <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Button</Button>
+        <Button variant="soft" intent="neutral" size="m" icon={<MoreIcon />} iconOnly aria-label="More" />
       </>
     ),
   },
@@ -82,8 +84,8 @@ export const WithoutFilters: Story = {
     ),
     slotRight: (
       <>
-        <Button variant="filled" intent="neutral" size="m">Export</Button>
-        <Button variant="soft" intent="neutral" size="m" icon={<SettingsIcon />} iconOnly aria-label="Settings" />
+        <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Button</Button>
+        <Button variant="soft" intent="neutral" size="m" icon={<MoreIcon />} iconOnly aria-label="More" />
       </>
     ),
   },

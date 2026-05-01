@@ -109,6 +109,7 @@ export const FilterChip = React.forwardRef<HTMLDivElement, FilterChipProps>(
         className={['dls-filter-chip', className].filter(Boolean).join(' ')}
         data-size={size}
         data-disabled={disabled || undefined}
+        data-hidden={!isVisible || undefined}
         data-open={isOpen || undefined}
       >
         {/* Bar — outline styled container with 2 parts */}

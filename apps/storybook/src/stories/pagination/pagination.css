@@ -178,19 +178,33 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--dls-spacing-3);
   padding: var(--dls-spacing-3) var(--dls-spacing-4);
   border: 1px solid var(--dls-color-border-subtle);
   border-radius: var(--dls-radius-component-pagination);
   font-family: var(--dls-font-family);
+  container-type: inline-size;
 }
 
 /* Variant: borderless (no container chrome) */
 
 .dls-pagination[data-variant="borderless"] {
   border: none;
-  padding: 0;
+  padding: var(--dls-spacing-3) var(--dls-spacing-4);
   border-radius: 0;
+}
+
+/* Prevent "Items per page" label wrapping; hide it when too narrow */
+
+.dls-items-per-page > span {
+  white-space: nowrap;
+}
+
+@container (max-width: 600px) {
+  .dls-items-per-page {
+    display: none;
+  }
 }
 
 /* ---------------------------------------------------------------------------

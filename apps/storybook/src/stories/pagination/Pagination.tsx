@@ -150,7 +150,7 @@ export const ItemsPerPage = React.forwardRef<HTMLDivElement, ItemsPerPageProps>(
           </span>
         </button>
         {open && (
-          <List className="dls-items-per-page__dropdown" role="listbox">
+          <List className="dls-items-per-page__dropdown">
             {options.map((opt) => (
               <ListItem
                 key={opt}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Pagination } from '../pagination/Pagination';
 import './table.css';
 
 /* ---------------------------------------------------------------------------
@@ -37,50 +38,9 @@ export interface TableProps {
    Arrow icons
    --------------------------------------------------------------------------- */
 
-const ChevronLeft = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M10 4L6 8L10 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronRight = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
-   Pagination helper — build page list with ellipsis
-   --------------------------------------------------------------------------- */
-
-function buildPageList(current: number, total: number): (number | 'ellipsis')[] {
-  if (total <= 7) {
-    return Array.from({ length: total }, (_, i) => i + 1);
-  }
-
-  const pages: (number | 'ellipsis')[] = [1];
-
-  if (current > 3) {
-    pages.push('ellipsis');
-  }
-
-  const start = Math.max(2, current - 1);
-  const end = Math.min(total - 1, current + 1);
-
-  for (let i = start; i <= end; i++) {
-    pages.push(i);
-  }
-
-  if (current < total - 2) {
-    pages.push('ellipsis');
-  }
-
-  pages.push(total);
-  return pages;
-}
-
-/* ---------------------------------------------------------------------------
-   Component
+   Component — uses DLS Pagination component for the bottom bar
    --------------------------------------------------------------------------- */
 
 export const Table = React.forwardRef<HTMLDivElement, TableProps>(
@@ -102,8 +62,6 @@ export const Table = React.forwardRef<HTMLDivElement, TableProps>(
     },
     ref,
   ) => {
-    const pageList = buildPageList(currentPage, totalPages);
-
     return (
       <div
         ref={ref}
@@ -123,61 +81,19 @@ export const Table = React.forwardRef<HTMLDivElement, TableProps>(
           {children}
         </div>
 
-        {/* Pagination */}
+        {/* Pagination — uses the DLS Pagination component */}
         {showPagination && (
-          <div className="dls-table__pagination">
-            <div className="dls-table__pagination-left">
-              <span>Items per page</span>
-              <select
-                value={itemsPerPage}
-                onChange={(e) => onItemsPerPageChange?.(Number(e.target.value))}
-              >
-                {itemsPerPageOptions.map((n) => (
-                  <option key={n} value={n}>{n}</option>
-                ))}
-              </select>
-              <span>of {totalItems}</span>
-            </div>
-
-            <div className="dls-table__pages">
-              <button
-                type="button"
-                className="dls-table__page"
-                disabled={currentPage <= 1}
-                aria-label="Previous page"
-                onClick={() => onPageChange?.(currentPage - 1)}
-              >
-                <ChevronLeft />
-              </button>
-
-              {pageList.map((item, i) =>
-                item === 'ellipsis' ? (
-                  <span key={`e${i}`} className="dls-table__page-ellipsis">…</span>
-                ) : (
-                  <button
-                    key={item}
-                    type="button"
-                    className="dls-table__page"
-                    data-selected={item === currentPage ? '' : undefined}
-                    aria-current={item === currentPage ? 'page' : undefined}
-                    onClick={() => onPageChange?.(item)}
-                  >
-                    {item}
-                  </button>
-                ),
-              )}
-
-              <button
-                type="button"
-                className="dls-table__page"
-                disabled={currentPage >= totalPages}
-                aria-label="Next page"
-                onClick={() => onPageChange?.(currentPage + 1)}
-              >
-                <ChevronRight />
-              </button>
-            </div>
-          </div>
+          <Pagination
+            variant="borderless"
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={totalItems}
+            pageSize={itemsPerPage}
+            pageSizeOptions={itemsPerPageOptions}
+            onPageChange={onPageChange}
+            onPageSizeChange={onItemsPerPageChange}
+            className="dls-table__pagination"
+          />
         )}
       </div>
     );

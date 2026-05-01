@@ -220,18 +220,24 @@
    Disabled
    --------------------------------------------------------------------------- */
 
-.dls-filter-chip[data-disabled] .dls-filter-chip__bar {
+.dls-filter-chip[data-disabled] .dls-filter-chip__bar,
+.dls-filter-chip[data-hidden] .dls-filter-chip__bar {
   background: var(--dls-color-surface-disabled);
   border-color: var(--dls-color-border-disabled);
   color: var(--dls-color-text-disabled);
+}
+
+.dls-filter-chip[data-disabled] .dls-filter-chip__bar {
   cursor: not-allowed;
 }
 
-.dls-filter-chip[data-disabled] .dls-filter-chip__value {
+.dls-filter-chip[data-disabled] .dls-filter-chip__value,
+.dls-filter-chip[data-hidden] .dls-filter-chip__value {
   border-left-color: var(--dls-color-border-disabled);
 }
 
-.dls-filter-chip[data-disabled] .dls-filter-chip__action {
+.dls-filter-chip[data-disabled] .dls-filter-chip__action,
+.dls-filter-chip[data-hidden] .dls-filter-chip__action {
   border-left-color: var(--dls-color-border-disabled);
 }
 
