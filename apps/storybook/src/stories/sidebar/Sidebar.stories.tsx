@@ -15,9 +15,10 @@ import { Sidebar, SidebarGroup, SidebarDivider } from './Sidebar';
 import { SidebarItem } from '../sidebar-item/SidebarItem';
 import { Submenu } from '../submenu/Submenu';
 import { IconShape } from '../icon-shape/IconShape';
+import { SIDEBAR_ACCOUNT_USER, SIDEBAR_WORKSPACE } from '../_fixtures';
 
 const meta = {
-  title: 'Templates/Sidebar',
+  title: 'Components/Sidebar',
   component: Sidebar,
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
@@ -56,8 +57,8 @@ export const Playground: Story = {
     <Frame>
       <Sidebar
         {...args}
-        slotTop={<SidebarItem type="big-icon" text="Acme Corp" secondaryText="admin@acme.com" media={<LogoStub />} />}
-        slotBottom={<SidebarItem type="big-icon" text="Anna Smith" secondaryText="anna@acme.com" media={<LogoStub />} />}
+        slotTop={<SidebarItem type="big-icon" text={SIDEBAR_WORKSPACE.name} secondaryText={SIDEBAR_WORKSPACE.email} media={<LogoStub />} />}
+        slotBottom={<SidebarItem type="big-icon" text={SIDEBAR_ACCOUNT_USER.name} secondaryText={SIDEBAR_ACCOUNT_USER.email} media={<LogoStub />} />}
       >
         <SidebarGroup>
           <SidebarItem type="simple" text="Dashboard" icon={<DashboardIcon />} active />
@@ -79,8 +80,8 @@ export const Variant1: Story = {
     <Frame>
       <Sidebar
         variant="1"
-        slotTop={<SidebarItem type="big-icon" text="Acme Corp" media={<LogoStub />} />}
-        slotBottom={<SidebarItem type="big-icon" text="Anna Smith" secondaryText="anna@acme.com" media={<LogoStub />} />}
+        slotTop={<SidebarItem type="big-icon" text={SIDEBAR_WORKSPACE.name} media={<LogoStub />} />}
+        slotBottom={<SidebarItem type="big-icon" text={SIDEBAR_ACCOUNT_USER.name} secondaryText={SIDEBAR_ACCOUNT_USER.email} media={<LogoStub />} />}
       >
         <Submenu
           expanded
@@ -119,8 +120,8 @@ export const Variant2: Story = {
     <Frame>
       <Sidebar
         variant="2"
-        slotTop={<SidebarItem type="big-icon" text="Acme Corp" secondaryText="admin@acme.com" media={<LogoStub />} />}
-        slotBottom={<SidebarItem type="big-icon" text="Anna Smith" secondaryText="anna@acme.com" media={<LogoStub />} />}
+        slotTop={<SidebarItem type="big-icon" text={SIDEBAR_WORKSPACE.name} secondaryText={SIDEBAR_WORKSPACE.email} media={<LogoStub />} />}
+        slotBottom={<SidebarItem type="big-icon" text={SIDEBAR_ACCOUNT_USER.name} secondaryText={SIDEBAR_ACCOUNT_USER.email} media={<LogoStub />} />}
       >
         <SidebarGroup>
           <SidebarItem type="simple" text="Dashboard" icon={<DashboardIcon />} active />
@@ -150,8 +151,8 @@ export const Variant3: Story = {
     <Frame>
       <Sidebar
         variant="3"
-        slotTop={<SidebarItem type="big-icon" text="Acme Corp" media={<LogoStub />} />}
-        slotBottom={<SidebarItem type="big-icon" text="Anna Smith" secondaryText="anna@acme.com" media={<LogoStub />} />}
+        slotTop={<SidebarItem type="big-icon" text={SIDEBAR_WORKSPACE.name} media={<LogoStub />} />}
+        slotBottom={<SidebarItem type="big-icon" text={SIDEBAR_ACCOUNT_USER.name} secondaryText={SIDEBAR_ACCOUNT_USER.email} media={<LogoStub />} />}
       >
         <SidebarGroup>
           <SidebarItem type="simple" text="Dashboard" icon={<DashboardIcon />} active />
@@ -182,7 +183,7 @@ export const Variant4: Story = {
     <Frame>
       <Sidebar
         variant="4"
-        slotTop={<SidebarItem type="big-icon" text="Acme Corp" secondaryText="admin@acme.com" media={<LogoStub />} />}
+        slotTop={<SidebarItem type="big-icon" text={SIDEBAR_WORKSPACE.name} secondaryText={SIDEBAR_WORKSPACE.email} media={<LogoStub />} />}
         slotBottom={<SidebarItem type="simple" text="Settings" icon={<SettingsIcon />} />}
       >
         <SidebarGroup>
@@ -212,8 +213,8 @@ export const Collapsed: Story = {
       <Sidebar
         variant="1"
         collapsed
-        slotTop={<SidebarItem type="big-icon" text="Acme" media={<LogoStub />} collapsed />}
-        slotBottom={<SidebarItem type="big-icon" text="Anna" media={<LogoStub />} collapsed />}
+        slotTop={<SidebarItem type="big-icon" text={SIDEBAR_WORKSPACE.shortName} media={<LogoStub />} collapsed />}
+        slotBottom={<SidebarItem type="big-icon" text={SIDEBAR_ACCOUNT_USER.name.split(' ')[0]} media={<LogoStub />} collapsed />}
       >
         <SidebarGroup>
           <SidebarItem type="simple" text="Dashboard" icon={<DashboardIcon />} collapsed active />
@@ -247,8 +248,8 @@ export const Interactive: Story = {
           slotTop={
             <SidebarItem
               type="big-icon"
-              text="Acme Corp"
-              secondaryText="admin@acme.com"
+              text={SIDEBAR_WORKSPACE.name}
+              secondaryText={SIDEBAR_WORKSPACE.email}
               media={<LogoStub />}
               collapsed={collapsed}
               onClick={() => setCollapsed(c => !c)}
@@ -257,8 +258,8 @@ export const Interactive: Story = {
           slotBottom={
             <SidebarItem
               type="big-icon"
-              text="Anna Smith"
-              secondaryText="anna@acme.com"
+              text={SIDEBAR_ACCOUNT_USER.name}
+              secondaryText={SIDEBAR_ACCOUNT_USER.email}
               media={<LogoStub />}
               collapsed={collapsed}
             />

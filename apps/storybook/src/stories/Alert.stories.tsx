@@ -3,6 +3,7 @@ import React from 'react';
 import { Alert, InfoIcon, CheckCircleIcon, AlertTriangleIcon, XCircleIcon } from './Alert';
 import { Button } from './Button';
 import type { AlertIntent } from './Alert';
+import { Section, Row } from './_helpers/StoryLayout';
 
 const INTENTS: AlertIntent[] = ['neutral', 'primary', 'info', 'success', 'warning', 'danger'];
 
@@ -48,38 +49,6 @@ type Story = StoryObj<typeof meta>;
 // Helpers
 // ---------------------------------------------------------------------------
 
-const Row = ({ label, children }: { label: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-    <span style={{
-      width: 64,
-      fontSize: 12,
-      color: 'var(--dls-color-text-secondary)',
-      fontFamily: 'var(--dls-font-family)',
-      flexShrink: 0,
-      paddingTop: 10,
-    }}>
-      {label}
-    </span>
-    {children}
-  </div>
-);
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-    <h3 style={{
-      margin: 0,
-      fontSize: 16,
-      fontWeight: 600,
-      fontFamily: 'var(--dls-font-family)',
-      color: 'var(--dls-color-text-primary)',
-    }}>
-      {title}
-    </h3>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      {children}
-    </div>
-  </div>
-);
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -102,7 +71,7 @@ export const AllIntents: Story = {
   render: () => (
     <Section title="All Intents (Size M)">
       {INTENTS.map((intent) => (
-        <Row key={intent} label={intent}>
+        <Row key={intent} label={intent} align="start">
           <Alert
             intent={intent}
             size="m"
@@ -125,7 +94,7 @@ export const AllIntentsSmall: Story = {
   render: () => (
     <Section title="All Intents (Size S)">
       {INTENTS.map((intent) => (
-        <Row key={intent} label={intent}>
+        <Row key={intent} label={intent} align="start">
           <Alert
             intent={intent}
             size="s"
@@ -148,7 +117,7 @@ export const WithoutIcon: Story = {
   render: () => (
     <Section title="Without Icon">
       {INTENTS.map((intent) => (
-        <Row key={intent} label={intent}>
+        <Row key={intent} label={intent} align="start">
           <Alert
             intent={intent}
             size="m"
@@ -169,7 +138,7 @@ export const WithoutTitle: Story = {
   render: () => (
     <Section title="Without Title">
       {INTENTS.map((intent) => (
-        <Row key={intent} label={intent}>
+        <Row key={intent} label={intent} align="start">
           <Alert
             intent={intent}
             size="m"
@@ -190,7 +159,7 @@ export const WithoutDescription: Story = {
   render: () => (
     <Section title="Without Description">
       {INTENTS.map((intent) => (
-        <Row key={intent} label={intent}>
+        <Row key={intent} label={intent} align="start">
           <Alert
             intent={intent}
             size="m"
@@ -211,7 +180,7 @@ export const WithAction: Story = {
   render: () => (
     <Section title="With Action Button">
       {INTENTS.map((intent) => (
-        <Row key={intent} label={intent}>
+        <Row key={intent} label={intent} align="start">
           <Alert
             intent={intent}
             size="m"

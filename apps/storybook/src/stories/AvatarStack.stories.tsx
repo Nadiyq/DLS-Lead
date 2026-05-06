@@ -3,6 +3,7 @@ import React from 'react';
 import { AvatarStack } from './AvatarStack';
 import { Avatar, UserIcon } from './Avatar';
 import type { AvatarStackSize, OverflowUser } from './AvatarStack';
+import { Section } from './_helpers/StoryLayout';
 
 const SIZES: AvatarStackSize[] = ['88', '80', '72', '48', '40', '32', '28', '24', '20', '18'];
 
@@ -40,23 +41,6 @@ type Story = StoryObj<typeof meta>;
 // Helpers
 // ---------------------------------------------------------------------------
 
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-    <h3 style={{
-      margin: 0,
-      fontSize: 16,
-      fontWeight: 600,
-      fontFamily: 'var(--dls-font-family)',
-      color: 'var(--dls-color-text-primary)',
-    }}>
-      {title}
-    </h3>
-    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', gap: 24 }}>
-      {children}
-    </div>
-  </div>
-);
-
 const SizeLabel = ({ size, children }: { size: string; children: React.ReactNode }) => (
   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
     {children}
@@ -90,7 +74,7 @@ export const Playground: Story = {
 
 export const AllSizes: Story = {
   render: () => (
-    <Section title="All Sizes — 2 Avatars">
+    <Section layout="wrap" innerGap={24} title="All Sizes — 2 Avatars">
       {SIZES.map((size) => (
         <SizeLabel key={size} size={size}>
           <AvatarStack size={size}>
@@ -119,7 +103,7 @@ export const WithCounter: Story = {
   render: () => {
     const [selected, setSelected] = React.useState(2);
     return (
-      <Section title="With Counter (+N) — hover the badge">
+      <Section layout="wrap" innerGap={24} title="With Counter (+N) — hover the badge">
         <AvatarStack
           size="48"
           max={2}
@@ -140,7 +124,7 @@ export const WithCounter: Story = {
 
 export const AllSizesWithCounter: Story = {
   render: () => (
-    <Section title="All Sizes — 2 Avatars + Counter">
+    <Section layout="wrap" innerGap={24} title="All Sizes — 2 Avatars + Counter">
       {SIZES.map((size) => (
         <SizeLabel key={size} size={size}>
           <AvatarStack size={size} max={2} total={22}>
@@ -160,7 +144,7 @@ export const AllSizesWithCounter: Story = {
 
 export const MaxVisible: Story = {
   render: () => (
-    <Section title="Max 3 of 5">
+    <Section layout="wrap" innerGap={24} title="Max 3 of 5">
       <AvatarStack size="48" max={3}>
         <Avatar src={SAMPLE_IMAGES[0]} alt="User 1" />
         <Avatar src={SAMPLE_IMAGES[1]} alt="User 2" />
@@ -178,7 +162,7 @@ export const MaxVisible: Story = {
 
 export const WithInitials: Story = {
   render: () => (
-    <Section title="Initials Stack">
+    <Section layout="wrap" innerGap={24} title="Initials Stack">
       <AvatarStack size="48">
         <Avatar initials="AB" />
         <Avatar initials="CD" />
@@ -194,7 +178,7 @@ export const WithInitials: Story = {
 
 export const WithIcons: Story = {
   render: () => (
-    <Section title="Icon Stack">
+    <Section layout="wrap" innerGap={24} title="Icon Stack">
       <AvatarStack size="48">
         <Avatar icon={<UserIcon />} />
         <Avatar icon={<UserIcon />} />
@@ -210,7 +194,7 @@ export const WithIcons: Story = {
 
 export const MixedContent: Story = {
   render: () => (
-    <Section title="Mixed — Image + Initials + Counter">
+    <Section layout="wrap" innerGap={24} title="Mixed — Image + Initials + Counter">
       <AvatarStack size="72" max={3} total={12}>
         <Avatar src={SAMPLE_IMAGES[0]} alt="User 1" />
         <Avatar src={SAMPLE_IMAGES[1]} alt="User 2" />

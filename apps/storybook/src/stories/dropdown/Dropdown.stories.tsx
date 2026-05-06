@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import { AtSign as AtSignIcon } from 'lucide-react';
 import { Dropdown, type DropdownOption } from './Dropdown';
+import { Section } from '../_helpers/StoryLayout';
 
 const meta = {
   title: 'Components/Dropdown',
@@ -23,15 +24,6 @@ type Story = StoryObj<typeof meta>;
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-    <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
-      {title}
-    </h3>
-    {children}
-  </div>
-);
 
 const textOptions: DropdownOption[] = [
   { value: 'opt1', label: 'Option one' },
@@ -74,16 +66,16 @@ export const AllStates: Story = {
   args: { options: textOptions },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24, width: 364 }}>
-      <Section title="Normal (empty)">
+      <Section layout="flat" title="Normal (empty)">
         <Dropdown options={textOptions} placeholder="Select" />
       </Section>
-      <Section title="Filled">
+      <Section layout="flat" title="Filled">
         <Dropdown options={textOptions} value="opt1" />
       </Section>
-      <Section title="Disabled">
+      <Section layout="flat" title="Disabled">
         <Dropdown options={textOptions} value="opt1" disabled />
       </Section>
-      <Section title="Error">
+      <Section layout="flat" title="Error">
         <Dropdown options={textOptions} value="opt1" error="Please select a valid option." />
       </Section>
     </div>

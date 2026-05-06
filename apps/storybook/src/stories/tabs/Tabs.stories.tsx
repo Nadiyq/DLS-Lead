@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Tabs } from './Tabs';
+import { Section } from '../_helpers/StoryLayout';
 
 const meta = {
   title: 'Components/Tabs',
@@ -11,19 +12,6 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-    <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
-      {title}
-    </h3>
-    {children}
-  </div>
-);
 
 const HomeIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,10 +61,10 @@ export const AllTypes: Story = {
   },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <Section title="Pill">
+      <Section layout="flat" size="s" title="Pill">
         <Tabs items={defaultItems} value="tab2" type="pill" />
       </Section>
-      <Section title="Folder">
+      <Section layout="flat" size="s" title="Folder">
         <Tabs items={defaultItems} value="tab2" type="folder" />
       </Section>
     </div>
@@ -94,10 +82,10 @@ export const WithIcons: Story = {
   },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <Section title="Pill with icons">
+      <Section layout="flat" size="s" title="Pill with icons">
         <Tabs items={iconItems} value="home" type="pill" />
       </Section>
-      <Section title="Folder with icons">
+      <Section layout="flat" size="s" title="Folder with icons">
         <Tabs items={iconItems} value="home" type="folder" />
       </Section>
     </div>
@@ -133,13 +121,13 @@ export const Interactive: Story = {
     const [folderValue, setFolderValue] = React.useState('tab1');
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-        <Section title="Pill (interactive)">
+        <Section layout="flat" size="s" title="Pill (interactive)">
           <Tabs items={defaultItems} value={pillValue} onChange={setPillValue} type="pill" />
           <span style={{ fontFamily: 'var(--dls-font-family)', fontSize: 13, color: 'var(--dls-color-text-secondary)' }}>
             Selected: {pillValue}
           </span>
         </Section>
-        <Section title="Folder (interactive)">
+        <Section layout="flat" size="s" title="Folder (interactive)">
           <Tabs items={defaultItems} value={folderValue} onChange={setFolderValue} type="folder" />
           <span style={{ fontFamily: 'var(--dls-font-family)', fontSize: 13, color: 'var(--dls-color-text-secondary)' }}>
             Selected: {folderValue}
@@ -166,10 +154,10 @@ export const ManyTabs: Story = {
     }));
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-        <Section title="Pill — many tabs">
+        <Section layout="flat" size="s" title="Pill — many tabs">
           <Tabs items={manyItems} value="tab3" type="pill" />
         </Section>
-        <Section title="Folder — many tabs">
+        <Section layout="flat" size="s" title="Folder — many tabs">
           <Tabs items={manyItems} value="tab3" type="folder" />
         </Section>
       </div>

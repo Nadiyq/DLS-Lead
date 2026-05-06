@@ -6,11 +6,17 @@ import type { FilterGroup } from './Filters';
 import { FilterChip } from '../filter-chip/FilterChip';
 import { List } from '../list-item/List';
 import { ListItem } from '../list-item/ListItem';
+import { Section } from '../_helpers/StoryLayout';
 
 const meta = {
   title: 'Components/Filters',
   component: Filters,
-  parameters: { layout: 'padded' },
+  parameters: {
+    layout: 'padded',
+    // FilterChip composition is deeply nested → Storybook's auto-source
+    // serializer crashes with `RangeError: Invalid string length`.
+    docs: { source: { type: 'code', code: '' } },
+  },
   tags: ['autodocs'],
 } satisfies Meta<typeof Filters>;
 
@@ -20,15 +26,6 @@ type Story = StoryObj<typeof meta>;
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-    <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
-      {title}
-    </h3>
-    {children}
-  </div>
-);
 
 const Val = ({ text }: { text: string }) => (
   <span className="dls-filter-chip__value-text">{text}</span>
@@ -61,7 +58,7 @@ export const Selected: Story = {
   args: { size: 'm', groups: [] },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="Size M — selected">
+      <Section layout="flat" size="s" outerGap={8} title="Size M — selected">
         <Filters
           size="m"
           groups={[
@@ -71,7 +68,7 @@ export const Selected: Story = {
           ]}
         />
       </Section>
-      <Section title="Size S — selected">
+      <Section layout="flat" size="s" outerGap={8} title="Size S — selected">
         <Filters
           size="s"
           groups={[
@@ -92,7 +89,7 @@ export const Unselected: Story = {
   args: { size: 'm', groups: [] },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="Size M — unselected">
+      <Section layout="flat" size="s" outerGap={8} title="Size M — unselected">
         <Filters
           size="m"
           groups={[
@@ -100,7 +97,7 @@ export const Unselected: Story = {
           ]}
         />
       </Section>
-      <Section title="Size S — unselected">
+      <Section layout="flat" size="s" outerGap={8} title="Size S — unselected">
         <Filters
           size="s"
           groups={[
@@ -191,7 +188,7 @@ const InteractiveDemo = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <Section title="Eye = hide/show; chevron opens options + remove">
+      <Section layout="flat" size="s" outerGap={8} title="Eye = hide/show; chevron opens options + remove">
         <Filters
           size="m"
           groups={groups}
@@ -228,10 +225,10 @@ export const SizesComparison: Story = {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <Section title="Size M (32px)">
+        <Section layout="flat" size="s" outerGap={8} title="Size M (32px)">
           <Filters size="m" groups={makeGroups('m')} />
         </Section>
-        <Section title="Size S (28px)">
+        <Section layout="flat" size="s" outerGap={8} title="Size S (28px)">
           <Filters size="s" groups={makeGroups('s')} />
         </Section>
       </div>

@@ -11,9 +11,16 @@ import { Filters } from '../filters/Filters';
 import { FilterChip } from '../filter-chip/FilterChip';
 
 const meta = {
-  title: 'Templates/Table',
+  title: 'Components/Table',
   component: Table,
-  parameters: { layout: 'padded' },
+  parameters: {
+    layout: 'padded',
+    // Heavy stories (Filters with deeply nested FilterChip composition) crash
+    // Storybook's auto-generated source serializer with `RangeError: Invalid
+    // string length`. Disable source autogen for the meta — individual stories
+    // can opt back in if needed.
+    docs: { source: { type: 'code', code: '' } },
+  },
   tags: ['autodocs'],
 } satisfies Meta<typeof Table>;
 
@@ -149,6 +156,9 @@ export const Default: Story = {
    --------------------------------------------------------------------------- */
 
 export const WithFilters: Story = {
+  parameters: {
+    docs: { source: { code: '' } },
+  },
   args: {
     showPagination: true,
     totalItems: 500,

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import { DateInput } from './DateInput';
+import { Section } from '../_helpers/StoryLayout';
 
 const meta = {
   title: 'Components/DateInput',
@@ -23,15 +24,6 @@ type Story = StoryObj<typeof meta>;
 // Helpers
 // ---------------------------------------------------------------------------
 
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-    <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
-      {title}
-    </h3>
-    {children}
-  </div>
-);
-
 // ---------------------------------------------------------------------------
 // Playground
 // ---------------------------------------------------------------------------
@@ -51,16 +43,16 @@ export const AllStates: Story = {
   args: {},
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24, width: 364 }}>
-      <Section title="Normal (empty)">
+      <Section layout="flat" title="Normal (empty)">
         <DateInput placeholder="MM / DD / YYYY" />
       </Section>
-      <Section title="Filled">
+      <Section layout="flat" title="Filled">
         <DateInput value="10 Sep 2023" />
       </Section>
-      <Section title="Disabled">
+      <Section layout="flat" title="Disabled">
         <DateInput value="10 Sep 2023" disabled />
       </Section>
-      <Section title="Error">
+      <Section layout="flat" title="Error">
         <DateInput value="10 Sep 2023" error="Please select a valid date." />
       </Section>
     </div>

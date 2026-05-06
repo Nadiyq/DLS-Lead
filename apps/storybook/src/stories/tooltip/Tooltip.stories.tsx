@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Tooltip } from './Tooltip';
 import { Kbd, KbdGroup } from '../kbd/Kbd';
+import { Section } from '../_helpers/StoryLayout';
 
 const meta = {
   title: 'Components/Tooltip',
@@ -16,15 +17,6 @@ type Story = StoryObj<typeof meta>;
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-    <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
-      {title}
-    </h3>
-    {children}
-  </div>
-);
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -46,10 +38,10 @@ export const Types: Story = {
   args: { text: 'Tooltip text' },
   render: () => (
     <div style={{ display: 'flex', gap: 32 }}>
-      <Section title="General">
+      <Section layout="flat" size="s" title="General">
         <Tooltip text="Tooltip text" orientation="top-center" />
       </Section>
-      <Section title="Error">
+      <Section layout="flat" size="s" title="Error">
         <Tooltip type="error" text="Error message" orientation="top-center" />
       </Section>
     </div>
@@ -64,13 +56,13 @@ export const OrientationsTop: Story = {
   args: { text: 'Tooltip' },
   render: () => (
     <div style={{ display: 'flex', gap: 32 }}>
-      <Section title="Top left">
+      <Section layout="flat" size="s" title="Top left">
         <Tooltip text="Tooltip text" orientation="top-left" />
       </Section>
-      <Section title="Top center">
+      <Section layout="flat" size="s" title="Top center">
         <Tooltip text="Tooltip text" orientation="top-center" />
       </Section>
-      <Section title="Top right">
+      <Section layout="flat" size="s" title="Top right">
         <Tooltip text="Tooltip text" orientation="top-right" />
       </Section>
     </div>
@@ -85,13 +77,13 @@ export const OrientationsBottom: Story = {
   args: { text: 'Tooltip' },
   render: () => (
     <div style={{ display: 'flex', gap: 32 }}>
-      <Section title="Bottom left">
+      <Section layout="flat" size="s" title="Bottom left">
         <Tooltip text="Tooltip text" orientation="bottom-left" />
       </Section>
-      <Section title="Bottom center">
+      <Section layout="flat" size="s" title="Bottom center">
         <Tooltip text="Tooltip text" orientation="bottom-center" />
       </Section>
-      <Section title="Bottom right">
+      <Section layout="flat" size="s" title="Bottom right">
         <Tooltip text="Tooltip text" orientation="bottom-right" />
       </Section>
     </div>
@@ -106,10 +98,10 @@ export const OrientationsSide: Story = {
   args: { text: 'Tooltip' },
   render: () => (
     <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
-      <Section title="Left">
+      <Section layout="flat" size="s" title="Left">
         <Tooltip text="Tooltip text" orientation="left" />
       </Section>
-      <Section title="Right">
+      <Section layout="flat" size="s" title="Right">
         <Tooltip text="Tooltip text" orientation="right" />
       </Section>
     </div>
@@ -124,7 +116,7 @@ export const WithShortcut: Story = {
   args: { text: 'Tooltip' },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="General with shortcut">
+      <Section layout="flat" size="s" title="General with shortcut">
         <Tooltip
           text="Tooltip text"
           orientation="top-center"
@@ -136,7 +128,7 @@ export const WithShortcut: Story = {
           }
         />
       </Section>
-      <Section title="Error with shortcut">
+      <Section layout="flat" size="s" title="Error with shortcut">
         <Tooltip
           type="error"
           text="Invalid input"

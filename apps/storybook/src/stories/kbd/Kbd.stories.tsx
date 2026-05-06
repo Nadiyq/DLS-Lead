@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React from 'react';
 import { Kbd, KbdGroup } from './Kbd';
+import { Section } from '../_helpers/StoryLayout';
 
 /* ===========================================================================
    Kbd stories
@@ -15,19 +15,6 @@ const kbdMeta = {
 
 export default kbdMeta;
 type KbdStory = StoryObj<typeof kbdMeta>;
-
-/* ---------------------------------------------------------------------------
-   Helpers
-   --------------------------------------------------------------------------- */
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-    <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
-      {title}
-    </h3>
-    {children}
-  </div>
-);
 
 /* ---------------------------------------------------------------------------
    Playground
@@ -47,7 +34,7 @@ export const SingleKeys: KbdStory = {
   args: { children: '' },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="Letter keys">
+      <Section layout="flat" size="s" title="Letter keys">
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <Kbd>A</Kbd>
           <Kbd>B</Kbd>
@@ -55,7 +42,7 @@ export const SingleKeys: KbdStory = {
           <Kbd>Z</Kbd>
         </div>
       </Section>
-      <Section title="Modifier keys">
+      <Section layout="flat" size="s" title="Modifier keys">
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <Kbd>Ctrl</Kbd>
           <Kbd>Alt</Kbd>
@@ -66,7 +53,7 @@ export const SingleKeys: KbdStory = {
           <Kbd>Space</Kbd>
         </div>
       </Section>
-      <Section title="Mac symbols">
+      <Section layout="flat" size="s" title="Mac symbols">
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <Kbd>⌘</Kbd>
           <Kbd>⇧</Kbd>
@@ -77,7 +64,7 @@ export const SingleKeys: KbdStory = {
           <Kbd>⎋</Kbd>
         </div>
       </Section>
-      <Section title="Arrow keys">
+      <Section layout="flat" size="s" title="Arrow keys">
         <div style={{ display: 'flex', gap: 8 }}>
           <Kbd>↑</Kbd>
           <Kbd>↓</Kbd>
@@ -97,7 +84,7 @@ export const GroupRegular: KbdStory = {
   args: { children: '' },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="Mac-style shortcut (adjacent)">
+      <Section layout="flat" size="s" title="Mac-style shortcut (adjacent)">
         <KbdGroup type="regular">
           <Kbd>⌘</Kbd>
           <Kbd>⇧</Kbd>
@@ -105,13 +92,13 @@ export const GroupRegular: KbdStory = {
           <Kbd>⌃</Kbd>
         </KbdGroup>
       </Section>
-      <Section title="Copy">
+      <Section layout="flat" size="s" title="Copy">
         <KbdGroup type="regular">
           <Kbd>⌘</Kbd>
           <Kbd>C</Kbd>
         </KbdGroup>
       </Section>
-      <Section title="Undo">
+      <Section layout="flat" size="s" title="Undo">
         <KbdGroup type="regular">
           <Kbd>⌘</Kbd>
           <Kbd>Z</Kbd>
@@ -129,7 +116,7 @@ export const GroupSeparated: KbdStory = {
   args: { children: '' },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="Bold (Windows)">
+      <Section layout="flat" size="s" title="Bold (Windows)">
         <KbdGroup type="separated">
           <Kbd>Ctrl</Kbd>
           <Kbd>Alt</Kbd>
@@ -137,13 +124,13 @@ export const GroupSeparated: KbdStory = {
           <Kbd>B</Kbd>
         </KbdGroup>
       </Section>
-      <Section title="Save">
+      <Section layout="flat" size="s" title="Save">
         <KbdGroup type="separated">
           <Kbd>Ctrl</Kbd>
           <Kbd>S</Kbd>
         </KbdGroup>
       </Section>
-      <Section title="Find and replace">
+      <Section layout="flat" size="s" title="Find and replace">
         <KbdGroup type="separated">
           <Kbd>Ctrl</Kbd>
           <Kbd>Shift</Kbd>

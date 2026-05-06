@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TableColumn } from './TableColumn';
 import type { TableColumnType, TableColumnRow } from './TableColumn';
+import { TABLE_COLUMN_ROWS } from '../_fixtures';
 import '../table/table.css';
 
 const meta = {
@@ -14,104 +15,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // ---------------------------------------------------------------------------
-// Sample rows
-// ---------------------------------------------------------------------------
-
-const textRows: TableColumnRow[] = [
-  { text: 'Alice' }, { text: 'Bob' }, { text: 'Charlie' },
-  { text: 'Diana' }, { text: 'Edward' },
-];
-
-const numberRows: TableColumnRow[] = [
-  { text: '1,200' }, { text: '890' }, { text: '3,450' },
-  { text: '567' }, { text: '12,000' },
-];
-
-const dateRows: TableColumnRow[] = [
-  { text: '12 Jan 2026' }, { text: '5 Feb 2026' }, { text: '18 Mar 2026' },
-  { text: '3 Apr 2026' }, { text: '22 May 2026' },
-];
-
-const checkboxRows: TableColumnRow[] = [
-  { checked: true }, { checked: false }, { checked: true },
-  { checked: false }, { checked: false },
-];
-
-const badgeRows: TableColumnRow[] = [
-  { badgeLabel: 'Active', badgeIntent: 'success' },
-  { badgeLabel: 'Pending', badgeIntent: 'warning' },
-  { badgeLabel: 'Active', badgeIntent: 'success' },
-  { badgeLabel: 'Inactive', badgeIntent: 'danger' },
-  { badgeLabel: 'Active', badgeIntent: 'success' },
-];
-
-const userRows: TableColumnRow[] = [
-  { text: 'John Smith', initials: 'JS' },
-  { text: 'Jane Doe', initials: 'JD' },
-  { text: 'Bob Wilson', initials: 'BW' },
-  { text: 'Alice Chen', initials: 'AC' },
-  { text: 'Tom Lee', initials: 'TL' },
-];
-
-const twoLineRows: TableColumnRow[] = [
-  { text: 'Project Alpha', secondaryText: 'Engineering' },
-  { text: 'Project Beta', secondaryText: 'Design' },
-  { text: 'Project Gamma', secondaryText: 'Marketing' },
-  { text: 'Project Delta', secondaryText: 'Sales' },
-  { text: 'Project Epsilon', secondaryText: 'Support' },
-];
-
-const twoLineAvatarRows: TableColumnRow[] = [
-  { text: 'John Smith', secondaryText: 'jsmith@gmail.com', initials: 'JS' },
-  { text: 'Jane Doe', secondaryText: 'jane@gmail.com', initials: 'JD' },
-  { text: 'Bob Wilson', secondaryText: 'bob@gmail.com', initials: 'BW' },
-  { text: 'Alice Chen', secondaryText: 'alice@gmail.com', initials: 'AC' },
-  { text: 'Tom Lee', secondaryText: 'tom@gmail.com', initials: 'TL' },
-];
-
-const TEAM_POOL = [
-  { name: 'Malik Roberson', initials: 'MR', src: 'https://i.pravatar.cc/48?u=malik' },
-  { name: 'Kenton Jerde', initials: 'KJ', src: 'https://i.pravatar.cc/48?u=kenton' },
-  { name: 'Talia Kubiak', initials: 'TK', src: 'https://i.pravatar.cc/48?u=talia' },
-  { name: 'Jayson Wintheiser', initials: 'JW', src: 'https://i.pravatar.cc/48?u=jayson' },
-  { name: 'Shea Trantow', initials: 'ST', src: 'https://i.pravatar.cc/48?u=shea' },
-  { name: 'Casey Miller', initials: 'CM', src: 'https://i.pravatar.cc/48?u=casey' },
-  { name: 'Alex Cooper', initials: 'AC', src: 'https://i.pravatar.cc/48?u=alex' },
-  { name: 'Bria Watsica', initials: 'BW', src: 'https://i.pravatar.cc/48?u=bria' },
-  { name: 'Devon Lubowitz', initials: 'DL', src: 'https://i.pravatar.cc/48?u=devon' },
-  { name: 'Elias Toure', initials: 'ET', src: 'https://i.pravatar.cc/48?u=elias' },
-  { name: 'Fiona Padberg', initials: 'FP', src: 'https://i.pravatar.cc/48?u=fiona' },
-  { name: 'Gabe Howell', initials: 'GH', src: 'https://i.pravatar.cc/48?u=gabe' },
-  { name: 'Hana Schmitt', initials: 'HS', src: 'https://i.pravatar.cc/48?u=hana' },
-  { name: 'Iris Cole', initials: 'IC', src: 'https://i.pravatar.cc/48?u=iris' },
-  { name: 'Jamal Weaver', initials: 'JW', src: 'https://i.pravatar.cc/48?u=jamal' },
-  { name: 'Kiana Gallegos', initials: 'KG', src: 'https://i.pravatar.cc/48?u=kiana' },
-  { name: 'Liam Bartell', initials: 'LB', src: 'https://i.pravatar.cc/48?u=liam' },
-  { name: 'Maya Ortiz', initials: 'MO', src: 'https://i.pravatar.cc/48?u=maya' },
-  { name: 'Noah Funk', initials: 'NF', src: 'https://i.pravatar.cc/48?u=noah' },
-  { name: 'Olive Reed', initials: 'OR', src: 'https://i.pravatar.cc/48?u=olive' },
-  { name: 'Priya Shah', initials: 'PS', src: 'https://i.pravatar.cc/48?u=priya' },
-  { name: 'Quinn Roberts', initials: 'QR', src: 'https://i.pravatar.cc/48?u=quinn' },
-];
-
-const stackedRows: TableColumnRow[] = [
-  { users: TEAM_POOL.slice(0, 5) },   // 2 visible + 3 in dropdown
-  { users: TEAM_POOL.slice(0, 22) },  // 2 visible + 20 in dropdown
-  { users: TEAM_POOL.slice(0, 7) },   // 2 visible + 5 in dropdown
-  { users: TEAM_POOL.slice(0, 2) },   // just 2 visible, no overflow
-  { users: TEAM_POOL.slice(0, 14) },  // 2 visible + 12 in dropdown
-];
-
-const cardRows: TableColumnRow[] = [
-  { cardLast4: '1234' }, { cardLast4: '5678' }, { cardLast4: '9012' },
-  { cardLast4: '3456' }, { cardLast4: '7890' },
-];
-
-const actionsRows: TableColumnRow[] = [
-  {}, {}, {}, {}, {},
-];
-
-// ---------------------------------------------------------------------------
 // Playground
 // ---------------------------------------------------------------------------
 
@@ -120,7 +23,7 @@ export const Playground: Story = {
     type: 'text',
     header: 'Name',
     sortable: true,
-    rows: textRows,
+    rows: TABLE_COLUMN_ROWS.text,
   },
 };
 
@@ -131,19 +34,19 @@ export const Playground: Story = {
 export const AllTypes: Story = {
   args: {
     type: 'text',
-    rows: textRows,
+    rows: TABLE_COLUMN_ROWS.text,
   },
   render: () => {
     const types: { type: TableColumnType; rows: TableColumnRow[]; header?: string }[] = [
-      { type: 'checkbox', rows: checkboxRows },
-      { type: 'text', rows: textRows, header: 'Name' },
-      { type: 'number', rows: numberRows, header: 'Amount' },
-      { type: 'date', rows: dateRows },
-      { type: 'badge', rows: badgeRows, header: 'Status' },
-      { type: 'user', rows: userRows },
-      { type: 'two-line', rows: twoLineRows, header: 'Project' },
-      { type: 'card', rows: cardRows },
-      { type: 'actions', rows: actionsRows },
+      { type: 'checkbox', rows: TABLE_COLUMN_ROWS.checkbox },
+      { type: 'text', rows: TABLE_COLUMN_ROWS.text, header: 'Name' },
+      { type: 'number', rows: TABLE_COLUMN_ROWS.number, header: 'Amount' },
+      { type: 'date', rows: TABLE_COLUMN_ROWS.date },
+      { type: 'badge', rows: TABLE_COLUMN_ROWS.badge, header: 'Status' },
+      { type: 'user', rows: TABLE_COLUMN_ROWS.user },
+      { type: 'two-line', rows: TABLE_COLUMN_ROWS.twoLine, header: 'Project' },
+      { type: 'card', rows: TABLE_COLUMN_ROWS.card },
+      { type: 'actions', rows: TABLE_COLUMN_ROWS.actions },
     ];
 
     return (
@@ -177,7 +80,7 @@ export const TextColumn: Story = {
     type: 'text',
     header: 'Name',
     sortable: true,
-    rows: textRows,
+    rows: TABLE_COLUMN_ROWS.text,
   },
 };
 
@@ -190,7 +93,7 @@ export const NumberColumn: Story = {
     type: 'number',
     header: 'Amount',
     sortable: true,
-    rows: numberRows,
+    rows: TABLE_COLUMN_ROWS.number,
   },
 };
 
@@ -202,7 +105,7 @@ export const BadgeColumn: Story = {
   args: {
     type: 'badge',
     header: 'Status',
-    rows: badgeRows,
+    rows: TABLE_COLUMN_ROWS.badge,
   },
 };
 
@@ -214,7 +117,7 @@ export const TwoLineAvatarColumn: Story = {
   args: {
     type: 'two-line+avatar',
     header: 'User',
-    rows: twoLineAvatarRows,
+    rows: TABLE_COLUMN_ROWS.twoLineAvatar,
   },
 };
 
@@ -226,7 +129,7 @@ export const UsersStackedColumn: Story = {
   args: {
     type: 'users-stacked',
     header: 'Team',
-    rows: stackedRows,
+    rows: TABLE_COLUMN_ROWS.stacked,
   },
 };
 
@@ -237,7 +140,7 @@ export const UsersStackedColumn: Story = {
 export const FullTable: Story = {
   args: {
     type: 'text',
-    rows: textRows,
+    rows: TABLE_COLUMN_ROWS.text,
   },
   render: () => (
     <div className="dls-table__columns" style={{
@@ -248,12 +151,12 @@ export const FullTable: Story = {
       overflow: 'hidden',
       width: 800,
     }}>
-      <TableColumn type="checkbox" rows={checkboxRows} />
-      <TableColumn type="two-line+avatar" header="User" rows={twoLineAvatarRows} sortable />
-      <TableColumn type="badge" header="Status" rows={badgeRows} />
-      <TableColumn type="date" header="Joined" rows={dateRows} sortable />
-      <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-      <TableColumn type="actions" rows={actionsRows} />
+      <TableColumn type="checkbox" rows={TABLE_COLUMN_ROWS.checkbox} />
+      <TableColumn type="two-line+avatar" header="User" rows={TABLE_COLUMN_ROWS.twoLineAvatar} sortable />
+      <TableColumn type="badge" header="Status" rows={TABLE_COLUMN_ROWS.badge} />
+      <TableColumn type="date" header="Joined" rows={TABLE_COLUMN_ROWS.date} sortable />
+      <TableColumn type="number" header="Amount" rows={TABLE_COLUMN_ROWS.number} sortable />
+      <TableColumn type="actions" rows={TABLE_COLUMN_ROWS.actions} />
     </div>
   ),
 };

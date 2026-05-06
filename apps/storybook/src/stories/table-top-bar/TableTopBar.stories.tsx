@@ -20,7 +20,12 @@ const FILTER_OPTIONS: Record<string, string[]> = {
 const meta = {
   title: 'Components/TableTopBar',
   component: TableTopBar,
-  parameters: { layout: 'padded' },
+  parameters: {
+    layout: 'padded',
+    // FilterChip composition is deeply nested → Storybook's auto-source
+    // serializer crashes with `RangeError: Invalid string length`.
+    docs: { source: { type: 'code', code: '' } },
+  },
   tags: ['autodocs'],
   decorators: [
     (Story) => (
@@ -96,6 +101,9 @@ export const WithoutFilters: Story = {
 // ---------------------------------------------------------------------------
 
 export const WithFilters: Story = {
+  parameters: {
+    docs: { source: { code: '' } },
+  },
   args: {
     showFilters: false,
     slotLeft: <SearchInput />,

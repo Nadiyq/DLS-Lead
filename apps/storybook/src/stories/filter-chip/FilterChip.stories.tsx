@@ -9,6 +9,12 @@ import { Checkbox } from '../checkbox/Checkbox';
 import { SearchField } from '../search-field/SearchField';
 import { CalendarRange } from '../calendar/CalendarRange';
 import { Button } from '../Button';
+import {
+  FILTER_DATE_FIXED_TODAY,
+  FILTER_NUMERIC_CONDITIONS,
+  FILTER_STATUS_OPTIONS,
+  FILTER_USERS,
+} from '../_fixtures';
 
 const meta = {
   title: 'Components/FilterChip',
@@ -34,17 +40,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
     </div>
   </div>
 );
-
-// Sample user data
-const USERS = [
-  { id: 1, name: 'Malik Roberson', initials: 'MR', src: 'https://i.pravatar.cc/48?u=malik' },
-  { id: 2, name: 'Kenton Jerde', initials: 'KJ', src: 'https://i.pravatar.cc/48?u=kenton' },
-  { id: 3, name: 'Talia Kubiak', initials: 'TK', src: 'https://i.pravatar.cc/48?u=talia' },
-  { id: 4, name: 'Jayson Wintheiser', initials: 'JW', src: 'https://i.pravatar.cc/48?u=jayson' },
-  { id: 5, name: 'Shea Trantow', initials: 'ST', src: 'https://i.pravatar.cc/48?u=shea' },
-  { id: 6, name: 'Casey Miller', initials: 'CM', src: 'https://i.pravatar.cc/48?u=casey' },
-  { id: 7, name: 'Alex Cooper', initials: 'AC', src: 'https://i.pravatar.cc/48?u=alex' },
-];
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -74,10 +69,10 @@ const UserFilterDemo = () => {
     );
   };
 
-  const selectedUsers = USERS.filter((u) => selectedIds.includes(u.id));
+  const selectedUsers = FILTER_USERS.filter((u) => selectedIds.includes(u.id));
   const filtered = search
-    ? USERS.filter((u) => u.name.toLowerCase().includes(search.toLowerCase()))
-    : USERS;
+    ? FILTER_USERS.filter((u) => u.name.toLowerCase().includes(search.toLowerCase()))
+    : FILTER_USERS;
 
   return (
     <FilterChip
@@ -145,8 +140,6 @@ export const UserFilter: Story = {
 // ---------------------------------------------------------------------------
 // Filter Type: Date
 // ---------------------------------------------------------------------------
-
-const DATE_FIXED_TODAY = new Date(2026, 2, 18); // March 18, 2026
 
 const formatDateRange = (start: Date, end: Date | null) => {
   const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
@@ -226,7 +219,7 @@ const DateFilterDemo = () => {
         {view === 'range' && (
           <CalendarRange
             className="dls-filter-chip__calendar-range"
-            today={DATE_FIXED_TODAY}
+            today={FILTER_DATE_FIXED_TODAY}
             startDate={draftStart}
             endDate={draftEnd}
             onRangeChange={(s, e) => { setDraftStart(s); setDraftEnd(e); }}
@@ -256,8 +249,6 @@ const EnumFilterDemo = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [selected, setSelected] = useState<string[]>(['active']);
 
-  const OPTIONS = ['Active', 'Inactive', 'Pending', 'Archived'];
-
   const toggle = (opt: string) => {
     const lower = opt.toLowerCase();
     setSelected((prev) =>
@@ -281,7 +272,7 @@ const EnumFilterDemo = () => {
       }
     >
       <List className="dls-filter-chip__enum-list">
-        {OPTIONS.map((opt) => (
+        {FILTER_STATUS_OPTIONS.map((opt) => (
           <ListItem
             key={opt}
             type="with-slots"
@@ -315,8 +306,6 @@ const NumericFilterDemo = () => {
   const [condition, setCondition] = useState('>');
   const [value, setValue] = useState('100');
 
-  const CONDITIONS = ['=', '>', '<', '>=', '<=', 'between'];
-
   return (
     <FilterChip
       label="Amount"
@@ -328,7 +317,7 @@ const NumericFilterDemo = () => {
     >
       <List className="dls-filter-chip__numeric-list">
         <ListItem type="label" text="Condition" />
-        {CONDITIONS.map((c) => (
+        {FILTER_NUMERIC_CONDITIONS.map((c) => (
           <ListItem
             key={c}
             type="text"

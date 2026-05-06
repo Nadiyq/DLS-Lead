@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import React from 'react';
 import { Button, PlusIcon } from './Button';
 import type { ButtonVariant, ButtonIntent } from './Button';
+import { Section, Row } from './_helpers/StoryLayout';
 
 const INTENTS: ButtonIntent[] = ['neutral', 'primary', 'info', 'success', 'warning', 'danger'];
 const VARIANTS: ButtonVariant[] = ['filled', 'outline', 'soft', 'dotted', 'ghost', 'link'];
@@ -54,38 +54,6 @@ export const Playground: Story = {
 // ---------------------------------------------------------------------------
 // Variant × Intent matrix (mirrors Figma layout)
 // ---------------------------------------------------------------------------
-
-const Row = ({ label, children }: { label: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-    <span style={{
-      width: 64,
-      fontSize: 12,
-      color: 'var(--dls-color-text-secondary)',
-      fontFamily: 'var(--dls-font-family)',
-      flexShrink: 0,
-    }}>
-      {label}
-    </span>
-    {children}
-  </div>
-);
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-    <h3 style={{
-      margin: 0,
-      fontSize: 16,
-      fontWeight: 600,
-      fontFamily: 'var(--dls-font-family)',
-      color: 'var(--dls-color-text-primary)',
-    }}>
-      {title}
-    </h3>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      {children}
-    </div>
-  </div>
-);
 
 export const Filled: Story = {
   render: () => (

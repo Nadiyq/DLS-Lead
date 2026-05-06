@@ -104,6 +104,49 @@ body[data-theme='dark'] .docblock-argstable-body,
   color: var(--dls-color-text-primary) !important;
 }
 
+body[data-theme='dark'] .sb-dls-docs-shell :where(h1, h2, h3, h4, h5, h6),
+.sb-dls-docs-shell[data-theme='dark'] :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--dls-color-text-primary) !important;
+}
+
+body[data-theme='dark'] .sb-dls-docs-shell :where(p, li, figcaption, label),
+.sb-dls-docs-shell[data-theme='dark'] :where(p, li, figcaption, label) {
+  color: var(--dls-color-text-secondary) !important;
+}
+
+body[data-theme='dark'] .sb-dls-docs-shell .docblock-argstable,
+body[data-theme='dark'] .sb-dls-docs-shell .docblock-argstable table,
+.sb-dls-docs-shell[data-theme='dark'] .docblock-argstable,
+.sb-dls-docs-shell[data-theme='dark'] .docblock-argstable table {
+  background: var(--dls-color-surface-base) !important;
+  color: var(--dls-color-text-primary) !important;
+}
+
+body[data-theme='dark'] .sb-dls-docs-shell .docblock-argstable thead,
+body[data-theme='dark'] .sb-dls-docs-shell .docblock-argstable th,
+.sb-dls-docs-shell[data-theme='dark'] .docblock-argstable thead,
+.sb-dls-docs-shell[data-theme='dark'] .docblock-argstable th {
+  background: var(--dls-color-surface-subtle) !important;
+  color: var(--dls-color-text-secondary) !important;
+}
+
+body[data-theme='dark'] .sb-dls-docs-shell .docblock-argstable tbody,
+body[data-theme='dark'] .sb-dls-docs-shell .docblock-argstable tr,
+body[data-theme='dark'] .sb-dls-docs-shell .docblock-argstable td,
+.sb-dls-docs-shell[data-theme='dark'] .docblock-argstable tbody,
+.sb-dls-docs-shell[data-theme='dark'] .docblock-argstable tr,
+.sb-dls-docs-shell[data-theme='dark'] .docblock-argstable td {
+  background: var(--dls-color-surface-base) !important;
+  color: var(--dls-color-text-primary) !important;
+}
+
+body[data-theme='dark'] .sb-dls-docs-shell .docblock-argstable :where(input, textarea, select),
+.sb-dls-docs-shell[data-theme='dark'] .docblock-argstable :where(input, textarea, select) {
+  background: var(--dls-color-surface-subtle) !important;
+  border-color: var(--dls-color-border-base) !important;
+  color: var(--dls-color-text-primary) !important;
+}
+
 body[data-theme='dark'] .sbdocs hr,
 body[data-theme='dark'] .sbdocs table,
 body[data-theme='dark'] .sbdocs thead,

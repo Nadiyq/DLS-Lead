@@ -3,6 +3,7 @@ import React from 'react';
 import { AlertDialog, InfoIcon, CheckCircleIcon, AlertTriangleIcon, XCircleIcon } from './AlertDialog';
 import { Button } from './Button';
 import type { AlertDialogIntent } from './AlertDialog';
+import { Section, Row } from './_helpers/StoryLayout';
 
 const INTENTS: AlertDialogIntent[] = ['neutral', 'primary', 'info', 'success', 'warning', 'danger'];
 
@@ -98,38 +99,6 @@ type Story = StoryObj<typeof meta>;
 // Helpers
 // ---------------------------------------------------------------------------
 
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-    <h3 style={{
-      margin: 0,
-      fontSize: 16,
-      fontWeight: 600,
-      fontFamily: 'var(--dls-font-family)',
-      color: 'var(--dls-color-text-primary)',
-    }}>
-      {title}
-    </h3>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {children}
-    </div>
-  </div>
-);
-
-const Row = ({ label, children }: { label: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-    <span style={{
-      width: 64,
-      fontSize: 12,
-      color: 'var(--dls-color-text-secondary)',
-      fontFamily: 'var(--dls-font-family)',
-      flexShrink: 0,
-      paddingTop: 18,
-    }}>
-      {label}
-    </span>
-    {children}
-  </div>
-);
 
 // ---------------------------------------------------------------------------
 // Playground — opens real <dialog> modal
@@ -172,7 +141,7 @@ export const AllIntentsDesktop: Story = {
   render: () => (
     <Section title="All Intents (Desktop)">
       {INTENTS.map((intent) => (
-        <Row key={intent} label={intent}>
+        <Row key={intent} label={intent} align="start">
           <InlinePanel
             intent={intent}
             breakpoint="desktop"
@@ -196,7 +165,7 @@ export const AllIntentsMobile: Story = {
   render: () => (
     <Section title="All Intents (Mobile)">
       {INTENTS.map((intent) => (
-        <Row key={intent} label={intent}>
+        <Row key={intent} label={intent} align="start">
           <InlinePanel
             intent={intent}
             breakpoint="mobile"

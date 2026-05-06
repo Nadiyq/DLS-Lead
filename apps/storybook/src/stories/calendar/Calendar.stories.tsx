@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Calendar } from './Calendar';
 import type { CalendarView } from './Calendar';
+import { Section } from '../_helpers/StoryLayout';
 
 const meta = {
   title: 'Components/Calendar',
@@ -115,33 +116,24 @@ export const YearPicker: Story = {
 // All views
 // ---------------------------------------------------------------------------
 
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-    <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
-      {title}
-    </h3>
-    {children}
-  </div>
-);
-
 export const AllViews: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 32, alignItems: 'flex-start' }}>
-      <Section title="Date">
+      <Section layout="flat" size="s" title="Date">
         <Calendar
           value={new Date(2026, 5, 25)}
           month={new Date(2026, 5, 1)}
           view="date"
         />
       </Section>
-      <Section title="Month">
+      <Section layout="flat" size="s" title="Month">
         <Calendar
           value={new Date(2026, 11, 1)}
           month={new Date(2026, 0, 1)}
           view="month"
         />
       </Section>
-      <Section title="Year">
+      <Section layout="flat" size="s" title="Year">
         <Calendar
           value={new Date(2033, 0, 1)}
           month={new Date(2026, 0, 1)}

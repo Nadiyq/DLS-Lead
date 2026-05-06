@@ -3,6 +3,7 @@ import React from 'react';
 import { CalendarRange } from './CalendarRange';
 import type { TimePeriod } from './CalendarRange';
 import { Button } from '../Button';
+import { Section } from '../_helpers/StoryLayout';
 
 const meta = {
   title: 'Components/CalendarRange',
@@ -17,15 +18,6 @@ type Story = StoryObj<typeof meta>;
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-    <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
-      {title}
-    </h3>
-    {children}
-  </div>
-);
 
 const fixedToday = new Date(2026, 5, 15); // June 15, 2026
 
@@ -62,7 +54,7 @@ export const AllLayouts: Story = {
   },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <Section title="Horizontal">
+      <Section layout="flat" size="s" title="Horizontal">
         <CalendarRange
           today={fixedToday}
           startDate={new Date(2026, 5, 10)}
@@ -70,7 +62,7 @@ export const AllLayouts: Story = {
           layout="horizontal"
         />
       </Section>
-      <Section title="Vertical">
+      <Section layout="flat" size="s" title="Vertical">
         <CalendarRange
           today={fixedToday}
           startDate={new Date(2026, 5, 10)}

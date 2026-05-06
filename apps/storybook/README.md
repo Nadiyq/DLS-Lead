@@ -33,6 +33,7 @@ Useful companion routes while debugging MCP:
 
 - `Foundations/*` documents tokens, typography, spacing, radius, and shared behavior
 - `Components/*` contains reusable DLS primitives and composed patterns
+- `Templates/*` contains full workflow examples assembled from DLS components, such as auth, upload, booking, and contact forms
 - `Debug/*` is reserved for internal verification stories
 
 ## Authoring Guidelines

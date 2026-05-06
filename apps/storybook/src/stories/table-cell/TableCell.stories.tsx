@@ -9,32 +9,8 @@ import { Badge } from '../Badge';
 import { Avatar } from '../Avatar';
 import { AvatarStack } from '../AvatarStack';
 import { mastercardLogo } from '../assets/brand-logos';
+import { SAMPLE_USERS } from '../_fixtures';
 import '../table/table.css';
-
-const SAMPLE_USERS = [
-  { name: 'Malik Roberson', initials: 'MR', src: 'https://i.pravatar.cc/48?u=malik' },
-  { name: 'Kenton Jerde', initials: 'KJ', src: 'https://i.pravatar.cc/48?u=kenton' },
-  { name: 'Talia Kubiak', initials: 'TK', src: 'https://i.pravatar.cc/48?u=talia' },
-  { name: 'Jayson Wintheiser', initials: 'JW', src: 'https://i.pravatar.cc/48?u=jayson' },
-  { name: 'Shea Trantow', initials: 'ST', src: 'https://i.pravatar.cc/48?u=shea' },
-  { name: 'Casey Miller', initials: 'CM', src: 'https://i.pravatar.cc/48?u=casey' },
-  { name: 'Alex Cooper', initials: 'AC', src: 'https://i.pravatar.cc/48?u=alex' },
-  { name: 'Bria Watsica', initials: 'BW', src: 'https://i.pravatar.cc/48?u=bria' },
-  { name: 'Devon Lubowitz', initials: 'DL', src: 'https://i.pravatar.cc/48?u=devon' },
-  { name: 'Elias Toure', initials: 'ET', src: 'https://i.pravatar.cc/48?u=elias' },
-  { name: 'Fiona Padberg', initials: 'FP', src: 'https://i.pravatar.cc/48?u=fiona' },
-  { name: 'Gabe Howell', initials: 'GH', src: 'https://i.pravatar.cc/48?u=gabe' },
-  { name: 'Hana Schmitt', initials: 'HS', src: 'https://i.pravatar.cc/48?u=hana' },
-  { name: 'Iris Cole', initials: 'IC', src: 'https://i.pravatar.cc/48?u=iris' },
-  { name: 'Jamal Weaver', initials: 'JW', src: 'https://i.pravatar.cc/48?u=jamal' },
-  { name: 'Kiana Gallegos', initials: 'KG', src: 'https://i.pravatar.cc/48?u=kiana' },
-  { name: 'Liam Bartell', initials: 'LB', src: 'https://i.pravatar.cc/48?u=liam' },
-  { name: 'Maya Ortiz', initials: 'MO', src: 'https://i.pravatar.cc/48?u=maya' },
-  { name: 'Noah Funk', initials: 'NF', src: 'https://i.pravatar.cc/48?u=noah' },
-  { name: 'Olive Reed', initials: 'OR', src: 'https://i.pravatar.cc/48?u=olive' },
-  { name: 'Priya Shah', initials: 'PS', src: 'https://i.pravatar.cc/48?u=priya' },
-  { name: 'Quinn Roberts', initials: 'QR', src: 'https://i.pravatar.cc/48?u=quinn' },
-];
 
 const meta = {
   title: 'Components/TableCell',
@@ -65,6 +41,9 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
     {children}
   </div>
 );
+
+const primarySampleUser = SAMPLE_USERS[0];
+const secondarySampleUser = SAMPLE_USERS[2];
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -119,16 +98,16 @@ export const TwoLineCell: Story = {
       <Section title="With avatar (slotLeft)">
         <TableCell
           type="two-line"
-          text="John Smith"
-          secondaryText="john@example.com"
-          slotLeft={<Avatar size="32" circle initials="JS" />}
+          text={primarySampleUser.name}
+          secondaryText={primarySampleUser.email}
+          slotLeft={<Avatar size="32" circle initials={primarySampleUser.initials} />}
           align="left"
         />
         <TableCell
           type="two-line"
-          text="Talia Kubiak"
-          secondaryText="talia@example.com"
-          slotLeft={<Avatar size="32" circle src="https://i.pravatar.cc/48?u=talia" initials="TK" />}
+          text={secondarySampleUser.name}
+          secondaryText={secondarySampleUser.email}
+          slotLeft={<Avatar size="32" circle src={secondarySampleUser.src} initials={secondarySampleUser.initials} />}
           align="left"
         />
       </Section>
@@ -258,23 +237,23 @@ export const UsersStackedCell: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0, width: 300 }}>
       <TableCell type="users-stacked" align="left">
-        <AvatarStack size="24" max={2} total={22}>
+        <AvatarStack size="24" max={2} total={SAMPLE_USERS.length}>
           {SAMPLE_USERS.map((u) => (
-            <Avatar key={u.initials} src={u.src} initials={u.initials} alt={u.name} />
+            <Avatar key={u.id} src={u.src} initials={u.initials} alt={u.name} />
           ))}
         </AvatarStack>
       </TableCell>
       <TableCell type="users-stacked" align="center">
-        <AvatarStack size="24" max={2} total={22}>
+        <AvatarStack size="24" max={2} total={SAMPLE_USERS.length}>
           {SAMPLE_USERS.map((u) => (
-            <Avatar key={u.initials} src={u.src} initials={u.initials} alt={u.name} />
+            <Avatar key={u.id} src={u.src} initials={u.initials} alt={u.name} />
           ))}
         </AvatarStack>
       </TableCell>
       <TableCell type="users-stacked" align="right">
-        <AvatarStack size="24" max={2} total={22}>
+        <AvatarStack size="24" max={2} total={SAMPLE_USERS.length}>
           {SAMPLE_USERS.map((u) => (
-            <Avatar key={u.initials} src={u.src} initials={u.initials} alt={u.name} />
+            <Avatar key={u.id} src={u.src} initials={u.initials} alt={u.name} />
           ))}
         </AvatarStack>
       </TableCell>
@@ -417,8 +396,8 @@ export const TableRowExample: Story = {
 
           {/* Column 2 — user (two-line) */}
           <TableHeaderCell text="User" sortable />
-          <TableCell type="two-line" text="John Smith" secondaryText="john@example.com" />
-          <TableCell type="two-line" text="Jane Doe" secondaryText="jane@example.com" />
+          <TableCell type="two-line" text={primarySampleUser.name} secondaryText={primarySampleUser.email} />
+          <TableCell type="two-line" text={secondarySampleUser.name} secondaryText={secondarySampleUser.email} />
 
           {/* Column 3 — status (badge) */}
           <TableHeaderCell text="Status" align="center" sortable />

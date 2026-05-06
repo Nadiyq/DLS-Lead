@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import './dropdown-export.css';
 import { ListItem } from '../list-item/ListItem';
 import { Radiobutton } from '../radiobutton/Radiobutton';
@@ -54,6 +54,9 @@ export const DropdownExport = React.forwardRef<HTMLDivElement, DropdownExportPro
   ) => {
     const [scope, setScope] = useState<ExportScope>(scopeProp);
     const [format, setFormat] = useState<ExportFormat>(formatProp);
+    // Unique per-instance ID so radios don't collide with other DropdownExport
+    // instances rendered on the same page (e.g. Storybook Docs).
+    const groupId = useId();
 
     const handleScope = (value: ExportScope) => {
       setScope(value);
@@ -86,7 +89,7 @@ export const DropdownExport = React.forwardRef<HTMLDivElement, DropdownExportPro
                 label={opt.label}
                 checked={scope === opt.value}
                 onChange={() => handleScope(opt.value)}
-                name="export-scope"
+                name={`export-scope-${groupId}`}
                 value={opt.value}
               />
             }
@@ -109,7 +112,7 @@ export const DropdownExport = React.forwardRef<HTMLDivElement, DropdownExportPro
                 label={opt.label}
                 checked={format === opt.value}
                 onChange={() => handleFormat(opt.value)}
-                name="export-format"
+                name={`export-format-${groupId}`}
                 value={opt.value}
               />
             }

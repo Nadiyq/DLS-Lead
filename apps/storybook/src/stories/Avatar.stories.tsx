@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Avatar, UserIcon } from './Avatar';
 import type { AvatarSize } from './Avatar';
+import { Section } from './_helpers/StoryLayout';
 
 const SIZES: AvatarSize[] = ['144', '88', '80', '72', '48', '40', '32', '28', '24', '20', '18'];
 
@@ -32,23 +33,6 @@ type Story = StoryObj<typeof meta>;
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-    <h3 style={{
-      margin: 0,
-      fontSize: 16,
-      fontWeight: 600,
-      fontFamily: 'var(--dls-font-family)',
-      color: 'var(--dls-color-text-primary)',
-    }}>
-      {title}
-    </h3>
-    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', gap: 16 }}>
-      {children}
-    </div>
-  </div>
-);
 
 const SizeLabel = ({ size, children }: { size: string; children: React.ReactNode }) => (
   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
@@ -82,7 +66,7 @@ export const Playground: Story = {
 
 export const AllSizesInitials: Story = {
   render: () => (
-    <Section title="All Sizes — Initials (Square)">
+    <Section layout="wrap" title="All Sizes — Initials (Square)">
       {SIZES.map((size) => (
         <SizeLabel key={size} size={size}>
           <Avatar size={size} initials="AB" />
@@ -98,7 +82,7 @@ export const AllSizesInitials: Story = {
 
 export const AllSizesInitialsCircle: Story = {
   render: () => (
-    <Section title="All Sizes — Initials (Circle)">
+    <Section layout="wrap" title="All Sizes — Initials (Circle)">
       {SIZES.map((size) => (
         <SizeLabel key={size} size={size}>
           <Avatar size={size} initials="AB" circle />
@@ -114,7 +98,7 @@ export const AllSizesInitialsCircle: Story = {
 
 export const AllSizesIcon: Story = {
   render: () => (
-    <Section title="All Sizes — Icon (Square)">
+    <Section layout="wrap" title="All Sizes — Icon (Square)">
       {SIZES.map((size) => (
         <SizeLabel key={size} size={size}>
           <Avatar size={size} icon={<UserIcon />} />
@@ -130,7 +114,7 @@ export const AllSizesIcon: Story = {
 
 export const AllSizesIconCircle: Story = {
   render: () => (
-    <Section title="All Sizes — Icon (Circle)">
+    <Section layout="wrap" title="All Sizes — Icon (Circle)">
       {SIZES.map((size) => (
         <SizeLabel key={size} size={size}>
           <Avatar size={size} icon={<UserIcon />} circle />
@@ -146,7 +130,7 @@ export const AllSizesIconCircle: Story = {
 
 export const AllSizesImage: Story = {
   render: () => (
-    <Section title="All Sizes — Image (Square)">
+    <Section layout="wrap" title="All Sizes — Image (Square)">
       {SIZES.map((size) => (
         <SizeLabel key={size} size={size}>
           <Avatar size={size} src={SAMPLE_IMAGE} alt="User" />
@@ -162,7 +146,7 @@ export const AllSizesImage: Story = {
 
 export const AllSizesImageCircle: Story = {
   render: () => (
-    <Section title="All Sizes — Image (Circle)">
+    <Section layout="wrap" title="All Sizes — Image (Circle)">
       {SIZES.map((size) => (
         <SizeLabel key={size} size={size}>
           <Avatar size={size} src={SAMPLE_IMAGE} alt="User" circle />
@@ -179,14 +163,14 @@ export const AllSizesImageCircle: Story = {
 export const WithDot: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <Section title="Dot — Initials (Square)">
+      <Section layout="wrap" title="Dot — Initials (Square)">
         {SIZES.map((size) => (
           <SizeLabel key={size} size={size}>
             <Avatar size={size} initials="AB" dot />
           </SizeLabel>
         ))}
       </Section>
-      <Section title="Dot — Image (Circle)">
+      <Section layout="wrap" title="Dot — Image (Circle)">
         {SIZES.map((size) => (
           <SizeLabel key={size} size={size}>
             <Avatar size={size} src={SAMPLE_IMAGE} alt="User" circle dot />
@@ -203,7 +187,7 @@ export const WithDot: Story = {
 
 export const ContentTypes: Story = {
   render: () => (
-    <Section title="Content Types — Size 80">
+    <Section layout="wrap" title="Content Types — Size 80">
       <SizeLabel size="Image">
         <Avatar size="80" src={SAMPLE_IMAGE} alt="User" />
       </SizeLabel>
@@ -223,7 +207,7 @@ export const ContentTypes: Story = {
 
 export const ShapeComparison: Story = {
   render: () => (
-    <Section title="Square vs Circle — Size 72">
+    <Section layout="wrap" title="Square vs Circle — Size 72">
       <SizeLabel size="Square">
         <Avatar size="72" initials="AB" />
       </SizeLabel>
@@ -248,7 +232,7 @@ const STACK_SIZES: AvatarSize[] = ['88', '80', '72', '48', '40', '32', '28', '24
 
 export const WithRemoveButton: Story = {
   render: () => (
-    <Section title="Remove Button — Hover to reveal (Circle)">
+    <Section layout="wrap" title="Remove Button — Hover to reveal (Circle)">
       {STACK_SIZES.map((size) => (
         <SizeLabel key={size} size={size}>
           <Avatar

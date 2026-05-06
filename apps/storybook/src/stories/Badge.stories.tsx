@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Badge } from './Badge';
+import { Section } from './_helpers/StoryLayout';
 
 const meta = {
   title: 'Components/Badge',
@@ -27,15 +28,8 @@ type Story = StoryObj<typeof meta>;
 // Helpers
 // ---------------------------------------------------------------------------
 
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-    <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
-      {title}
-    </h3>
-    {children}
-  </div>
-);
-
+/* Local Row — Badge stories use a label-less horizontal wrap (different from
+   the shared `Row` helper which always has a label column). */
 const Row = ({ children }: { children: React.ReactNode }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>{children}</div>
 );
@@ -80,7 +74,7 @@ export const AllVariants: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <Section title="Sizes">
+    <Section layout="flat" title="Sizes">
       <Row>
         {sizes.map((size) => (
           <Badge key={size} size={size} variant="outline" intent="info">

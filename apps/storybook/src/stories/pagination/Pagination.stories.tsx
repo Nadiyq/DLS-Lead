@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { PageButton, ItemsPerPage, Pagination } from './Pagination';
+import { Section } from '../_helpers/StoryLayout';
 
 /* ===========================================================================
    PageButton stories
@@ -15,19 +16,6 @@ const pageButtonMeta = {
 
 export default pageButtonMeta;
 type PBStory = StoryObj<typeof pageButtonMeta>;
-
-/* ---------------------------------------------------------------------------
-   Helpers
-   --------------------------------------------------------------------------- */
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-    <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-primary)' }}>
-      {title}
-    </h3>
-    {children}
-  </div>
-);
 
 /* ---------------------------------------------------------------------------
    Playground
@@ -50,7 +38,7 @@ export const AllTypes: PBStory = {
   args: { children: '1' },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="Number">
+      <Section layout="flat" size="s" title="Number">
         <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
           <PageButton type="number">1</PageButton>
           <PageButton type="number" selected>2</PageButton>
@@ -58,19 +46,19 @@ export const AllTypes: PBStory = {
           <PageButton type="number" disabled>4</PageButton>
         </div>
       </Section>
-      <Section title="More (ellipsis)">
+      <Section layout="flat" size="s" title="More (ellipsis)">
         <div style={{ display: 'flex', gap: 4 }}>
           <PageButton type="more" />
           <PageButton type="more" disabled />
         </div>
       </Section>
-      <Section title="Previous / Next">
+      <Section layout="flat" size="s" title="Previous / Next">
         <div style={{ display: 'flex', gap: 8 }}>
           <PageButton type="previous" />
           <PageButton type="next" />
         </div>
       </Section>
-      <Section title="Previous / Next — disabled">
+      <Section layout="flat" size="s" title="Previous / Next — disabled">
         <div style={{ display: 'flex', gap: 8 }}>
           <PageButton type="previous" disabled />
           <PageButton type="next" disabled />
@@ -88,7 +76,7 @@ export const States: PBStory = {
   args: { children: '1' },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="Number states (hover/focus are interactive — try them)">
+      <Section layout="flat" size="s" title="Number states (hover/focus are interactive — try them)">
         <div style={{ display: 'flex', gap: 4 }}>
           <PageButton type="number">Normal</PageButton>
           <PageButton type="number" selected>Selected</PageButton>
@@ -136,7 +124,7 @@ export const FullPagination: PBStory = {
 
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-          <Section title="Bordered (default) — with items-per-page">
+          <Section layout="flat" size="s" title="Bordered (default) — with items-per-page">
             <Pagination
               currentPage={page}
               totalPages={totalPages}
@@ -150,7 +138,7 @@ export const FullPagination: PBStory = {
             />
           </Section>
 
-          <Section title="Bordered — pages only">
+          <Section layout="flat" size="s" title="Bordered — pages only">
             <Pagination
               currentPage={page}
               totalPages={totalPages}
@@ -158,7 +146,7 @@ export const FullPagination: PBStory = {
             />
           </Section>
 
-          <Section title="Borderless variant">
+          <Section layout="flat" size="s" title="Borderless variant">
             <Pagination
               variant="borderless"
               currentPage={page}
@@ -173,7 +161,7 @@ export const FullPagination: PBStory = {
             />
           </Section>
 
-          <Section title="Few pages (no ellipsis)">
+          <Section layout="flat" size="s" title="Few pages (no ellipsis)">
             <Pagination
               currentPage={Math.min(page, 5)}
               totalPages={5}
@@ -195,16 +183,16 @@ export const EdgeCases: PBStory = {
   args: { children: '1' },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <Section title="First page (Previous disabled)">
+      <Section layout="flat" size="s" title="First page (Previous disabled)">
         <Pagination currentPage={1} totalPages={20} />
       </Section>
-      <Section title="Last page (Next disabled)">
+      <Section layout="flat" size="s" title="Last page (Next disabled)">
         <Pagination currentPage={20} totalPages={20} />
       </Section>
-      <Section title="Middle page (ellipsis both sides)">
+      <Section layout="flat" size="s" title="Middle page (ellipsis both sides)">
         <Pagination currentPage={10} totalPages={20} />
       </Section>
-      <Section title="Single page">
+      <Section layout="flat" size="s" title="Single page">
         <Pagination currentPage={1} totalPages={1} />
       </Section>
     </div>

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React from 'react';
 import { Accordion, AccordionItem } from './Accordion';
+import { Section } from './_helpers/StoryLayout';
 
 const meta = {
   title: 'Components/Accordion',
@@ -20,27 +20,6 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-    <h3 style={{
-      margin: 0,
-      fontSize: 16,
-      fontWeight: 600,
-      fontFamily: 'var(--dls-font-family)',
-      color: 'var(--dls-color-text-primary)',
-    }}>
-      {title}
-    </h3>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      {children}
-    </div>
-  </div>
-);
 
 // ---------------------------------------------------------------------------
 // Playground
