@@ -16,7 +16,7 @@ You are working in the DLS-Lead repo.
 Before writing or changing UI code:
 1. Read `specs/session-start.md`.
 2. Read `specs/tokens/README.md` and `specs/tokens/token-reference.md`.
-3. Read the relevant files in `specs/foundations/`, `specs/patterns/`, and `specs/components/`.
+3. Read the relevant files in `specs/foundations/`, `specs/patterns/`, and `specs/components/`, including `specs/foundations/accessibility.md` and `specs/patterns/accessibility-generation.md` for React UI.
 4. Use the `dls-lead-storybook` MCP server before choosing a component:
    - run `list-all-documentation`
    - run `get-documentation` for every component you plan to use
@@ -41,6 +41,14 @@ Composition rules:
 - Icon-only buttons must have `aria-label`.
 - Focus styles use `:focus-visible` plus DLS focus ring tokens.
 
+Accessibility rules:
+- Use semantic HTML: `button` for actions, `a href` for navigation, landmarks for page regions, ordered heading levels, lists for lists, tables for tabular data, and labels/fieldsets/legends for forms.
+- Every interactive element must have an accessible name.
+- Icon-only buttons must put `aria-label` on the button and `aria-hidden="true"` on the icon.
+- Dynamic state uses native state first, then `aria-expanded`, `aria-selected`, `aria-checked`, `aria-current`, `aria-disabled`, `aria-describedby`, or `aria-live="polite"` as appropriate.
+- All interactions must be keyboard accessible. Overlays close with Escape. Modals trap focus and restore it on close.
+- Respect `prefers-reduced-motion` for spatial motion. Do not introduce Tailwind into DLS components unless the target package already uses Tailwind.
+- Query user-facing interactive UI with `getByRole` and accessible name, not `getByTestId`.
+
 If the needed component, prop, variant, state, token, breakpoint, or z-index layer is not documented, stop and ask instead of guessing.
 ```
-

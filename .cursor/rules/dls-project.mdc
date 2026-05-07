@@ -27,6 +27,7 @@ Before writing or modifying UI code, read the repo-local specs:
 1. `specs/session-start.md`
 2. `specs/tokens/README.md` and `specs/tokens/token-reference.md`
 3. Relevant files in `specs/foundations/`, `specs/patterns/`, and `specs/components/`
+4. For generated React UI, `specs/foundations/accessibility.md` and `specs/patterns/accessibility-generation.md`
 
 These markdown files are the machine-readable design-system layer for AI agents. If a spec exists, look it up instead of guessing.
 
@@ -45,6 +46,8 @@ Reusable prompts for DLS-safe Claude, Cursor, Codex, and other coding-agent work
 - Every component CSS starts with `all: unset; box-sizing: border-box;`.
 - `:hover:not(:disabled)`, `:focus-visible` (not `:focus`), focus ring via `box-shadow` (never `outline`).
 - No hardcoded colors, sizes, or radii. Use `--dls-radius-component-*`, never primitive `--dls-radius-*`.
+- Use semantic HTML, accessible names, keyboard behavior, and ARIA state relationships for every interactive component.
+- Tests should query by role and accessible name, not `getByTestId`, for user-facing UI.
 
 ## Figma Workflow
 

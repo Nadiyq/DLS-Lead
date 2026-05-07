@@ -7,6 +7,15 @@
 3. **If you can't find a component, stop and ask.** Say: "I need [X]. I don't see it in the DLS -- should I create a new component, or is there an equivalent?"
 4. **Don't re-implement interaction patterns.** Hover, focus, disabled, loading, error states already exist in DLS components. Compose; never clone behavior.
 
+## Accessibility & Semantics
+
+- Read `.claude/skills/accessibility.md` and `specs/foundations/accessibility.md` before generating interactive, form, navigation, table, or overlay UI.
+- Use semantic HTML: `button` for actions, `a href` for navigation, landmarks for page regions, heading levels in order, lists for lists, tables for tabular data, and labels/fieldsets/legends for forms.
+- Every interactive element must have an accessible name. Icon-only buttons need `aria-label` on the button and `aria-hidden="true"` on the icon.
+- Dynamic state uses native state first, then `aria-expanded`, `aria-selected`, `aria-checked`, `aria-current`, `aria-disabled`, `aria-describedby`, or `aria-live="polite"` as needed.
+- All interaction must work by keyboard. Overlays close with Escape. Modals trap focus and restore focus on close.
+- Tests query with `getByRole` and accessible name, not `getByTestId`, for user-facing interactive UI.
+
 ## Dropdowns, Menus, and Popover Lists — ALWAYS use List + ListItem
 
 > **All dropdowns, menus, select popovers, context menus, command menus, and account/settings flyouts are wrappers around `List` + `ListItem`.** Every row inside them MUST be a `<ListItem>` — never a custom `<div>`, `<li>`, or styled row element. This matches Figma exactly: every row in a dropdown frame is a `list-item` instance.

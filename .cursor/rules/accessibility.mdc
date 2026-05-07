@@ -1,0 +1,49 @@
+---
+description: Accessible React component generation rules for DLS-Lead
+alwaysApply: true
+---
+
+# Accessibility Generation Rules
+
+Apply these rules to every generated or edited React component.
+
+## HTML Semantics
+
+- Use `<button>` for actions. Never use `<div onClick>` or `<span onClick>`.
+- Use `<a href="...">` for navigation. Never use `<span onClick={navigate}>`.
+- Use `<nav>`, `<main>`, `<aside>`, `<header>`, and `<footer>` for landmarks.
+- Use `<h1>` through `<h6>` in correct hierarchical order. Do not skip levels.
+- Use `<ul>` / `<ol>` with `<li>` for lists.
+- Use `<table>`, `<thead>`, `<tbody>`, `<th>`, and `<td>` for tabular data.
+- Use `<form>`, `<fieldset>`, `<legend>`, and `<label>` for forms.
+- Use `<dialog>` with `showModal()` for native modal dialog primitives.
+- Use `<details>` / `<summary>` for simple disclosures when appropriate.
+
+## Accessibility
+
+- Every interactive element must have an accessible name from visible text, `aria-label`, or `aria-labelledby`.
+- Every form input must have an associated `<label>` or `aria-label`.
+- Icon-only buttons require `aria-label` on the button and `aria-hidden="true"` on the icon.
+- Decorative images require `alt=""` or `aria-hidden="true"`.
+- Dynamic state uses native state first, then `aria-expanded`, `aria-selected`, `aria-checked`, `aria-current`, `aria-disabled`, `aria-describedby`, or `aria-live="polite"` as appropriate.
+
+## Keyboard And Motion
+
+- All interactive elements must be keyboard accessible.
+- Use visible `:focus-visible` styles with DLS focus ring tokens.
+- Composite widgets follow WAI-ARIA Authoring Practices keyboard behavior.
+- Modals trap focus, restore focus on close, and close with Escape.
+- Escape closes overlays.
+- Respect `prefers-reduced-motion` for transform, position, scale, or other spatial motion.
+
+## Library And Styling Preferences
+
+- Use existing documented DLS components first.
+- For complex patterns such as tabs, combobox, dialog, listbox, and menu, do not hand-roll ARIA behavior.
+- If DLS lacks a needed primitive, stop and ask. When approved, prefer Headless UI, Radix UI, or React Aria.
+- DLS-Lead uses DLS CSS and tokens. Do not introduce Tailwind unless the target package already uses Tailwind.
+
+## Testing
+
+- Query elements with `getByRole` and accessible name.
+- Do not prefer `getByTestId` for user-facing interactive UI.

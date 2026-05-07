@@ -26,6 +26,6 @@ export const ReviewerMode: Story = {
     await expect(canvas.getByText('Design system owner')).toBeInTheDocument();
 
     await userEvent.click(canvas.getByRole('button', { name: 'Foundations' }));
-    await expect(canvas.getByText('Focus: Foundations')).toBeInTheDocument();
+    await expect(canvas.getByText('Current review path: Foundations')).toBeInTheDocument();
   },
 };

@@ -14,6 +14,7 @@ When working on UI components in this repo, read the repo-local specs first and 
 - Run `get-storybook-story-instructions` before creating or editing stories so new stories follow Storybook's current MCP guidance.
 - Run `run-story-tests` after UI changes when Storybook test tools are available.
 - Never invent props or variants for DLS components. If a prop or state is not documented in Storybook, stop and ask instead of guessing.
+- For generated or edited React UI, read `specs/foundations/accessibility.md` and `specs/patterns/accessibility-generation.md`. Use semantic HTML, accessible names, keyboard support, ARIA state relationships, reduced-motion guards for spatial motion, and tests queried by role/name.
 
 Operational notes:
 

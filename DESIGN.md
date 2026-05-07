@@ -382,14 +382,20 @@ Tabs:
 
 Requirements:
 
+- Use semantic HTML: `button` for actions, `a href` for navigation, landmarks for regions, ordered headings, lists for lists, tables for tabular data, and labels/fieldsets/legends for forms.
 - Use native interactive elements first.
 - Every interactive element has a visible `:focus-visible` treatment.
 - Icon-only buttons have accessible names.
+- Icon-only buttons put the accessible name on the button and hide decorative icons from assistive tech.
 - Inputs have visible labels or explicit accessible names.
 - Hint and error text is connected to fields with `aria-describedby` when supported.
 - Disabled controls use native `disabled` when possible.
 - Non-native disabled controls use `aria-disabled` and block pointer and keyboard activation.
-- Selected states expose `aria-selected`, `aria-current`, or checked semantics as appropriate.
+- Dynamic states expose `aria-expanded`, `aria-selected`, `aria-checked`, `aria-current`, `aria-disabled`, or native equivalents as appropriate.
+- Status messages use `aria-live="polite"`.
+- Overlays close with Escape. Modals trap focus and restore focus on close.
+- Spatial motion respects `prefers-reduced-motion`.
+- Tests query user-facing UI by role and accessible name, not test id.
 - Error states use danger tokens plus explanatory text.
 - Color is never the only signal. Pair color with icon, text, shape, or state semantics.
 - Hover-only affordances are also reachable by keyboard focus.

@@ -82,6 +82,8 @@ DLS-Lead's Storybook can act as an MCP server for AI agents through the official
 Packaged setup files live here:
 
 - [AGENTS.md](AGENTS.md)
+- [.cursorrules](.cursorrules)
+- [.github/copilot-instructions.md](.github/copilot-instructions.md)
 - [.mcp.json](.mcp.json)
 - [.cursor/mcp.json](.cursor/mcp.json)
 - [mcp/README.md](mcp/README.md)
@@ -94,7 +96,7 @@ The intended read order for AI agents is:
 
 1. [specs/session-start.md](specs/session-start.md)
 2. [specs/tokens/README.md](specs/tokens/README.md) and [specs/tokens/token-reference.md](specs/tokens/token-reference.md)
-3. Relevant files in [specs/foundations/](specs/foundations), [specs/patterns/](specs/patterns), and [specs/components/](specs/components)
+3. Relevant files in [specs/foundations/](specs/foundations), [specs/patterns/](specs/patterns), and [specs/components/](specs/components), especially [specs/foundations/accessibility.md](specs/foundations/accessibility.md) and [specs/patterns/accessibility-generation.md](specs/patterns/accessibility-generation.md) for React UI.
 
 This is the machine-readable design-system layer for DLS-Lead: if a spec exists, the agent should look it up instead of guessing.
 

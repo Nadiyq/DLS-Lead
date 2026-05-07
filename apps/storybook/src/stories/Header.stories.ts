@@ -30,16 +30,8 @@ export const ReadyForReview: Story = {
   },
 };
 
-export const WithReviewer: Story = {
-  args: {
-    user: {
-      name: 'Nadia',
-      role: 'Design system owner',
-    },
-  },
+export const ComponentsAction: Story = {
   play: async ({ args, canvas }) => {
-    await expect(canvas.getByText('Design system owner')).toBeInTheDocument();
-
     await userEvent.click(canvas.getByRole('button', { name: 'Components' }));
     await expect(args.onOpenComponents).toHaveBeenCalled();
   },

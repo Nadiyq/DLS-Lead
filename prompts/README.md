@@ -47,6 +47,8 @@ Copy these prompts into Claude, Cursor, Codex, or another coding agent when you 
 - Use DLS tokens: no raw hex, raw rgba, ad hoc spacing, ad hoc radii, or invented token names.
 - Use `data-*` attributes and native states for variants and state.
 - Use `lucide-react` icons only.
+- Use semantic HTML, accessible names, keyboard behavior, ARIA state relationships, and `prefers-reduced-motion` guards for spatial motion.
+- Test user-facing interactive UI with `getByRole` and accessible name, not `getByTestId`.
 - Use the official Figma MCP for Figma work; do not use Figma console.
 
 ## When To Stop
@@ -57,4 +59,3 @@ Tell the agent to stop and ask if:
 - A needed token does not exist in `tokens/tokens.json` or `specs/tokens/`.
 - A new component is needed but no Figma URL is provided.
 - A design requires a global breakpoint or z-index scale that DLS-Lead does not currently publish.
-

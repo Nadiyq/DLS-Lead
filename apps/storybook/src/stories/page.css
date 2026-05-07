@@ -24,10 +24,8 @@
 }
 
 .dls-page-example__hero {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--dls-spacing-16) * 5)), 1fr));
-  gap: var(--dls-spacing-6);
-  align-items: stretch;
+  display: flex;
+  align-items: flex-start;
 }
 
 .dls-page-example__intro {
@@ -35,6 +33,15 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--dls-spacing-4);
+}
+
+.dls-page-example__eyebrow {
+  color: var(--dls-color-text-secondary);
+  font-size: var(--dls-text-upper-s-font-size);
+  line-height: var(--dls-text-upper-s-line-height);
+  font-weight: var(--dls-text-upper-s-font-weight);
+  letter-spacing: var(--dls-text-upper-s-letter-spacing);
+  text-transform: uppercase;
 }
 
 .dls-page-example__intro h2 {
@@ -66,17 +73,10 @@
   flex-wrap: wrap;
 }
 
-.dls-page-example__status {
+.dls-page-example__review-path {
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--dls-spacing-8);
-  min-height: calc(var(--dls-spacing-16) * 3);
-  padding: var(--dls-spacing-6);
-  border: thin solid var(--dls-color-border-subtle);
-  border-radius: var(--dls-radius-component-card);
-  background: var(--dls-color-surface-muted);
+  padding-left: var(--dls-spacing-3);
+  border-left: thin solid var(--dls-color-border-subtle);
 }
 
 .dls-page-example__grid {
@@ -91,4 +91,11 @@
 
 .dls-page-example .dls-card__footer {
   justify-content: flex-start;
+}
+
+.dls-page-example__reviewer-note {
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: var(--dls-spacing-3);
+  border-left: thin solid var(--dls-color-border-subtle);
 }

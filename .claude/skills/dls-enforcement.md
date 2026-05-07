@@ -104,6 +104,10 @@ When the hook blocks your edit, **read the error message carefully** and fix the
 
 ## React/JSX Rules
 
+- Use semantic HTML for generated UI: `button` for actions, `a href` for navigation, landmarks for page structure, lists for lists, tables for tabular data, and associated labels for form controls.
+- Every interactive element must have an accessible name. Icon-only buttons require `aria-label` on the button and `aria-hidden="true"` on the icon.
+- Use native state first; add ARIA state and relationships (`aria-expanded`, `aria-selected`, `aria-checked`, `aria-current`, `aria-disabled`, `aria-describedby`, `aria-live`) when needed.
+- Complex widgets must be keyboard accessible. Overlays close with Escape; modals trap and restore focus.
 - Never use `className` with non-DLS classes
 - Never use inline `style={{ }}` for visual properties (layout-only is acceptable for truly dynamic values like calculated widths)
 - Use `data-variant`, `data-intent`, `data-size` props — not className variants

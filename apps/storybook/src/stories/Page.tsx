@@ -86,7 +86,6 @@ export const Page: React.FC = () => {
   return (
     <article className="dls-page-example-shell">
       <Header
-        user={user}
         onOpenFoundations={() => setFocus('foundations')}
         onOpenComponents={() => setFocus('components')}
       />
@@ -94,9 +93,7 @@ export const Page: React.FC = () => {
       <section className="dls-page-example">
         <div className="dls-page-example__hero">
           <div className="dls-page-example__intro">
-            <Badge variant="soft" intent="info" size="s">
-              DLS example
-            </Badge>
+            <span className="dls-page-example__eyebrow">DLS example</span>
             <h2>Design-system workspace</h2>
             <p>
               This page replaces the starter Storybook tutorial with a DLS-native example: semantic
@@ -117,14 +114,23 @@ export const Page: React.FC = () => {
                 </Button>
               )}
             </div>
+            {user && (
+              <div className="dls-page-example__reviewer-note" aria-live="polite">
+                <Text
+                  size="s"
+                  title={`Reviewing as ${user.name}`}
+                  description={user.role ?? 'Reviewer'}
+                />
+              </div>
+            )}
+            <div className="dls-page-example__review-path" aria-live="polite">
+              <Text
+                size="s"
+                title={`Current review path: ${activeFocus.label}`}
+                description={activeFocus.description}
+              />
+            </div>
           </div>
-
-          <aside className="dls-page-example__status" aria-label="DLS workspace status">
-            <Badge variant="filled" intent={focus === 'foundations' ? 'info' : 'success'} size="s">
-              Focus: {activeFocus.label}
-            </Badge>
-            <Text size="s" title="Current review path" description={activeFocus.description} />
-          </aside>
         </div>
 
         <div className="dls-page-example__grid">
@@ -140,7 +146,7 @@ export const Page: React.FC = () => {
               }
               title={pillar.title}
               description={pillar.description}
-              footer={<Badge variant="ghost" intent="neutral" size="s">DLS ready</Badge>}
+              footer={<Badge variant="ghost" intent="success" size="s">DLS ready</Badge>}
             >
               <div className="dls-page-example__detail-stack">
                 {pillar.details.map((detail) => (

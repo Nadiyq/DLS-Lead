@@ -8,6 +8,7 @@ related:
   - tokens/README.md
   - tokens/token-reference.md
   - patterns/composition.md
+  - patterns/accessibility-generation.md
 ---
 
 # DLS-Lead Session Start
@@ -31,6 +32,7 @@ Use this checklist at the start of every UI task.
 - Typography choice: [foundations/typography.md](foundations/typography.md)
 - Interactive states: [foundations/motion.md](foundations/motion.md)
 - Accessibility, keyboard, or ARIA: [foundations/accessibility.md](foundations/accessibility.md)
+- Generating or editing React components: [patterns/accessibility-generation.md](patterns/accessibility-generation.md)
 - Icons: [foundations/iconography.md](foundations/iconography.md)
 - Responsive layout: [foundations/breakpoints.md](foundations/breakpoints.md) and [foundations/grid.md](foundations/grid.md)
 - Component styling: relevant file in [`components/`](components/)
@@ -43,6 +45,8 @@ Use this checklist at the start of every UI task.
 - Dropdowns, menus, and popovers are composed with `List` and `ListItem`.
 - Icons come from `lucide-react` only.
 - Focus uses `:focus-visible` and a ring, never `outline` styling as the visual treatment.
+- Use semantic HTML and accessible names for every interactive element.
+- Test UI by role and accessible name instead of `getByTestId`.
 
 ## Decision Order
 

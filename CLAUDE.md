@@ -92,6 +92,7 @@ Project-scoped config and setup examples live in `.mcp.json`, `.cursor/mcp.json`
 | **ANY CSS or UI work (ALWAYS read first)** | **`.claude/skills/dls-enforcement.md`** |
 | Build / scaffold a component | `.claude/skills/component-patterns.md` |
 | Any UI work — using or composing components | `.claude/skills/dls-component-rules.md` |
+| Accessibility, semantics, keyboard, ARIA, tests | `.claude/skills/accessibility.md` |
 | Work with tokens (add, edit, lookup) | `.claude/skills/token-architecture.md` |
 | Theming, dark mode, brand overrides | `.claude/skills/theming.md` |
 | Typography decisions | `.claude/skills/typography.md` |

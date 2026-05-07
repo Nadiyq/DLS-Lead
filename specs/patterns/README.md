@@ -15,8 +15,8 @@ Patterns explain how DLS components fit together.
 |---|---|
 | Choosing between similar components | [component-selection.md](component-selection.md) |
 | Building screens and composing components | [composition.md](composition.md) |
+| Generating accessible React components | [accessibility-generation.md](accessibility-generation.md) |
 
 ## Rule
 
 If the same decision comes up in two PRs or two generated screens, write it as a pattern instead of leaving it as reviewer memory.
-
