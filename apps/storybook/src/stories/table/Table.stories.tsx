@@ -4,11 +4,11 @@ import { Search as SearchIcon, Filter as FilterIcon, MoreHorizontal as MoreIcon,
 import { Table } from './Table';
 import { TableTopBar } from '../table-top-bar/TableTopBar';
 import { TableColumn } from '../table-column/TableColumn';
-import type { TableColumnRow } from '../table-column/TableColumn';
 import { Button } from '../Button';
 import { InputField } from '../input-field/InputField';
 import { Filters } from '../filters/Filters';
 import { FilterChip } from '../filter-chip/FilterChip';
+import { TABLE_ROWS } from '../_fixtures';
 
 const meta = {
   title: 'Components/Table',
@@ -27,42 +27,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/* ---------------------------------------------------------------------------
-   Sample data
-   --------------------------------------------------------------------------- */
-
-const checkboxRows: TableColumnRow[] = [
-  { checked: true }, { checked: false }, { checked: true },
-  { checked: false }, { checked: false },
-];
-
-const userRows: TableColumnRow[] = [
-  { text: 'John Smith', secondaryText: 'jsmith@acme.com', initials: 'JS' },
-  { text: 'Jane Doe', secondaryText: 'jane@acme.com', initials: 'JD' },
-  { text: 'Bob Wilson', secondaryText: 'bob@acme.com', initials: 'BW' },
-  { text: 'Alice Chen', secondaryText: 'alice@acme.com', initials: 'AC' },
-  { text: 'Tom Lee', secondaryText: 'tom@acme.com', initials: 'TL' },
-];
-
-const badgeRows: TableColumnRow[] = [
-  { badgeLabel: 'Active', badgeIntent: 'success' },
-  { badgeLabel: 'Pending', badgeIntent: 'warning' },
-  { badgeLabel: 'Active', badgeIntent: 'success' },
-  { badgeLabel: 'Inactive', badgeIntent: 'danger' },
-  { badgeLabel: 'Active', badgeIntent: 'success' },
-];
-
-const dateRows: TableColumnRow[] = [
-  { text: '12 Jan 2026' }, { text: '5 Feb 2026' }, { text: '18 Mar 2026' },
-  { text: '3 Apr 2026' }, { text: '22 May 2026' },
-];
-
-const numberRows: TableColumnRow[] = [
-  { text: '$1,200' }, { text: '$890' }, { text: '$3,450' },
-  { text: '$567' }, { text: '$12,000' },
-];
-
-const actionsRows: TableColumnRow[] = [{}, {}, {}, {}, {}];
+const { checkbox: checkboxRows, user: userRows, badge: badgeRows, date: dateRows, number: numberRows, actions: actionsRows } = TABLE_ROWS;
 
 /* ---------------------------------------------------------------------------
    Playground

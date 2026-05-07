@@ -124,6 +124,38 @@ export const FILTER_DATE_FIXED_TODAY = new Date(2026, 2, 18);
 export const FILTER_STATUS_OPTIONS = ['Active', 'Inactive', 'Pending', 'Archived'];
 export const FILTER_NUMERIC_CONDITIONS = ['=', '>', '<', '>=', '<=', 'between'];
 
+export const TABLE_ROWS: Record<
+  'checkbox' | 'user' | 'badge' | 'date' | 'number' | 'actions',
+  TableColumnRow[]
+> = {
+  checkbox: [
+    { checked: true }, { checked: false }, { checked: true },
+    { checked: false }, { checked: false },
+  ],
+  user: SAMPLE_USERS.slice(0, 5).map(({ name, email, initials, src }) => ({
+    text: name,
+    secondaryText: email,
+    initials,
+    avatarSrc: src,
+  })),
+  badge: [
+    { badgeLabel: 'Active', badgeIntent: 'success' },
+    { badgeLabel: 'Pending', badgeIntent: 'warning' },
+    { badgeLabel: 'Active', badgeIntent: 'success' },
+    { badgeLabel: 'Inactive', badgeIntent: 'danger' },
+    { badgeLabel: 'Active', badgeIntent: 'success' },
+  ],
+  date: [
+    { text: '12 Jan 2026' }, { text: '5 Feb 2026' }, { text: '18 Mar 2026' },
+    { text: '3 Apr 2026' }, { text: '22 May 2026' },
+  ],
+  number: [
+    { text: '$1,200' }, { text: '$890' }, { text: '$3,450' },
+    { text: '$567' }, { text: '$12,000' },
+  ],
+  actions: Array.from({ length: 5 }, () => ({})),
+};
+
 export const SIDEBAR_WORKSPACE = {
   name: 'Acme Corp',
   shortName: 'Acme',
