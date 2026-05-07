@@ -1,72 +1,168 @@
 import React from 'react';
 
+import { Badge } from './Badge';
+import { Button } from './Button';
+import { Card } from './card/Card';
 import { Header } from './Header';
+import { Text } from './text/Text';
+import { Boxes, CheckCircle2, Layers3, Palette, Workflow } from 'lucide-react';
 import './page.css';
 
 type User = {
   name: string;
+  role?: string;
 };
+
+const focusContent = {
+  foundations: {
+    label: 'Foundations',
+    description: 'Color, typography, spacing, and motion are mapped through named DLS tokens.',
+  },
+  components: {
+    label: 'Components',
+    description: 'Stories show documented props, variants, states, and composition rules.',
+  },
+};
+
+const systemPillars = [
+  {
+    icon: <Palette aria-hidden />,
+    title: 'Foundations',
+    status: 'Tokenized',
+    intent: 'info',
+    description: 'Semantic token layers keep light and dark themes consistent across stories.',
+    details: [
+      {
+        title: 'Color',
+        description: 'Surface, text, border, and intent tokens are used instead of raw values.',
+      },
+      {
+        title: 'Typography',
+        description: 'Headings and body copy follow the Inter-based DLS type scale.',
+      },
+    ],
+  },
+  {
+    icon: <Boxes aria-hidden />,
+    title: 'Components',
+    status: 'Documented',
+    intent: 'success',
+    description: 'Reusable UI pieces are shown with real variants and documented props.',
+    details: [
+      {
+        title: 'Actions',
+        description: 'Buttons, badges, cards, and text primitives are composed directly.',
+      },
+      {
+        title: 'States',
+        description: 'Review stories cover useful interactive and themed states.',
+      },
+    ],
+  },
+  {
+    icon: <Workflow aria-hidden />,
+    title: 'Patterns',
+    status: 'Composed',
+    intent: 'warning',
+    description: 'Examples demonstrate how foundations and components become product surfaces.',
+    details: [
+      {
+        title: 'Structure',
+        description: 'Content is grouped with DLS components before introducing new layout.',
+      },
+      {
+        title: 'Governance',
+        description: 'Storybook links stay aligned with the local DLS specs and MCP docs.',
+      },
+    ],
+  },
+] as const;
 
 export const Page: React.FC = () => {
   const [user, setUser] = React.useState<User>();
+  const [focus, setFocus] = React.useState<keyof typeof focusContent>('components');
+  const activeFocus = focusContent[focus];
 
   return (
-    <article>
+    <article className="dls-page-example-shell">
       <Header
         user={user}
-        onLogin={() => setUser({ name: 'Jane Doe' })}
-        onLogout={() => setUser(undefined)}
-        onCreateAccount={() => setUser({ name: 'Jane Doe' })}
+        onOpenFoundations={() => setFocus('foundations')}
+        onOpenComponents={() => setFocus('components')}
       />
 
       <section className="dls-page-example">
-        <h2>Pages in Storybook</h2>
-        <p>
-          We recommend building UIs with a{' '}
-          <a href="https://componentdriven.org" target="_blank" rel="noopener noreferrer">
-            <strong>component-driven</strong>
-          </a>{' '}
-          process starting with atomic components and ending with pages.
-        </p>
-        <p>
-          Render pages with mock data. This makes it easy to build and review page states without
-          needing to navigate to them in your app. Here are some handy patterns for managing page
-          data in Storybook:
-        </p>
-        <ul>
-          <li>
-            Use a higher-level connected component. Storybook helps you compose such data from the
-            "args" of child component stories
-          </li>
-          <li>
-            Assemble data in the page component from your services. You can mock these services out
-            using Storybook.
-          </li>
-        </ul>
-        <p>
-          Get a guided tutorial on component-driven development at{' '}
-          <a href="https://storybook.js.org/tutorials/" target="_blank" rel="noopener noreferrer">
-            Storybook tutorials
-          </a>
-          . Read more in the{' '}
-          <a href="https://storybook.js.org/docs" target="_blank" rel="noopener noreferrer">
-            docs
-          </a>
-          .
-        </p>
-        <div className="dls-page-example__tip-wrapper">
-          <span className="dls-page-example__tip">Tip</span> Adjust the width of the canvas with the{' '}
-          <svg width="10" height="10" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-            <g fill="none" fillRule="evenodd">
-              <path
-                d="M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z"
-                id="a"
-                fill="currentColor"
-              />
-            </g>
-          </svg>
-          Viewports addon in the toolbar
+        <div className="dls-page-example__hero">
+          <div className="dls-page-example__intro">
+            <Badge variant="soft" intent="info" size="s">
+              DLS example
+            </Badge>
+            <h2>Design-system workspace</h2>
+            <p>
+              This page replaces the starter Storybook tutorial with a DLS-native example: semantic
+              tokens, documented components, and composition patterns working together in one surface.
+            </p>
+            <div className="dls-page-example__actions">
+              <Button
+                intent="primary"
+                variant="filled"
+                icon={<CheckCircle2 aria-hidden />}
+                onClick={() => setUser({ name: 'Nadia', role: 'Design system owner' })}
+              >
+                Review as designer
+              </Button>
+              {user && (
+                <Button variant="ghost" onClick={() => setUser(undefined)}>
+                  Reset reviewer
+                </Button>
+              )}
+            </div>
+          </div>
+
+          <aside className="dls-page-example__status" aria-label="DLS workspace status">
+            <Badge variant="filled" intent={focus === 'foundations' ? 'info' : 'success'} size="s">
+              Focus: {activeFocus.label}
+            </Badge>
+            <Text size="s" title="Current review path" description={activeFocus.description} />
+          </aside>
         </div>
+
+        <div className="dls-page-example__grid">
+          {systemPillars.map((pillar) => (
+            <Card
+              key={pillar.title}
+              type="outline"
+              headerIcon={pillar.icon}
+              headerContent={
+                <Badge variant="soft" intent={pillar.intent} size="s">
+                  {pillar.status}
+                </Badge>
+              }
+              title={pillar.title}
+              description={pillar.description}
+              footer={<Badge variant="ghost" intent="neutral" size="s">DLS ready</Badge>}
+            >
+              <div className="dls-page-example__detail-stack">
+                {pillar.details.map((detail) => (
+                  <Text
+                    key={detail.title}
+                    size="s"
+                    title={detail.title}
+                    description={detail.description}
+                  />
+                ))}
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        <Card
+          type="muted"
+          headerIcon={<Layers3 aria-hidden />}
+          headerContent={<Badge variant="soft" intent="neutral" size="s">Composition</Badge>}
+          title="How to add DLS content here"
+          description="Use the existing Example stories as composition examples: import documented DLS components, wire realistic state, and place them under the Examples navigation group."
+        />
       </section>
     </article>
   );

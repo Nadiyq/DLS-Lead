@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { expect, userEvent, within } from 'storybook/test';
+import { expect, userEvent } from 'storybook/test';
 
 import { Page } from './Page';
 
 const meta = {
-  title: 'Example/Page',
+  title: 'Examples/DLS Workspace',
   component: Page,
+  tags: ['autodocs'],
   parameters: {
-    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
 } satisfies Meta<typeof Page>;
@@ -16,18 +16,16 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const LoggedOut: Story = {};
+export const Default: Story = {};
 
-// More on component testing: https://storybook.js.org/docs/writing-tests/interaction-testing
-export const LoggedIn: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const loginButton = canvas.getByRole('button', { name: /Log in/i });
-    await expect(loginButton).toBeInTheDocument();
-    await userEvent.click(loginButton);
-    await expect(loginButton).not.toBeInTheDocument();
+export const ReviewerMode: Story = {
+  play: async ({ canvas }) => {
+    const reviewButton = canvas.getByRole('button', { name: 'Review as designer' });
+    await expect(reviewButton).toBeInTheDocument();
+    await userEvent.click(reviewButton);
+    await expect(canvas.getByText('Design system owner')).toBeInTheDocument();
 
-    const logoutButton = canvas.getByRole('button', { name: /Log out/i });
-    await expect(logoutButton).toBeInTheDocument();
+    await userEvent.click(canvas.getByRole('button', { name: 'Foundations' }));
+    await expect(canvas.getByText('Focus: Foundations')).toBeInTheDocument();
   },
 };

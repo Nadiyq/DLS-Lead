@@ -234,6 +234,7 @@ export const Collapsed: Story = {
    --------------------------------------------------------------------------- */
 
 export const Interactive: Story = {
+  parameters: { docs: { source: { code: '' } } },
   args: { variant: '1', collapsed: false, children: null },
   render: () => {
     const [collapsed, setCollapsed] = React.useState(false);

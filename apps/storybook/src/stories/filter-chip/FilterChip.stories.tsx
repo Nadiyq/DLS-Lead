@@ -133,6 +133,7 @@ const UserFilterDemo = () => {
 };
 
 export const UserFilter: Story = {
+  parameters: { docs: { source: { code: '' } } },
   args: { label: 'Users' },
   render: () => <UserFilterDemo />,
 };
@@ -237,6 +238,7 @@ const DateFilterDemo = () => {
 };
 
 export const DateFilter: Story = {
+  parameters: { docs: { source: { code: '' } } },
   args: { label: 'Date' },
   render: () => <DateFilterDemo />,
 };

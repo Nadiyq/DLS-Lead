@@ -138,6 +138,7 @@ export const UsersStackedColumn: Story = {
 // ---------------------------------------------------------------------------
 
 export const FullTable: Story = {
+  parameters: { docs: { source: { code: '' } } },
   args: {
     type: 'text',
     rows: TABLE_COLUMN_ROWS.text,

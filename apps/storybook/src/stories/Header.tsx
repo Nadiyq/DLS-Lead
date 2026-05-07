@@ -1,60 +1,48 @@
 import { Button } from './Button';
+import { Badge } from './Badge';
+import { BookOpen, Boxes } from 'lucide-react';
 import './header.css';
 
 type User = {
   name: string;
+  role?: string;
 };
 
 export interface HeaderProps {
   user?: User;
-  onLogin?: () => void;
-  onLogout?: () => void;
-  onCreateAccount?: () => void;
+  onOpenFoundations?: () => void;
+  onOpenComponents?: () => void;
 }
 
-export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => (
-  <header>
-    <div className="dls-header-example">
-      <div className="dls-header-example__brand">
-        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <g fill="none" fillRule="evenodd">
-            <path
-              d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z"
-              fill="var(--dls-color-surface-base)"
-            />
-            <path
-              d="M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z"
-              fill="var(--dls-color-intent-primary-strong)"
-            />
-            <path
-              d="M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z"
-              fill="var(--dls-color-intent-info-base)"
-            />
-          </g>
-        </svg>
-        <h1>Acme</h1>
+export const Header = ({ user, onOpenFoundations, onOpenComponents }: HeaderProps) => (
+  <header className="dls-header-example" aria-label="DLS example header">
+    <div className="dls-header-example__brand">
+      <img className="dls-header-example__logo" src="/logo.svg" alt="" />
+      <div className="dls-header-example__title-group">
+        <Badge variant="soft" intent="info" size="s">
+          Storybook
+        </Badge>
+        <h1>DLS Lead</h1>
+        <p>Documented tokens, components, and composition examples</p>
       </div>
-      <div className="dls-header-example__actions">
-        {user ? (
-          <>
-            <span className="dls-header-example__welcome">
-              Welcome, <b>{user.name}</b>!
-            </span>
-            <Button size="s" variant="ghost" onClick={onLogout}>
-              Log out
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button size="s" variant="ghost" onClick={onLogin}>
-              Log in
-            </Button>
-            <Button size="s" intent="primary" variant="filled" onClick={onCreateAccount}>
-              Sign up
-            </Button>
-          </>
-        )}
-      </div>
+    </div>
+    <div className="dls-header-example__actions">
+      {user ? (
+        <span className="dls-header-example__welcome">
+          Reviewing as <b>{user.name}</b>
+          {user.role && <span>{user.role}</span>}
+        </span>
+      ) : (
+        <Badge variant="soft" intent="success" size="s">
+          Ready for review
+        </Badge>
+      )}
+      <Button size="s" variant="ghost" icon={<BookOpen aria-hidden />} onClick={onOpenFoundations}>
+        Foundations
+      </Button>
+      <Button size="s" intent="primary" variant="filled" icon={<Boxes aria-hidden />} onClick={onOpenComponents}>
+        Components
+      </Button>
     </div>
   </header>
 );

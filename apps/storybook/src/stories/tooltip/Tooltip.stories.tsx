@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React from 'react';
 import { Tooltip } from './Tooltip';
 import { Kbd, KbdGroup } from '../kbd/Kbd';
 import { Section } from '../_helpers/StoryLayout';

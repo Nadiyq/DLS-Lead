@@ -1,34 +1,46 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { fn } from 'storybook/test';
+import { expect, fn, userEvent } from 'storybook/test';
 
 import { Header } from './Header';
 
 const meta = {
-  title: 'Example/Header',
+  title: 'Examples/DLS Header',
   component: Header,
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   parameters: {
-    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
   args: {
-    onLogin: fn(),
-    onLogout: fn(),
-    onCreateAccount: fn(),
+    onOpenFoundations: fn(),
+    onOpenComponents: fn(),
   },
 } satisfies Meta<typeof Header>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const LoggedIn: Story = {
-  args: {
-    user: {
-      name: 'Jane Doe',
-    },
+export const ReadyForReview: Story = {
+  play: async ({ args, canvas }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Foundations' }));
+    await expect(args.onOpenFoundations).toHaveBeenCalled();
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Components' }));
+    await expect(args.onOpenComponents).toHaveBeenCalled();
   },
 };
 
-export const LoggedOut: Story = {};
+export const WithReviewer: Story = {
+  args: {
+    user: {
+      name: 'Nadia',
+      role: 'Design system owner',
+    },
+  },
+  play: async ({ args, canvas }) => {
+    await expect(canvas.getByText('Design system owner')).toBeInTheDocument();
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Components' }));
+    await expect(args.onOpenComponents).toHaveBeenCalled();
+  },
+};

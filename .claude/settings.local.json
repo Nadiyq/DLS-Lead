@@ -47,7 +47,9 @@
       "Bash(curl -s -o /tmp/link-figma.png \"https://www.figma.com/api/mcp/asset/02901d40-7fb6-405b-8079-6e6b6e618863\")",
       "Bash(node -e \"const l = require\\('lucide-react'\\); console.log\\('Info:', !!l.Info\\); console.log\\('CheckCircle:', !!l.CheckCircle\\); console.log\\('CircleCheck:', !!l.CircleCheck\\); console.log\\('AlertTriangle:', !!l.AlertTriangle\\); console.log\\('TriangleAlert:', !!l.TriangleAlert\\); console.log\\('XCircle:', !!l.XCircle\\); console.log\\('CircleX:', !!l.CircleX\\);\")",
       "Bash(curl -s -o /tmp/tab-figma.png \"https://www.figma.com/api/mcp/asset/9a8e7079-1491-44ef-ac9b-227b1a947de6\")",
-      "Bash(curl -s -o /tmp/tab-group-figma.png \"https://www.figma.com/api/mcp/asset/d14ad6f0-2e63-4ecd-93a9-64face39acd0\")"
+      "Bash(curl -s -o /tmp/tab-group-figma.png \"https://www.figma.com/api/mcp/asset/d14ad6f0-2e63-4ecd-93a9-64face39acd0\")",
+      "mcp__dls-lead-storybook__preview-stories",
+      "mcp__dls-lead-storybook__list-all-documentation"
     ]
   },
   "enabledMcpjsonServers": [
