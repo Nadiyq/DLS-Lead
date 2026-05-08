@@ -13,10 +13,10 @@ export const Header = ({ onOpenFoundations, onOpenComponents }: HeaderProps) => 
       <img className="dls-header-example__logo" src="/logo.svg" alt="" />
       <div className="dls-header-example__actions">
         <div className="dls-header-example__action-buttons">
-          <Button size="s" variant="ghost" intent="neutral" icon={<BookOpen aria-hidden />} onClick={onOpenFoundations}>
+          <Button size="m" variant="ghost" intent="neutral" icon={<BookOpen aria-hidden />} onClick={onOpenFoundations}>
             Foundations
           </Button>
-          <Button size="s" variant="ghost" intent="neutral" icon={<Boxes aria-hidden />} onClick={onOpenComponents}>
+          <Button size="m" variant="ghost" intent="neutral" icon={<Boxes aria-hidden />} onClick={onOpenComponents}>
             Components
           </Button>
         </div>

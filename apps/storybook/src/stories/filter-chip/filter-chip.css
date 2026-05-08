@@ -282,7 +282,8 @@
 .dls-filter-chip__enum-list,
 .dls-filter-chip__date-list,
 .dls-filter-chip__numeric-list {
-  min-width: 242px;
+  min-width: 200px;
+  width: max-content;
   max-height: 320px;
   overflow-y: auto;
   box-shadow: var(--dls-shadow-m);

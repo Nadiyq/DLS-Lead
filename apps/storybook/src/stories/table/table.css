@@ -14,7 +14,6 @@
   width: 100%;
   border: 1px solid var(--dls-color-border-base);
   border-radius: var(--dls-radius-component-table);
-  overflow: hidden;
   font-family: var(--dls-font-family);
 }
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import './dropdown-filters.css';
+import { List } from '../list-item/List';
 import { ListItem } from '../list-item/ListItem';
-import { ChipRegular } from '../chip/ChipRegular';
+import { FilterChip } from '../filter-chip/FilterChip';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -15,9 +16,14 @@ export interface FilterOption {
 }
 
 export interface DropdownFiltersProps {
-  /** Available filter options, rendered as chevron-chips */
-  options: FilterOption[];
-  /** Called when a filter chip is clicked (to open its value picker) */
+  /**
+   * Custom filter chip content. When provided, `options` is ignored.
+   * Pass FilterChip instances directly for stateful / interactive use.
+   */
+  children?: React.ReactNode;
+  /** Convenience: simple filter options rendered as FilterChip (size=S) */
+  options?: FilterOption[];
+  /** Called when a simple option chip's chevron is clicked */
   onSelect?: (id: string) => void;
   className?: string;
 }
@@ -25,41 +31,51 @@ export interface DropdownFiltersProps {
 /* ---------------------------------------------------------------------------
    Component
 
-   Figma spec (node 6122-16482): a single label row "Filters" followed by a
-   chip row. Each chip is a ChipRegular in outline/neutral/size-s variant
-   with a trailing chevron — clicking a chip opens that filter's value
-   picker. This matches table toolbars in the reference design.
+   Figma spec (node 6122-16482):
+   dropdown-filters (container with border/shadow)
+     list
+       list-item type=label  "Filters"
+       list-item type=chips
+         FilterChip (size=S) × N
    --------------------------------------------------------------------------- */
 
 export const DropdownFilters = React.forwardRef<HTMLDivElement, DropdownFiltersProps>(
   (
     {
+      children,
       options,
-      onSelect,
+      onSelect: _onSelect,
       className,
     },
     ref,
   ) => {
+    const chips = children ?? options?.map((opt) => (
+      <FilterChip
+        key={opt.id}
+        label={opt.label}
+        isVisible
+        size="s"
+        valueSummary={<span className="dls-filter-chip__value-text">All</span>}
+      />
+    ));
+
+    const hasChips = React.Children.count(chips) > 0;
+
     return (
       <div
         ref={ref}
         className={['dls-dropdown-filters', className].filter(Boolean).join(' ')}
-        role="listbox"
+        role="dialog"
+        aria-label="Filters"
       >
-        <ListItem type="label" text="Filters" />
-        <ListItem type="chips">
-          {options.map((opt) => (
-            <ChipRegular
-              key={opt.id}
-              label={opt.label}
-              size="s"
-              variant="outline"
-              intent="neutral"
-              chevron
-              onClick={() => onSelect?.(opt.id)}
-            />
-          ))}
-        </ListItem>
+        <List>
+          <ListItem type="label" text="Filters" />
+          {hasChips ? (
+            <ListItem type="chips">{chips}</ListItem>
+          ) : (
+            <ListItem type="empty-state" text="No filters selected" />
+          )}
+        </List>
       </div>
     );
   },

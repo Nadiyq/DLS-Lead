@@ -13,7 +13,7 @@
 
 .dls-header-example__topbar {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: var(--dls-spacing-4);
   width: 100%;
@@ -60,9 +60,9 @@
 .dls-header-example__brand p {
   margin: 0;
   color: var(--dls-color-text-secondary);
-  font-size: var(--dls-text-paragraph-s-font-size);
-  line-height: var(--dls-text-paragraph-s-line-height);
-  font-weight: var(--dls-text-paragraph-s-medium-font-weight);
+  font-size: var(--dls-text-paragraph-m-font-size);
+  line-height: var(--dls-text-paragraph-m-line-height);
+  font-weight: var(--dls-text-paragraph-m-light-font-weight);
 }
 
 .dls-header-example__actions {

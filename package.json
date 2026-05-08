@@ -1,8 +1,11 @@
 {
   "name": "dls-design-tokens",
   "version": "1.0.0",
-  "description": "DLS-Lead design tokens for products, design tools, and AI coding agents",
+  "description": "DLS-Lead design tokens for products, design tools, and AI coding agents — DTCG-compliant JSON with CSS, SCSS, TypeScript outputs and LLM-readable specs",
+  "license": "MIT",
+  "author": "Nadiyq",
   "main": "./tokens/tokens.json",
+  "types": "./tokens/tokens.ts",
   "style": "./tokens/tokens.css",
   "sass": "./tokens/tokens.scss",
   "exports": {
@@ -42,7 +45,11 @@
     "figma",
     "storybook",
     "ai-agents",
-    "llm"
+    "llm",
+    "oklch",
+    "4-layer-tokens",
+    "react",
+    "css-variables"
   ],
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,7 @@
 /* ==========================================================================
    DLS Dropdown Filters — filter selection panel for tables
-   Composed of ListItem rows (label + chips). Standalone root.
+   Wraps a List component with label + chips rows containing FilterChip(S).
+   Standalone root — provides the outer container styling.
    ========================================================================== */
 
 .dls-dropdown-filters {
@@ -8,11 +9,17 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  width: 280px;
-  padding: var(--dls-spacing-2);
+  width: 295px;
   background: var(--dls-color-surface-base);
   border: 1px solid var(--dls-color-border-subtle);
   border-radius: var(--dls-radius-component-list);
   box-shadow: var(--dls-shadow-surface-md);
   font-family: var(--dls-font-family);
+}
+
+/* Inner List inherits container styling — remove its own border/shadow */
+.dls-dropdown-filters > .dls-list {
+  border: none;
+  box-shadow: none;
+  background: transparent;
 }

@@ -13,6 +13,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  background: var(--dls-color-surface-base);
   font-family: var(--dls-font-family);
 }
 
@@ -35,7 +36,7 @@
 .dls-table-top-bar__left {
   display: flex;
   align-items: center;
-  gap: var(--dls-spacing-3);
+  gap: var(--dls-spacing-2);
   flex: 1 1 0%;
   min-width: 0;
 }
@@ -47,7 +48,7 @@
 .dls-table-top-bar__right {
   display: flex;
   align-items: center;
-  gap: var(--dls-spacing-3);
+  gap: var(--dls-spacing-2);
   flex-shrink: 0;
 }
 
@@ -61,4 +62,7 @@
   gap: var(--dls-spacing-3);
   padding: var(--dls-spacing-3) var(--dls-spacing-4);
   border-bottom: 1px solid var(--dls-color-border-subtle);
+  overflow: visible;
+  position: relative;
+  z-index: 2;
 }

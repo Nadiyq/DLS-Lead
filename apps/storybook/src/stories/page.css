@@ -56,9 +56,9 @@
   max-width: calc(var(--dls-spacing-16) * 10);
   margin: 0;
   color: var(--dls-color-text-secondary);
-  font-size: var(--dls-text-paragraph-l-font-size);
-  line-height: var(--dls-text-paragraph-l-line-height);
-  font-weight: var(--dls-text-paragraph-l-medium-font-weight);
+  font-size: var(--dls-text-paragraph-m-font-size);
+  line-height: var(--dls-text-paragraph-m-line-height);
+  font-weight: var(--dls-text-paragraph-m-light-font-weight);
 }
 
 .dls-page-example__actions,

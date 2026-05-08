@@ -152,7 +152,7 @@ export const Page: React.FC = () => {
                 {pillar.details.map((detail) => (
                   <Text
                     key={detail.title}
-                    size="s"
+                    size="m"
                     title={detail.title}
                     description={detail.description}
                   />

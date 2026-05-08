@@ -1,12 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { Trash2 as TrashIcon } from 'lucide-react';
 import { DropdownFilters } from './DropdownFilters';
-import type { FilterOption } from './DropdownFilters';
+import { FilterChip } from '../filter-chip/FilterChip';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
+import { Checkbox } from '../checkbox/Checkbox';
 
 const meta = {
   title: 'Components/DropdownFilters',
   component: DropdownFilters,
-  parameters: { layout: 'centered' },
+  parameters: {
+    layout: 'centered',
+    docs: { source: { type: 'code', code: '' } },
+  },
   tags: ['autodocs'],
 } satisfies Meta<typeof DropdownFilters>;
 
@@ -17,59 +24,208 @@ type Story = StoryObj<typeof meta>;
 // Sample data
 // ---------------------------------------------------------------------------
 
-const filterOptions: FilterOption[] = [
+const ALL_FILTERS = [
   { id: 'status', label: 'Status' },
   { id: 'role', label: 'Role' },
   { id: 'date', label: 'Date' },
   { id: 'department', label: 'Department' },
-  { id: 'location', label: 'Location' },
 ];
 
+const FILTER_VALUES: Record<string, string[]> = {
+  Status: ['Active', 'Inactive', 'Pending', 'Archived'],
+  Role: ['Admin', 'Editor', 'Viewer'],
+  Date: ['Today', 'Yesterday', 'Last 7 days', 'Last 30 days'],
+  Department: ['Engineering', 'Design', 'Sales', 'Support'],
+};
+
 // ---------------------------------------------------------------------------
-// Playground
+// Helpers
+// ---------------------------------------------------------------------------
+
+function summarize(selected: Set<string>): string {
+  if (selected.size === 0) return 'All';
+  if (selected.size === 1) return [...selected][0];
+  return `${selected.size} selected`;
+}
+
+// ---------------------------------------------------------------------------
+// Shared hook — manages active filters with multi-select values and removal
+// ---------------------------------------------------------------------------
+
+function useFilters(initial: { id: string; label: string }[]) {
+  const [filters, setFilters] = React.useState(
+    initial.map(f => ({
+      ...f,
+      values: new Set<string>([FILTER_VALUES[f.label]?.[0] ?? '']),
+      visible: true,
+    })),
+  );
+
+  const toggleValue = (id: string, opt: string) =>
+    setFilters(prev => prev.map(f => {
+      if (f.id !== id) return f;
+      const next = new Set(f.values);
+      if (next.has(opt)) next.delete(opt); else next.add(opt);
+      return { ...f, values: next };
+    }));
+
+  const setVisible = (id: string, visible: boolean) =>
+    setFilters(prev => prev.map(f => f.id === id ? { ...f, visible } : f));
+
+  const remove = (id: string) =>
+    setFilters(prev => prev.filter(f => f.id !== id));
+
+  return { filters, toggleValue, setVisible, remove };
+}
+
+// ---------------------------------------------------------------------------
+// Playground — 4 removable filter chips
 // ---------------------------------------------------------------------------
 
 export const Playground: Story = {
-  args: {
-    options: filterOptions,
+  render: () => {
+    const { filters, toggleValue, setVisible, remove } = useFilters(ALL_FILTERS);
+
+    return (
+      <DropdownFilters>
+        {filters.map(f => {
+          const options = FILTER_VALUES[f.label] ?? [];
+          return (
+            <FilterChip
+              key={f.id}
+              label={f.label}
+              isVisible={f.visible}
+              onVisibilityChange={(v) => setVisible(f.id, v)}
+              size="s"
+              valueSummary={<span className="dls-filter-chip__value-text">{summarize(f.values)}</span>}
+            >
+              <List className="dls-filter-chip__enum-list">
+                {options.map(opt => (
+                  <ListItem
+                    key={opt}
+                    type="with-slots"
+                    text={opt}
+                    interactive={false}
+                    slotLeft={<Checkbox checked={f.values.has(opt)} onChange={() => toggleValue(f.id, opt)} />}
+                    onClick={() => toggleValue(f.id, opt)}
+                  />
+                ))}
+                <ListItem type="divider" />
+                <ListItem
+                  type="with-slots"
+                  text="Remove filter"
+                  iconStart={<TrashIcon />}
+                  onClick={() => remove(f.id)}
+                />
+              </List>
+            </FilterChip>
+          );
+        })}
+      </DropdownFilters>
+    );
   },
 };
 
 // ---------------------------------------------------------------------------
-// Short list — matches the 3-chip Figma reference
+// Short list — 3 removable filter chips
 // ---------------------------------------------------------------------------
 
 export const ShortList: Story = {
-  args: {
-    options: filterOptions.slice(0, 3),
+  render: () => {
+    const { filters, toggleValue, setVisible, remove } = useFilters(ALL_FILTERS.slice(0, 3));
+
+    return (
+      <DropdownFilters>
+        {filters.map(f => {
+          const options = FILTER_VALUES[f.label] ?? [];
+          return (
+            <FilterChip
+              key={f.id}
+              label={f.label}
+              isVisible={f.visible}
+              onVisibilityChange={(v) => setVisible(f.id, v)}
+              size="s"
+              valueSummary={<span className="dls-filter-chip__value-text">{summarize(f.values)}</span>}
+            >
+              <List className="dls-filter-chip__enum-list">
+                {options.map(opt => (
+                  <ListItem
+                    key={opt}
+                    type="with-slots"
+                    text={opt}
+                    interactive={false}
+                    slotLeft={<Checkbox checked={f.values.has(opt)} onChange={() => toggleValue(f.id, opt)} />}
+                    onClick={() => toggleValue(f.id, opt)}
+                  />
+                ))}
+                <ListItem type="divider" />
+                <ListItem
+                  type="with-slots"
+                  text="Remove filter"
+                  iconStart={<TrashIcon />}
+                  onClick={() => remove(f.id)}
+                />
+              </List>
+            </FilterChip>
+          );
+        })}
+      </DropdownFilters>
+    );
   },
 };
 
 // ---------------------------------------------------------------------------
-// Interactive — fires onSelect when a chip is clicked
+// Empty state — no filters selected
+// ---------------------------------------------------------------------------
+
+export const EmptyState: Story = {
+  render: () => <DropdownFilters />,
+};
+
+// ---------------------------------------------------------------------------
+// Interactive — 2 removable filter chips
 // ---------------------------------------------------------------------------
 
 export const Interactive: Story = {
-  args: {
-    options: filterOptions,
-  },
   render: () => {
-    const [lastClicked, setLastClicked] = React.useState<string | null>(null);
+    const { filters, toggleValue, setVisible, remove } = useFilters(ALL_FILTERS.slice(0, 2));
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'center' }}>
-        <DropdownFilters
-          options={filterOptions}
-          onSelect={(id) => setLastClicked(id)}
-        />
-        <p style={{
-          margin: 0, fontSize: 'var(--dls-text-s-font-size)',
-          fontFamily: 'var(--dls-font-family)', color: 'var(--dls-color-text-secondary)',
-          maxWidth: 280, textAlign: 'center',
-        }}>
-          Last clicked: {lastClicked ?? 'None'}
-        </p>
-      </div>
+      <DropdownFilters>
+        {filters.map(f => {
+          const options = FILTER_VALUES[f.label] ?? [];
+          return (
+            <FilterChip
+              key={f.id}
+              label={f.label}
+              isVisible={f.visible}
+              onVisibilityChange={(v) => setVisible(f.id, v)}
+              size="s"
+              valueSummary={<span className="dls-filter-chip__value-text">{summarize(f.values)}</span>}
+            >
+              <List className="dls-filter-chip__enum-list">
+                {options.map(opt => (
+                  <ListItem
+                    key={opt}
+                    type="with-slots"
+                    text={opt}
+                    interactive={false}
+                    slotLeft={<Checkbox checked={f.values.has(opt)} onChange={() => toggleValue(f.id, opt)} />}
+                    onClick={() => toggleValue(f.id, opt)}
+                  />
+                ))}
+                <ListItem type="divider" />
+                <ListItem
+                  type="with-slots"
+                  text="Remove filter"
+                  iconStart={<TrashIcon />}
+                  onClick={() => remove(f.id)}
+                />
+              </List>
+            </FilterChip>
+          );
+        })}
+      </DropdownFilters>
     );
   },
 };

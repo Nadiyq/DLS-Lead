@@ -1,115 +1,217 @@
-# DLS-Lead
+# dls-design-tokens
 
-This repository uses a 4-layer design token architecture.
+Design tokens for DLS-Lead, a token-driven design system for SaaS products. Ships as DTCG-compliant JSON with generated CSS, SCSS, and TypeScript outputs, plus LLM-readable specs and agent prompts.
 
-## Token Architecture
-
-`Layer 1` primitives use raw values such as hex, rgba, spacing, radius, and typography scales.
-
-`Layer 2` semantic tokens map those primitives into UI meaning such as surface, text, border, and intent roles.
-
-`Layer 3` state abstraction is a hybrid model:
-- In code, interactive state colors use `OKLCH` relative color syntax with numeric lightness deltas.
-- In Figma, the same states are represented with opacity overlays for tooling compatibility.
-
-This means the system is **not** purely hex-based. Base tokens may be hex/rgba, but hover and pressed behavior in code is defined by OKLCH state transforms.
-
-## Canonical State-Layer Files
-
-- `tokens/tokens.scss` defines Layer 3 state constants such as `$dls-state-l-delta-hover` and `$dls-state-l-delta-pressed`.
-- `tokens/tokens.json` documents `state.lDelta.hover` and `state.lDelta.pressed` in the token source.
-- `tokens/tokens.ts` exports the same state model for code consumers.
-- `tokens/tokens.css` publishes the generated CSS custom properties.
-- `apps/storybook/src/stories/button.css` and other component stylesheets apply the deltas with `oklch(from <base> calc(l + delta) c h)`.
-
-## Source Of Truth
-
-When describing this design system, use the following summary:
-
-> DLS-Lead uses hex/rgba primitives plus an OKLCH-based state layer for hover and pressed interactions in code, with Figma overlay equivalents for design tooling.
-
-## NPM Package For Tokens
-
-The root package, `dls-design-tokens`, is configured as a publishable npm package for the token layer. The package intentionally publishes the canonical token JSON, generated CSS/SCSS/TS token outputs, LLM-readable specs, prompts, and AI consumption docs.
-
-Install:
+Built for human developers and AI coding agents alike.
 
 ```bash
 npm install dls-design-tokens
 ```
 
-Package entry points:
+## For AI Agents
 
-| Path | Purpose |
-|---|---|
-| `dls-design-tokens` | Canonical DTCG token JSON |
-| `dls-design-tokens/tokens.json` | Explicit token JSON import |
-| `dls-design-tokens/tokens.css` | CSS custom properties |
-| `dls-design-tokens/tokens.scss` | SCSS token output |
-| `dls-design-tokens/tokens.ts` | TypeScript token source |
-| `dls-design-tokens/ai` | AI agent consumption guide |
-| `dls-design-tokens/specs/...` | LLM-readable design-system specs |
-| `dls-design-tokens/prompts/...` | Copy-paste agent prompts |
+This package is designed to be consumed by AI coding agents (Claude, Cursor, Codex, Copilot) before they generate UI. The token JSON is machine-readable, DTCG-compliant, and annotated with `$description` fields that tell agents what each token is for and when not to use it.
 
-AI agents should read [docs/ai-agent-token-consumption.md](docs/ai-agent-token-consumption.md) before generating UI from the npm package. The short version:
+**Start here:**
 
-1. Read `tokens/tokens.json` before writing CSS.
-2. Prefer Layer 4 component tokens, then Layer 2 semantic tokens.
-3. Use Layer 3 state tokens for hover, pressed, focus-visible, and disabled behavior.
-4. Never use Layer 1 primitive tokens directly in component CSS.
-5. Never invent token names, raw colors, spacing, radii, or shadows.
-
-Publish dry run:
-
-```bash
-npm pack --dry-run
+```text
+1. Read `dls-design-tokens/ai`              — agent rules and constraints
+2. Read `dls-design-tokens/tokens.json`      — the canonical token source
+3. Read `dls-design-tokens/specs/session-start.md`  — session checklist
+4. Read `dls-design-tokens/specs/tokens/token-reference.md` — full token map
 ```
 
-## Figma MCP Sync
+Or paste one of the bundled prompts directly into your agent:
 
-The repo now includes a local companion workflow for Figma MCP sync:
+```text
+Use the DLS-Lead token package as the source of truth.
+Read `dls-design-tokens/ai`, then `dls-design-tokens/tokens.json`,
+then the relevant files under `dls-design-tokens/specs/`.
+Generate UI using DLS tokens only.
+Prefer Layer 4 component tokens, then Layer 2 semantic tokens.
+Use Layer 3 state tokens for hover, pressed, focus-visible, and disabled.
+Never invent tokens, props, variants, spacing values, colors, or radii.
+```
 
-- MCP-side: fetch node data with `get_design_context`, `get_screenshot`, and `get_variable_defs`
-- Repo-side: audit token names and values with `npm run figma:audit`
-- Library-first: always check `apps/storybook/src/stories/` before building a new component
+### What's in the Package for Agents
 
-Full workflow and examples live in [docs/figma-sync.md](docs/figma-sync.md).
+| Content | Count | Purpose |
+|---|---|---|
+| Design tokens | 359 | Colors, spacing, radius, shadow, typography, state, icons |
+| Component specs | 76 | Machine-readable anatomy, props, tokens, states, code examples |
+| Foundation specs | 14 | Color, spacing, typography, motion, accessibility, grid, z-index |
+| Pattern specs | 4 | Composition, component selection, accessibility generation |
+| Agent prompts | 15 | Copy-paste prompts for settings pages, data tables, forms, auth flows, dashboards, and more |
 
-## Storybook MCP
+### Token Architecture (4 Layers)
 
-DLS-Lead's Storybook can act as an MCP server for AI agents through the official Storybook MCP addon. Start Storybook with `npm run storybook`, then connect your agent to `http://127.0.0.1:6006/mcp`.
+Tokens follow a strict 4-layer hierarchy. Agents must respect the layer boundaries:
 
-Packaged setup files live here:
+```
+Layer 1 — Primitives     Raw values: hex colors, px sizes, font stacks
+                          Example: color.primary.600 → #7F56D9
+                          Rule: NEVER use in component CSS
 
-- [AGENTS.md](AGENTS.md)
-- [.cursorrules](.cursorrules)
-- [.github/copilot-instructions.md](.github/copilot-instructions.md)
-- [.mcp.json](.mcp.json)
-- [.cursor/mcp.json](.cursor/mcp.json)
-- [mcp/README.md](mcp/README.md)
+Layer 2 — Semantics      UI meaning: surface, text, border, intent roles
+                          Example: --dls-color-surface-base, --dls-color-text-primary
+                          Rule: Use when no L4 component token exists
 
-## LLM Specs
+Layer 3 — State           OKLCH lightness deltas for interactive states
+                          Example: state.lDelta.hover → +0.06
+                          Rule: Use for :hover, :active, :focus-visible, :disabled
 
-The repo includes a repo-local `specs/` directory with structured markdown files for foundations, tokens, patterns, and core components. It follows the LLM-readable design-system approach described by Hardik Pandya: agents read specs at session start, choose from a closed token layer, and verify component APIs through Storybook.
+Layer 4 — Component       Named per-component tokens
+                          Example: --dls-radius-component-button → 6px
+                          Rule: ALWAYS prefer over L1/L2 when available
+```
 
-The intended read order for AI agents is:
+### Token Naming Convention
 
-1. [specs/session-start.md](specs/session-start.md)
-2. [specs/tokens/README.md](specs/tokens/README.md) and [specs/tokens/token-reference.md](specs/tokens/token-reference.md)
-3. Relevant files in [specs/foundations/](specs/foundations), [specs/patterns/](specs/patterns), and [specs/components/](specs/components), especially [specs/foundations/accessibility.md](specs/foundations/accessibility.md) and [specs/patterns/accessibility-generation.md](specs/patterns/accessibility-generation.md) for React UI.
+All CSS custom properties follow this pattern:
 
-This is the machine-readable design-system layer for DLS-Lead: if a spec exists, the agent should look it up instead of guessing.
+```
+--dls-{category}-{scope}-{name}
 
-## Prompt Library
+--dls-color-surface-base          L2 semantic color
+--dls-color-intent-primary-bg     L2 intent color
+--dls-color-component-card-bg     L4 component color
+--dls-radius-component-button     L4 component radius
+--dls-spacing-4                   Spacing scale (16px)
+--dls-shadow-focus-ring           Focus ring shadow
+```
 
-Reusable prompts for Claude, Cursor, Codex, and other coding agents live in [prompts/](prompts/). Start with [prompts/base-agent-contract.md](prompts/base-agent-contract.md), then paste a task prompt such as:
+### Agent Constraints
 
-- [prompts/settings-page.md](prompts/settings-page.md)
-- [prompts/data-table-page.md](prompts/data-table-page.md)
-- [prompts/form-dialog.md](prompts/form-dialog.md)
-- [prompts/dropdown-menu.md](prompts/dropdown-menu.md)
-- [prompts/component-scaffold-from-figma.md](prompts/component-scaffold-from-figma.md)
-- [prompts/audit-fix-component.md](prompts/audit-fix-component.md)
-- [prompts/token-addition.md](prompts/token-addition.md)
+- Never hardcode hex, rgb, hsl, rgba, px spacing, radius, font, or shadow values.
+- Never reference L1 primitives (e.g., `--dls-color-primary-700`) in component CSS.
+- Never invent token names — if a token doesn't exist, stop and ask.
+- Use `data-*` attributes for variants and states, not `.is-*` or `.has-*` classes.
+- Use `:focus-visible` not `:focus`. Focus rings use `box-shadow`, never `outline`.
+- Icons from `lucide-react` only, aliased with an `Icon` suffix.
 
-These prompts bake in the spec read order, token constraints, Storybook MCP workflow, and DLS component usage rules.
+## Package Entry Points
+
+| Import Path | Format | Purpose |
+|---|---|---|
+| `dls-design-tokens` | JSON | Canonical DTCG token source (default) |
+| `dls-design-tokens/tokens.json` | JSON | Explicit token JSON import |
+| `dls-design-tokens/tokens.css` | CSS | CSS custom properties (`:root` block) |
+| `dls-design-tokens/tokens.scss` | SCSS | SCSS variables (`$dls-*`) |
+| `dls-design-tokens/tokens.ts` | TypeScript | Typed token exports (ES module) |
+| `dls-design-tokens/ai` | Markdown | AI agent consumption guide |
+| `dls-design-tokens/specs/*` | Markdown | LLM-readable design system specs |
+| `dls-design-tokens/prompts/*` | Markdown | Copy-paste agent prompts |
+
+### Import Examples
+
+CSS:
+```css
+@import "dls-design-tokens/tokens.css";
+```
+
+ESM:
+```js
+import tokens from "dls-design-tokens" with { type: "json" };
+```
+
+CommonJS:
+```js
+const tokens = require("dls-design-tokens");
+```
+
+SCSS:
+```scss
+@use "dls-design-tokens/tokens.scss" as dls;
+```
+
+TypeScript:
+```ts
+import { color, spacing, radius } from "dls-design-tokens/tokens.ts";
+```
+
+## Token Categories
+
+The JSON contains these top-level categories:
+
+| Category | Layers | Description |
+|---|---|---|
+| `color` | L1 + L2 | 7 primitive scales (neutral, primary, info, success, warning, danger, additional) + semantic mappings (surface, text, border, intent) |
+| `font` | L1 | Font family (Inter) and weight scale (400-700) |
+| `text` | L1 | Font size and line height scale (xs through 2xl) |
+| `typography` | L1 | Composed type styles: heading, paragraph, button, link, upper, italic, avatar |
+| `spacing` | L1 | 8pt grid scale from 0 to 64px |
+| `radius` | L1 + L4 | Primitive scale (xs-full) + per-component radius tokens |
+| `shadow` | L2 | Elevation shadows and focus ring |
+| `icon` | L1 | Stroke width scale for 12/16/24px icons |
+| `effect` | L2 | Backdrop blur and saturate values |
+| `state` | L3 | OKLCH lightness deltas for hover (+0.06) and pressed (-0.03) |
+
+## Bundled Specs
+
+The `specs/` directory contains 100+ structured markdown files organized for agent consumption:
+
+- **`specs/session-start.md`** — Read first. Checklist for every UI task.
+- **`specs/tokens/`** — Token reference, color tokens, spacing, typography, elevation, motion.
+- **`specs/foundations/`** — Accessibility, breakpoints, color, grid, motion, spacing, typography, z-index.
+- **`specs/patterns/`** — Composition rules, component selection, accessibility generation.
+- **`specs/components/`** — 76 component specs with anatomy, props, tokens, states, and code examples.
+
+## Bundled Prompts
+
+The `prompts/` directory contains 15 copy-paste prompts for AI agents. Each prompt bakes in the correct spec read order, token constraints, and Storybook MCP workflow. See [prompts/README.md](prompts/README.md) for the full index.
+
+Start with `prompts/base-agent-contract.md`, then use a task prompt:
+
+| Task | Prompt |
+|---|---|
+| Settings page with sidebar | `prompts/settings-page.md` |
+| Data table with filters | `prompts/data-table-page.md` |
+| Form or dialog workflow | `prompts/form-dialog.md` |
+| Dashboard with KPI cards | `prompts/dashboard-page.md` |
+| Login / signup / OTP | `prompts/auth-flow.md` |
+| App shell with sidebar + top bar | `prompts/nav-shell.md` |
+| Searchable list or card grid | `prompts/list-page.md` |
+| Entity detail / profile page | `prompts/detail-page.md` |
+| Messaging / chat / notifications | `prompts/messaging-ui.md` |
+| Dropdown, menu, or popover | `prompts/dropdown-menu.md` |
+| Scaffold component from Figma | `prompts/component-scaffold-from-figma.md` |
+| Audit and fix violations | `prompts/audit-fix-component.md` |
+| Add or extend tokens | `prompts/token-addition.md` |
+
+## State Layer
+
+DLS-Lead uses a hybrid state model:
+
+- **In code:** interactive states use OKLCH relative color syntax with numeric lightness deltas. Hover shifts lightness by `+0.06`, pressed by `-0.03`. This produces perceptually uniform state changes across all color scales.
+- **In Figma:** the same states are represented with opacity overlays for tooling compatibility.
+
+Agents should use the `state.lDelta.hover` and `state.lDelta.pressed` tokens from `tokens.json`, applied via `oklch(from <base> calc(l + delta) c h)` in CSS.
+
+## Development
+
+### Source of Truth
+
+`tokens/tokens.json` is the canonical DTCG source. Generated outputs (`tokens.css`, `tokens.scss`, `tokens.ts`) are committed alongside it — do not hand-edit them.
+
+### Storybook
+
+```bash
+cd apps/storybook && npm run storybook    # Storybook at :6006
+```
+
+The Storybook instance acts as an MCP server for AI agents at `http://127.0.0.1:6006/mcp`. Setup files: [.mcp.json](.mcp.json), [.cursor/mcp.json](.cursor/mcp.json), [mcp/README.md](mcp/README.md).
+
+### Figma Sync
+
+Uses the official Figma MCP for design-to-code sync. Key tools: `use_figma`, `get_screenshot`, `get_design_context`, `get_variable_defs`. Full workflow in [docs/figma-sync.md](docs/figma-sync.md).
+
+### Publish
+
+```bash
+npm pack --dry-run    # Preview what ships
+npm publish           # Publish to npm (public)
+```
+
+## License
+
+MIT

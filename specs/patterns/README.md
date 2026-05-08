@@ -16,6 +16,7 @@ Patterns explain how DLS components fit together.
 | Choosing between similar components | [component-selection.md](component-selection.md) |
 | Building screens and composing components | [composition.md](composition.md) |
 | Generating accessible React components | [accessibility-generation.md](accessibility-generation.md) |
+| Heavy data tables (CRM, admin, operational) | [data-table.md](data-table.md) |
 
 ## Rule
 

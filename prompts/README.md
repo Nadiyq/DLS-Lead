@@ -37,6 +37,12 @@ Copy these prompts into Claude, Cursor, Codex, or another coding agent when you 
 | Scaffold/update a component from Figma | [component-scaffold-from-figma.md](component-scaffold-from-figma.md) |
 | Audit and fix an existing component | [audit-fix-component.md](audit-fix-component.md) |
 | Add or extend tokens safely | [token-addition.md](token-addition.md) |
+| Build a dashboard with KPI cards and charts | [dashboard-page.md](dashboard-page.md) |
+| Build an entity detail or profile page | [detail-page.md](detail-page.md) |
+| Build login, signup, or OTP screens | [auth-flow.md](auth-flow.md) |
+| Build an app shell with sidebar and top bar | [nav-shell.md](nav-shell.md) |
+| Build a searchable list or card grid page | [list-page.md](list-page.md) |
+| Build messaging, chat, or notification UI | [messaging-ui.md](messaging-ui.md) |
 
 ## Non-Negotiables Baked Into These Prompts
 

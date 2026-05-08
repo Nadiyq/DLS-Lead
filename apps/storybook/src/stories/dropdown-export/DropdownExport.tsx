@@ -2,6 +2,7 @@ import React, { useState, useId } from 'react';
 import './dropdown-export.css';
 import { ListItem } from '../list-item/ListItem';
 import { Radiobutton } from '../radiobutton/Radiobutton';
+import { Button } from '../Button';
 
 /* ---------------------------------------------------------------------------
    Types
@@ -19,6 +20,8 @@ export interface DropdownExportProps {
   onScopeChange?: (scope: ExportScope) => void;
   /** Called when format changes */
   onFormatChange?: (format: ExportFormat) => void;
+  /** Called when user clicks Export */
+  onExport?: (scope: ExportScope, format: ExportFormat) => void;
   className?: string;
 }
 
@@ -48,6 +51,7 @@ export const DropdownExport = React.forwardRef<HTMLDivElement, DropdownExportPro
       format: formatProp = 'excel',
       onScopeChange,
       onFormatChange,
+      onExport,
       className,
     },
     ref,
@@ -118,6 +122,17 @@ export const DropdownExport = React.forwardRef<HTMLDivElement, DropdownExportPro
             }
           />
         ))}
+
+        <ListItem type="buttons">
+          <Button
+            variant="outline"
+            intent="neutral"
+            size="m"
+            onClick={() => onExport?.(scope, format)}
+          >
+            Export
+          </Button>
+        </ListItem>
       </div>
     );
   },
