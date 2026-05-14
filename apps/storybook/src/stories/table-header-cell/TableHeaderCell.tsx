@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpDown as ArrowUpDownIcon, ArrowUp as ArrowUpIcon, ArrowDown as ArrowDownIcon } from 'lucide-react';
+import { ArrowUpDown as ArrowUpDownIcon, ArrowUp as ArrowUpIcon, ArrowDown as ArrowDownIcon, ChevronDown as ChevronDownIcon } from 'lucide-react';
 import './table-header-cell.css';
 
 /* ---------------------------------------------------------------------------
@@ -25,9 +25,16 @@ export interface TableHeaderCellProps {
   sortDirection?: SortDirection;
   /** Called when sort is toggled */
   onSort?: () => void;
+  /** Called when column menu trigger is clicked */
+  onMenuClick?: () => void;
   /** Slot content (control type — checkbox, etc.) */
   children?: React.ReactNode;
+  /** Floating menu content anchored to the header cell */
+  floatingMenu?: React.ReactNode;
+  /** Column resize handle */
+  resizeHandle?: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 /* ---------------------------------------------------------------------------
@@ -44,8 +51,12 @@ export const TableHeaderCell = React.forwardRef<HTMLDivElement, TableHeaderCellP
       sortable = false,
       sortDirection = 'none',
       onSort,
+      onMenuClick,
       children,
+      floatingMenu,
+      resizeHandle,
       className,
+      style,
     },
     ref,
   ) => {
@@ -58,6 +69,10 @@ export const TableHeaderCell = React.forwardRef<HTMLDivElement, TableHeaderCellP
         e.preventDefault();
         onSort?.();
       }
+    };
+
+    const stopHeaderFloatingContentPropagation = (e: React.SyntheticEvent) => {
+      e.stopPropagation();
     };
 
     const isActive = sortDirection !== 'none';
@@ -93,6 +108,7 @@ export const TableHeaderCell = React.forwardRef<HTMLDivElement, TableHeaderCellP
         tabIndex={sortable ? 0 : undefined}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
+        style={style}
       >
         {type === 'text' && (
           <>
@@ -107,6 +123,52 @@ export const TableHeaderCell = React.forwardRef<HTMLDivElement, TableHeaderCellP
         )}
 
         {/* empty type renders nothing — just the background bar */}
+
+        {type === 'text' && onMenuClick && (
+          <button
+            type="button"
+            className="dls-table-header-cell__menu-trigger"
+            onClick={stopHeaderFloatingContentPropagation}
+            onPointerDown={stopHeaderFloatingContentPropagation}
+            onKeyDown={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onMenuClick();
+              }
+            }}
+            onMouseDown={(e) => {
+              e.stopPropagation();
+              onMenuClick();
+            }}
+            aria-label={`Column menu${text ? ` for ${text}` : ''}`}
+            tabIndex={0}
+          >
+            <ChevronDownIcon />
+          </button>
+        )}
+
+        {floatingMenu && (
+          <span
+            className="dls-table-header-cell__floating-menu"
+            onClick={stopHeaderFloatingContentPropagation}
+            onKeyDown={stopHeaderFloatingContentPropagation}
+            onPointerDown={stopHeaderFloatingContentPropagation}
+          >
+            {floatingMenu}
+          </span>
+        )}
+
+        {resizeHandle && (
+          <span
+            className="dls-table-header-cell__resize"
+            onClick={stopHeaderFloatingContentPropagation}
+            onKeyDown={stopHeaderFloatingContentPropagation}
+            onPointerDown={stopHeaderFloatingContentPropagation}
+          >
+            {resizeHandle}
+          </span>
+        )}
       </div>
     );
   },

@@ -286,14 +286,116 @@ Order items right-to-left by importance:
 
 ## 12. Responsive Behavior
 
-- On narrow viewports, hide non-essential columns and show a "Show columns" control.
-- Pinned + identifier columns stay visible; secondary columns collapse first.
-- If the table cannot fit on mobile, consider switching to a `Card`-based list layout below a breakpoint rather than forcing horizontal scroll.
-- The toolbar stacks vertically on narrow screens: search on top, actions below.
+Data tables must stay readable at every breakpoint, including large desktop.
+
+### Desktop and tablet
+
+- Keep the tabular structure on desktop and tablet.
+- If all columns do not fit within the available viewport, use horizontal scrolling instead of compressing columns until content becomes unreadable.
+- This applies to large desktop tables with many columns and to smaller tablet widths.
+- Preserve stable, readable column minimums. Do not shrink all columns to fit the screen.
+- Pinned columns stay fixed to the left edge during horizontal scroll.
+
+### Mobile
+
+On mobile, the table must not remain a full-width multi-column grid. Transform each row into a compact two-column list/card pattern similar to Shopify Admin tables.
+
+Each mobile row has a maximum of two content columns:
+
+| Mobile column | Purpose | Content |
+|---|---|---|
+| Column 1 — Primary context | Main identifier for the row | Usually the first desktop data column or the value that best represents the row |
+| Column 2 — Key value | Second most important comparison/action value | Amount, role, status, due date, or another task-critical value |
+
+Column 1 may include 1-3 lines:
+
+- Line 1: primary value
+- Lines 2-3: supporting metadata, such as date, status, delivery method, or short description
+
+The designer decides what is primary and secondary based on the table's purpose and user task. AI-generated layouts must not choose randomly; prioritize the values that help users identify, compare, or act on the row fastest.
+
+### AI-generated responsive rules
+
+Do:
+
+- keep full table structure on desktop/tablet
+- allow horizontal scrolling when columns do not fit
+- convert rows into a two-column mobile pattern
+- surface only the most important values on mobile
+- move secondary details into supporting lines, badges, or expanded row details
+
+Do not:
+
+- shrink all columns to fit the screen
+- keep 5-10 columns visible on mobile
+- truncate the main identifier too aggressively
+- hide key actions or statuses
+- invent a different mobile structure for every table type
 
 ---
 
-## 13. Keyboard and Accessibility
+## 13. Interaction Requirements
+
+Table stories must demonstrate a working data table pattern, not static UI only. Controls must connect to table data and visibly affect the table.
+
+### Column resizing
+
+- Each column boundary includes a `Resizable` drag handle when resizing is allowed.
+- Users can drag the boundary between columns to change column width.
+- Column resizing works for every visible column where resizing is allowed.
+- Do not render resize handles as decorative-only UI.
+
+### Sorting
+
+- Users can sort by any visible column where sorting is logically possible.
+- Sorting can be triggered from the column header, `DropdownColumnActions`, or the `TableTopBar` sort `FilterChip`.
+- The active sort state is visible in the column header.
+- Sorting must change the rendered row order.
+
+### Filtering
+
+- Filters connect to actual table columns and table data.
+- Available filters match the filterable columns in the table; do not show generic or unrelated filters.
+- Users can add a filter, remove a filter, edit an active filter value, and filter by any column where filtering is logically possible.
+- If a user opens `DropdownColumnActions` for a column and clicks Filter, the table automatically adds or focuses the filter for that exact column above the table.
+
+### Per-column actions
+
+`DropdownColumnActions` must be available from every visible column header where column actions are allowed. The menu is contextual to that column and includes:
+
+- Sort ascending
+- Sort descending
+- Filter
+- Pin column
+- Move left
+- Move right
+- Hide column
+
+### Column customization menu
+
+The table toolbar includes a Columns option using `DropdownColumns`. The menu allows users to:
+
+- show hidden columns
+- hide visible columns
+- pin/unpin columns
+- reorder columns
+- apply or cancel changes
+
+These controls must update the actual table state. Do not create separate fake dropdown stories that are visually correct but disconnected from the table.
+
+Required full-table behavior:
+
+- resizing changes column width
+- sorting changes row order
+- filtering changes visible rows
+- column visibility changes visible columns
+- pinning keeps columns fixed during horizontal scroll
+- reordering changes column position
+- column action menu works from every visible column header
+
+---
+
+## 14. Keyboard and Accessibility
 
 - Table uses semantic `role="grid"` or native `<table>` markup.
 - Arrow keys navigate between cells.

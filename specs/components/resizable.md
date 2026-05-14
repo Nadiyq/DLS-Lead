@@ -33,6 +33,7 @@ Use `Resizable` as a drag handle between resizable panels. Supports pointer drag
 - `disabled`
 - `onResize` — called with horizontal delta during drag
 - `onResizeStart`, `onResizeEnd`
+- `valueNow`, `valueMin`, `valueMax` — ARIA value metadata for keyboard/screen-reader users
 - `aria-label`
 
 ## States

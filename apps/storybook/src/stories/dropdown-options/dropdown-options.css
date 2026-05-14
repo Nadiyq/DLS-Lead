@@ -30,20 +30,28 @@
   display: block;
 }
 
-/* Placement */
+/* Portal variant — rendered to document.body via createPortal */
 
-.dls-dropdown-options__panel[data-align="start"] {
+.dls-dropdown-options__panel--portal {
+  display: block;
+  position: fixed;
+  z-index: 1000;
+}
+
+/* Placement — inline (non-portal) only */
+
+.dls-dropdown-options__panel:not(.dls-dropdown-options__panel--portal)[data-align="start"] {
   left: 0;
 }
 
-.dls-dropdown-options__panel[data-align="end"] {
+.dls-dropdown-options__panel:not(.dls-dropdown-options__panel--portal)[data-align="end"] {
   right: 0;
 }
 
-.dls-dropdown-options__panel[data-side="bottom"] {
+.dls-dropdown-options__panel:not(.dls-dropdown-options__panel--portal)[data-side="bottom"] {
   top: calc(100% + var(--dls-spacing-1));
 }
 
-.dls-dropdown-options__panel[data-side="top"] {
+.dls-dropdown-options__panel:not(.dls-dropdown-options__panel--portal)[data-side="top"] {
   bottom: calc(100% + var(--dls-spacing-1));
 }

@@ -38,6 +38,7 @@ export interface TableCellProps {
   /** Generic children (for badge, button, actions, slot types) */
   children?: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 /* ---------------------------------------------------------------------------
@@ -57,6 +58,7 @@ export const TableCell = React.forwardRef<HTMLDivElement, TableCellProps>(
       slotRight,
       children,
       className,
+      style,
     },
     ref,
   ) => {
@@ -71,6 +73,7 @@ export const TableCell = React.forwardRef<HTMLDivElement, TableCellProps>(
         data-align={align}
         data-padding={padding ? undefined : 'false'}
         role="cell"
+        style={style}
       >
         {/* Text and two-line types render structured content */}
         {isTextType && (

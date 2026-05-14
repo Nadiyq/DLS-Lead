@@ -1,42 +1,226 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React from 'react';
 import {
-  Plus as PlusIcon,
-  MoreHorizontal as MoreIcon,
-  Filter as FilterIcon,
+  Pencil as PencilIcon,
   Trash2 as TrashIcon,
-  Columns3 as Columns3Icon,
-  Download as DownloadIcon,
-  ChevronRight as ChevronRightIcon,
-  ArrowDown as ArrowDownIcon,
-  ArrowUp as ArrowUpIcon,
 } from 'lucide-react';
-import { Table } from './Table';
-import { TableTopBar } from '../table-top-bar/TableTopBar';
-import { TableColumn } from '../table-column/TableColumn';
+import { Avatar } from '../Avatar';
 import { Button } from '../Button';
-import { SearchField } from '../search-field/SearchField';
-import { DropdownOptions } from '../dropdown-options/DropdownOptions';
-import { Filters } from '../filters/Filters';
-import { FilterChip } from '../filter-chip/FilterChip';
-import { DropdownSorting } from '../dropdown-sorting/DropdownSorting';
-import { DropdownColumns } from '../dropdown-columns/DropdownColumns';
-import { DropdownFilters } from '../dropdown-filters/DropdownFilters';
-import { DropdownExport } from '../dropdown-export/DropdownExport';
-import { List } from '../list-item/List';
-import { ListItem } from '../list-item/ListItem';
 import { Checkbox } from '../checkbox/Checkbox';
 import { TABLE_ROWS } from '../_fixtures';
+import { Table } from './Table';
+import { TableCell } from '../table-cell/TableCell';
+import {
+  InteractiveDataTable,
+  type DataTableColumn,
+  renderStatusBadge,
+} from './interactive-data-table.story-helpers';
+
+interface MemberRow {
+  id: string;
+  name: string;
+  email: string;
+  initials?: string;
+  avatarSrc?: string;
+  status: 'Active' | 'Pending' | 'Inactive';
+  role: 'Admin' | 'Editor' | 'Viewer';
+  joined: string;
+  amount: string;
+}
+
+const {
+  user: userRows,
+  badge: badgeRows,
+  date: dateRows,
+  number: numberRows,
+} = TABLE_ROWS;
+
+const MEMBER_ROWS: MemberRow[] = userRows.map((user, index) => ({
+  id: `member-${index + 1}`,
+  name: user.text ?? `Member ${index + 1}`,
+  email: user.secondaryText ?? `member${index + 1}@example.com`,
+  initials: user.initials,
+  avatarSrc: user.avatarSrc,
+  status: (badgeRows[index]?.badgeLabel as MemberRow['status']) ?? 'Active',
+  role: (['Admin', 'Editor', 'Viewer', 'Editor', 'Viewer'][index] as MemberRow['role']) ?? 'Viewer',
+  joined: dateRows[index]?.text ?? '12 Jan 2026',
+  amount: numberRows[index]?.text ?? '$0',
+}));
+
+const amountValue = (amount: string) => Number(amount.replace(/[$,]/g, ''));
+const statusIntent = (status: MemberRow['status']) => (
+  status === 'Active' ? 'success' :
+  status === 'Pending' ? 'warning' :
+  'danger'
+);
+
+const memberColumns: DataTableColumn<MemberRow>[] = [
+  {
+    id: 'select',
+    label: 'Select',
+    width: 48,
+    minWidth: 48,
+    sortable: false,
+    filterable: false,
+    resizable: false,
+    hideable: false,
+    pinned: true,
+    getValue: () => '',
+    renderCell: (row, context, pinned) => (
+      <TableCell key="select" type="slot" align="center" className={pinned.className} style={pinned.style}>
+        <Checkbox
+          checked={context.selected}
+          aria-label={`Select ${row.name}`}
+          onChange={context.toggleSelected}
+        />
+      </TableCell>
+    ),
+  },
+  {
+    id: 'user',
+    label: 'User',
+    width: 260,
+    minWidth: 200,
+    sortable: true,
+    filterable: true,
+    pinned: true,
+    getValue: (row) => row.name,
+    getSortValue: (row) => row.name,
+    getFilterValue: (row) => row.name,
+    getSearchValue: (row) => `${row.name} ${row.email}`,
+    renderCell: (row, _context, pinned) => (
+      <TableCell
+        key="user"
+        type="two-line"
+        text={row.name}
+        secondaryText={row.email}
+        className={pinned.className}
+        style={pinned.style}
+        slotLeft={<Avatar size="24" circle src={row.avatarSrc} initials={row.initials} />}
+      />
+    ),
+  },
+  {
+    id: 'status',
+    label: 'Status',
+    width: 140,
+    minWidth: 112,
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.status,
+    getSortValue: (row) => row.status,
+    getFilterValue: (row) => row.status,
+    renderCell: (row, _context, pinned) => (
+      <TableCell key="status" type="badge" className={pinned.className} style={pinned.style}>
+        {renderStatusBadge(row.status, statusIntent(row.status))}
+      </TableCell>
+    ),
+    renderMobileValue: (row) => renderStatusBadge(row.status, statusIntent(row.status)),
+  },
+  {
+    id: 'role',
+    label: 'Role',
+    width: 140,
+    minWidth: 112,
+    visible: false,
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.role,
+    getSortValue: (row) => row.role,
+    getFilterValue: (row) => row.role,
+  },
+  {
+    id: 'joined',
+    label: 'Joined',
+    width: 150,
+    minWidth: 128,
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.joined,
+    getSortValue: (row) => Date.parse(row.joined),
+    getFilterValue: (row) => row.joined,
+  },
+  {
+    id: 'amount',
+    label: 'Amount',
+    width: 140,
+    minWidth: 112,
+    align: 'right',
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.amount,
+    getSortValue: (row) => amountValue(row.amount),
+    getFilterValue: (row) => row.amount,
+  },
+  {
+    id: 'actions',
+    label: 'Actions',
+    width: 112,
+    minWidth: 96,
+    align: 'center',
+    sortable: false,
+    filterable: false,
+    resizable: false,
+    hideable: false,
+    getValue: () => 'Actions',
+    renderCell: (row, _context, pinned) => (
+      <TableCell key="actions" type="actions" align="center" className={pinned.className} style={pinned.style}>
+        <span className="dls-table-column__actions">
+          <Button variant="ghost" intent="neutral" size="m" icon={<PencilIcon />} iconOnly aria-label={`Edit ${row.name}`} />
+          <Button variant="ghost" intent="neutral" size="m" icon={<TrashIcon />} iconOnly aria-label={`Delete ${row.name}`} />
+        </span>
+      </TableCell>
+    ),
+  },
+];
+
+const createMember = (rows: MemberRow[]): MemberRow => {
+  const next = rows.length + 1;
+  return {
+    id: `member-${next}`,
+    name: `New member ${next}`,
+    email: `new.member${next}@example.com`,
+    initials: 'NM',
+    status: 'Pending',
+    role: 'Viewer',
+    joined: '11 May 2026',
+    amount: '$0',
+  };
+};
+
+interface MemberTableStoryProps {
+  initialShowFilters?: boolean;
+  showPagination?: boolean;
+  initialPageSize?: number;
+}
+
+const MemberTableStory = ({
+  initialShowFilters = false,
+  showPagination = true,
+  initialPageSize = 5,
+}: MemberTableStoryProps) => (
+  <InteractiveDataTable
+    rows={MEMBER_ROWS}
+    columns={memberColumns}
+    getRowId={(row) => row.id}
+    primaryActionLabel="Add row"
+    createRow={createMember}
+    initialShowFilters={initialShowFilters}
+    showPagination={showPagination}
+    initialPageSize={initialPageSize}
+    mobile={{
+      primaryColumnId: 'user',
+      secondaryColumnId: 'amount',
+      supportingColumnIds: ['status', 'joined'],
+      actionsColumnId: 'actions',
+    }}
+  />
+);
 
 const meta = {
   title: 'Components/Table',
   component: Table,
   parameters: {
     layout: 'padded',
-    // Heavy stories (Filters with deeply nested FilterChip composition) crash
-    // Storybook's auto-generated source serializer with `RangeError: Invalid
-    // string length`. Disable source autogen for the meta — individual stories
-    // can opt back in if needed.
     docs: { source: { type: 'code', code: '' } },
   },
   tags: ['autodocs'],
@@ -45,479 +229,30 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const { checkbox: checkboxRows, user: userRows, badge: badgeRows, date: dateRows, number: numberRows, actions: actionsRows } = TABLE_ROWS;
-
-/* ---------------------------------------------------------------------------
-   Shared — OptionsMenu with drill-in sub-menus
-   --------------------------------------------------------------------------- */
-
-const FILTER_OPTIONS: Record<string, string[]> = {
-  Status: ['Active', 'Inactive', 'Pending', 'Archived'],
-  Role: ['Admin', 'Editor', 'Viewer'],
-};
-
-const SORT_COLUMNS = [
-  { value: 'user', label: 'User' },
-  { value: 'status', label: 'Status' },
-  { value: 'joined', label: 'Joined' },
-  { value: 'amount', label: 'Amount' },
-];
-
-const initialShown = [
-  { id: 'user', label: 'User' },
-  { id: 'status', label: 'Status', pinned: true },
-  { id: 'joined', label: 'Joined' },
-];
-
-const initialHidden = [
-  { id: 'amount', label: 'Amount' },
-  { id: 'actions', label: 'Actions' },
-];
-
-function summarizeValues(selected: Set<string>): string {
-  if (selected.size === 0) return 'All';
-  if (selected.size === 1) return [...selected][0];
-  return `${selected.size} selected`;
-}
-
-type SubMenu = 'root' | 'columns' | 'filters' | 'export';
-
-const DefaultFiltersPanel = () => {
-  const keys = Object.keys(FILTER_OPTIONS);
-  const [activeKeys, setActiveKeys] = React.useState(keys);
-  const [values, setValues] = React.useState<Record<string, Set<string>>>(
-    Object.fromEntries(keys.map(k => [k, new Set([FILTER_OPTIONS[k][0]])])),
-  );
-  const [visibility, setVisibility] = React.useState<Record<string, boolean>>(
-    Object.fromEntries(keys.map(k => [k, true])),
-  );
-  const toggleValue = (key: string, opt: string) =>
-    setValues(prev => {
-      const next = new Set(prev[key]);
-      if (next.has(opt)) next.delete(opt); else next.add(opt);
-      return { ...prev, [key]: next };
-    });
-  const toggleVisibility = (key: string, v: boolean) => setVisibility(prev => ({ ...prev, [key]: v }));
-  const removeFilter = (key: string) => setActiveKeys(prev => prev.filter(k => k !== key));
-
-  return (
-    <DropdownFilters>
-      {activeKeys.map(key => (
-        <FilterChip
-          key={key}
-          label={key}
-          isVisible={visibility[key] ?? true}
-          onVisibilityChange={(v) => toggleVisibility(key, v)}
-          size="s"
-          valueSummary={<span className="dls-filter-chip__value-text">{summarizeValues(values[key])}</span>}
-        >
-          <List className="dls-filter-chip__enum-list">
-            {FILTER_OPTIONS[key].map(opt => (
-              <ListItem
-                key={opt}
-                type="with-slots"
-                text={opt}
-                interactive={false}
-                slotLeft={<Checkbox checked={values[key]?.has(opt)} onChange={() => toggleValue(key, opt)} />}
-                onClick={() => toggleValue(key, opt)}
-              />
-            ))}
-            <ListItem type="divider" />
-            <ListItem
-              type="with-slots"
-              text="Remove filter"
-              iconStart={<TrashIcon />}
-              onClick={() => removeFilter(key)}
-            />
-          </List>
-        </FilterChip>
-      ))}
-    </DropdownFilters>
-  );
-};
-
-interface OptionsMenuProps {
-  filtersPanel?: React.ReactNode;
-}
-
-const OptionsMenu = ({ filtersPanel }: OptionsMenuProps = {}) => {
-  const [menu, setMenu] = React.useState<SubMenu>('root');
-
-  const rootMenu = (
-    <List>
-      <ListItem type="label" text="Customize" />
-      <ListItem
-        type="with-slots"
-        text="Columns"
-        iconStart={<Columns3Icon />}
-        iconEnd={<ChevronRightIcon />}
-        onClick={() => setMenu('columns')}
-      />
-      <ListItem
-        type="with-slots"
-        text="Filters"
-        iconStart={<FilterIcon />}
-        iconEnd={<ChevronRightIcon />}
-        onClick={() => setMenu('filters')}
-      />
-      <ListItem type="divider" />
-      <ListItem
-        type="with-slots"
-        text="Export"
-        iconStart={<DownloadIcon />}
-        iconEnd={<ChevronRightIcon />}
-        onClick={() => setMenu('export')}
-      />
-    </List>
-  );
-
-  let submenu: React.ReactNode = null;
-  if (menu === 'columns') {
-    submenu = (
-      <DropdownColumns
-        shown={initialShown}
-        hidden={initialHidden}
-        onApply={() => setMenu('root')}
-        onCancel={() => setMenu('root')}
-      />
-    );
-  } else if (menu === 'filters') {
-    submenu = filtersPanel ?? <DefaultFiltersPanel />;
-  } else if (menu === 'export') {
-    submenu = <DropdownExport />;
-  }
-
-  return (
-    <DropdownOptions triggerIcon={<MoreIcon />} triggerLabel="Options">
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--dls-spacing-2)' }}>
-        {rootMenu}
-        {submenu}
-      </div>
-    </DropdownOptions>
-  );
-};
-
-/* ---------------------------------------------------------------------------
-   Playground
-   --------------------------------------------------------------------------- */
-
 export const Playground: Story = {
-  args: {
-    showPagination: true,
-    totalItems: 500,
-    itemsPerPage: 10,
-    currentPage: 1,
-    totalPages: 10,
-    columns: '40px 2fr 1fr 1fr 1fr 100px',
-    rowCount: 5,
-    children: null,
-  },
-  render: (args) => (
-    <Table
-      {...args}
-      topBar={
-        <TableTopBar
-          slotLeft={
-            <>
-              <SearchField placeholder="Search..." />
-              <Button variant="ghost" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filters" />
-            </>
-          }
-          slotRight={
-            <>
-              <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add new</Button>
-              <OptionsMenu />
-            </>
-          }
-        />
-      }
-    >
-      <TableColumn type="checkbox" rows={checkboxRows} />
-      <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
-      <TableColumn type="badge" header="Status" rows={badgeRows} />
-      <TableColumn type="date" header="Joined" rows={dateRows} sortable />
-      <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-      <TableColumn type="actions" rows={actionsRows} />
-    </Table>
-  ),
+  args: { children: null },
+  render: () => <MemberTableStory />,
 };
-
-/* ---------------------------------------------------------------------------
-   Default — table with top bar, no filters
-   --------------------------------------------------------------------------- */
 
 export const Default: Story = {
-  args: {
-    showPagination: true,
-    totalItems: 500,
-    itemsPerPage: 10,
-    currentPage: 1,
-    totalPages: 10,
-    columns: '40px 2fr 1fr 1fr 1fr 100px',
-    rowCount: 5,
-    children: null,
-  },
-  render: (args) => (
-    <Table
-      {...args}
-      topBar={
-        <TableTopBar
-          slotLeft={
-            <>
-              <SearchField placeholder="Search..." />
-              <Button variant="ghost" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filters" />
-            </>
-          }
-          slotRight={
-            <>
-              <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add new</Button>
-              <OptionsMenu />
-            </>
-          }
-        />
-      }
-    >
-      <TableColumn type="checkbox" rows={checkboxRows} />
-      <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
-      <TableColumn type="badge" header="Status" rows={badgeRows} />
-      <TableColumn type="date" header="Joined" rows={dateRows} sortable />
-      <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-      <TableColumn type="actions" rows={actionsRows} />
-    </Table>
-  ),
+  args: { children: null },
+  render: () => <MemberTableStory />,
 };
 
-/* ---------------------------------------------------------------------------
-   With filters — Sort chip (separate group) + filter chips with dropdown children
-   --------------------------------------------------------------------------- */
-
 export const WithFilters: Story = {
+  args: { children: null },
   parameters: {
     docs: { source: { code: '' } },
   },
-  args: {
-    showPagination: true,
-    totalItems: 500,
-    itemsPerPage: 10,
-    currentPage: 1,
-    totalPages: 10,
-    columns: '40px 2fr 1fr 1fr 1fr 100px',
-    rowCount: 5,
-    children: null,
-  },
-  render: (args) => {
-    const [sortColumn, setSortColumn] = React.useState('user');
-    const [sortDirection, setSortDirection] = React.useState<'ascending' | 'descending'>('ascending');
-    const sortLabel = SORT_COLUMNS.find(c => c.value === sortColumn)?.label ?? sortColumn;
-    const SortIcon = sortDirection === 'ascending' ? ArrowDownIcon : ArrowUpIcon;
-
-    const [activeFilters, setActiveFilters] = React.useState([
-      { id: 'status', label: 'Status', values: new Set(['Active']), isVisible: true },
-      { id: 'role', label: 'Role', values: new Set(['Admin']), isVisible: true },
-    ]);
-
-    const toggleValue = (id: string, opt: string) =>
-      setActiveFilters(prev => prev.map(f => {
-        if (f.id !== id) return f;
-        const next = new Set(f.values);
-        if (next.has(opt)) next.delete(opt); else next.add(opt);
-        return { ...f, values: next };
-      }));
-    const setVisibility = (id: string, isVisible: boolean) =>
-      setActiveFilters(prev => prev.map(f => f.id === id ? { ...f, isVisible } : f));
-    const removeFilter = (id: string) =>
-      setActiveFilters(prev => prev.filter(f => f.id !== id));
-
-    const buildChips = (size: 'm' | 's') => activeFilters.map(f => (
-      <FilterChip
-        key={f.id}
-        label={f.label}
-        isVisible={f.isVisible}
-        onVisibilityChange={(v) => setVisibility(f.id, v)}
-        size={size}
-        valueSummary={<span className="dls-filter-chip__value-text">{summarizeValues(f.values)}</span>}
-      >
-        <List className="dls-filter-chip__enum-list">
-          {(FILTER_OPTIONS[f.label] ?? []).map(opt => (
-            <ListItem
-              key={opt}
-              type="with-slots"
-              text={opt}
-              interactive={false}
-              slotLeft={<Checkbox checked={f.values.has(opt)} onChange={() => toggleValue(f.id, opt)} />}
-              onClick={() => toggleValue(f.id, opt)}
-            />
-          ))}
-          <ListItem type="divider" />
-          <ListItem
-            type="with-slots"
-            text="Remove filter"
-            iconStart={<TrashIcon />}
-            onClick={() => removeFilter(f.id)}
-          />
-        </List>
-      </FilterChip>
-    ));
-
-    return (
-      <Table
-        {...args}
-        topBar={
-          <TableTopBar
-            slotLeft={
-              <>
-                <SearchField placeholder="Search..." />
-                <Button variant="ghost" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filters" />
-              </>
-            }
-            slotRight={
-              <>
-                <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add new</Button>
-                <OptionsMenu
-                  filtersPanel={
-                    activeFilters.length > 0
-                      ? <DropdownFilters>{buildChips('s')}</DropdownFilters>
-                      : <DropdownFilters />
-                  }
-                />
-              </>
-            }
-            showFilters
-            filters={
-              <Filters
-                size="m"
-                groups={[
-                  {
-                    id: 'sort',
-                    children: (
-                      <FilterChip
-                        label="Sort"
-                        labelIcon={<SortIcon />}
-                        isVisible
-                        size="m"
-                        valueSummary={<span className="dls-filter-chip__value-text">{sortLabel}</span>}
-                      >
-                        <DropdownSorting
-                          columns={SORT_COLUMNS}
-                          column={sortColumn}
-                          direction={sortDirection}
-                          onColumnChange={setSortColumn}
-                          onDirectionChange={setSortDirection}
-                        />
-                      </FilterChip>
-                    ),
-                  },
-                  {
-                    id: 'filters',
-                    children: <>{buildChips('m')}</>,
-                  },
-                ]}
-              />
-            }
-          />
-        }
-      >
-        <TableColumn type="checkbox" rows={checkboxRows} />
-        <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
-        <TableColumn type="badge" header="Status" rows={badgeRows} />
-        <TableColumn type="date" header="Joined" rows={dateRows} sortable />
-        <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-        <TableColumn type="actions" rows={actionsRows} />
-      </Table>
-    );
-  },
+  render: () => <MemberTableStory initialShowFilters />,
 };
-
-/* ---------------------------------------------------------------------------
-   Without pagination
-   --------------------------------------------------------------------------- */
 
 export const NoPagination: Story = {
-  args: {
-    showPagination: false,
-    columns: '40px 2fr 1fr 1fr',
-    rowCount: 5,
-    children: null,
-  },
-  render: (args) => (
-    <Table
-      {...args}
-      topBar={
-        <TableTopBar
-          slotLeft={<SearchField placeholder="Search..." />}
-          slotRight={
-            <>
-              <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add new</Button>
-              <OptionsMenu />
-            </>
-          }
-        />
-      }
-    >
-      <TableColumn type="checkbox" rows={checkboxRows} />
-      <TableColumn type="text" header="Name" rows={userRows.map(r => ({ text: r.text }))} sortable />
-      <TableColumn type="badge" header="Status" rows={badgeRows} />
-      <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-    </Table>
-  ),
+  args: { children: null },
+  render: () => <MemberTableStory showPagination={false} />,
 };
 
-/* ---------------------------------------------------------------------------
-   Interactive pagination
-   --------------------------------------------------------------------------- */
-
 export const InteractivePagination: Story = {
-  args: {
-    showPagination: true,
-    totalItems: 500,
-    itemsPerPage: 10,
-    currentPage: 1,
-    totalPages: 50,
-    columns: '40px 2fr 1fr 1fr 1fr 100px',
-    rowCount: 5,
-    children: null,
-  },
-  render: () => {
-    const [page, setPage] = React.useState(1);
-    const [perPage, setPerPage] = React.useState(10);
-    const total = 500;
-    const totalPages = Math.ceil(total / perPage);
-
-    return (
-      <Table
-        showPagination
-        totalItems={total}
-        itemsPerPage={perPage}
-        currentPage={page}
-        totalPages={totalPages}
-        onPageChange={setPage}
-        onItemsPerPageChange={(n) => { setPerPage(n); setPage(1); }}
-        columns="40px 2fr 1fr 1fr 1fr 100px"
-        rowCount={5}
-        topBar={
-          <TableTopBar
-            slotLeft={<SearchField placeholder="Search..." />}
-            slotRight={
-              <>
-                <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add new</Button>
-                <DropdownOptions triggerIcon={<MoreIcon />} triggerLabel="Options">
-                  <List>
-                    <ListItem type="text" text="Columns" />
-                    <ListItem type="text" text="Export" />
-                  </List>
-                </DropdownOptions>
-              </>
-            }
-          />
-        }
-      >
-        <TableColumn type="checkbox" rows={checkboxRows} />
-        <TableColumn type="two-line+avatar" header="User" rows={userRows} sortable />
-        <TableColumn type="badge" header="Status" rows={badgeRows} />
-        <TableColumn type="date" header="Joined" rows={dateRows} sortable />
-        <TableColumn type="number" header="Amount" rows={numberRows} sortable />
-        <TableColumn type="actions" rows={actionsRows} />
-      </Table>
-    );
-  },
+  args: { children: null },
+  render: () => <MemberTableStory initialPageSize={5} />,
 };

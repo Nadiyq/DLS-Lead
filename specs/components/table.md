@@ -39,7 +39,9 @@ Use `Table` for dense, structured, multi-row data with headers and optional pagi
 - `topBar`
 - `children`
 - `columns`
+- `layout` — `columns` for legacy column composition, `rows` for interactive row-based table stories
 - `rowCount`
+- `mobileRows` — compact two-column mobile row list
 - `showPagination`
 - `totalItems`
 - `itemsPerPage`
@@ -53,6 +55,8 @@ Use `Table` for dense, structured, multi-row data with headers and optional pagi
 
 - default
 - paginated
+- horizontally scrollable
+- mobile row-list layout
 - selected-row styling through child columns and cells
 
 ## Code Example

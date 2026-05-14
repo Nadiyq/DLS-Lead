@@ -39,7 +39,10 @@ Use `TableHeaderCell` for column headers in a table grid. Supports sortable colu
 - `text`
 - `sortable`, `sortDirection` — `asc | desc | none`
 - `onSort`
+- `onMenuClick` — optional callback for the column action menu trigger (hover-visible chevron)
 - `children` (for control type)
+- `resizeHandle` — optional `Resizable` handle at the column boundary
+- `floatingMenu` — optional contextual menu content anchored to the header cell
 
 ## States
 

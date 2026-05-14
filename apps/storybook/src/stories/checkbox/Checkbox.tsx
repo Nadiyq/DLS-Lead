@@ -27,6 +27,8 @@ export interface CheckboxProps {
   name?: string;
   /** Native value attribute */
   value?: string;
+  /** Accessible label when no visible label is rendered */
+  'aria-label'?: string;
 }
 
 /* ---------------------------------------------------------------------------
@@ -62,6 +64,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
       className,
       name,
       value,
+      'aria-label': ariaLabel,
     },
     ref,
   ) => {
@@ -93,6 +96,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           onChange={handleChange}
           name={name}
           value={value}
+          aria-label={ariaLabel}
         />
         <span className="dls-checkbox__box-wrapper">
           <span className="dls-checkbox__box">

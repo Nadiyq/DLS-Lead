@@ -46,6 +46,7 @@ Do not use it for mutually exclusive choices; use `Radiobutton` for that.
 - `textOrientation` — `right | left`
 - `onChange`
 - `name`, `value`
+- `aria-label` — required when the checkbox has no visible `label`
 
 ## States
 

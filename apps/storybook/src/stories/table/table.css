@@ -6,15 +6,32 @@
    Container
    --------------------------------------------------------------------------- */
 
+.dls-interactive-data-table-shell {
+  box-sizing: border-box;
+  width: min(100%, calc(100vw - (var(--dls-spacing-10) * 2)));
+  min-width: 0;
+}
+
+@media (max-width: 44rem) {
+  .dls-interactive-data-table-shell {
+    width: min(100%, calc(100vw - (var(--dls-spacing-4) * 2)));
+  }
+}
+
 .dls-table {
   all: unset;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  contain: inline-size;
   border: 1px solid var(--dls-color-border-base);
   border-radius: var(--dls-radius-component-table);
   font-family: var(--dls-font-family);
+  overflow: visible;
+  background: var(--dls-color-surface-base);
 }
 
 /* ---------------------------------------------------------------------------
@@ -24,19 +41,186 @@
    grid row and therefore the same height.
    --------------------------------------------------------------------------- */
 
+.dls-table__scroll {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: clip;
+}
+
+.dls-table__scroll:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
 .dls-table__columns {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
   min-height: 0;
+  min-width: max-content;
+}
+
+.dls-table__columns[data-layout="rows"] {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  min-width: 100%;
+}
+
+.dls-table__row {
+  display: grid;
+  grid-template-columns: var(--dls-table-columns);
+  min-width: max-content;
+}
+
+.dls-table__row > .dls-table-cell,
+.dls-table__row > .dls-table-header-cell {
+  min-width: 0;
+}
+
+.dls-table__pinned-cell {
+  position: sticky;
+  left: var(--dls-table-pinned-left, 0);
+  z-index: 4;
+  box-shadow: inset -1px 0 0 var(--dls-color-border-subtle);
+}
+
+.dls-table-cell.dls-table__pinned-cell {
+  background: var(--dls-color-surface-base);
+}
+
+.dls-table-header-cell.dls-table__pinned-cell {
+  z-index: 5;
+}
+
+.dls-table__column-menu-popover {
+  position: fixed;
+  z-index: 1000;
 }
 
 /* Wrapper divs (legacy) become transparent to the grid.
    When TableColumn is wrapped in a sizing div, the wrapper needs
    display:contents so cells become direct grid participants.
    Only target plain divs — not cells or columns themselves. */
-.dls-table__columns > :not(.dls-table-column):not(.dls-table-cell):not(.dls-table-header-cell) {
+.dls-table__columns:not([data-layout="rows"]) > :not(.dls-table-column):not(.dls-table-cell):not(.dls-table-header-cell) {
   display: contents;
+}
+
+/* ---------------------------------------------------------------------------
+   Empty row
+   --------------------------------------------------------------------------- */
+
+.dls-table__empty-row {
+  display: grid;
+  grid-template-columns: var(--dls-table-columns);
+  min-width: max-content;
+  border-bottom: 1px solid var(--dls-color-border-subtle);
+}
+
+.dls-table__empty-content {
+  display: flex;
+  justify-content: center;
+  padding: var(--dls-spacing-10) var(--dls-spacing-6);
+  background: var(--dls-color-surface-base);
+}
+
+.dls-table__empty-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  color: var(--dls-color-text-secondary);
+  font-size: var(--dls-text-paragraph-m-font-size);
+  line-height: var(--dls-text-paragraph-m-line-height);
+  text-align: center;
+}
+
+.dls-table__empty-title {
+  font-size: var(--dls-text-heading-h4-font-size);
+  line-height: var(--dls-text-heading-h4-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Mobile row-list layout
+   --------------------------------------------------------------------------- */
+
+.dls-table__mobile-rows {
+  display: none;
+}
+
+.dls-table__mobile-row {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--dls-spacing-3);
+  padding: var(--dls-spacing-3) var(--dls-spacing-4);
+  border-bottom: 1px solid var(--dls-color-border-subtle);
+}
+
+.dls-table__mobile-primary,
+.dls-table__mobile-secondary {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dls-spacing-1);
+}
+
+.dls-table__mobile-secondary {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.dls-table__mobile-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-table__mobile-meta,
+.dls-table__mobile-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--dls-text-s-font-size);
+  line-height: var(--dls-text-s-line-height);
+  color: var(--dls-color-text-secondary);
+}
+
+.dls-table__mobile-value {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  color: var(--dls-color-text-primary);
+  white-space: nowrap;
+}
+
+.dls-table__mobile-actions {
+  display: inline-flex;
+  justify-content: flex-end;
+  gap: var(--dls-spacing-1);
+}
+
+.dls-table__mobile-row--empty {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  padding: var(--dls-spacing-8) var(--dls-spacing-4);
+}
+
+@media (max-width: 44rem) {
+  .dls-table[data-has-mobile-rows] .dls-table__scroll {
+    display: none;
+  }
+
+  .dls-table[data-has-mobile-rows] .dls-table__mobile-rows {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* ---------------------------------------------------------------------------

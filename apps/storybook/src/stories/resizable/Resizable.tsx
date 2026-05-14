@@ -14,6 +14,12 @@ export interface ResizableProps {
   onResizeStart?: () => void;
   /** Called when drag ends */
   onResizeEnd?: () => void;
+  /** Current value for screen readers */
+  valueNow?: number;
+  /** Minimum value for screen readers */
+  valueMin?: number;
+  /** Maximum value for screen readers */
+  valueMax?: number;
   /** Accessible label */
   'aria-label'?: string;
   className?: string;
@@ -45,6 +51,9 @@ export const Resizable = React.forwardRef<HTMLDivElement, ResizableProps>(
       onResize,
       onResizeStart,
       onResizeEnd,
+      valueNow = 0,
+      valueMin = 0,
+      valueMax = 100,
       'aria-label': ariaLabel = 'Resize',
       className,
     },
@@ -104,6 +113,9 @@ export const Resizable = React.forwardRef<HTMLDivElement, ResizableProps>(
         role="separator"
         aria-orientation="vertical"
         aria-label={ariaLabel}
+        aria-valuemin={valueMin}
+        aria-valuemax={valueMax}
+        aria-valuenow={valueNow}
         tabIndex={disabled ? -1 : 0}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}

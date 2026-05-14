@@ -1,299 +1,338 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import {
-  Plus as PlusIcon,
-  MoreHorizontal as MoreIcon,
-  Filter as FilterIcon,
-  Columns3 as Columns3Icon,
-  Download as DownloadIcon,
-  ChevronRight as ChevronRightIcon,
-  ArrowDown as ArrowDownIcon,
-  X as XIcon,
+  Pencil as PencilIcon,
+  Trash2 as TrashIcon,
 } from 'lucide-react';
-import { Table } from './Table';
-import { TableTopBar } from '../table-top-bar/TableTopBar';
-import { TableColumn } from '../table-column/TableColumn';
-import { Button } from '../Button';
-import { SearchField } from '../search-field/SearchField';
-import { Filters } from '../filters/Filters';
-import { FilterChip } from '../filter-chip/FilterChip';
-import { DropdownSorting } from '../dropdown-sorting/DropdownSorting';
-import { DropdownColumns } from '../dropdown-columns/DropdownColumns';
-import { DropdownFilters } from '../dropdown-filters/DropdownFilters';
-import { DropdownExport } from '../dropdown-export/DropdownExport';
-import { DropdownOptions } from '../dropdown-options/DropdownOptions';
-import { Tabs } from '../tabs/Tabs';
+import { Avatar } from '../Avatar';
 import { Badge } from '../Badge';
+import { Button } from '../Button';
 import { Card } from '../card/Card';
-import { List } from '../list-item/List';
-import { ListItem } from '../list-item/ListItem';
 import { Checkbox } from '../checkbox/Checkbox';
-import { SAMPLE_USERS, FILTER_STATUS_OPTIONS } from '../_fixtures';
-import type { TableColumnRow } from '../table-column/TableColumn';
-
-/* ---------------------------------------------------------------------------
-   Fixture data — 10-row CRM contacts dataset
-   --------------------------------------------------------------------------- */
+import { SAMPLE_USERS } from '../_fixtures';
+import { Tabs } from '../tabs/Tabs';
+import { Table } from './Table';
+import { TableCell } from '../table-cell/TableCell';
+import {
+  InteractiveDataTable,
+  type DataTableColumn,
+  type DataTableMobileConfig,
+  renderStatusBadge,
+} from './interactive-data-table.story-helpers';
 
 type ContactStatus = 'Active' | 'Pending' | 'Inactive' | 'Churned';
 
 interface Contact {
+  id: string;
   name: string;
   email: string;
   initials: string;
-  avatarSrc: string;
+  avatarSrc?: string;
   company: string;
   status: ContactStatus;
   statusIntent: 'success' | 'info' | 'neutral' | 'danger';
   deal: string;
+  dealValue: number;
   lastActivity: string;
+  lastActivityRank: number;
 }
 
-const COMPANIES = ['Acme Corp', 'Globex Inc', 'Initech', 'Umbrella Co', 'Stark Industries', 'Wayne Ent', 'Hooli', 'Pied Piper', 'Soylent Corp', 'Cyberdyne'];
+const COMPANIES = [
+  'Acme Corp',
+  'Globex Inc',
+  'Initech',
+  'Umbrella Co',
+  'Stark Industries',
+  'Wayne Ent',
+  'Hooli',
+  'Pied Piper',
+  'Soylent Corp',
+  'Cyberdyne',
+];
 
-const CONTACTS: Contact[] = SAMPLE_USERS.slice(0, 10).map((u, i) => {
-  const statuses: { label: ContactStatus; intent: Contact['statusIntent'] }[] = [
-    { label: 'Active', intent: 'success' },
-    { label: 'Pending', intent: 'info' },
-    { label: 'Inactive', intent: 'neutral' },
-    { label: 'Churned', intent: 'danger' },
-  ];
-  const s = statuses[i % statuses.length];
-  const deals = ['$12,400', '$8,900', '$3,200', '$45,000', '$1,800', '$22,500', '$67,000', '$5,600', '$31,000', '$9,750'];
-  const dates = ['2 hours ago', 'Yesterday', '3 days ago', '1 week ago', '2 weeks ago', 'Jan 15', 'Feb 3', 'Mar 22', 'Apr 10', 'May 1'];
+const STATUSES: Array<{ label: ContactStatus; intent: Contact['statusIntent'] }> = [
+  { label: 'Active', intent: 'success' },
+  { label: 'Pending', intent: 'info' },
+  { label: 'Inactive', intent: 'neutral' },
+  { label: 'Churned', intent: 'danger' },
+];
+
+const DEAL_VALUES = [12400, 8900, 3200, 45000, 1800, 22500, 67000, 5600, 31000, 9750];
+const LAST_ACTIVITY = ['2 hours ago', 'Yesterday', '3 days ago', '1 week ago', '2 weeks ago', 'Jan 15', 'Feb 3', 'Mar 22', 'Apr 10', 'May 1'];
+
+const formatDeal = (value: number) => new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+}).format(value);
+
+const CONTACTS: Contact[] = SAMPLE_USERS.slice(0, 10).map((user, index) => {
+  const status = STATUSES[index % STATUSES.length];
+  const dealValue = DEAL_VALUES[index];
+
   return {
-    name: u.name,
-    email: u.email,
-    initials: u.initials,
-    avatarSrc: u.src,
-    company: COMPANIES[i],
-    status: s.label,
-    statusIntent: s.intent,
-    deal: deals[i],
-    lastActivity: dates[i],
+    id: `contact-${index + 1}`,
+    name: user.name,
+    email: user.email,
+    initials: user.initials,
+    avatarSrc: user.src,
+    company: COMPANIES[index],
+    status: status.label,
+    statusIntent: status.intent,
+    deal: formatDeal(dealValue),
+    dealValue,
+    lastActivity: LAST_ACTIVITY[index],
+    lastActivityRank: index,
   };
 });
 
-const UNIQUE_COMPANIES = [...new Set(CONTACTS.map((c) => c.company))];
+const crmActions = (row: Contact, pinned: { className?: string; style?: React.CSSProperties }) => (
+  <TableCell key="actions" type="actions" align="center" className={pinned.className} style={pinned.style}>
+    <span className="dls-table-column__actions">
+      <Button variant="ghost" intent="neutral" size="m" icon={<PencilIcon />} iconOnly aria-label={`Edit ${row.name}`} />
+      <Button variant="ghost" intent="neutral" size="m" icon={<TrashIcon />} iconOnly aria-label={`Delete ${row.name}`} />
+    </span>
+  </TableCell>
+);
 
-const toRows = (contacts: Contact[]) => ({
-  checkbox: contacts.map(() => ({ checked: false })) as TableColumnRow[],
-  contact: contacts.map((c) => ({
-    text: c.name,
-    secondaryText: c.email,
-    initials: c.initials,
-    avatarSrc: c.avatarSrc,
-  })) as TableColumnRow[],
-  company: contacts.map((c) => ({ text: c.company })) as TableColumnRow[],
-  status: contacts.map((c) => ({
-    badgeLabel: c.status,
-    badgeIntent: c.statusIntent,
-  })) as TableColumnRow[],
-  deal: contacts.map((c) => ({ text: c.deal })) as TableColumnRow[],
-  lastActivity: contacts.map((c) => ({ text: c.lastActivity })) as TableColumnRow[],
-  actions: contacts.map(() => ({})) as TableColumnRow[],
-});
-
-/* ---------------------------------------------------------------------------
-   Shared filter components — reusable across stories
-   --------------------------------------------------------------------------- */
-
-const StatusFilterChip = ({ selected, onToggle }: {
-  selected: string[];
-  onToggle: (status: string) => void;
-}) => {
-  const summaryText = selected.length === 0
-    ? 'All'
-    : selected.length === 1
-      ? selected[0]
-      : `${selected.length} selected`;
-
-  return (
-    <FilterChip
-      label="Status"
-      isVisible
-      size="m"
-      valueSummary={<span className="dls-filter-chip__value-text">{summaryText}</span>}
-    >
-      <List className="dls-filter-chip__enum-list">
-        {FILTER_STATUS_OPTIONS.map((opt) => (
-          <ListItem
-            key={opt}
-            type="with-slots"
-            text={opt}
-            interactive={false}
-            slotLeft={<Checkbox checked={selected.includes(opt)} onChange={() => onToggle(opt)} />}
-            onClick={() => onToggle(opt)}
-          />
-        ))}
-      </List>
-    </FilterChip>
-  );
-};
-
-const CompanyFilterChip = ({ selected, onToggle }: {
-  selected: string[];
-  onToggle: (company: string) => void;
-}) => {
-  const summaryText = selected.length === 0
-    ? 'All'
-    : selected.length === 1
-      ? selected[0]
-      : `${selected.length} selected`;
-
-  return (
-    <FilterChip
-      label="Company"
-      isVisible
-      size="m"
-      valueSummary={<span className="dls-filter-chip__value-text">{summaryText}</span>}
-    >
-      <List className="dls-filter-chip__enum-list">
-        {UNIQUE_COMPANIES.map((c) => (
-          <ListItem
-            key={c}
-            type="with-slots"
-            text={c}
-            interactive={false}
-            slotLeft={<Checkbox checked={selected.includes(c)} onChange={() => onToggle(c)} />}
-            onClick={() => onToggle(c)}
-          />
-        ))}
-      </List>
-    </FilterChip>
-  );
-};
-
-/* ---------------------------------------------------------------------------
-   Sort chip — uses FilterChip visually but drives sorting, not filtering.
-   Separated from filter chips by a Filters group divider per Figma spec.
-   --------------------------------------------------------------------------- */
-
-const SORTABLE_COLUMNS = [
-  { value: 'name', label: 'Name' },
-  { value: 'company', label: 'Company' },
-  { value: 'deal', label: 'Deal value' },
-  { value: 'lastActivity', label: 'Last activity' },
-];
-
-const SortChip = ({ column, direction, onColumnChange, onDirectionChange }: {
-  column: string;
-  direction: 'ascending' | 'descending';
-  onColumnChange: (v: string) => void;
-  onDirectionChange: (v: 'ascending' | 'descending') => void;
-}) => {
-  const columnLabel = SORTABLE_COLUMNS.find((c) => c.value === column)?.label ?? column;
-
-  return (
-    <FilterChip
-      label="Sort"
-      labelIcon={<ArrowDownIcon />}
-      isVisible
-      size="m"
-      valueSummary={<span className="dls-filter-chip__value-text">{columnLabel}</span>}
-    >
-      <DropdownSorting
-        columns={SORTABLE_COLUMNS}
-        column={column}
-        direction={direction}
-        onColumnChange={onColumnChange}
-        onDirectionChange={onDirectionChange}
+const selectColumn: DataTableColumn<Contact> = {
+  id: 'select',
+  label: 'Select',
+  width: 48,
+  minWidth: 48,
+  sortable: false,
+  filterable: false,
+  resizable: false,
+  hideable: false,
+  pinned: true,
+  getValue: () => '',
+  renderCell: (row, context, pinned) => (
+    <TableCell key="select" type="slot" align="center" className={pinned.className} style={pinned.style}>
+      <Checkbox
+        checked={context.selected}
+        aria-label={`Select ${row.name}`}
+        onChange={context.toggleSelected}
       />
-    </FilterChip>
-  );
+    </TableCell>
+  ),
 };
 
-/* ---------------------------------------------------------------------------
-   Shared — OptionsMenu with drill-in sub-menus
-   --------------------------------------------------------------------------- */
-
-const crmShown = [
-  { id: 'contact', label: 'Contact' },
-  { id: 'company', label: 'Company', pinned: true },
-  { id: 'status', label: 'Status' },
+const crmColumns: DataTableColumn<Contact>[] = [
+  selectColumn,
+  {
+    id: 'contact',
+    label: 'Contact',
+    width: 280,
+    minWidth: 220,
+    pinned: true,
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.name,
+    getSortValue: (row) => row.name,
+    getFilterValue: (row) => row.name,
+    getSearchValue: (row) => `${row.name} ${row.email}`,
+    renderCell: (row, _context, pinned) => (
+      <TableCell
+        key="contact"
+        type="two-line"
+        text={row.name}
+        secondaryText={row.email}
+        className={pinned.className}
+        style={pinned.style}
+        slotLeft={<Avatar size="24" circle src={row.avatarSrc} initials={row.initials} />}
+      />
+    ),
+  },
+  {
+    id: 'company',
+    label: 'Company',
+    width: 180,
+    minWidth: 144,
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.company,
+    getSortValue: (row) => row.company,
+    getFilterValue: (row) => row.company,
+  },
+  {
+    id: 'status',
+    label: 'Status',
+    width: 140,
+    minWidth: 112,
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.status,
+    getSortValue: (row) => row.status,
+    getFilterValue: (row) => row.status,
+    renderCell: (row, _context, pinned) => (
+      <TableCell key="status" type="badge" className={pinned.className} style={pinned.style}>
+        {renderStatusBadge(row.status, row.statusIntent)}
+      </TableCell>
+    ),
+    renderMobileValue: (row) => renderStatusBadge(row.status, row.statusIntent),
+  },
+  {
+    id: 'deal',
+    label: 'Deal value',
+    width: 144,
+    minWidth: 120,
+    align: 'right',
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.deal,
+    getSortValue: (row) => row.dealValue,
+    getFilterValue: (row) => row.deal,
+  },
+  {
+    id: 'lastActivity',
+    label: 'Last activity',
+    width: 160,
+    minWidth: 128,
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.lastActivity,
+    getSortValue: (row) => row.lastActivityRank,
+    getFilterValue: (row) => row.lastActivity,
+  },
+  {
+    id: 'actions',
+    label: 'Actions',
+    width: 112,
+    minWidth: 96,
+    align: 'center',
+    sortable: false,
+    filterable: false,
+    resizable: false,
+    hideable: false,
+    getValue: () => 'Actions',
+    renderCell: (row, _context, pinned) => crmActions(row, pinned),
+  },
 ];
 
-const crmHidden = [
-  { id: 'deal', label: 'Deal value' },
-  { id: 'lastActivity', label: 'Last activity' },
+const singleLineCrmColumns: DataTableColumn<Contact>[] = [
+  selectColumn,
+  {
+    id: 'name',
+    label: 'Name',
+    width: 200,
+    minWidth: 160,
+    pinned: true,
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.name,
+    getSortValue: (row) => row.name,
+    getFilterValue: (row) => row.name,
+    getSearchValue: (row) => `${row.name} ${row.email}`,
+  },
+  {
+    id: 'email',
+    label: 'Email',
+    width: 240,
+    minWidth: 180,
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.email,
+    getSortValue: (row) => row.email,
+    getFilterValue: (row) => row.email,
+  },
+  {
+    id: 'company',
+    label: 'Company',
+    width: 180,
+    minWidth: 144,
+    sortable: true,
+    filterable: true,
+    getValue: (row) => row.company,
+    getSortValue: (row) => row.company,
+    getFilterValue: (row) => row.company,
+  },
+  crmColumns[3],
+  crmColumns[4],
+  crmColumns[6],
 ];
 
-type SubMenu = 'root' | 'columns' | 'filters' | 'export';
+const createContact = (rows: Contact[]): Contact => {
+  const next = rows.length + 1;
+  const user = SAMPLE_USERS[next % SAMPLE_USERS.length];
 
-interface CrmOptionsMenuProps {
-  filtersPanel?: React.ReactNode;
+  return {
+    id: `contact-${next}`,
+    name: `New contact ${next}`,
+    email: `new.contact${next}@example.com`,
+    initials: user?.initials ?? 'NC',
+    avatarSrc: user?.src,
+    company: 'New account',
+    status: 'Pending',
+    statusIntent: 'info',
+    deal: formatDeal(0),
+    dealValue: 0,
+    lastActivity: 'Just now',
+    lastActivityRank: -1,
+  };
+};
+
+interface CrmTableStoryProps {
+  rows?: Contact[];
+  columns?: DataTableColumn<Contact>[];
+  mobile?: DataTableMobileConfig;
+  initialSearch?: string;
+  initialShowFilters?: boolean;
+  initialFilters?: Array<{ id: string; values: string[]; isVisible?: boolean }>;
+  showPagination?: boolean;
+  rowPredicate?: (row: Contact) => boolean;
+  emptyTitle?: string;
+  emptyDescription?: string;
 }
 
-const CrmOptionsMenu = ({ filtersPanel }: CrmOptionsMenuProps = {}) => {
-  const [menu, setMenu] = React.useState<SubMenu>('root');
-
-  const rootMenu = (
-    <List>
-      <ListItem type="label" text="Customize" />
-      <ListItem
-        type="with-slots"
-        text="Columns"
-        iconStart={<Columns3Icon />}
-        iconEnd={<ChevronRightIcon />}
-        onClick={() => setMenu('columns')}
-      />
-      <ListItem
-        type="with-slots"
-        text="Filters"
-        iconStart={<FilterIcon />}
-        iconEnd={<ChevronRightIcon />}
-        onClick={() => setMenu('filters')}
-      />
-      <ListItem type="divider" />
-      <ListItem
-        type="with-slots"
-        text="Export"
-        iconStart={<DownloadIcon />}
-        iconEnd={<ChevronRightIcon />}
-        onClick={() => setMenu('export')}
-      />
-    </List>
-  );
-
-  let submenu: React.ReactNode = null;
-  if (menu === 'columns') {
-    submenu = (
-      <DropdownColumns
-        shown={crmShown}
-        hidden={crmHidden}
-        onApply={() => setMenu('root')}
-        onCancel={() => setMenu('root')}
-      />
-    );
-  } else if (menu === 'filters') {
-    submenu = filtersPanel ?? (
-      <DropdownFilters>
-        <FilterChip label="Status" isVisible size="s" valueSummary={<span className="dls-filter-chip__value-text">All</span>}>
-          <List className="dls-filter-chip__enum-list">
-            {FILTER_STATUS_OPTIONS.map(opt => (
-              <ListItem key={opt} type="with-slots" text={opt} interactive={false} slotLeft={<Checkbox checked={false} onChange={() => {}} />} />
-            ))}
-          </List>
-        </FilterChip>
-      </DropdownFilters>
-    );
-  } else if (menu === 'export') {
-    submenu = <DropdownExport />;
-  }
-
-  return (
-    <DropdownOptions triggerIcon={<MoreIcon />} triggerLabel="Options">
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--dls-spacing-2)' }}>
-        {rootMenu}
-        {submenu}
+const CrmTableStory = ({
+  rows = CONTACTS,
+  columns = crmColumns,
+  mobile = {
+    primaryColumnId: 'contact',
+    secondaryColumnId: 'deal',
+    supportingColumnIds: ['status', 'lastActivity'],
+    actionsColumnId: 'actions',
+  },
+  initialSearch,
+  initialShowFilters = false,
+  initialFilters,
+  showPagination = true,
+  rowPredicate,
+  emptyTitle = 'No contacts found',
+  emptyDescription = 'Adjust search, filters, or column visibility.',
+}: CrmTableStoryProps) => (
+  <InteractiveDataTable
+    rows={rows}
+    columns={columns}
+    getRowId={(row) => row.id}
+    mobile={mobile}
+    primaryActionLabel="Add contact"
+    createRow={createContact}
+    initialSearch={initialSearch}
+    initialShowFilters={initialShowFilters}
+    initialFilters={initialFilters}
+    showPagination={showPagination}
+    rowPredicate={rowPredicate}
+    emptyState={
+      <div className="dls-table__empty-stack">
+        <span className="dls-table__empty-title">{emptyTitle}</span>
+        <span className="dls-table__empty-description">{emptyDescription}</span>
       </div>
-    </DropdownOptions>
-  );
-};
+    }
+  />
+);
 
-/* ---------------------------------------------------------------------------
-   Storybook meta
-   --------------------------------------------------------------------------- */
+const statusCounts = (status: ContactStatus) => CONTACTS.filter((contact) => contact.status === status).length;
+
+const statusTabs = [
+  { value: 'all', label: 'All contacts', count: CONTACTS.length, intent: 'neutral' as const },
+  { value: 'active', label: 'Active', count: statusCounts('Active'), intent: 'success' as const },
+  { value: 'pending', label: 'Pending', count: statusCounts('Pending'), intent: 'info' as const },
+  { value: 'inactive', label: 'Inactive', count: statusCounts('Inactive'), intent: 'neutral' as const },
+  { value: 'churned', label: 'Churned', count: statusCounts('Churned'), intent: 'danger' as const },
+];
+
+const summaryCards = statusTabs.filter((tab) => tab.value !== 'all');
 
 const meta = {
   title: 'Patterns/CRM Data Table',
@@ -304,10 +343,7 @@ const meta = {
       source: { type: 'code', code: '' },
       description: {
         component:
-          'Best-practice data table composition for CRM and operational screens. ' +
-          'Demonstrates search, filtering, sorting, column management, single-line rows, ' +
-          'status badges, tabs, summary cards, pagination, and empty states — all built from ' +
-          'existing DLS components with no custom markup. See `specs/patterns/data-table.md` for the full pattern spec.',
+          'Best-practice data table composition for CRM and operational screens. Demonstrates a working top bar, filters, sorting, column actions, column management, resizing, pinning, horizontal scroll, mobile row cards, tabs, summary filters, pagination, and empty states.',
       },
     },
   },
@@ -317,507 +353,137 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/* ---------------------------------------------------------------------------
-   1. Full CRM Table — the "golden" example
-   --------------------------------------------------------------------------- */
-
 export const FullCrmTable: Story = {
   name: 'Full CRM Table',
   args: { children: null },
   render: () => {
-    const [search, setSearch] = React.useState('');
     const [tab, setTab] = React.useState('all');
-    const [page, setPage] = React.useState(1);
-    const [perPage, setPerPage] = React.useState(10);
-    const [showFilters, setShowFilters] = React.useState(true);
-    const [sortColumn, setSortColumn] = React.useState('name');
-    const [sortDirection, setSortDirection] = React.useState<'ascending' | 'descending'>('ascending');
-    const [statusFilter, setStatusFilter] = React.useState<string[]>(['Active']);
-    const [companyFilter, setCompanyFilter] = React.useState<string[]>(['Acme Corp']);
-
-    const toggleStatus = (s: string) =>
-      setStatusFilter((prev) => prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]);
-    const toggleCompany = (c: string) =>
-      setCompanyFilter((prev) => prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]);
-
-    const filtered = CONTACTS.filter((c) => {
-      if (tab !== 'all' && c.status.toLowerCase() !== tab) return false;
-      if (search && !c.name.toLowerCase().includes(search.toLowerCase()) && !c.email.toLowerCase().includes(search.toLowerCase()) && !c.company.toLowerCase().includes(search.toLowerCase())) return false;
-      return true;
-    });
-
-    const rows = toRows(filtered);
-    const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--dls-spacing-4)', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--dls-spacing-4)', alignItems: 'stretch' }}>
         <Tabs
           type="pill"
           value={tab}
-          onChange={(v) => { setTab(v); setPage(1); }}
-          items={[
-            { value: 'all', label: 'All contacts', slotContent: <Badge variant="soft" intent="neutral" size="xs">{CONTACTS.length}</Badge> },
-            { value: 'active', label: 'Active', slotContent: <Badge variant="soft" intent="success" size="xs">{CONTACTS.filter(c => c.status === 'Active').length}</Badge> },
-            { value: 'pending', label: 'Pending', slotContent: <Badge variant="soft" intent="info" size="xs">{CONTACTS.filter(c => c.status === 'Pending').length}</Badge> },
-            { value: 'inactive', label: 'Inactive', slotContent: <Badge variant="soft" intent="neutral" size="xs">{CONTACTS.filter(c => c.status === 'Inactive').length}</Badge> },
-            { value: 'churned', label: 'Churned', slotContent: <Badge variant="soft" intent="danger" size="xs">{CONTACTS.filter(c => c.status === 'Churned').length}</Badge> },
-          ]}
+          onChange={setTab}
+          items={statusTabs.map((item) => ({
+            value: item.value,
+            label: item.label,
+            slotContent: <Badge variant="soft" intent={item.intent} size="xs">{item.count}</Badge>,
+          }))}
         />
-
-        <Table
-          showPagination
-          totalItems={filtered.length}
-          itemsPerPage={perPage}
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={setPage}
-          onItemsPerPageChange={(n) => { setPerPage(n); setPage(1); }}
-          columns="40px 2fr 1fr 100px 100px 120px 80px"
-          rowCount={filtered.length}
-          topBar={
-            <TableTopBar
-              slotLeft={
-                <>
-                  <SearchField
-                    placeholder="Search contacts..."
-                    value={search}
-                    onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                    onClear={() => { setSearch(''); setPage(1); }}
-                  />
-                  <Button
-                    variant="ghost"
-                    intent="neutral"
-                    size="m"
-                    icon={<FilterIcon />}
-                    iconOnly
-                    aria-label="Toggle filters"
-                    onClick={() => setShowFilters(!showFilters)}
-                  />
-                </>
-              }
-              slotRight={
-                <>
-                  <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add contact</Button>
-                  <CrmOptionsMenu />
-                </>
-              }
-              showFilters={showFilters}
-              filters={
-                <Filters
-                  size="m"
-                  groups={[
-                    {
-                      id: 'sort',
-                      children: (
-                        <SortChip
-                          column={sortColumn}
-                          direction={sortDirection}
-                          onColumnChange={setSortColumn}
-                          onDirectionChange={setSortDirection}
-                        />
-                      ),
-                    },
-                    {
-                      id: 'status',
-                      children: <StatusFilterChip selected={statusFilter} onToggle={toggleStatus} />,
-                    },
-                    {
-                      id: 'company',
-                      children: <CompanyFilterChip selected={companyFilter} onToggle={toggleCompany} />,
-                    },
-                  ]}
-                  showAdd
-                  onAdd={() => {}}
-                />
-              }
-            />
-          }
-        >
-          <TableColumn type="checkbox" rows={rows.checkbox} />
-          <TableColumn type="two-line+avatar" header="Contact" rows={rows.contact} sortable />
-          <TableColumn type="text" header="Company" rows={rows.company} sortable />
-          <TableColumn type="badge" header="Status" rows={rows.status} />
-          <TableColumn type="number" header="Deal value" rows={rows.deal} sortable />
-          <TableColumn type="text" header="Last activity" rows={rows.lastActivity} sortable />
-          <TableColumn type="actions" rows={rows.actions} />
-        </Table>
+        <CrmTableStory
+          initialShowFilters
+          rowPredicate={(row) => tab === 'all' || row.status.toLowerCase() === tab}
+        />
       </div>
     );
   },
 };
-
-/* ---------------------------------------------------------------------------
-   2. With Summary Cards — cards act as clickable filters
-   --------------------------------------------------------------------------- */
 
 export const WithSummaryCards: Story = {
   name: 'With Summary Cards',
   args: { children: null },
   render: () => {
     const [activeCard, setActiveCard] = React.useState<string | null>(null);
-    const [page, setPage] = React.useState(1);
-
-    const filtered = activeCard
-      ? CONTACTS.filter((c) => c.status.toLowerCase() === activeCard)
-      : CONTACTS;
-
-    const rows = toRows(filtered);
-
-    const summaryData = [
-      { key: 'active', label: 'Active', count: CONTACTS.filter(c => c.status === 'Active').length, intent: 'success' as const },
-      { key: 'pending', label: 'Pending', count: CONTACTS.filter(c => c.status === 'Pending').length, intent: 'info' as const },
-      { key: 'inactive', label: 'Inactive', count: CONTACTS.filter(c => c.status === 'Inactive').length, intent: 'neutral' as const },
-      { key: 'churned', label: 'Churned', count: CONTACTS.filter(c => c.status === 'Churned').length, intent: 'danger' as const },
-    ];
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--dls-spacing-4)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--dls-spacing-3)' }}>
-          {summaryData.map((s) => (
-            <Card
-              key={s.key}
-              type={activeCard === s.key ? 'regular' : 'outline'}
-              title={String(s.count)}
-              description={s.label}
-              headerContent={<Badge variant="ghost" intent={s.intent} size="xs">{s.label}</Badge>}
-              {...{ onClick: () => { setActiveCard(activeCard === s.key ? null : s.key); setPage(1); }, style: { cursor: 'pointer' } } as any}
-            />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 'var(--dls-spacing-3)' }}>
+          {summaryCards.map((summary) => (
+            <button
+              key={summary.value}
+              type="button"
+              aria-pressed={activeCard === summary.value}
+              onClick={() => setActiveCard(activeCard === summary.value ? null : summary.value)}
+              style={{
+                all: 'unset',
+                display: 'block',
+                cursor: 'pointer',
+              }}
+            >
+              <Card
+                type={activeCard === summary.value ? 'regular' : 'outline'}
+                title={String(summary.count)}
+                description={summary.label}
+                headerContent={<Badge variant="ghost" intent={summary.intent} size="xs">{summary.label}</Badge>}
+              />
+            </button>
           ))}
         </div>
-
-        <Table
-          showPagination
-          totalItems={filtered.length}
-          itemsPerPage={10}
-          currentPage={page}
-          totalPages={Math.max(1, Math.ceil(filtered.length / 10))}
-          onPageChange={setPage}
-          columns="40px 2fr 1fr 100px 100px 120px 80px"
-          rowCount={filtered.length}
-          topBar={
-            <TableTopBar
-              slotLeft={
-                <SearchField placeholder="Search contacts..." />
-              }
-              slotRight={
-                <>
-                  <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add contact</Button>
-                  <CrmOptionsMenu />
-                </>
-              }
-            />
-          }
-        >
-          <TableColumn type="checkbox" rows={rows.checkbox} />
-          <TableColumn type="two-line+avatar" header="Contact" rows={rows.contact} sortable />
-          <TableColumn type="text" header="Company" rows={rows.company} sortable />
-          <TableColumn type="badge" header="Status" rows={rows.status} />
-          <TableColumn type="number" header="Deal value" rows={rows.deal} sortable />
-          <TableColumn type="text" header="Last activity" rows={rows.lastActivity} sortable />
-          <TableColumn type="actions" rows={rows.actions} />
-        </Table>
+        <CrmTableStory
+          rowPredicate={(row) => !activeCard || row.status.toLowerCase() === activeCard}
+        />
       </div>
     );
   },
 };
 
-/* ---------------------------------------------------------------------------
-   3. Minimal — search + single primary action, no filters
-   --------------------------------------------------------------------------- */
-
 export const Minimal: Story = {
   name: 'Minimal Table',
   args: { children: null },
-  render: () => {
-    const rows = toRows(CONTACTS);
-
-    return (
-      <Table
-        showPagination
-        totalItems={CONTACTS.length}
-        itemsPerPage={10}
-        currentPage={1}
-        totalPages={1}
-        columns="2fr 1fr 100px 100px 80px"
-        rowCount={CONTACTS.length}
-        topBar={
-          <TableTopBar
-            slotLeft={<SearchField placeholder="Search contacts..." />}
-            slotRight={
-              <>
-                <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add contact</Button>
-                <CrmOptionsMenu />
-              </>
-            }
-          />
-        }
-      >
-        <TableColumn type="two-line+avatar" header="Contact" rows={rows.contact} sortable />
-        <TableColumn type="text" header="Company" rows={rows.company} sortable />
-        <TableColumn type="badge" header="Status" rows={rows.status} />
-        <TableColumn type="number" header="Deal value" rows={rows.deal} sortable />
-        <TableColumn type="actions" rows={rows.actions} />
-      </Table>
-    );
-  },
+  render: () => (
+    <CrmTableStory
+      columns={crmColumns.filter((column) => !['select', 'lastActivity'].includes(column.id))}
+      mobile={{
+        primaryColumnId: 'contact',
+        secondaryColumnId: 'deal',
+        supportingColumnIds: ['status', 'company'],
+        actionsColumnId: 'actions',
+      }}
+    />
+  ),
 };
-
-/* ---------------------------------------------------------------------------
-   4. Single-line rows — no two-line cells, demonstrating the default
-   --------------------------------------------------------------------------- */
 
 export const SingleLineRows: Story = {
   name: 'Single-Line Rows',
   args: { children: null },
-  render: () => {
-    const nameRows: TableColumnRow[] = CONTACTS.map((c) => ({ text: c.name }));
-    const emailRows: TableColumnRow[] = CONTACTS.map((c) => ({ text: c.email }));
-    const companyRows: TableColumnRow[] = CONTACTS.map((c) => ({ text: c.company }));
-    const statusRows: TableColumnRow[] = CONTACTS.map((c) => ({
-      badgeLabel: c.status,
-      badgeIntent: c.statusIntent,
-    }));
-    const dealRows: TableColumnRow[] = CONTACTS.map((c) => ({ text: c.deal }));
-    const actionsRows: TableColumnRow[] = CONTACTS.map(() => ({}));
-
-    return (
-      <Table
-        showPagination
-        totalItems={CONTACTS.length}
-        itemsPerPage={10}
-        currentPage={1}
-        totalPages={1}
-        columns="40px 1.5fr 1.5fr 1fr 100px 100px 80px"
-        rowCount={CONTACTS.length}
-        topBar={
-          <TableTopBar
-            slotLeft={<SearchField placeholder="Search..." />}
-            slotRight={
-              <>
-                <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add contact</Button>
-                <CrmOptionsMenu />
-              </>
-            }
-          />
-        }
-      >
-        <TableColumn type="checkbox" rows={CONTACTS.map(() => ({ checked: false }))} />
-        <TableColumn type="text" header="Name" rows={nameRows} sortable />
-        <TableColumn type="text" header="Email" rows={emailRows} sortable />
-        <TableColumn type="text" header="Company" rows={companyRows} sortable />
-        <TableColumn type="badge" header="Status" rows={statusRows} />
-        <TableColumn type="number" header="Deal value" rows={dealRows} sortable />
-        <TableColumn type="actions" rows={actionsRows} />
-      </Table>
-    );
-  },
+  render: () => (
+    <CrmTableStory
+      columns={singleLineCrmColumns}
+      mobile={{
+        primaryColumnId: 'name',
+        secondaryColumnId: 'deal',
+        supportingColumnIds: ['status', 'company'],
+        actionsColumnId: 'actions',
+      }}
+    />
+  ),
 };
-
-/* ---------------------------------------------------------------------------
-   5. Filtered state — active filters visible, reduced dataset
-   --------------------------------------------------------------------------- */
 
 export const FilteredState: Story = {
   name: 'Filtered State',
   args: { children: null },
-  render: () => {
-    const [sortColumn, setSortColumn] = React.useState('name');
-    const [sortDirection, setSortDirection] = React.useState<'ascending' | 'descending'>('ascending');
-    const [statusFilter, setStatusFilter] = React.useState<string[]>(['Active']);
-    const toggleStatus = (s: string) =>
-      setStatusFilter((prev) => prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]);
-
-    const activeContacts = CONTACTS.filter((c) => c.status === 'Active');
-    const rows = toRows(activeContacts);
-
-    return (
-      <Table
-        showPagination
-        totalItems={activeContacts.length}
-        itemsPerPage={10}
-        currentPage={1}
-        totalPages={1}
-        columns="40px 2fr 1fr 100px 100px 120px 80px"
-        rowCount={activeContacts.length}
-        topBar={
-          <TableTopBar
-            slotLeft={
-              <>
-                <SearchField placeholder="Search contacts..." />
-                <Button variant="ghost" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filters" />
-              </>
-            }
-            slotRight={
-              <>
-                <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add contact</Button>
-                <CrmOptionsMenu />
-              </>
-            }
-            showFilters
-            filters={
-              <Filters
-                size="m"
-                groups={[
-                  {
-                    id: 'sort',
-                    children: (
-                      <SortChip
-                        column={sortColumn}
-                        direction={sortDirection}
-                        onColumnChange={setSortColumn}
-                        onDirectionChange={setSortDirection}
-                      />
-                    ),
-                  },
-                  {
-                    id: 'status',
-                    children: <StatusFilterChip selected={statusFilter} onToggle={toggleStatus} />,
-                  },
-                ]}
-                showAdd
-                onAdd={() => {}}
-              />
-            }
-          />
-        }
-      >
-        <TableColumn type="checkbox" rows={rows.checkbox} />
-        <TableColumn type="two-line+avatar" header="Contact" rows={rows.contact} sortable />
-        <TableColumn type="text" header="Company" rows={rows.company} sortable />
-        <TableColumn type="badge" header="Status" rows={rows.status} />
-        <TableColumn type="number" header="Deal value" rows={rows.deal} sortable />
-        <TableColumn type="text" header="Last activity" rows={rows.lastActivity} sortable />
-        <TableColumn type="actions" rows={rows.actions} />
-      </Table>
-    );
-  },
+  render: () => (
+    <CrmTableStory
+      initialShowFilters
+      initialFilters={[{ id: 'status', values: ['Active'] }]}
+    />
+  ),
 };
-
-/* ---------------------------------------------------------------------------
-   6. Empty state — search returns no results
-   --------------------------------------------------------------------------- */
 
 export const EmptySearchResults: Story = {
   name: 'Empty Search Results',
   args: { children: null },
-  render: () => {
-    const [statusFilter, setStatusFilter] = React.useState<string[]>(['Active']);
-    const toggleStatus = (s: string) =>
-      setStatusFilter((prev) => prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]);
-
-    return (
-      <Table
-        showPagination={false}
-        columns="2fr 1fr 100px 100px 80px"
-        rowCount={0}
-        topBar={
-          <TableTopBar
-            slotLeft={
-              <>
-                <SearchField placeholder="Search contacts..." value="zzzznotfound" />
-                <Button variant="ghost" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filters" />
-              </>
-            }
-            slotRight={
-              <>
-                <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add contact</Button>
-                <CrmOptionsMenu />
-              </>
-            }
-            showFilters
-            filters={
-              <Filters
-                size="m"
-                groups={[
-                  {
-                    id: 'status',
-                    children: <StatusFilterChip selected={statusFilter} onToggle={toggleStatus} />,
-                  },
-                ]}
-              />
-            }
-          />
-        }
-      >
-        <div style={{
-          padding: 'var(--dls-spacing-10) var(--dls-spacing-6)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 'var(--dls-spacing-3)',
-          color: 'var(--dls-color-text-secondary)',
-          fontFamily: 'var(--dls-font-family)',
-          fontSize: 'var(--dls-text-paragraph-m-font-size)',
-          lineHeight: 'var(--dls-text-paragraph-m-line-height)',
-        }}>
-          <span style={{
-            fontSize: 'var(--dls-text-heading-h4-font-size)',
-            fontWeight: 'var(--dls-font-weight-medium)' as any,
-            color: 'var(--dls-color-text-primary)',
-          }}>
-            No results found
-          </span>
-          <span>No contacts match your current search and filters.</span>
-          <Button variant="outline" intent="neutral" size="m" icon={<XIcon />}>Clear filters</Button>
-        </div>
-      </Table>
-    );
-  },
+  render: () => (
+    <CrmTableStory
+      initialSearch="zzzznotfound"
+      initialShowFilters
+      showPagination={false}
+      emptyTitle="No results found"
+      emptyDescription="No contacts match the current search and filters."
+    />
+  ),
 };
-
-/* ---------------------------------------------------------------------------
-   7. Empty state — no data yet
-   --------------------------------------------------------------------------- */
 
 export const EmptyNoData: Story = {
   name: 'Empty — No Data',
   args: { children: null },
   render: () => (
-    <Table
+    <CrmTableStory
+      rows={[]}
       showPagination={false}
-      columns="1fr"
-      rowCount={0}
-      topBar={
-        <TableTopBar
-          slotLeft={<SearchField placeholder="Search contacts..." disabled />}
-          slotRight={
-            <>
-              <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add contact</Button>
-              <DropdownOptions triggerIcon={<MoreIcon />} triggerLabel="Options" disabled>
-                <List>
-                  <ListItem type="label" text="Customize" />
-                  <ListItem type="with-slots" text="Columns" iconStart={<Columns3Icon />} iconEnd={<ChevronRightIcon />} />
-                  <ListItem type="with-slots" text="Filters" iconStart={<FilterIcon />} iconEnd={<ChevronRightIcon />} />
-                  <ListItem type="divider" />
-                  <ListItem type="with-slots" text="Export" iconStart={<DownloadIcon />} iconEnd={<ChevronRightIcon />} />
-                </List>
-              </DropdownOptions>
-            </>
-          }
-        />
-      }
-    >
-      <div style={{
-        padding: 'var(--dls-spacing-10) var(--dls-spacing-6)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: 'var(--dls-spacing-3)',
-        color: 'var(--dls-color-text-secondary)',
-        fontFamily: 'var(--dls-font-family)',
-        fontSize: 'var(--dls-text-paragraph-m-font-size)',
-        lineHeight: 'var(--dls-text-paragraph-m-line-height)',
-      }}>
-        <span style={{
-          fontSize: 'var(--dls-text-heading-h4-font-size)',
-          fontWeight: 'var(--dls-font-weight-medium)' as any,
-          color: 'var(--dls-color-text-primary)',
-        }}>
-          No contacts yet
-        </span>
-        <span>Add your first contact to get started.</span>
-        <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Add contact</Button>
-      </div>
-    </Table>
+      emptyTitle="No contacts yet"
+      emptyDescription="Add your first contact to get started."
+    />
   ),
 };
