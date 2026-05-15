@@ -208,7 +208,8 @@ Order items right-to-left by importance:
 ## 8. Row Selection
 
 - When bulk operations are needed, add a checkbox column as the first column.
-- Use `TableHeaderCell type="control"` with a "select all" `Checkbox`.
+- The checkbox column is always the first column, is not sortable, not filterable, not hideable, and has no column action menu.
+- Use `TableHeaderCell type="control"` with a "select all" `Checkbox`. Do not pass `onMenuClick` or `sortable` to the checkbox header cell.
 - Use `TableCell` with `slotLeft={<Checkbox />}`.
 - When rows are selected, show a contextual bulk-action bar (e.g., "3 selected — Delete, Export, Assign").
 - "Select all" selects the current page. If all-pages selection is needed, show a banner: "All 25 on this page selected. Select all 1,204?"
@@ -361,7 +362,7 @@ Table stories must demonstrate a working data table pattern, not static UI only.
 
 ### Per-column actions
 
-`DropdownColumnActions` must be available from every visible column header where column actions are allowed. The menu is contextual to that column and includes:
+`DropdownColumnActions` must be available from every visible content column header. The checkbox (select) column and other functional columns (e.g., row actions) never show column actions. The menu is contextual to that column and includes:
 
 - Sort ascending
 - Sort descending

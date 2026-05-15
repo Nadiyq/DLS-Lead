@@ -412,7 +412,13 @@ export function InteractiveDataTable<Row>({
     }
   });
 
-  const columnsTemplate = visibleColumns.map((column) => `${column.width}px`).join(' ');
+  const columnsTemplate = visibleColumns
+    .map((column, i) =>
+      i === 1
+        ? `minmax(${column.width}px, 1fr)`
+        : `${column.width}px`,
+    )
+    .join(' ');
   const shownColumnItems: ColumnItem[] = columns
     .filter((column) => column.visible)
     .map((column) => ({ id: column.id, label: column.label, pinned: column.pinned }));
