@@ -53,7 +53,7 @@ variant is the primary-action treatment, regardless of intent.
 - Rows where both actions have equal hierarchy but one action is
   clearly primary and the other is secondary; express the hierarchy
   with filled + outline.
-- Passive status, labels, or tags -> use Badge or a text label.
+- Passive status, labels, or tags -> use Badge or text label.
 - Navigation lists -> use SidebarItem, Tabs, Breadcrumbs, or links.
 - Form fields -> use InputField, ButtonInputGroup, or related form components.
 - Menu rows -> use ListItem inside the relevant dropdown/menu component.
