@@ -1,0 +1,175 @@
+{
+  "name": "InputField",
+  "kebabName": "input-field",
+  "category": "input",
+  "description": "Labeled single-line text field with optional hint, error, clear action, and leading/trailing icons. Extends HTML input attributes (except native size).",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text above the input."
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "required": false,
+      "description": "Hint text below the input."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "required": false,
+      "description": "Error message — puts the field in error state."
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show a clear button when input has value."
+    },
+    {
+      "name": "onClear",
+      "type": "() => void",
+      "required": false,
+      "description": "Callback when clear button is clicked."
+    },
+    {
+      "name": "iconStart",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading icon inside the input."
+    },
+    {
+      "name": "iconEnd",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Trailing icon inside the input (replaced by clear icon when clearable + filled)."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only — do NOT use for custom styling."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-hover",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "InputField hover changes border color only (no background shift). Error and disabled states swap to dedicated L4 and L2 tokens. No OKLCH shift or overlay technique is used for hover/pressed backgrounds.",
+    "available": [
+      ":hover:not(:disabled):not([data-disabled]):not([data-error])",
+      ":focus-within:not(:disabled):not([data-disabled]):not([data-error])",
+      "[data-error]",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-color-component-input-border-hover",
+      "--dls-color-component-input-border-focus",
+      "--dls-color-component-input-border-disabled",
+      "--dls-color-component-input-bg-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "input",
+    "requiredAria": [
+      "aria-invalid",
+      "aria-describedby"
+    ],
+    "keyboard": {
+      "Tab": "Move focus to/from the input",
+      "Escape": "No default — consumer may wire to clear or blur"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "124:9046",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=124-9046",
+    "propertyMapping": [
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only Figma property. In code, states come from CSS pseudo-classes (:hover, :focus-within) and data attributes (data-error, data-disabled)."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "value",
+        "note": "Figma 'text' maps to the HTML input 'value' attribute passed through InputFieldProps."
+      },
+      {
+        "figmaProperty": "placeholder",
+        "reactProp": "placeholder",
+        "note": "HTML attribute pass-through from Omit<React.InputHTMLAttributes, 'size'>."
+      },
+      {
+        "figmaProperty": "error",
+        "reactProp": "error",
+        "valueMapping": {
+          "true": "string (truthy)",
+          "false": "undefined"
+        },
+        "note": "Figma 'error' is a boolean toggling the error row. In code, 'error' is a string — truthy string = error state and displays the message."
+      },
+      {
+        "figmaProperty": "errorText",
+        "reactProp": "error",
+        "note": "Figma 'errorText' content maps to the React 'error' string prop value."
+      }
+    ]
+  },
+  "useWhen": [
+    "Single-line text entry with label, hint, and/or error feedback",
+    "Search or filter inputs that need a clear action",
+    "Fields that benefit from leading/trailing icon affordances"
+  ],
+  "doNotUseFor": [
+    "Multi-line text — use Textarea",
+    "Option selection — use Dropdown",
+    "Phone numbers — use PhoneInput",
+    "OTP codes — use OtpInput",
+    "Date entry — use DateInput",
+    "Chip/tag entry — use ChipInput"
+  ],
+  "relations": [
+    "FormField",
+    "SearchField",
+    "Textarea",
+    "Dropdown"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-scope",
+      "description": "Figma 'field' component does not include label or hint rows. In code, InputField renders label, field, and hint/error as a single component. Label and hint are code-only props with no Figma property counterpart.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-26T14:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "2a155acde4bdaf54"
+  }
+}

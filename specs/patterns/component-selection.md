@@ -19,8 +19,9 @@ Use this file when multiple DLS components seem plausible.
 | Need | Use | Do Not Substitute With |
 |---|---|---|
 | Primary or secondary action | `Button` | `Badge`, `Chip`, raw link styling |
-| Small status or metadata pill | `Badge` | `Button`, `FilterChip` |
-| Compact label or multi-part inline metadata | `Chip` / `ChipRegular` | `Badge` when you need rich internal parts |
+| Small passive status or metadata pill | `Badge` | `Button`, `Chip`, `FilterChip` |
+| Removable, editable, or selectable tag/value | `ChipRegular` | `Badge` when the value is interactive |
+| Chip content/action part inside chip controls | `Chip` | Standalone product UI |
 | Filter visibility + filter editor trigger | `FilterChip` | `Badge`, `Button`, custom segmented chip |
 
 ## Content And Structure

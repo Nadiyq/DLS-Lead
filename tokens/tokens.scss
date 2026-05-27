@@ -372,7 +372,7 @@ $dls-component-badge-danger: (bg: $dls-color-intent-danger-subtle, fg: $dls-colo
 $dls-component-badge-info: (bg: $dls-color-intent-info-subtle, fg: $dls-color-intent-info-text, border: $dls-color-intent-info-border);
 
 $dls-component-chip-bg: (base: $dls-color-surface-muted, disabled: $dls-color-surface-disabled);
-$dls-component-chip-fg: (base: $dls-color-text-primary, disabled: $dls-color-text-disabled);
+$dls-component-chip-fg: (base: $dls-color-text-primary, disabled: $dls-color-text-placeholder);
 $dls-component-chip-border: (base: $dls-color-border-subtle, disabled: $dls-color-border-disabled);
 
 $dls-component-tab-fg: (base: $dls-color-text-secondary, active: $dls-color-text-primary, hover: $dls-color-text-primary, disabled: $dls-color-text-disabled);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChevronDown as ChevronDownIcon } from 'lucide-react';
 import './accordion.css';
 
 // ─── AccordionItem ────────────────────────────────────────────────────────────
@@ -18,6 +19,9 @@ export interface AccordionItemProps {
 export const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
   ({ title, children, defaultOpen = false, disabled = false, className, ...props }, ref) => {
     const [isOpen, setIsOpen] = React.useState(defaultOpen);
+    const id = React.useId();
+    const triggerId = `${id}trigger`;
+    const contentId = `${id}content`;
 
     return (
       <div
@@ -27,32 +31,26 @@ export const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps
         {...props}
       >
         <button
+          id={triggerId}
           className="dls-accordion-item__trigger"
           onClick={() => setIsOpen((o) => !o)}
           disabled={disabled}
           aria-expanded={isOpen}
+          aria-controls={contentId}
         >
           <span className="dls-accordion-item__title">{title}</span>
-          <svg
-            className="dls-accordion-item__chevron"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M4 6L8 10L12 6"
-              stroke="currentColor"
-              strokeWidth="1.33"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ChevronDownIcon className="dls-accordion-item__chevron" aria-hidden="true" />
         </button>
 
         {isOpen && children !== undefined && (
-          <div className="dls-accordion-item__content">{children}</div>
+          <div
+            id={contentId}
+            className="dls-accordion-item__content"
+            role="region"
+            aria-labelledby={triggerId}
+          >
+            {children}
+          </div>
         )}
       </div>
     );

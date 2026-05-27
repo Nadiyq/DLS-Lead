@@ -5,6 +5,7 @@ status: active
 source_of_truth:
   - apps/storybook/src/stories/filter-chip/FilterChip.tsx
   - apps/storybook/src/stories/filter-chip/filter-chip.css
+  - tokens/tokens.json
 ---
 
 # Filter Chip
@@ -12,11 +13,17 @@ source_of_truth:
 ## Metadata
 
 - Category: filter / control
-- Sizes: `xs | s | m`
+- Sizes: `m | s`
 
 ## Overview
 
-Use `FilterChip` for table and data-view filters where the chip both communicates visibility and optionally opens a filter editor panel.
+Use `FilterChip` for table and data-view filters where the label part
+communicates and toggles filter visibility, while the value part opens
+an optional filter editor panel.
+
+The label part can reflect visible/hidden state, such as Eye/EyeOff for
+an enabled or disabled filter. The value part uses a chip-regular-like
+summary and chevron action to open the filter editor.
 
 Do not use it as a generic badge or generic action button.
 
@@ -33,6 +40,7 @@ Do not use it as a generic badge or generic action button.
 
 - `--dls-radius-component-chip`
 - `--dls-color-surface-base`
+- `--dls-color-component-chip-fg-disabled`
 - `--dls-color-border-base`
 - `--dls-color-border-subtle`
 - `--dls-state-hover-overlay`
@@ -60,6 +68,9 @@ Do not use it as a generic badge or generic action button.
 - pressed
 - focus-visible
 - disabled
+
+Hover and pressed states use overlay tokens. The chevron rotation
+respects `prefers-reduced-motion`.
 
 ## Code Example
 

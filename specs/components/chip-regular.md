@@ -19,7 +19,17 @@ source_of_truth:
 
 ## Overview
 
-Use `ChipRegular` for interactive tags — clickable, removable, or selectable. Wraps the `Chip` building block with interactive behavior.
+Use `ChipRegular` for interactive tags, editable status values, and
+removable values. It composes one `Chip` content part with one optional
+action part: chevron for opening a dropdown/editor, or cross for
+removing the value.
+
+Use it for table-row status values that can be changed inline, compact
+filter values that open a dropdown, and token/tag rows where values can
+be removed.
+
+Do not use it for passive status or metadata that only needs to be
+read. Use `Badge` or a text label for passive display.
 
 ## Anatomy
 
@@ -30,6 +40,7 @@ Use `ChipRegular` for interactive tags — clickable, removable, or selectable. 
 ## Tokens Used
 
 - `--dls-color-component-chip-regular-*`
+- `--dls-color-component-chip-fg-disabled`
 - `--dls-color-intent-*`
 - `--dls-radius-component-chip`
 
@@ -53,6 +64,9 @@ Use `ChipRegular` for interactive tags — clickable, removable, or selectable. 
 - focus-visible
 - pressed
 - disabled
+
+Hover and pressed states use overlay tokens over the variant surface.
+Reduced motion disables ChipRegular transitions.
 
 ## Code Example
 

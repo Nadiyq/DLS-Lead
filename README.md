@@ -57,7 +57,7 @@ Layer 2 — Semantics      UI meaning: surface, text, border, intent roles
                           Rule: Use when no L4 component token exists
 
 Layer 3 — State           OKLCH lightness deltas for interactive states
-                          Example: state.lDelta.hover → +0.06
+                          Example: state.lDelta.hover → -0.05
                           Rule: Use for :hover, :active, :focus-visible, :disabled
 
 Layer 4 — Component       Named per-component tokens
@@ -144,7 +144,7 @@ The JSON contains these top-level categories:
 | `shadow` | L2 | Elevation shadows and focus ring |
 | `icon` | L1 | Stroke width scale for 12/16/24px icons |
 | `effect` | L2 | Backdrop blur and saturate values |
-| `state` | L3 | OKLCH lightness deltas for hover (+0.06) and pressed (-0.03) |
+| `state` | L3 | OKLCH lightness deltas for hover (-0.05) and pressed (-0.10) |
 
 ## Bundled Specs
 
@@ -182,7 +182,7 @@ Start with `prompts/base-agent-contract.md`, then use a task prompt:
 
 DLS-Lead uses a hybrid state model:
 
-- **In code:** interactive states use OKLCH relative color syntax with numeric lightness deltas. Hover shifts lightness by `+0.06`, pressed by `-0.03`. This produces perceptually uniform state changes across all color scales.
+- **In code:** interactive states use OKLCH relative color syntax with numeric lightness deltas. Hover shifts lightness by `-0.05`, pressed by `-0.10`. This produces perceptually uniform state changes across all color scales.
 - **In Figma:** the same states are represented with opacity overlays for tooling compatibility.
 
 Agents should use the `state.lDelta.hover` and `state.lDelta.pressed` tokens from `tokens.json`, applied via `oklch(from <base> calc(l + delta) c h)` in CSS.

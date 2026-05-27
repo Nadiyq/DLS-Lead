@@ -46,6 +46,7 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
     const showClear = clearable && hasValue && !disabled;
     const reactId = React.useId();
     const inputId = id || reactId;
+    const hintId = `${inputId}-hint`;
 
     return (
       <div className={['dls-input-field', className].filter(Boolean).join(' ')}>
@@ -75,6 +76,8 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
             className="dls-input-field__input"
             disabled={disabled}
             value={value}
+            aria-invalid={hasError || undefined}
+            aria-describedby={(hint || hasError) ? hintId : undefined}
             {...props}
           />
           {showClear ? (
@@ -97,6 +100,7 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
 
         {(hint || hasError) && (
           <div
+            id={hintId}
             className="dls-input-field__hint"
             data-error={hasError || undefined}
           >

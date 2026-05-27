@@ -72,6 +72,7 @@ export const DropdownAutocomplete = React.forwardRef<HTMLDivElement, DropdownAut
     const listboxId = `${triggerId}-listbox`;
 
     const hasError = !!error;
+    const hintId = `${triggerId}-hint`;
     const selected = options.find((o) => o.value === value);
     const hasLeading = !!(leadingIcon || selected?.icon || selected?.avatarSrc || selected?.avatarInitials);
 
@@ -202,6 +203,8 @@ export const DropdownAutocomplete = React.forwardRef<HTMLDivElement, DropdownAut
             aria-autocomplete="list"
             aria-controls={isOpen ? listboxId : undefined}
             aria-expanded={isOpen}
+            aria-invalid={hasError || undefined}
+            aria-describedby={(hint || hasError) ? hintId : undefined}
             role="combobox"
           />
 
@@ -259,7 +262,7 @@ export const DropdownAutocomplete = React.forwardRef<HTMLDivElement, DropdownAut
         </div>
 
         {(hint || hasError) && (
-          <div className="dls-dropdown-autocomplete__hint" data-error={hasError || undefined}>
+          <div id={hintId} className="dls-dropdown-autocomplete__hint" data-error={hasError || undefined}>
             {hasError && (
               <span className="dls-dropdown-autocomplete__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />

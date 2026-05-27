@@ -203,14 +203,14 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
-  background: var(--dls-color-intent-info-base);
+  background: var(--dls-color-intent-info-strong);
   color: var(--dls-color-intent-info-on-base);
   border-radius: var(--dls-radius-component-button);
   transition: background-color 150ms ease;
 }
 
 .dls-textarea__send:hover:not(:disabled) {
-  background: oklch(from var(--dls-color-intent-info-base) calc(l + var(--dls-state-l-delta-hover)) c h);
+  background: oklch(from var(--dls-color-intent-info-strong) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
 
 .dls-textarea__send:focus-visible {
@@ -260,4 +260,15 @@
 .dls-textarea__hint-icon svg {
   width: 100%;
   height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-textarea__box,
+  .dls-textarea__send {
+    transition: none;
+  }
 }

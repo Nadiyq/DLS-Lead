@@ -1,0 +1,175 @@
+{
+  "name": "PhoneInput",
+  "kebabName": "phone-input",
+  "category": "form input",
+  "description": "International phone number input with country selector (flag + dial code + chevron), clear button, and optional label, hint, and error. Extends HTML input attributes (except size and type).",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text above the input."
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "required": false,
+      "description": "Hint text below the input."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "required": false,
+      "description": "Error message — puts the field in error state."
+    },
+    {
+      "name": "country",
+      "type": "CountryOption",
+      "required": false,
+      "default": "{ code: 'US', dialCode: '+1', flag: '🇺🇸', name: 'United States' }",
+      "description": "Selected country object with code, dialCode, flag, and name."
+    },
+    {
+      "name": "onCountryClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Callback when the country selector is clicked."
+    },
+    {
+      "name": "onClear",
+      "type": "() => void",
+      "required": false,
+      "description": "Callback when clear button is clicked."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only — do NOT use for custom styling."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-hover",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "PhoneInput hover changes border color only — no background OKLCH shift or overlay. Same token-swap pattern as InputField.",
+    "available": [
+      ":hover:not(:disabled):not([data-disabled]):not([data-error])",
+      ":focus-within:not([data-disabled])",
+      "[data-error]",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-color-component-input-border-hover",
+      "--dls-color-component-input-border-focus",
+      "--dls-color-component-input-border-disabled",
+      "--dls-color-component-input-bg-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "input[type=tel]",
+    "requiredAria": [
+      "aria-invalid",
+      "aria-describedby"
+    ],
+    "keyboard": {
+      "Tab": "Move focus between country button, input, and clear button",
+      "Enter/Space": "Activate country selector button"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6438:829",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6438-829",
+    "propertyMapping": [
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only Figma property. In code, states come from CSS pseudo-classes (:hover, :focus-within) and data attributes (data-error, data-disabled)."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "value",
+        "note": "Figma 'text' maps to the HTML input 'value' attribute passed through PhoneInputProps."
+      },
+      {
+        "figmaProperty": "placeholder",
+        "reactProp": "placeholder",
+        "note": "HTML attribute pass-through. Default '000-000-0000' in both Figma and code."
+      },
+      {
+        "figmaProperty": "code",
+        "reactProp": "country",
+        "note": "Figma 'code' is a string (e.g. '+1'). In code, dial code is part of the CountryOption object: country.dialCode."
+      },
+      {
+        "figmaProperty": "error",
+        "reactProp": "error",
+        "valueMapping": {
+          "true": "string (truthy)",
+          "false": "undefined"
+        },
+        "note": "Figma 'error' is a boolean toggling the error row. In code, 'error' is a string — truthy = error state + message."
+      },
+      {
+        "figmaProperty": "errorText",
+        "reactProp": "error",
+        "note": "Figma 'errorText' content maps to the React 'error' string prop value."
+      }
+    ]
+  },
+  "useWhen": [
+    "International phone number entry with country selection",
+    "Forms requiring phone numbers with dial code",
+    "Contact or registration forms with phone fields"
+  ],
+  "doNotUseFor": [
+    "General text input — use InputField",
+    "Non-phone number input — use InputField",
+    "Phone display only — render text directly"
+  ],
+  "relations": [
+    "InputField",
+    "FormField",
+    "Dropdown"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-scope",
+      "description": "Figma 'phone' component does not include label or hint rows. In code, PhoneInput renders label, field box, and hint/error as a single component. Label and hint are code-only props.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-country-model",
+      "description": "Figma has a simple 'code' string property for dial code and a built-in US flag. In code, country is a full CountryOption object { code, dialCode, flag, name } supporting any country with flag emoji.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-27T13:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "e2f573d17adf8489"
+  }
+}

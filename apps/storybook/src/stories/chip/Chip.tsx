@@ -34,7 +34,9 @@ export interface ChipProps {
   chevron?: boolean;
   /** Show trailing cross icon */
   cross?: boolean;
+  /** Chip part size. */
   size?: ChipSize;
+  /** Additional class name for the root chip part. */
   className?: string;
 }
 

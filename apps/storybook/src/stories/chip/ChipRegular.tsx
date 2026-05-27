@@ -30,7 +30,9 @@ export interface ChipRegularProps {
   onRemove?: React.MouseEventHandler;
   /** Click handler — makes chip interactive */
   onClick?: React.MouseEventHandler;
+  /** Disable chip interaction and apply disabled tokens. */
   disabled?: boolean;
+  /** Additional class name for the root chip. */
   className?: string;
 }
 
@@ -55,9 +57,21 @@ export const ChipRegular = React.forwardRef<HTMLDivElement, ChipRegularProps>(
     },
     ref,
   ) => {
-    const isInteractive = !!onClick;
     const isDot = variant === 'dot';
     const hasSecondPart = !!chevron || !!onRemove;
+    const hasChevronAction = !!chevron && !!onClick;
+    const isInteractive = !!onClick && !hasSecondPart;
+
+    const handleActionClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+      e.stopPropagation();
+      if (onRemove) {
+        onRemove(e);
+        return;
+      }
+      if (hasChevronAction) {
+        onClick?.(e as unknown as React.MouseEvent);
+      }
+    };
 
     return (
       <div
@@ -69,7 +83,7 @@ export const ChipRegular = React.forwardRef<HTMLDivElement, ChipRegularProps>(
         data-intent={intent}
         data-size={size}
         data-disabled={disabled || undefined}
-        onClick={!disabled ? onClick : undefined}
+        onClick={isInteractive && !disabled ? onClick : undefined}
         onKeyDown={
           isInteractive && !disabled
             ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick?.(e as unknown as React.MouseEvent); } }
@@ -86,16 +100,21 @@ export const ChipRegular = React.forwardRef<HTMLDivElement, ChipRegularProps>(
         />
 
         {/* Part 2: action — chevron or cross */}
-        {hasSecondPart && (
+        {(onRemove || hasChevronAction) && (
           <button
             type="button"
             className="dls-chip-regular__action"
             disabled={disabled}
-            onClick={onRemove ? (e) => { e.stopPropagation(); onRemove(e); } : undefined}
-            aria-label={onRemove ? `Remove ${label}` : undefined}
+            onClick={!disabled ? handleActionClick : undefined}
+            aria-label={onRemove ? `Remove ${label}` : `Open ${label}`}
           >
             {onRemove ? <XIcon /> : <ChevronDownIcon />}
           </button>
+        )}
+        {chevron && !onRemove && !hasChevronAction && (
+          <span className="dls-chip-regular__action" aria-hidden="true">
+            <ChevronDownIcon />
+          </span>
         )}
       </div>
     );

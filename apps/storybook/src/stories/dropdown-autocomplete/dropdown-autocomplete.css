@@ -277,3 +277,14 @@
   width: 100%;
   height: 100%;
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-dropdown-autocomplete__trigger,
+  .dls-dropdown-autocomplete__chevron {
+    transition: none;
+  }
+}

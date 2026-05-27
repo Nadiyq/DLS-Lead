@@ -49,7 +49,11 @@
       "Bash(curl -s -o /tmp/tab-figma.png \"https://www.figma.com/api/mcp/asset/9a8e7079-1491-44ef-ac9b-227b1a947de6\")",
       "Bash(curl -s -o /tmp/tab-group-figma.png \"https://www.figma.com/api/mcp/asset/d14ad6f0-2e63-4ecd-93a9-64face39acd0\")",
       "mcp__dls-lead-storybook__preview-stories",
-      "mcp__dls-lead-storybook__list-all-documentation"
+      "mcp__dls-lead-storybook__list-all-documentation",
+      "Bash(node -e 'const s = require\\('\\\\''./specs/schemas/component.v1.json'\\\\''\\); console.log\\('\\\\''Valid JSON. Top-level required:'\\\\'', s.required\\); console.log\\('\\\\''Prop defs:'\\\\'', Object.keys\\(s.$defs\\)\\); console.log\\('\\\\''Total properties:'\\\\'', Object.keys\\(s.properties\\).length\\)')",
+      "Bash(xargs -I{} basename {} .md)",
+      "Bash(grep -E '\\\\.tsx$')",
+      "Bash(grep -rl '<svg' /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories --include='*.tsx' ! -name '*.stories.tsx' ! -path '*/_*')"
     ]
   },
   "enabledMcpjsonServers": [

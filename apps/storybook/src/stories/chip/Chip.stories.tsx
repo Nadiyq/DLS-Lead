@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { Eye as EyeIcon } from 'lucide-react';
 import { Chip, type ChipAvatar, type ChipSize } from './Chip';
 
 const meta = {
@@ -25,13 +26,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
       {children}
     </div>
   </div>
-);
-
-const EyeIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M1.5 8C2.5 5 5 3 8 3C11 3 13.5 5 14.5 8C13.5 11 11 13 8 13C5 13 2.5 11 1.5 8Z" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-    <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.33" />
-  </svg>
 );
 
 const avatarA: ChipAvatar = { src: 'https://i.pravatar.cc/48?u=a' };

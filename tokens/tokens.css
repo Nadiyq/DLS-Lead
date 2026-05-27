@@ -282,7 +282,7 @@
   --dls-color-component-chip-bg-base: var(--dls-color-surface-muted);
   --dls-color-component-chip-bg-disabled: var(--dls-color-surface-disabled);
   --dls-color-component-chip-fg-base: var(--dls-color-text-primary);
-  --dls-color-component-chip-fg-disabled: var(--dls-color-text-disabled);
+  --dls-color-component-chip-fg-disabled: var(--dls-color-text-placeholder);
   --dls-color-component-chip-border-base: var(--dls-color-border-subtle);
   --dls-color-component-chip-border-disabled: var(--dls-color-border-disabled);
 
@@ -299,14 +299,14 @@
   --dls-color-component-pagination-bg-base: transparent;
   --dls-color-component-pagination-bg-active: var(--dls-color-surface-muted);
 
-  /* Accordion */
-  --dls-color-component-accordion-border: var(--dls-color-border-base);
-  --dls-color-component-accordion-title-fg: var(--dls-color-text-primary);
-  --dls-color-component-accordion-content-fg: var(--dls-color-text-secondary);
-  --dls-color-component-accordion-bg-hover: var(--dls-state-hover-overlay);
-  --dls-color-component-accordion-bg-pressed: var(--dls-state-pressed-overlay);
-  --dls-shadow-component-accordion-focus-ring: var(--dls-shadow-focus-ring);
-  --dls-state-component-accordion-disabled-opacity: var(--dls-state-disabled-opacity);
+  /* Accordion Item */
+  --dls-color-component-accordion-item-border: var(--dls-color-border-base);
+  --dls-color-component-accordion-item-title-fg: var(--dls-color-text-primary);
+  --dls-color-component-accordion-item-content-fg: var(--dls-color-text-secondary);
+  --dls-color-component-accordion-item-bg-hover: var(--dls-state-hover-overlay);
+  --dls-color-component-accordion-item-bg-pressed: var(--dls-state-pressed-overlay);
+  --dls-shadow-component-accordion-item-focus-ring: var(--dls-shadow-focus-ring);
+  --dls-state-component-accordion-item-disabled-opacity: var(--dls-state-disabled-opacity);
 
   /* Alert (per variant) */
   --dls-color-component-alert-neutral-bg: var(--dls-color-surface-muted);

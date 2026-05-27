@@ -94,7 +94,7 @@
   --_divider: oklch(from var(--_on-base) l c h / 0.2);
 }
 
-.dls-chip-regular[data-variant="filled"]:hover:not([data-disabled]) {
+.dls-chip-regular[data-variant="filled"]:hover:not(:disabled):not([data-disabled]) {
   background: var(--_base);
   box-shadow: inset 0 0 0 100px var(--dls-state-hover-overlay);
 }
@@ -122,7 +122,7 @@
   --_divider: var(--_border);
 }
 
-.dls-chip-regular[data-variant="outline"]:hover:not([data-disabled]) {
+.dls-chip-regular[data-variant="outline"]:hover:not(:disabled):not([data-disabled]) {
   box-shadow: inset 0 0 0 100px var(--dls-state-hover-overlay);
 }
 
@@ -148,7 +148,7 @@
   --_divider: var(--_border);
 }
 
-.dls-chip-regular[data-variant="soft"]:hover:not([data-disabled]) {
+.dls-chip-regular[data-variant="soft"]:hover:not(:disabled):not([data-disabled]) {
   box-shadow: inset 0 0 0 100px var(--dls-state-hover-overlay);
 }
 
@@ -168,7 +168,7 @@
   --_divider: transparent;
 }
 
-.dls-chip-regular[data-variant="dot"]:hover:not([data-disabled]) {
+.dls-chip-regular[data-variant="dot"]:hover:not(:disabled):not([data-disabled]) {
   box-shadow: inset 0 0 0 100px var(--dls-state-hover-overlay);
 }
 
@@ -190,7 +190,7 @@
 
 .dls-chip-regular[data-disabled] {
   background: var(--dls-color-surface-disabled);
-  color: var(--dls-color-text-disabled);
+  color: var(--dls-color-component-chip-fg-disabled);
   cursor: not-allowed;
 }
 
@@ -219,7 +219,7 @@
 }
 
 .dls-chip-regular[data-disabled] .dls-chip__dot {
-  background: var(--dls-color-text-disabled);
+  background: var(--dls-color-component-chip-fg-disabled);
 }
 
 /* ---------------------------------------------------------------------------
@@ -265,6 +265,10 @@
   cursor: pointer;
 }
 
+.dls-chip-regular__action[aria-hidden="true"] {
+  cursor: default;
+}
+
 /* M action padding */
 .dls-chip-regular__action,
 .dls-chip-regular[data-size="m"] .dls-chip-regular__action {
@@ -295,4 +299,10 @@
 .dls-chip-regular[data-disabled] .dls-chip-regular__action {
   cursor: not-allowed;
   pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-chip-regular {
+    transition: none;
+  }
 }

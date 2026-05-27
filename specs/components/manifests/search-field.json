@@ -1,0 +1,126 @@
+{
+  "name": "SearchField",
+  "kebabName": "search-field",
+  "category": "form input",
+  "description": "Search input with a built-in search icon and optional clear button. Purpose-built for search — simpler than InputField. Extends HTML input attributes (except size and type).",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text above the search field."
+    },
+    {
+      "name": "onClear",
+      "type": "() => void",
+      "required": false,
+      "description": "Callback when clear button is clicked."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only — do NOT use for custom styling."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-hover",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "SearchField hover changes border color only — no background OKLCH shift or overlay. Same token-swap pattern as InputField.",
+    "available": [
+      ":hover:not(:disabled):not([data-disabled])",
+      ":focus-within:not([data-disabled])",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-color-component-input-border-hover",
+      "--dls-color-component-input-border-focus",
+      "--dls-color-component-input-border-disabled",
+      "--dls-color-component-input-bg-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "input[type=search]",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Move focus to/from the input and clear button",
+      "Escape": "No default — consumer may wire to clear or blur"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "59:10798",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=59-10798",
+    "propertyMapping": [
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only Figma property. In code, states come from CSS pseudo-classes (:hover, :focus-within) and data-disabled attribute."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "value",
+        "note": "Figma 'text' maps to the HTML input 'value' attribute passed through SearchFieldProps."
+      },
+      {
+        "figmaProperty": "placeholder",
+        "reactProp": "placeholder",
+        "note": "HTML attribute pass-through. Default 'Search' in both Figma and code."
+      }
+    ]
+  },
+  "useWhen": [
+    "Search or filter inputs where the search icon is always visible",
+    "Quick-filter fields in toolbars, tables, or sidebars",
+    "Simple search with no hint, error, or icon customization needed"
+  ],
+  "doNotUseFor": [
+    "General text entry — use InputField",
+    "Autocomplete search — use DropdownAutocomplete",
+    "Multi-line search or chat — use Textarea or MessageComposer"
+  ],
+  "relations": [
+    "InputField",
+    "DropdownAutocomplete"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-scope",
+      "description": "Figma component does not include a label row. In code, SearchField renders an optional label above the field box. Label is a code-only prop.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-clear-visibility",
+      "description": "Figma shows the clear button only in the focused state. In code, clear button appears whenever the input has a value and is not disabled (regardless of focus).",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-27T12:30:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "0c49f5736f59f927"
+  }
+}

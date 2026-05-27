@@ -70,6 +70,7 @@ export const ChipInput = React.forwardRef<HTMLInputElement, ChipInputProps>(
     const listboxId = `${inputId}-listbox`;
 
     const hasError = !!error;
+    const hintId = `${inputId}-hint`;
     const hasOptions = !!options && options.length > 0;
     const hasChips = values.length > 0;
     const canFreeText = allowFreeText ?? !hasOptions;
@@ -234,6 +235,8 @@ export const ChipInput = React.forwardRef<HTMLInputElement, ChipInputProps>(
                 aria-autocomplete={hasOptions ? 'list' : undefined}
                 aria-controls={showListbox ? listboxId : undefined}
                 aria-expanded={hasOptions ? isOpen : undefined}
+                aria-invalid={hasError || undefined}
+                aria-describedby={(hint || hasError) ? hintId : undefined}
               />
             </div>
           </div>
@@ -279,6 +282,7 @@ export const ChipInput = React.forwardRef<HTMLInputElement, ChipInputProps>(
 
         {(hint || hasError) && (
           <div
+            id={hintId}
             className="dls-chip-input__hint"
             data-error={hasError || undefined}
           >

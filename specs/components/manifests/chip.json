@@ -1,0 +1,272 @@
+{
+  "name": "Chip",
+  "kebabName": "chip",
+  "category": "data display / building block",
+  "description": "Internal chip content/action building block used by ChipRegular and FilterChip. Do not use directly in product UI.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [
+    "neutral",
+    "primary",
+    "info",
+    "success",
+    "warning",
+    "danger"
+  ],
+  "sizes": [
+    "m",
+    "s",
+    "xs"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Primary label text."
+    },
+    {
+      "name": "secondaryLabel",
+      "type": "string",
+      "required": false,
+      "description": "Secondary text for the icon+two-text type."
+    },
+    {
+      "name": "leadingIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading icon element."
+    },
+    {
+      "name": "avatar",
+      "type": "ChipAvatar",
+      "required": false,
+      "description": "Single avatar rendered before the label."
+    },
+    {
+      "name": "stackedAvatars",
+      "type": "ChipAvatar[]",
+      "required": false,
+      "description": "Stacked avatars rendered before the label."
+    },
+    {
+      "name": "flag",
+      "type": "string",
+      "required": false,
+      "description": "Flag content rendered before the label."
+    },
+    {
+      "name": "dot",
+      "type": "DotIntent",
+      "required": false,
+      "enum": [
+        "neutral",
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "description": "Dot indicator intent."
+    },
+    {
+      "name": "chevron",
+      "type": "boolean",
+      "required": false,
+      "description": "Show trailing chevron icon."
+    },
+    {
+      "name": "cross",
+      "type": "boolean",
+      "required": false,
+      "description": "Show trailing cross icon."
+    },
+    {
+      "name": "size",
+      "type": "ChipSize",
+      "required": false,
+      "default": "m",
+      "enum": [
+        "xs",
+        "s",
+        "m"
+      ],
+      "description": "Chip part size."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root chip part."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-chip-fg-base",
+    "--dls-color-intent-danger-base",
+    "--dls-color-intent-info-base",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-primary-base",
+    "--dls-color-intent-success-base",
+    "--dls-color-intent-warning-base",
+    "--dls-color-surface-base",
+    "--dls-color-text-secondary",
+    "--dls-font-family",
+    "--dls-font-weight-normal",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Chip is a static visual part. Interactive state is owned by ChipRegular or FilterChip.",
+    "available": [
+      "data-size",
+      "data-has-avatar",
+      ".dls-chip__dot[data-intent]"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [
+      "Button",
+      "Link",
+      "InputField",
+      "Dropdown",
+      "Tooltip"
+    ],
+    "forbiddenParents": [
+      "Button"
+    ],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "none"
+  },
+  "figma": {
+    "nodeId": "6452:4949",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6452-4949",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s",
+          "XS": "xs"
+        }
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "label"
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "secondaryLabel",
+        "note": "Used for the icon+two-text configuration when a secondary value is needed."
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "leadingIcon",
+        "note": "Figma icon+text and icon+two-text configurations map to a React icon node."
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "avatar",
+        "valueMapping": {
+          "avatar": "ChipAvatar"
+        }
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "stackedAvatars",
+        "valueMapping": {
+          "stacked": "ChipAvatar[]"
+        }
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "flag",
+        "valueMapping": {
+          "flag": "string"
+        }
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "dot",
+        "valueMapping": {
+          "dot": "DotIntent"
+        }
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "cross",
+        "valueMapping": {
+          "cross": "true"
+        }
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "chevron",
+        "valueMapping": {
+          "chevron": "true"
+        }
+      },
+      {
+        "figmaProperty": "part",
+        "reactProp": null,
+        "note": "Composition role only. Code infers content/action role from the props passed by ChipRegular or FilterChip."
+      },
+      {
+        "figmaProperty": "component set",
+        "reactProp": null,
+        "valueMapping": {
+          "chip": "Chip"
+        },
+        "note": "This Figma set is the internal Chip building block."
+      }
+    ]
+  },
+  "useWhen": [
+    "Building the content part inside ChipRegular",
+    "Building the action part inside ChipRegular",
+    "Building the label/value parts inside FilterChip",
+    "A parent chip component owns interaction and state"
+  ],
+  "doNotUseFor": [
+    "Standalone product UI",
+    "Passive status, labels, or tags - use Badge or a text label",
+    "Removable, selectable, or editable values - use ChipRegular",
+    "Table/data-view filter controls - use FilterChip",
+    "Buttons, menu rows, or navigation"
+  ],
+  "relations": [
+    "ChipRegular",
+    "FilterChip",
+    "Badge",
+    "Avatar"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-property-model",
+      "description": "Figma exposes part and type properties, while React exposes individual content/action props and lets parent components provide behavior.",
+      "severity": "low"
+    },
+    {
+      "area": "token-layer",
+      "description": "Icon, dot, avatar-overlap, and stacked-avatar border dimensions are still fixed structural pixel values because dedicated L4 chip part size tokens do not exist yet.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-27T09:05:37.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "630071d5ca48e67c"
+  }
+}

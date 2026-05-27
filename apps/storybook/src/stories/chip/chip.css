@@ -18,7 +18,7 @@
   font-family: var(--dls-font-family);
   white-space: nowrap;
   max-width: 100%;
-  color: var(--dls-color-text-primary);
+  color: var(--dls-color-component-chip-fg-base);
 }
 
 /* ---------------------------------------------------------------------------
@@ -159,7 +159,6 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 16px;
+  font-size: var(--dls-text-m-font-size);
   line-height: 1;
 }
-

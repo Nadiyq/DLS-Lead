@@ -53,12 +53,6 @@
   line-height: var(--dls-text-m-line-height);
 }
 
-.dls-filter-chip[data-size="xs"] .dls-filter-chip__bar {
-  height: 24px;
-  font-size: var(--dls-text-m-font-size);
-  line-height: var(--dls-text-m-line-height);
-}
-
 /* ---------------------------------------------------------------------------
    Label part — clickable button containing Chip building block
    --------------------------------------------------------------------------- */
@@ -131,12 +125,6 @@
   gap: var(--dls-spacing-1-5);
 }
 
-/* XS padding */
-.dls-filter-chip[data-size="xs"] .dls-filter-chip__value-content {
-  padding: var(--dls-spacing-1);
-  gap: var(--dls-spacing-1);
-}
-
 /* ---------------------------------------------------------------------------
    Action button (chevron) — divider via border-left, matching Chip padding
    --------------------------------------------------------------------------- */
@@ -161,11 +149,6 @@
 /* S action padding */
 .dls-filter-chip[data-size="s"] .dls-filter-chip__action {
   padding: var(--dls-spacing-1) var(--dls-spacing-1-5);
-}
-
-/* XS action padding */
-.dls-filter-chip[data-size="xs"] .dls-filter-chip__action {
-  padding: var(--dls-spacing-1);
 }
 
 .dls-filter-chip__action svg {
@@ -224,7 +207,7 @@
 .dls-filter-chip[data-hidden] .dls-filter-chip__bar {
   background: var(--dls-color-surface-disabled);
   border-color: var(--dls-color-border-disabled);
-  color: var(--dls-color-text-disabled);
+  color: var(--dls-color-component-chip-fg-disabled);
 }
 
 .dls-filter-chip[data-disabled] .dls-filter-chip__bar {
@@ -286,7 +269,7 @@
   width: max-content;
   max-height: 320px;
   overflow-y: auto;
-  box-shadow: var(--dls-shadow-m);
+  box-shadow: var(--dls-shadow-surface-md);
 }
 
 /* ---------------------------------------------------------------------------
@@ -333,4 +316,11 @@
 
 .dls-filter-chip__number-input::placeholder {
   color: var(--dls-color-component-input-fg-placeholder);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-filter-chip__bar,
+  .dls-filter-chip__chevron-icon {
+    transition: none;
+  }
 }

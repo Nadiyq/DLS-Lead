@@ -1,0 +1,231 @@
+{
+  "name": "ChipInput",
+  "kebabName": "chip-input",
+  "category": "form input / multi-select",
+  "description": "Multi-value input with removable ChipRegular tokens, optional autocomplete listbox, free-text entry, and label/hint/error feedback. Combines input-field and dropdown patterns for multi-select.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "options",
+      "type": "ChipInputOption[]",
+      "required": false,
+      "description": "Available options — when provided, behaves as multi-select autocomplete."
+    },
+    {
+      "name": "values",
+      "type": "string[]",
+      "required": false,
+      "default": "[]",
+      "description": "Currently selected values (option values when using options, or free-text strings)."
+    },
+    {
+      "name": "onValuesChange",
+      "type": "(values: string[]) => void",
+      "required": false,
+      "description": "Callback when selection changes."
+    },
+    {
+      "name": "allowFreeText",
+      "type": "boolean",
+      "required": false,
+      "description": "Allow creating values not in options list (via Enter key). Defaults to true when no options provided."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text."
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "required": false,
+      "description": "Hint text."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "required": false,
+      "description": "Error message — puts the field in error state."
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "required": false,
+      "default": "Type...",
+      "description": "Placeholder when empty."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disables the input and all chips."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only — do NOT use for custom styling."
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "description": "ID for the input element. Auto-generated if not provided."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-hover",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input",
+    "--dls-color-component-dropdown-bg",
+    "--dls-color-component-dropdown-border",
+    "--dls-radius-component-dropdown"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "ChipInput box hover changes border color only — no background OKLCH shift or overlay on the main surface. Same input-family token-swap pattern. Chips inside use their own ChipRegular state treatment.",
+    "available": [
+      ":hover:not(:disabled):not([data-disabled]):not([data-error])",
+      ":focus-within:not([data-disabled])",
+      "[data-open]",
+      "[data-error]",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-color-component-input-border-hover",
+      "--dls-color-component-input-border-focus",
+      "--dls-color-component-input-border-disabled",
+      "--dls-color-component-input-bg-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["ChipRegular", "ListItem"],
+    "forbiddenChildren": [],
+    "maxDepth": 2,
+    "minItems": 0,
+    "recommendedItems": 2
+  },
+  "accessibility": {
+    "semanticElement": "input[role=combobox]",
+    "requiredAria": [
+      "aria-autocomplete",
+      "aria-expanded",
+      "aria-controls",
+      "aria-invalid",
+      "aria-describedby",
+      "aria-multiselectable"
+    ],
+    "keyboard": {
+      "ArrowDown": "Open listbox or move highlight down",
+      "ArrowUp": "Move highlight up",
+      "Enter": "Select highlighted option or add free-text chip",
+      "Backspace": "Remove last chip when input is empty",
+      "Escape": "Close listbox and clear search"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order; arrow keys within listbox"
+  },
+  "figma": {
+    "nodeId": "124:9357",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=124-9357",
+    "propertyMapping": [
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only Figma property. In code, states come from CSS pseudo-classes and data attributes (data-error, data-disabled, data-open, data-has-chips)."
+      },
+      {
+        "figmaProperty": "empty",
+        "reactProp": null,
+        "note": "Figma boolean. In code, empty state is derived from values.length === 0."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": null,
+        "note": "Figma text shows typed search text. In code, managed by internal search state."
+      },
+      {
+        "figmaProperty": "placeholder",
+        "reactProp": "placeholder",
+        "note": "Direct mapping. Default 'Type...' in both Figma and code."
+      },
+      {
+        "figmaProperty": "error",
+        "reactProp": "error",
+        "valueMapping": {
+          "true": "string (truthy)",
+          "false": "undefined"
+        },
+        "note": "Figma boolean. In code, error is a string — truthy = error state + message."
+      },
+      {
+        "figmaProperty": "errorText",
+        "reactProp": "error",
+        "note": "Figma errorText content maps to the React error string prop value."
+      },
+      {
+        "figmaProperty": "tag1",
+        "reactProp": "values",
+        "note": "Figma booleans tag1/tag2/tag3 toggle individual chips. In code, chips are driven by the values array."
+      },
+      {
+        "figmaProperty": "tag2",
+        "reactProp": "values",
+        "note": "See tag1 note."
+      },
+      {
+        "figmaProperty": "tag3",
+        "reactProp": "values",
+        "note": "See tag1 note."
+      }
+    ]
+  },
+  "useWhen": [
+    "Multi-value selection from a predefined list (tags, categories, assignees)",
+    "Free-text token entry with removable chips",
+    "Multi-select autocomplete with type-to-filter"
+  ],
+  "doNotUseFor": [
+    "Single-value selection — use Dropdown or DropdownAutocomplete",
+    "Non-removable labels — use Badge",
+    "Rich text input — use a rich text editor",
+    "Single-line text — use InputField"
+  ],
+  "relations": [
+    "ChipRegular",
+    "Dropdown",
+    "DropdownAutocomplete",
+    "InputField",
+    "ListItem",
+    "FormField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-scope",
+      "description": "Figma 'chips' component does not include label, hint, or listbox rows. In code, ChipInput renders label, field box with chips + input, optional listbox, and hint/error as a single component.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-chip-model",
+      "description": "Figma uses boolean toggles (tag1, tag2, tag3) for up to 3 chips. In code, chips are driven by a dynamic values array with unlimited entries and wrapping.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-27T14:30:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "eb382620ce110251"
+  }
+}

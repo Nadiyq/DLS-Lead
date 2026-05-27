@@ -24,8 +24,8 @@ These files document the DLS components that agents should reach for first. Stor
 | Need | Spec |
 |---|---|
 | Status or metadata pill | [badge.md](badge.md) |
-| Read-only tag / label | [chip.md](chip.md) |
-| Interactive tag | [chip-regular.md](chip-regular.md) |
+| Internal chip content/action part | [chip.md](chip.md) |
+| Interactive tag or editable value | [chip-regular.md](chip-regular.md) |
 | User / entity image | [avatar.md](avatar.md) |
 | Overlapping user group | [avatar-stack.md](avatar-stack.md) |
 | Semantic icon badge | [icon-shape.md](icon-shape.md) |

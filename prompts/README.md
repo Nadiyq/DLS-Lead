@@ -35,6 +35,7 @@ Copy these prompts into Claude, Cursor, Codex, or another coding agent when you 
 | Build a form or dialog workflow | [form-dialog.md](form-dialog.md) |
 | Build a dropdown, menu, or popover list | [dropdown-menu.md](dropdown-menu.md) |
 | Scaffold/update a component from Figma | [component-scaffold-from-figma.md](component-scaffold-from-figma.md) |
+| Continue AI-ready component rollout | [component-rollout.md](component-rollout.md) |
 | Audit and fix an existing component | [audit-fix-component.md](audit-fix-component.md) |
 | Add or extend tokens safely | [token-addition.md](token-addition.md) |
 | Build a dashboard with KPI cards and charts | [dashboard-page.md](dashboard-page.md) |
@@ -55,7 +56,8 @@ Copy these prompts into Claude, Cursor, Codex, or another coding agent when you 
 - Use `lucide-react` icons only.
 - Use semantic HTML, accessible names, keyboard behavior, ARIA state relationships, and `prefers-reduced-motion` guards for spatial motion.
 - Test user-facing interactive UI with `getByRole` and accessible name, not `getByTestId`.
-- Use the official Figma MCP for Figma work; do not use Figma console.
+- Use the official Figma MCP for Figma work; do not use Figma console,
+  Desktop Bridge, `mcp__figma_console__`, or bridge-based fallback tools.
 
 ## When To Stop
 

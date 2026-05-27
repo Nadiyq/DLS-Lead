@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Eye as EyeIcon, EyeOff as EyeOffIcon, ChevronDown as ChevronDownIcon } from 'lucide-react';
-import { Chip, type ChipSize } from '../chip/Chip';
+import { Chip } from '../chip/Chip';
 import './filter-chip.css';
 
 /* ---------------------------------------------------------------------------
    Types
    --------------------------------------------------------------------------- */
 
-export type FilterChipSize = ChipSize;
+export type FilterChipSize = 'm' | 's';
 
 export interface FilterChipProps {
   /** Filter category label (e.g. "Users", "Date", "Status") */
@@ -30,6 +30,7 @@ export interface FilterChipProps {
   open?: boolean;
   /** Called when dropdown open state changes */
   onOpenChange?: (open: boolean) => void;
+  /** Additional class name for the root filter chip. */
   className?: string;
 }
 

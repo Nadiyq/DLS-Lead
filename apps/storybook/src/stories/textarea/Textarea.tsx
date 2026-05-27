@@ -54,6 +54,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const hasError = !!error;
     const reactId = React.useId();
     const inputId = id || reactId;
+    const hintId = `${inputId}-hint`;
     const charCount = typeof value === 'string' ? value.length : 0;
     const showCounter = showCount || maxLength !== undefined;
     const hasValue = value !== undefined && value !== '';
@@ -87,6 +88,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               disabled={disabled}
               value={value}
               maxLength={maxLength}
+              aria-invalid={hasError || undefined}
+              aria-describedby={(hint || hasError) ? hintId : undefined}
               {...props}
             />
             {showClear && (
@@ -134,6 +137,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
         {(hint || hasError) && (
           <div
+            id={hintId}
             className="dls-textarea__hint"
             data-error={hasError || undefined}
           >

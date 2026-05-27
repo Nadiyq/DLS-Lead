@@ -18,9 +18,14 @@ source_of_truth:
 
 ## Overview
 
-Use `Chip` as the base building block for read-only tags and labels. It supports leading content (icon, avatar, stacked avatars, flag, dot) and trailing content (chevron, cross).
+Use `Chip` as an internal building block for chip-like controls. It
+provides the content and action parts used by `ChipRegular` and
+`FilterChip`.
 
-For interactive chips with click/remove behavior, use `ChipRegular`.
+Do not use `Chip` alone in product UI. For passive status or metadata,
+use `Badge` or a text label. For removable, selectable, or editable
+tag-like UI, use `ChipRegular`. For table/data-view filters, use
+`FilterChip`.
 
 ## Anatomy
 
@@ -35,9 +40,12 @@ For interactive chips with click/remove behavior, use `ChipRegular`.
 
 ## Tokens Used
 
-- `--dls-color-component-chip-*`
-- `--dls-radius-component-chip`
+- `--dls-color-component-chip-fg-base`
+- `--dls-color-text-secondary`
+- `--dls-color-surface-base`
+- `--dls-color-intent-*-base`
 - `--dls-spacing-*`
+- `--dls-text-m-*`
 
 ## Props / API
 
@@ -52,13 +60,14 @@ For interactive chips with click/remove behavior, use `ChipRegular`.
 
 ## States
 
-- static (display only)
+- static content/action part only
+- visual state is controlled by the parent component
 
 ## Code Example
 
 ```tsx
-<Chip label="Active" dot="success" size="m" />
-<Chip label="Nadiia" avatar={{ initials: "NA" }} cross />
+<ChipRegular label="Active" variant="dot" intent="success" size="m" />
+<FilterChip label="Status" isVisible valueSummary={<span>Active</span>} />
 ```
 
 ## Cross-References

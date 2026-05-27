@@ -160,3 +160,13 @@
 .dls-search-field__box[data-disabled] .dls-search-field__icon {
   color: var(--dls-color-text-disabled);
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-search-field__box {
+    transition: none;
+  }
+}

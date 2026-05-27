@@ -46,7 +46,7 @@ export const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
           className="dls-search-field__box"
           data-disabled={disabled || undefined}
         >
-          <span className="dls-search-field__icon">
+          <span className="dls-search-field__icon" aria-hidden="true">
             <SearchIcon />
           </span>
 

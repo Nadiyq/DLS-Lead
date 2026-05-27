@@ -1,0 +1,231 @@
+{
+  "name": "Dropdown",
+  "kebabName": "dropdown",
+  "category": "input / selection",
+  "description": "Select field with bordered trigger, chevron, listbox of ListItem rows, and optional label, hint, error, leading icon/avatar. Supports keyboard navigation.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "options",
+      "type": "DropdownOption[]",
+      "required": true,
+      "description": "Available options."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Currently selected value."
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Callback when selection changes."
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "required": false,
+      "default": "Select",
+      "description": "Placeholder text."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text."
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "required": false,
+      "description": "Hint text."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "required": false,
+      "description": "Error message — puts the field in error state."
+    },
+    {
+      "name": "leadingIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading icon for the trigger (shown when no value selected)."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disables the dropdown."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only — do NOT use for custom styling."
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "description": "ID for the trigger button. Auto-generated if not provided."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-hover",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input",
+    "--dls-color-component-dropdown-bg",
+    "--dls-color-component-dropdown-border",
+    "--dls-radius-component-dropdown"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Dropdown trigger hover changes border color only — no background OKLCH shift or overlay on the main surface. ListItem rows use their own hover treatment. Keyboard highlight on list items uses the state hover overlay.",
+    "available": [
+      ":hover:not(:disabled):not([data-error])",
+      ":focus-visible",
+      "[data-open]",
+      "[data-error]",
+      ":disabled"
+    ],
+    "tokens": [
+      "--dls-color-component-input-border-hover",
+      "--dls-color-component-input-border-focus",
+      "--dls-color-component-input-border-disabled",
+      "--dls-color-component-input-bg-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["ListItem"],
+    "forbiddenChildren": [],
+    "maxDepth": 2,
+    "minItems": 0,
+    "recommendedItems": 3
+  },
+  "accessibility": {
+    "semanticElement": "button[aria-haspopup=listbox]",
+    "requiredAria": [
+      "aria-haspopup",
+      "aria-expanded",
+      "aria-controls",
+      "aria-invalid",
+      "aria-describedby"
+    ],
+    "keyboard": {
+      "ArrowDown": "Open listbox or move highlight down",
+      "ArrowUp": "Move highlight up",
+      "Enter": "Select highlighted option",
+      "Escape": "Close listbox"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order; arrow keys within listbox"
+  },
+  "figma": {
+    "nodeId": "124:8681",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=124-8681",
+    "propertyMapping": [
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only Figma property. In code, states come from CSS pseudo-classes (:hover, :focus-visible, :disabled) and data attributes (data-error, data-open)."
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": null,
+        "note": "Figma 'type' (text | avatar | icon) controls leading content. In code, leading content is determined by option.icon, option.avatarSrc/avatarInitials, or the leadingIcon prop."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "value",
+        "note": "Figma 'text' shows selected item label. In code, resolved from options array by matching value prop."
+      },
+      {
+        "figmaProperty": "placeholder",
+        "reactProp": "placeholder",
+        "note": "Direct mapping. Default 'Select' in both Figma and code."
+      },
+      {
+        "figmaProperty": "error",
+        "reactProp": "error",
+        "valueMapping": {
+          "true": "string (truthy)",
+          "false": "undefined"
+        },
+        "note": "Figma boolean. In code, error is a string — truthy = error state + message."
+      },
+      {
+        "figmaProperty": "errorText",
+        "reactProp": "error",
+        "note": "Figma errorText content maps to the React error string prop value."
+      },
+      {
+        "figmaProperty": "clear",
+        "reactProp": null,
+        "note": "Figma boolean toggles clear button. Dropdown in code does not support clearable — only DropdownAutocomplete has clear."
+      },
+      {
+        "figmaProperty": "chevronDown",
+        "reactProp": null,
+        "note": "Figma boolean toggles chevron. In code, chevron is always rendered."
+      },
+      {
+        "figmaProperty": "change",
+        "reactProp": "leadingIcon",
+        "note": "Figma 'change' is an icon swap slot. In code, mapped to the leadingIcon prop or option.icon."
+      }
+    ]
+  },
+  "useWhen": [
+    "Choosing from a predefined list of options",
+    "Select fields with icon or avatar leading content",
+    "Form fields requiring single-value selection with label and validation"
+  ],
+  "doNotUseFor": [
+    "Searchable/filterable selection — use DropdownAutocomplete",
+    "Multi-select — use a dedicated multi-select component",
+    "Action menus — use ContextMenu or Dropdown-specific action variants",
+    "Navigation — use Tabs or Sidebar"
+  ],
+  "relations": [
+    "DropdownAutocomplete",
+    "InputField",
+    "ListItem",
+    "FormField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-shared-component",
+      "description": "Figma uses a single 'dropdown+autocomplete' component set for both Dropdown and DropdownAutocomplete. In code, they are separate components. This manifest covers only Dropdown (non-searchable select).",
+      "severity": "low"
+    },
+    {
+      "area": "figma-scope",
+      "description": "Figma component does not include label or hint rows. In code, Dropdown renders label, trigger, and hint/error as a single component. Label and hint are code-only props.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-clear",
+      "description": "Figma 'clear' boolean exists on the shared component set. In code, Dropdown does not support clearable — clearing is only available in DropdownAutocomplete.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-27T14:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "05c85c4181d10aa0"
+  }
+}

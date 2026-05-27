@@ -174,14 +174,14 @@ export const IconOnly: Story = {
       <Section title="Icon-only M">
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           {VARIANTS.filter((v) => v !== 'link').map((v) => (
-            <Button key={v} variant={v} intent="primary" size="m" icon={<PlusIcon />} iconOnly />
+            <Button key={v} variant={v} intent="primary" size="m" icon={<PlusIcon />} iconOnly aria-label={`Add item with ${v} button`} />
           ))}
         </div>
       </Section>
       <Section title="Icon-only S">
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           {VARIANTS.filter((v) => v !== 'link').map((v) => (
-            <Button key={v} variant={v} intent="primary" size="s" icon={<PlusIcon />} iconOnly />
+            <Button key={v} variant={v} intent="primary" size="s" icon={<PlusIcon />} iconOnly aria-label={`Add item with ${v} small button`} />
           ))}
         </div>
       </Section>

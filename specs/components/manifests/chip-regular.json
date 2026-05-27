@@ -1,0 +1,303 @@
+{
+  "name": "ChipRegular",
+  "kebabName": "chip-regular",
+  "category": "interactive chip / action",
+  "description": "Interactive chip for compact editable, removable, or selectable values. Composes a Chip content part with an optional chevron or remove action part.",
+  "subComponents": [],
+  "variants": [
+    "filled",
+    "outline",
+    "soft",
+    "dot"
+  ],
+  "intents": [
+    "neutral",
+    "info",
+    "success",
+    "warning",
+    "danger"
+  ],
+  "sizes": [
+    "m",
+    "s",
+    "xs"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Primary label."
+    },
+    {
+      "name": "variant",
+      "type": "ChipRegularVariant",
+      "required": false,
+      "default": "outline",
+      "enum": [
+        "filled",
+        "outline",
+        "soft",
+        "dot"
+      ],
+      "description": "Visual variant."
+    },
+    {
+      "name": "intent",
+      "type": "ChipRegularIntent",
+      "required": false,
+      "default": "neutral",
+      "enum": [
+        "neutral",
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "description": "Color intent."
+    },
+    {
+      "name": "size",
+      "type": "ChipRegularSize",
+      "required": false,
+      "default": "m",
+      "enum": [
+        "xs",
+        "s",
+        "m"
+      ],
+      "description": "Size."
+    },
+    {
+      "name": "leadingIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading icon element."
+    },
+    {
+      "name": "avatar",
+      "type": "ChipAvatar",
+      "required": false,
+      "description": "Single avatar rendered before the label."
+    },
+    {
+      "name": "chevron",
+      "type": "boolean",
+      "required": false,
+      "description": "Show trailing chevron as the second part."
+    },
+    {
+      "name": "onRemove",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Remove callback; shows trailing cross as the second part."
+    },
+    {
+      "name": "onClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Click handler; makes the chip interactive."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disable chip interaction and apply disabled tokens."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root chip."
+    }
+  ],
+  "tokens": [
+    "--dls-color-border-base",
+    "--dls-color-border-disabled",
+    "--dls-color-border-subtle",
+    "--dls-color-component-chip-fg-disabled",
+    "--dls-color-intent-danger-base",
+    "--dls-color-intent-danger-border",
+    "--dls-color-intent-danger-on-base",
+    "--dls-color-intent-danger-subtle",
+    "--dls-color-intent-danger-text",
+    "--dls-color-intent-info-base",
+    "--dls-color-intent-info-border",
+    "--dls-color-intent-info-on-base",
+    "--dls-color-intent-info-subtle",
+    "--dls-color-intent-info-text",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-border",
+    "--dls-color-intent-neutral-on-base",
+    "--dls-color-intent-neutral-subtle",
+    "--dls-color-intent-neutral-text",
+    "--dls-color-intent-success-base",
+    "--dls-color-intent-success-border",
+    "--dls-color-intent-success-on-base",
+    "--dls-color-intent-success-subtle",
+    "--dls-color-intent-success-text",
+    "--dls-color-intent-warning-base",
+    "--dls-color-intent-warning-border",
+    "--dls-color-intent-warning-on-base",
+    "--dls-color-intent-warning-subtle",
+    "--dls-color-intent-warning-text",
+    "--dls-color-surface-base",
+    "--dls-color-surface-disabled",
+    "--dls-font-family",
+    "--dls-font-weight-normal",
+    "--dls-radius-component-chip",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-state-focus-ring-color",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "All ChipRegular variants keep their base surface and layer hover/pressed overlay tokens over the chip. Focus uses the shared focus-ring token.",
+    "available": [
+      "data-variant",
+      "data-intent",
+      "data-size",
+      "data-disabled",
+      ":hover:not(:disabled):not([data-disabled])",
+      ":active:not([data-disabled])",
+      ":focus-visible",
+      ".dls-chip-regular__action:focus-visible"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [
+      "Chip"
+    ],
+    "forbiddenChildren": [
+      "Button",
+      "InputField",
+      "Dropdown",
+      "Tooltip"
+    ],
+    "forbiddenParents": [
+      "Button"
+    ],
+    "maxDepth": 1,
+    "minItems": 1,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=button] when onClick is provided without a second part; button for remove or chevron action",
+    "requiredAria": [
+      "aria-label on remove action",
+      "aria-label on chevron action when onClick is provided"
+    ],
+    "keyboard": {
+      "Space": "Activate clickable root chip when onClick is provided",
+      "Enter": "Activate clickable root chip when onClick is provided",
+      "Tab": "Move focus to root or action button in natural tab order"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "45:1790",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=45-1790",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s",
+          "XS": "xs"
+        }
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "variant",
+        "valueMapping": {
+          "filled": "filled",
+          "outline": "outline",
+          "soft": "soft",
+          "dot": "dot"
+        },
+        "note": "Figma property 'type' is the React ChipRegular visual variant."
+      },
+      {
+        "figmaProperty": "status",
+        "reactProp": "intent",
+        "valueMapping": {
+          "neutral": "neutral",
+          "info": "info",
+          "success": "success",
+          "warning": "warning",
+          "danger": "danger"
+        },
+        "note": "Figma property 'status' is the React ChipRegular intent."
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only Figma property. In code, state comes from CSS pseudo-classes and data-disabled."
+      },
+      {
+        "figmaProperty": "disabled?",
+        "reactProp": "disabled",
+        "valueMapping": {
+          "false": "false",
+          "true": "true"
+        }
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "label"
+      },
+      {
+        "figmaProperty": "component set",
+        "reactProp": null,
+        "valueMapping": {
+          "regular": "ChipRegular"
+        },
+        "note": "This Figma set represents the interactive regular chip family."
+      }
+    ]
+  },
+  "useWhen": [
+    "A compact value is clickable, removable, selectable, or editable",
+    "A row status can be changed inline from a chip control",
+    "A token or tag value can be removed",
+    "A compact editable value needs a chevron or remove action"
+  ],
+  "doNotUseFor": [
+    "Passive status or metadata - use Badge or a text label",
+    "Standalone content/action parts - use Chip only inside chip-family components",
+    "Table/data-view filter label + value pairs - use FilterChip",
+    "Primary or secondary actions - use Button",
+    "Navigation"
+  ],
+  "relations": [
+    "Chip",
+    "FilterChip",
+    "Badge",
+    "ChipInput"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "The filled variant divider uses an inline OKLCH alpha expression derived from on-base text because no dedicated chip divider token exists yet.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-27T09:08:57.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "fddd92b682bd57bd"
+  }
+}

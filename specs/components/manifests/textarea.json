@@ -1,0 +1,210 @@
+{
+  "name": "Textarea",
+  "kebabName": "textarea",
+  "category": "form input",
+  "description": "Multi-line text field with optional character counter, clear button, send action, used-percent indicator, and hint/error feedback. Extends HTML textarea attributes (except children).",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text above the textarea."
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "required": false,
+      "description": "Hint text below the textarea."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "required": false,
+      "description": "Error message — puts the field in error state."
+    },
+    {
+      "name": "maxLength",
+      "type": "number",
+      "required": false,
+      "description": "Maximum character count. Shows counter in bottom bar when set."
+    },
+    {
+      "name": "showCount",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show character counter even without maxLength (displays current count)."
+    },
+    {
+      "name": "showUsedPercent",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show 'N% used' indicator in the bottom bar (requires maxLength)."
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show a clear (X) button when the textarea has value."
+    },
+    {
+      "name": "onClear",
+      "type": "() => void",
+      "required": false,
+      "description": "Callback when the clear button is clicked."
+    },
+    {
+      "name": "onSend",
+      "type": "() => void",
+      "required": false,
+      "description": "Callback for the send action. When provided, a send button renders in the bottom bar."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only — do NOT use for custom styling."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-hover",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input",
+    "--dls-radius-component-button"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Textarea box hover changes border color only — no background OKLCH shift or overlay. The embedded send button uses OKLCH L-shift for its hover state, but that is a sub-element action, not the main component surface.",
+    "available": [
+      ":hover:not(:disabled):not([data-disabled]):not([data-error])",
+      ":focus-within:not([data-disabled]):not([data-error])",
+      "[data-error]",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-color-component-input-border-hover",
+      "--dls-color-component-input-border-focus",
+      "--dls-color-component-input-border-disabled",
+      "--dls-color-component-input-bg-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "textarea",
+    "requiredAria": [
+      "aria-invalid",
+      "aria-describedby"
+    ],
+    "keyboard": {
+      "Tab": "Move focus to/from the textarea and embedded buttons",
+      "Escape": "No default — consumer may wire to blur or cancel"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6433:6439",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6433-6439",
+    "propertyMapping": [
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only Figma property. In code, states come from CSS pseudo-classes (:hover, :focus-within) and data attributes (data-error, data-disabled)."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "value",
+        "note": "Figma 'text' maps to the HTML textarea 'value' attribute passed through TextareaProps."
+      },
+      {
+        "figmaProperty": "placeholder",
+        "reactProp": "placeholder",
+        "note": "HTML attribute pass-through from Omit<React.TextareaHTMLAttributes, 'children'>."
+      },
+      {
+        "figmaProperty": "error",
+        "reactProp": "error",
+        "valueMapping": {
+          "true": "string (truthy)",
+          "false": "undefined"
+        },
+        "note": "Figma 'error' is a boolean toggling the error row. In code, 'error' is a string — truthy string = error state + message."
+      },
+      {
+        "figmaProperty": "errorText",
+        "reactProp": "error",
+        "note": "Figma 'errorText' content maps to the React 'error' string prop value."
+      },
+      {
+        "figmaProperty": "bottomControls",
+        "reactProp": null,
+        "note": "Figma boolean toggles entire bottom bar. In code, bottom bar visibility is derived: shows when showCount, maxLength, showUsedPercent, or onSend is set."
+      },
+      {
+        "figmaProperty": "characters",
+        "reactProp": "showCount",
+        "valueMapping": {
+          "true": "true (or maxLength set)",
+          "false": "false"
+        },
+        "note": "Figma 'characters' toggles counter. In code, counter shows when showCount=true or maxLength is set."
+      },
+      {
+        "figmaProperty": "sendBtn",
+        "reactProp": "onSend",
+        "note": "Figma boolean toggles send button. In code, send button renders when onSend callback is provided."
+      },
+      {
+        "figmaProperty": "used",
+        "reactProp": "showUsedPercent",
+        "note": "Figma boolean toggles '% used' text. Maps to React showUsedPercent prop (also requires maxLength)."
+      }
+    ]
+  },
+  "useWhen": [
+    "Multi-line text entry with character counting or limits",
+    "Comment or message composition with send action",
+    "Description or bio fields needing usage feedback"
+  ],
+  "doNotUseFor": [
+    "Single-line text — use InputField",
+    "Rich text editing — use a rich text editor",
+    "Chat-style messaging — use MessageComposer"
+  ],
+  "relations": [
+    "InputField",
+    "FormField",
+    "MessageComposer"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-scope",
+      "description": "Figma 'text-area' component does not include label or hint rows. In code, Textarea renders label, box, and hint/error as a single component. Label and hint are code-only props with no Figma property counterpart.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-27T12:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "003e5e887c39fb6e"
+  }
+}

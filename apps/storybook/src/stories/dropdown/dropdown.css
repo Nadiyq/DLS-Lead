@@ -240,3 +240,14 @@
   width: 100%;
   height: 100%;
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-dropdown__trigger,
+  .dls-dropdown__chevron {
+    transition: none;
+  }
+}

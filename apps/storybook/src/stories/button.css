@@ -297,3 +297,9 @@
 .dls-button[data-variant="link"]:disabled {
   color: var(--dls-color-text-disabled);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-button {
+    transition: none;
+  }
+}

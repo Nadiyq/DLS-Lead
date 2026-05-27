@@ -1,0 +1,200 @@
+{
+  "name": "Accordion",
+  "kebabName": "accordion",
+  "category": "layout / disclosure",
+  "description": "Collapsible disclosure for sectioning long-form content into expand/collapse panels. Use AccordionItem alone, or wrap multiple in Accordion for a grouped list.",
+  "subComponents": [
+    "AccordionItem"
+  ],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Header text displayed in the trigger bar. (AccordionItem)"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Collapsible content shown when expanded. On Accordion (group), one or more AccordionItem elements. (Both)"
+    },
+    {
+      "name": "defaultOpen",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Start in the open state. (AccordionItem)"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disable all interaction. (AccordionItem)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. (Both)"
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-accordion-item-border",
+    "--dls-color-component-accordion-item-title-fg",
+    "--dls-color-component-accordion-item-content-fg",
+    "--dls-color-component-accordion-item-bg-hover",
+    "--dls-color-component-accordion-item-bg-pressed",
+    "--dls-shadow-component-accordion-item-focus-ring",
+    "--dls-state-component-accordion-item-disabled-opacity",
+    "--dls-radius-component-accordion"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "AccordionItem trigger has no base fill — it sits on the page background. Overlay tokens produce the hover/pressed tint. Figma's overlay representation is 1:1 with code for this component.",
+    "available": [
+      "data-open",
+      ":hover:not(:disabled)",
+      ":active:not(:disabled)",
+      ":focus-visible",
+      ":disabled"
+    ],
+    "tokens": [
+      "--dls-color-component-accordion-item-bg-hover",
+      "--dls-color-component-accordion-item-bg-pressed",
+      "--dls-shadow-component-accordion-item-focus-ring",
+      "--dls-state-component-accordion-item-disabled-opacity"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [
+      "AccordionItem"
+    ],
+    "forbiddenChildren": [
+      "Accordion"
+    ],
+    "maxDepth": 1,
+    "minItems": 2,
+    "recommendedItems": 3
+  },
+  "accessibility": {
+    "semanticElement": "button",
+    "requiredAria": [
+      "aria-expanded",
+      "aria-controls"
+    ],
+    "keyboard": {
+      "Space": "Toggle open/close",
+      "Enter": "Toggle open/close",
+      "Tab": "Move between triggers"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6489:1187",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6489-1187",
+    "propertyMapping": [
+      {
+        "figmaProperty": "active",
+        "reactProp": "defaultOpen",
+        "valueMapping": {
+          "Off": "false",
+          "On": "true"
+        },
+        "note": "Figma 'active' controls initial visual state. In code, defaultOpen sets the initial useState value; runtime open state is internal."
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only Figma property. In code, states come from native CSS pseudo-classes (:hover, :focus-visible, :active, :disabled), not a prop."
+      },
+      {
+        "figmaProperty": "title",
+        "reactProp": "title"
+      },
+      {
+        "figmaProperty": "slot-content",
+        "reactProp": "children"
+      },
+      {
+        "figmaProperty": "(disabled)",
+        "reactProp": "disabled",
+        "note": "Not a first-class Figma variant. Implied via state=disabled or opacity treatment. In code, native button[disabled]."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "accordion-item",
+        "nodeId": "6489:1187",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6489-1187",
+        "propertyMapping": [
+          {
+            "figmaProperty": "active",
+            "reactProp": "defaultOpen",
+            "valueMapping": {
+              "Off": "false",
+              "On": "true"
+            }
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only. States come from CSS pseudo-classes."
+          },
+          {
+            "figmaProperty": "title",
+            "reactProp": "title"
+          },
+          {
+            "figmaProperty": "slot-content",
+            "reactProp": "children"
+          },
+          {
+            "figmaProperty": "(disabled)",
+            "reactProp": "disabled",
+            "note": "Not a first-class Figma variant. In code, native button[disabled]."
+          }
+        ]
+      },
+      {
+        "name": "accordion",
+        "nodeId": "6489:2618",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6489-2618",
+        "propertyMapping": [
+          {
+            "figmaProperty": "Slot",
+            "reactProp": "children",
+            "note": "Figma Slot accepts nested AccordionItem instances. In code, children prop takes one or more <AccordionItem> elements."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Progressively revealing supporting content (FAQ, settings groups, item details)",
+    "Reducing vertical density on read-heavy pages",
+    "Grouping related, independently-expandable sections"
+  ],
+  "doNotUseFor": [
+    "Primary navigation — use Sidebar or Tabs",
+    "Mutually exclusive views — use Tabs",
+    "Required form steps — use Stepper or full-page flow",
+    "Always-visible content — render inline",
+    "Nesting inside another Accordion (max depth = 1)"
+  ],
+  "relations": [
+    "Tabs",
+    "Sidebar"
+  ],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-05-26T12:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "9a16badeac11043c"
+  }
+}

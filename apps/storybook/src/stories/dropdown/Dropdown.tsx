@@ -69,6 +69,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
     const listboxId = `${triggerId}-listbox`;
 
     const hasError = !!error;
+    const hintId = `${triggerId}-hint`;
     const selected = options.find((o) => o.value === value);
     const hasLeading = !!(leadingIcon || selected?.icon || selected?.avatarSrc || selected?.avatarInitials);
 
@@ -167,6 +168,8 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-controls={isOpen ? listboxId : undefined}
+          aria-invalid={hasError || undefined}
+          aria-describedby={(hint || hasError) ? hintId : undefined}
         >
           {renderLeading(selected) || renderLeading()}
 
@@ -219,7 +222,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
         </div>
 
         {(hint || hasError) && (
-          <div className="dls-dropdown__hint" data-error={hasError || undefined}>
+          <div id={hintId} className="dls-dropdown__hint" data-error={hasError || undefined}>
             {hasError && (
               <span className="dls-dropdown__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />

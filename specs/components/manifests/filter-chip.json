@@ -1,0 +1,244 @@
+{
+  "name": "FilterChip",
+  "kebabName": "filter-chip",
+  "category": "filter / control",
+  "description": "Chip-family filter control with a visibility label part, value summary, optional chevron action, and optional dropdown/editor panel.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [
+    "m",
+    "s"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Filter category label."
+    },
+    {
+      "name": "labelIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading icon for the label part; defaults to Eye or EyeOff based on visibility."
+    },
+    {
+      "name": "isVisible",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Whether the filter is applied to the table."
+    },
+    {
+      "name": "onVisibilityChange",
+      "type": "(visible: boolean) => void",
+      "required": false,
+      "description": "Called when the label part is clicked."
+    },
+    {
+      "name": "valueSummary",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Summary content rendered in the value part."
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Dropdown panel content rendered when the value chevron is clicked."
+    },
+    {
+      "name": "size",
+      "type": "FilterChipSize",
+      "required": false,
+      "default": "m",
+      "enum": [
+        "m",
+        "s"
+      ],
+      "description": "Size."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled."
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": false,
+      "description": "Controlled open state."
+    },
+    {
+      "name": "onOpenChange",
+      "type": "(open: boolean) => void",
+      "required": false,
+      "description": "Called when dropdown open state changes."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root filter chip."
+    }
+  ],
+  "tokens": [
+    "--dls-color-border-base",
+    "--dls-color-border-disabled",
+    "--dls-color-border-subtle",
+    "--dls-color-component-chip-fg-disabled",
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-intent-neutral-text",
+    "--dls-color-surface-base",
+    "--dls-color-surface-disabled",
+    "--dls-font-family",
+    "--dls-font-weight-normal",
+    "--dls-radius-component-chip",
+    "--dls-radius-component-input",
+    "--dls-shadow-surface-md",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-state-focus-ring-color",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Label and value action buttons layer hover/pressed overlay tokens over the outline chip bar. Focus uses the shared focus-ring token, and hidden/disabled states swap to chip disabled foreground plus disabled semantic surface and border tokens.",
+    "available": [
+      "data-size",
+      "data-disabled",
+      "data-hidden",
+      "data-open",
+      ":hover:not(:disabled)",
+      ":active:not(:disabled)",
+      ":focus-visible",
+      ":disabled"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [
+      "List",
+      "ListItem",
+      "Checkbox",
+      "SearchField",
+      "CalendarRange",
+      "Button"
+    ],
+    "forbiddenChildren": [
+      "FilterChip",
+      "ChipRegular"
+    ],
+    "forbiddenParents": [
+      "Button"
+    ],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div wrapper with native button controls",
+    "requiredAria": [
+      "aria-pressed on label button",
+      "aria-expanded on value action when editor exists",
+      "aria-haspopup on value action when editor exists"
+    ],
+    "keyboard": {
+      "Space": "Activate focused label or value action button",
+      "Enter": "Activate focused label or value action button",
+      "Escape": "Close the open editor",
+      "Tab": "Move focus through label and value action buttons in natural order"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6455:7661",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6455-7661",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s"
+        }
+      },
+      {
+        "figmaProperty": "hidden",
+        "reactProp": "isVisible",
+        "valueMapping": {
+          "false": "true",
+          "true": "false"
+        },
+        "note": "Figma names the property hidden; React exposes the positive state as isVisible."
+      },
+      {
+        "figmaProperty": "hidden",
+        "reactProp": "labelIcon",
+        "valueMapping": {
+          "false": "Eye",
+          "true": "EyeOff"
+        },
+        "note": "The default label icon follows visibility state unless labelIcon is provided."
+      },
+      {
+        "figmaProperty": "component set",
+        "reactProp": null,
+        "valueMapping": {
+          "filter": "FilterChip"
+        },
+        "note": "This Figma set represents the filter chip family."
+      }
+    ]
+  },
+  "useWhen": [
+    "A table or data-view filter must stay visible as a chip",
+    "Clicking the label part toggles whether the filter affects the view",
+    "Clicking the value chevron opens a filter editor",
+    "A filter value summary must remain visible in a toolbar or filter row",
+    "Sorting or filter chips need a label part that reflects state"
+  ],
+  "doNotUseFor": [
+    "Passive status or metadata - use Badge or a text label",
+    "Removable tags or editable row values - use ChipRegular",
+    "Standalone chip content/action parts - use Chip only inside chip-family components",
+    "Primary or secondary actions - use Button",
+    "Navigation"
+  ],
+  "relations": [
+    "Chip",
+    "ChipRegular",
+    "List",
+    "ListItem",
+    "SearchField",
+    "Button"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-scope",
+      "description": "Figma exposes only hidden and size for the filter set. React exposes label, valueSummary, children, open state, and callbacks required for real product filter behavior.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-27T09:05:37.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "bf2ab95fad51b212"
+  }
+}

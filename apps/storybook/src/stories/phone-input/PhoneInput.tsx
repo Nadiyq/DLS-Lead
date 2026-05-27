@@ -68,6 +68,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     const hasError = !!error;
     const hasValue = value !== undefined && value !== '';
     const inputId = id || React.useId();
+    const hintId = `${inputId}-hint`;
 
     return (
       <div className={['dls-phone-input', className].filter(Boolean).join(' ')}>
@@ -95,7 +96,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             aria-label={`Selected country: ${country.name}. Click to change.`}
           >
             <span className="dls-phone-input__flag">{country.flag}</span>
-            <span className="dls-phone-input__chevron">
+            <span className="dls-phone-input__chevron" aria-hidden="true">
               <ChevronDownIcon />
             </span>
           </button>
@@ -110,6 +111,8 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             disabled={disabled}
             value={value}
             placeholder={placeholder}
+            aria-invalid={hasError || undefined}
+            aria-describedby={(hint || hasError) ? hintId : undefined}
             {...props}
           />
 
@@ -127,6 +130,7 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
 
         {(hint || hasError) && (
           <div
+            id={hintId}
             className="dls-phone-input__hint"
             data-error={hasError || undefined}
           >

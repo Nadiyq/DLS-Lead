@@ -1,0 +1,1006 @@
+{
+  "name": "Button",
+  "kebabName": "button",
+  "category": "action",
+  "description": "Native button action control for CTAs, row actions, toolbar actions, modal actions, and compact inline actions, with filled as the primary action treatment, outline as the secondary action treatment, soft as a tonal supporting treatment, dotted as a dashed optional-action treatment, ghost as a borderless tertiary treatment, and link as an inline text-style action treatment.",
+  "variants": [
+    "filled",
+    "outline",
+    "soft",
+    "dotted",
+    "ghost",
+    "link"
+  ],
+  "intents": [
+    "neutral",
+    "primary",
+    "info",
+    "success",
+    "warning",
+    "danger"
+  ],
+  "sizes": [
+    "m",
+    "s"
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "ButtonVariant",
+      "required": false,
+      "default": "filled",
+      "enum": [
+        "filled",
+        "outline",
+        "soft",
+        "dotted",
+        "ghost",
+        "link"
+      ],
+      "description": "Visual treatment for the action."
+    },
+    {
+      "name": "intent",
+      "type": "ButtonIntent",
+      "required": false,
+      "default": "neutral",
+      "enum": [
+        "neutral",
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "description": "Semantic intent that controls color tokens."
+    },
+    {
+      "name": "size",
+      "type": "ButtonSize",
+      "required": false,
+      "default": "m",
+      "enum": [
+        "m",
+        "s"
+      ],
+      "description": "Button height, typography, padding, and icon slot size."
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional leading icon. Use lucide-react icons."
+    },
+    {
+      "name": "iconEnd",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional trailing icon. Use lucide-react icons."
+    },
+    {
+      "name": "iconOnly",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Hide visible label content and render a square icon button. Requires an accessible name."
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Visible button label unless iconOnly is true."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Disable native button interaction and apply disabled tokens."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root button."
+    }
+  ],
+  "tokens": [
+    "--dls-color-border-base",
+    "--dls-color-border-disabled",
+    "--dls-color-intent-danger-base",
+    "--dls-color-intent-danger-border",
+    "--dls-color-intent-danger-on-base",
+    "--dls-color-intent-danger-subtle",
+    "--dls-color-intent-danger-text",
+    "--dls-color-intent-info-base",
+    "--dls-color-intent-info-border",
+    "--dls-color-intent-info-on-base",
+    "--dls-color-intent-info-strong",
+    "--dls-color-intent-info-subtle",
+    "--dls-color-intent-info-text",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-border",
+    "--dls-color-intent-neutral-on-base",
+    "--dls-color-intent-neutral-subtle",
+    "--dls-color-intent-neutral-text",
+    "--dls-color-intent-primary-base",
+    "--dls-color-intent-primary-border",
+    "--dls-color-intent-primary-on-base",
+    "--dls-color-intent-primary-strong",
+    "--dls-color-intent-primary-subtle",
+    "--dls-color-intent-primary-text",
+    "--dls-color-intent-success-base",
+    "--dls-color-intent-success-border",
+    "--dls-color-intent-success-on-base",
+    "--dls-color-intent-success-subtle",
+    "--dls-color-intent-success-text",
+    "--dls-color-intent-warning-base",
+    "--dls-color-intent-warning-border",
+    "--dls-color-intent-warning-on-base",
+    "--dls-color-intent-warning-subtle",
+    "--dls-color-intent-warning-text",
+    "--dls-color-surface-base",
+    "--dls-color-surface-disabled",
+    "--dls-color-text-disabled",
+    "--dls-font-family",
+    "--dls-font-weight-medium",
+    "--dls-radius-component-button",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-spacing-2-5",
+    "--dls-state-focus-ring-color",
+    "--dls-state-hover-overlay",
+    "--dls-state-l-delta-hover",
+    "--dls-state-l-delta-pressed",
+    "--dls-state-pressed-overlay",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height"
+  ],
+  "states": {
+    "implementation": "hybrid",
+    "rationale": "Filled and soft surfaces have a base fill and use OKLCH L-delta state shifts. Outline, dotted, ghost, and link variants are transparent and use state overlay tokens. Figma overlays are a visual simulation for filled/soft, not the exact code implementation.",
+    "available": [
+      ":hover:not(:disabled)",
+      ":active:not(:disabled)",
+      ":focus-visible",
+      ":disabled",
+      "data-variant",
+      "data-intent",
+      "data-size",
+      "data-icon-only"
+    ],
+    "tokens": [
+      "--dls-state-l-delta-hover",
+      "--dls-state-l-delta-pressed",
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": [
+      "Button",
+      "Link",
+      "InputField",
+      "Dropdown",
+      "Tooltip"
+    ],
+    "forbiddenParents": [
+      "Button"
+    ],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "button",
+    "requiredAria": [
+      "aria-label or aria-labelledby when iconOnly=true"
+    ],
+    "keyboard": {
+      "Space": "Activate the native button",
+      "Enter": "Activate the native button",
+      "Tab": "Move focus to and from the button in natural tab order"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "46:1829",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=46-1829",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s"
+        }
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "intent",
+        "valueMapping": {
+          "neutral": "neutral",
+          "primary": "primary",
+          "info": "info",
+          "success": "success",
+          "warning": "warning",
+          "danger": "danger"
+        },
+        "note": "Figma property 'type' is the React Button intent."
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+      },
+      {
+        "figmaProperty": "disabled",
+        "reactProp": "disabled"
+      },
+      {
+        "figmaProperty": "icon-left",
+        "reactProp": "icon",
+        "valueMapping": {
+          "false": "undefined",
+          "true": "ReactNode"
+        },
+        "note": "Visibility toggle for the leading icon slot."
+      },
+      {
+        "figmaProperty": "change-left",
+        "reactProp": "icon",
+        "note": "Nested icon instance selector. In React, pass the matching lucide-react node to icon."
+      },
+      {
+        "figmaProperty": "icon-right",
+        "reactProp": "iconEnd",
+        "valueMapping": {
+          "false": "undefined",
+          "true": "ReactNode"
+        },
+        "note": "Visibility toggle for the trailing icon slot."
+      },
+      {
+        "figmaProperty": "change-right",
+        "reactProp": "iconEnd",
+        "note": "Nested icon instance selector. In React, pass the matching lucide-react node to iconEnd."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "children"
+      },
+      {
+        "figmaProperty": "component set",
+        "reactProp": "variant",
+        "valueMapping": {
+          "button-filled": "filled"
+        },
+        "note": "This Figma set only represents filled buttons."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "button-filled",
+        "nodeId": "46:1829",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=46-1829",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "type",
+            "reactProp": "intent",
+            "note": "Figma property 'type' is the React Button intent."
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+          },
+          {
+            "figmaProperty": "disabled",
+            "reactProp": "disabled"
+          },
+          {
+            "figmaProperty": "icon-left",
+            "reactProp": "icon",
+            "note": "Visibility toggle for the leading icon slot."
+          },
+          {
+            "figmaProperty": "change-left",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "icon-right",
+            "reactProp": "iconEnd",
+            "note": "Visibility toggle for the trailing icon slot."
+          },
+          {
+            "figmaProperty": "change-right",
+            "reactProp": "iconEnd",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "children"
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "button-filled": "filled"
+            }
+          }
+        ]
+      },
+      {
+        "name": "button-outline",
+        "nodeId": "46:2087",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=46-2087",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent"
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+          },
+          {
+            "figmaProperty": "disabled",
+            "reactProp": "disabled"
+          },
+          {
+            "figmaProperty": "icon-left",
+            "reactProp": "icon",
+            "note": "Visibility toggle for the leading icon slot."
+          },
+          {
+            "figmaProperty": "change-left",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "icon-right",
+            "reactProp": "iconEnd",
+            "note": "Visibility toggle for the trailing icon slot."
+          },
+          {
+            "figmaProperty": "change-right",
+            "reactProp": "iconEnd",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "children"
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "button-outline": "outline"
+            },
+            "note": "This Figma set only represents outline buttons."
+          }
+        ]
+      },
+      {
+        "name": "button-soft",
+        "nodeId": "46:2333",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=46-2333",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent"
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+          },
+          {
+            "figmaProperty": "disabled",
+            "reactProp": "disabled"
+          },
+          {
+            "figmaProperty": "icon-left",
+            "reactProp": "icon",
+            "note": "Visibility toggle for the leading icon slot."
+          },
+          {
+            "figmaProperty": "change-left",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "icon-right",
+            "reactProp": "iconEnd",
+            "note": "Visibility toggle for the trailing icon slot."
+          },
+          {
+            "figmaProperty": "change-right",
+            "reactProp": "iconEnd",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "children"
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "button-soft": "soft"
+            },
+            "note": "This Figma set only represents soft buttons."
+          }
+        ]
+      },
+      {
+        "name": "button-dotted",
+        "nodeId": "6459:2555",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6459-2555",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent"
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+          },
+          {
+            "figmaProperty": "disabled",
+            "reactProp": "disabled"
+          },
+          {
+            "figmaProperty": "icon-left",
+            "reactProp": "icon",
+            "note": "Visibility toggle for the leading icon slot."
+          },
+          {
+            "figmaProperty": "change-left",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "icon-right",
+            "reactProp": "iconEnd",
+            "note": "Visibility toggle for the trailing icon slot."
+          },
+          {
+            "figmaProperty": "change-right",
+            "reactProp": "iconEnd",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "children"
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "button-dotted": "dotted"
+            },
+            "note": "This Figma set only represents dotted buttons."
+          }
+        ]
+      },
+      {
+        "name": "button-ghost",
+        "nodeId": "6459:2714",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6459-2714",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent"
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+          },
+          {
+            "figmaProperty": "disabled",
+            "reactProp": "disabled"
+          },
+          {
+            "figmaProperty": "icon-left",
+            "reactProp": "icon",
+            "note": "Visibility toggle for the leading icon slot."
+          },
+          {
+            "figmaProperty": "change-left",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "icon-right",
+            "reactProp": "iconEnd",
+            "note": "Visibility toggle for the trailing icon slot."
+          },
+          {
+            "figmaProperty": "change-right",
+            "reactProp": "iconEnd",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "children"
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "button-ghost": "ghost"
+            },
+            "note": "This Figma set only represents ghost buttons."
+          }
+        ]
+      },
+      {
+        "name": "button-link",
+        "nodeId": "6455:15475",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6455-15475",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent"
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property for normal, hover, focus, and pressed. In code, these states come from native CSS pseudo-classes."
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": "disabled",
+            "valueMapping": {
+              "normal": "false",
+              "hover": "false",
+              "focus": "false",
+              "pressed": "false",
+              "disabled": "true"
+            },
+            "note": "This Figma set uses state=disabled instead of a separate disabled property. In code, disabled is the native disabled attribute."
+          },
+          {
+            "figmaProperty": "icon-left",
+            "reactProp": "icon",
+            "note": "Visibility toggle for the leading icon slot."
+          },
+          {
+            "figmaProperty": "change-left",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "icon-right",
+            "reactProp": "iconEnd",
+            "note": "Visibility toggle for the trailing icon slot."
+          },
+          {
+            "figmaProperty": "change-right",
+            "reactProp": "iconEnd",
+            "note": "Nested icon instance selector."
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "children"
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "link": "link"
+            },
+            "note": "This Figma set is named link and represents Button link variants only. There is no icon-only link Figma set."
+          }
+        ]
+      },
+      {
+        "name": "icon-filled",
+        "nodeId": "6459:2813",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6459-2813",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent"
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+          },
+          {
+            "figmaProperty": "disabled",
+            "reactProp": "disabled"
+          },
+          {
+            "figmaProperty": "change",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector. In React, pass the matching lucide-react node to icon."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "icon-filled": "filled"
+            },
+            "note": "This Figma set only represents filled icon-only buttons."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "iconOnly",
+            "valueMapping": {
+              "icon-filled": "true"
+            },
+            "note": "Icon-only is fixed for this component set."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "children",
+            "valueMapping": {
+              "icon-filled": "undefined"
+            },
+            "note": "Visible label is omitted. Consuming code must provide aria-label or aria-labelledby."
+          }
+        ]
+      },
+      {
+        "name": "icon-soft",
+        "nodeId": "6459:3252",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6459-3252",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent"
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+          },
+          {
+            "figmaProperty": "disabled",
+            "reactProp": "disabled"
+          },
+          {
+            "figmaProperty": "change",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector. In React, pass the matching lucide-react node to icon."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "icon-soft": "soft"
+            },
+            "note": "This Figma set only represents soft icon-only buttons."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "iconOnly",
+            "valueMapping": {
+              "icon-soft": "true"
+            },
+            "note": "Icon-only is fixed for this component set."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "children",
+            "valueMapping": {
+              "icon-soft": "undefined"
+            },
+            "note": "Visible label is omitted. Consuming code must provide aria-label or aria-labelledby."
+          }
+        ]
+      },
+      {
+        "name": "icon-dotted",
+        "nodeId": "6459:3310",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6459-3310",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent"
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+          },
+          {
+            "figmaProperty": "disabled",
+            "reactProp": "disabled"
+          },
+          {
+            "figmaProperty": "change",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector. In React, pass the matching lucide-react node to icon."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "icon-dotted": "dotted"
+            },
+            "note": "This Figma set only represents dotted icon-only buttons."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "iconOnly",
+            "valueMapping": {
+              "icon-dotted": "true"
+            },
+            "note": "Icon-only is fixed for this component set."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "children",
+            "valueMapping": {
+              "icon-dotted": "undefined"
+            },
+            "note": "Visible label is omitted. Consuming code must provide aria-label or aria-labelledby."
+          }
+        ]
+      },
+      {
+        "name": "icon-ghost",
+        "nodeId": "6459:3368",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6459-3368",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent"
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+          },
+          {
+            "figmaProperty": "disabled",
+            "reactProp": "disabled"
+          },
+          {
+            "figmaProperty": "change",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector. In React, pass the matching lucide-react node to icon."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "icon-ghost": "ghost"
+            },
+            "note": "This Figma set only represents ghost icon-only buttons."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "iconOnly",
+            "valueMapping": {
+              "icon-ghost": "true"
+            },
+            "note": "Icon-only is fixed for this component set."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "children",
+            "valueMapping": {
+              "icon-ghost": "undefined"
+            },
+            "note": "Visible label is omitted. Consuming code must provide aria-label or aria-labelledby."
+          }
+        ]
+      },
+      {
+        "name": "icon-outline",
+        "nodeId": "6459:3036",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6459-3036",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent"
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. In code, state comes from native CSS pseudo-classes and the disabled attribute."
+          },
+          {
+            "figmaProperty": "disabled",
+            "reactProp": "disabled"
+          },
+          {
+            "figmaProperty": "change",
+            "reactProp": "icon",
+            "note": "Nested icon instance selector. In React, pass the matching lucide-react node to icon."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "variant",
+            "valueMapping": {
+              "icon-outline": "outline"
+            },
+            "note": "This Figma set only represents outline icon-only buttons."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "iconOnly",
+            "valueMapping": {
+              "icon-outline": "true"
+            },
+            "note": "Icon-only is fixed for this component set."
+          },
+          {
+            "figmaProperty": "component set",
+            "reactProp": "children",
+            "valueMapping": {
+              "icon-outline": "undefined"
+            },
+            "note": "Visible label is omitted. Consuming code must provide aria-label or aria-labelledby."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Triggering an immediate user action",
+    "Submitting, saving, deleting, confirming, or opening a workflow",
+    "Using filled Button for the primary action in a row, group, dialog footer, or toolbar",
+    "Using outline Button for the secondary action in a row, group, dialog footer, or toolbar",
+    "Using soft Button for low-emphasis tonal supporting actions that should remain visible without becoming the primary or secondary row treatment",
+    "Using dotted Button for dashed optional, additive, empty-slot, or placeholder-like actions",
+    "Using ghost Button for borderless tertiary, contextual, or repeated actions that should stay available without a visible container at rest",
+    "Using link Button for inline text-style actions that trigger an action and keep a visible text label",
+    "Pairing one filled primary action with one outline secondary action, such as Do something + Cancel",
+    "Showing a compact action with optional leading or trailing icon",
+    "Displaying icon-only actions when the button has an accessible name"
+  ],
+  "doNotUseFor": [
+    "Primary and secondary action rows that use the same variant for both actions, such as filled + filled or outline + outline",
+    "Primary and secondary action rows that use soft as a substitute for the filled primary or outline secondary treatment",
+    "Primary and secondary action rows that use dotted as a substitute for the filled primary or outline secondary treatment",
+    "Primary and secondary action rows that use ghost as a substitute for the filled primary or outline secondary treatment",
+    "Primary and secondary action rows that use link as a substitute for the filled primary or outline secondary treatment",
+    "Rows that use soft + soft to represent primary and secondary action hierarchy",
+    "Rows that use dotted + dotted to represent primary and secondary action hierarchy",
+    "Rows that use ghost + ghost to represent primary and secondary action hierarchy",
+    "Rows that use link + link to represent primary and secondary action hierarchy",
+    "Icon-only link buttons; the Figma system has no icon-only link component set",
+    "Navigation to another URL or route - use a semantic link or anchor",
+    "Secondary actions rendered as filled when a filled primary action is already present in the same row",
+    "Primary actions rendered as outline when paired with a secondary action in the same row",
+    "Passive status, labels, or tags - use Badge or a text label",
+    "Navigation lists - use SidebarItem, Tabs, Breadcrumbs, or links",
+    "Form fields - use InputField, ButtonInputGroup, or related form components",
+    "Menu rows - use ListItem inside the relevant dropdown or menu component"
+  ],
+  "relations": [
+    "ButtonGroup",
+    "ButtonInputGroup",
+    "Badge",
+    "Text",
+    "Dropdown",
+    "Tooltip"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Button CSS still uses L2 intent tokens and semantic disabled tokens directly. L4 button color tokens exist in tokens.json but currently cover only primary, secondary, and ghost families, not every Button variant and intent.",
+      "severity": "medium"
+    },
+    {
+      "area": "figma-property-names",
+      "description": "Some Button Figma sets use property names that do not exactly match React props: button-filled uses type for intent, icon-left/icon-right toggle icon slots, change-left/change-right select nested icon instances, icon-only sets use change for the icon slot, and the link set uses state=disabled instead of a separate disabled property.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-contract",
+      "description": "The Figma link Button set has no icon-only component set. React can technically receive iconOnly with variant=link, but generated usage should keep a visible text label for link buttons.",
+      "severity": "low"
+    },
+    {
+      "area": "accessibility-type-enforcement",
+      "description": "Icon-only accessible names are required by the component contract and Storybook examples, but TypeScript does not conditionally require aria-label or aria-labelledby when iconOnly=true.",
+      "severity": "medium"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-27T09:05:37.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "94480331e2e50ea6"
+  }
+}
