@@ -51,6 +51,22 @@ const sizes = ['xs', 's', 'm', 'l'] as const;
 export const Playground: Story = {};
 
 // ---------------------------------------------------------------------------
+// Figma matrix
+// ---------------------------------------------------------------------------
+
+export const FigmaMatrix: Story = {
+  render: () => (
+    <Section title="Figma indicator">
+      <Row>
+        {sizes.map((size) => (
+          <BadgeIndicator key={size} size={size} intent="danger" value={2} />
+        ))}
+      </Row>
+    </Section>
+  ),
+};
+
+// ---------------------------------------------------------------------------
 // All intents × sizes
 // ---------------------------------------------------------------------------
 

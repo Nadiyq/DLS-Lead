@@ -34,11 +34,10 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Trigger (the bordered box)
+   Trigger container (the bordered box — a <div> holding trigger-btn + clear)
    --------------------------------------------------------------------------- */
 
 .dls-date-input__trigger {
-  all: unset;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -52,6 +51,21 @@
   border-radius: var(--dls-radius-component-input);
   cursor: pointer;
   transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Trigger button (inner <button> for keyboard/ARIA, fills available space)
+   --------------------------------------------------------------------------- */
+
+.dls-date-input__trigger-btn {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dls-spacing-2);
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
 }
 
 /* ---------------------------------------------------------------------------
@@ -159,7 +173,7 @@
    State: Hover
    --------------------------------------------------------------------------- */
 
-.dls-date-input__trigger:hover:not(:disabled):not([data-error]) {
+.dls-date-input__trigger:hover:not(:disabled):not([data-disabled]):not([data-error]) {
   border-color: var(--dls-color-component-input-border-hover);
 }
 
@@ -167,7 +181,7 @@
    State: Focus
    --------------------------------------------------------------------------- */
 
-.dls-date-input__trigger:focus-visible {
+.dls-date-input__trigger:has(.dls-date-input__trigger-btn:focus-visible) {
   border-color: var(--dls-color-component-input-border-focus);
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }
@@ -176,18 +190,22 @@
    State: Disabled
    --------------------------------------------------------------------------- */
 
-.dls-date-input__trigger:disabled {
+.dls-date-input__trigger[data-disabled] {
   background: var(--dls-color-component-input-bg-disabled);
   border-color: var(--dls-color-component-input-border-disabled);
   cursor: not-allowed;
 }
 
-.dls-date-input__trigger:disabled .dls-date-input__value {
+.dls-date-input__trigger[data-disabled] .dls-date-input__trigger-btn {
+  cursor: not-allowed;
+}
+
+.dls-date-input__trigger[data-disabled] .dls-date-input__value {
   color: var(--dls-color-component-input-fg-disabled);
 }
 
-.dls-date-input__trigger:disabled .dls-date-input__chevron,
-.dls-date-input__trigger:disabled .dls-date-input__calendar-icon {
+.dls-date-input__trigger[data-disabled] .dls-date-input__chevron,
+.dls-date-input__trigger[data-disabled] .dls-date-input__calendar-icon {
   color: var(--dls-color-text-disabled);
 }
 
@@ -253,4 +271,15 @@
 .dls-date-input__trigger[data-open] {
   border-color: var(--dls-color-component-input-border-focus);
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-date-input__trigger,
+  .dls-date-input__clear {
+    transition: none;
+  }
 }

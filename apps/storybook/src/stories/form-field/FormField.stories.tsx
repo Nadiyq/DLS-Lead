@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { Search as SearchIcon } from 'lucide-react';
 import { FormField } from './FormField';
 import { SlotInput } from '../slot-input/SlotInput';
 
@@ -33,12 +34,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 );
 
-const SearchIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M10.5 10.5L14 14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
 
 // ---------------------------------------------------------------------------
 // Playground

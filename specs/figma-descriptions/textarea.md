@@ -5,6 +5,7 @@ React: <Textarea>
 Spec: specs/components/textarea.md
 TSX: apps/storybook/src/stories/textarea/Textarea.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-textarea--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6433-6439
 
 --------------------------------------------
 ## State implementation contract

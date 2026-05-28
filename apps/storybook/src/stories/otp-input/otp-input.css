@@ -273,3 +273,15 @@
   width: 100%;
   height: 100%;
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-otp-input__field[data-type="no-spacing"],
+  .dls-otp-input__group,
+  .dls-otp-input__slot {
+    transition: none;
+  }
+}

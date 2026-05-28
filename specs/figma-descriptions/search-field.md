@@ -5,6 +5,7 @@ React: <SearchField>
 Spec: specs/components/search-field.md
 TSX: apps/storybook/src/stories/search-field/SearchField.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-searchfield--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=59-10798
 
 --------------------------------------------
 ## State implementation contract

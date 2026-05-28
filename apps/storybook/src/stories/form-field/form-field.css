@@ -122,3 +122,13 @@
 .dls-form-field__hint[data-disabled] {
   color: var(--dls-color-text-disabled);
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-form-field__info {
+    transition: none;
+  }
+}

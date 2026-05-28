@@ -1,0 +1,209 @@
+{
+  "name": "BadgeIndicator",
+  "kebabName": "badge-indicator",
+  "category": "status / notification",
+  "description": "High-attention filled notification indicator for dot-only alerts and compact unread counts.",
+  "variants": [],
+  "intents": [
+    "neutral",
+    "primary",
+    "info",
+    "success",
+    "warning",
+    "danger"
+  ],
+  "sizes": [
+    "xs",
+    "s",
+    "m",
+    "l"
+  ],
+  "props": [
+    {
+      "name": "value",
+      "type": "number",
+      "required": false,
+      "description": "Numeric value to display. Ignored at size \"xs\" (dot-only)."
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "default": 99,
+      "description": "Maximum value before showing \"{max}+\"."
+    },
+    {
+      "name": "intent",
+      "type": "BadgeIndicatorIntent",
+      "required": false,
+      "default": "danger",
+      "enum": [
+        "neutral",
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "description": "Semantic intent that controls the filled indicator color."
+    },
+    {
+      "name": "size",
+      "type": "BadgeIndicatorSize",
+      "required": false,
+      "default": "m",
+      "enum": [
+        "xs",
+        "s",
+        "m",
+        "l"
+      ],
+      "description": "Indicator dimensions and count typography."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root indicator."
+    }
+  ],
+  "tokens": [
+    "--dls-color-intent-danger-base",
+    "--dls-color-intent-danger-on-base",
+    "--dls-color-intent-info-base",
+    "--dls-color-intent-info-on-base",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-on-base",
+    "--dls-color-intent-primary-base",
+    "--dls-color-intent-primary-on-base",
+    "--dls-color-intent-success-base",
+    "--dls-color-intent-success-on-base",
+    "--dls-color-intent-warning-base",
+    "--dls-color-intent-warning-on-base",
+    "--dls-font-family",
+    "--dls-font-weight-semibold",
+    "--dls-radius-component-badge",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-spacing-4",
+    "--dls-spacing-6",
+    "--dls-spacing-8",
+    "--dls-text-avatar-2xs-font-size",
+    "--dls-text-avatar-2xs-line-height",
+    "--dls-text-avatar-3xs-font-size",
+    "--dls-text-avatar-3xs-line-height"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "BadgeIndicator is passive notification metadata. It has no hover, pressed, disabled, selected, or focus behavior; visual differences are controlled by data-intent and data-size.",
+    "available": [
+      "data-intent",
+      "data-size"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "forbiddenChildren": [
+      "Button",
+      "Link",
+      "InputField",
+      "Dropdown",
+      "Tooltip"
+    ],
+    "forbiddenParents": [
+      "Button"
+    ],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "span",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "none"
+  },
+  "figma": {
+    "nodeId": "6478:4120",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6478-4120",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "XS": "xs",
+          "S": "s",
+          "M": "m",
+          "L": "l"
+        }
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "value",
+        "note": "Figma stores the visible count as text; React derives the rendered text from numeric value and max. Value is ignored visually for size=\"xs\"."
+      },
+      {
+        "figmaProperty": "intent",
+        "reactProp": "intent",
+        "valueMapping": {
+          "danger": "danger"
+        },
+        "note": "The Figma indicator node is fixed to danger. React also supports additional intents as code extensions."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "indicator",
+        "nodeId": "6478:4120",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6478-4120",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "XS": "xs",
+              "S": "s",
+              "M": "m",
+              "L": "l"
+            }
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "value",
+            "note": "React value is numeric and supports overflow via max."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "High-attention notification dot",
+    "Unread count over a notification icon or icon button",
+    "Dot-only attention marker",
+    "Compact urgent count"
+  ],
+  "doNotUseFor": [
+    "Ordinary item totals or tab counts; use BadgeNumber",
+    "Passive status labels; use Badge",
+    "Interactive filter or removable values; use ChipRegular or FilterChip",
+    "Long text or helper copy; use Text"
+  ],
+  "relations": [
+    "Badge",
+    "BadgeNumber",
+    "TopBar",
+    "Avatar"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-coverage",
+      "description": "Figma node 6478:4120 shows a danger-only indicator size set. React also supports neutral, primary, info, success, and warning intents as Storybook-documented code extensions.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T07:27:30Z",
+    "generator": "codex-manual@1.0.0",
+    "sourceHash": "9698962ce58870a8"
+  }
+}

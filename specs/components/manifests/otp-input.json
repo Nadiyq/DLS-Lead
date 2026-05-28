@@ -1,0 +1,206 @@
+{
+  "name": "OtpInput",
+  "kebabName": "otp-input",
+  "category": "form input",
+  "description": "One-time-password input with configurable digit count and visual grouping (spacing, no-spacing, 1-separator, 2-separator). Each digit renders as an individual slot with auto-advance, backspace, and paste support.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "length",
+      "type": "number",
+      "required": false,
+      "default": 6,
+      "description": "Number of digits."
+    },
+    {
+      "name": "type",
+      "type": "\"spacing\" | \"no-spacing\" | \"1-separator\" | \"2-separator\"",
+      "required": false,
+      "default": "spacing",
+      "enum": ["spacing", "no-spacing", "1-separator", "2-separator"],
+      "description": "Visual type controlling slot layout and grouping."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "default": "",
+      "description": "Current value."
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Callback when value changes."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text."
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "required": false,
+      "description": "Hint text."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "required": false,
+      "description": "Error message — puts all slots in error state."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disables all slots."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only — do NOT use for custom styling."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-hover",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "OtpInput slots hover changes border color only (spacing type). No-spacing and separator types change the group/field border. No background OKLCH shift or overlay on the main surface.",
+    "available": [
+      ":hover:not(:disabled):not([data-error])",
+      ":focus-visible",
+      ":focus-within:not([data-disabled]):not([data-error])",
+      "[data-filled]",
+      "[data-error]",
+      ":disabled",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-color-component-input-border-hover",
+      "--dls-color-component-input-border-focus",
+      "--dls-color-component-input-border-disabled",
+      "--dls-color-component-input-bg-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "input[type=text][inputMode=numeric]",
+    "requiredAria": [
+      "aria-label",
+      "aria-invalid",
+      "aria-describedby"
+    ],
+    "keyboard": {
+      "0-9": "Enter digit and auto-advance to next slot",
+      "Backspace": "Clear current slot or move to previous",
+      "ArrowLeft": "Move focus to previous slot",
+      "ArrowRight": "Move focus to next slot",
+      "Paste": "Paste digits across all slots"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "manual focus management between slots"
+  },
+  "figma": {
+    "nodeId": "6617:10709",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6617-10709",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "no spacing": "no-spacing",
+          "spacing": "spacing",
+          "1-separator": "1-separator",
+          "2-separator": "2-separator"
+        },
+        "note": "Figma 'no spacing' uses space, code uses hyphenated 'no-spacing'. Other values match directly."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "otp",
+        "nodeId": "6617:10709",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6617-10709",
+        "propertyMapping": [
+          {
+            "figmaProperty": "type",
+            "reactProp": "type",
+            "valueMapping": {
+              "no spacing": "no-spacing",
+              "spacing": "spacing",
+              "1-separator": "1-separator",
+              "2-separator": "2-separator"
+            },
+            "note": "Controls slot layout and grouping."
+          }
+        ]
+      },
+      {
+        "name": "otp-slot",
+        "nodeId": "6617:11742",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6617-11742",
+        "propertyMapping": [
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only. In code, states come from CSS pseudo-classes (:focus-visible, :disabled) and data attributes (data-filled, data-error)."
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "value",
+            "note": "Figma slot text is a single digit. In code, each slot's digit is derived from the value string prop split by index."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "One-time password or verification code entry",
+    "PIN code input",
+    "Short numeric code entry with visual slot feedback"
+  ],
+  "doNotUseFor": [
+    "General text input — use InputField",
+    "Phone numbers — use PhoneInput",
+    "Long numeric sequences — use InputField with inputMode numeric",
+    "Credit card numbers — use SlotInput"
+  ],
+  "relations": [
+    "InputField",
+    "SlotInput",
+    "FormField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-scope",
+      "description": "Figma otp component does not include label or hint/error rows. In code, OtpInput renders label, field, and hint/error as a single component.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T10:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "f67fecb1bb9cec71"
+  }
+}

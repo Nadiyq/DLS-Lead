@@ -6,6 +6,7 @@ React: <ChipRegular>
 Spec: specs/components/chip-regular.md
 TSX: apps/storybook/src/stories/chip/ChipRegular.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-chipregular--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=45-1790
 
 --------------------------------------------
 ## State implementation contract
@@ -45,7 +46,7 @@ token/tag inputs.
 |----------------|------------|--------|
 | size | size | M -> m, S -> s, XS -> xs |
 | type | variant | filled / outline / soft / dot |
-| status | intent | neutral / info / success / warning / danger |
+| intent | intent | neutral / info / success / warning / danger |
 | state | (native CSS) | normal / hover / focus / pressed / disabled |
 | disabled? | disabled | false / true |
 | text | label | string |
@@ -55,7 +56,7 @@ Notes:
 - `state` in Figma is visual only. In code, states come from CSS
   pseudo-classes and the disabled data attribute.
 - Figma `type` maps to React `variant`.
-- Figma `status` maps to React `intent`.
+- Figma `intent` maps directly to React `intent`.
 - The React API chooses the action part with `chevron` or `onRemove`.
   Figma represents the regular chip family as composed chip parts.
 - `ChipRegular` uses `Chip` internally; consuming code should not

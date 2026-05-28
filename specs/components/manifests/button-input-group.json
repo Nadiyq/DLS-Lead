@@ -1,0 +1,165 @@
+{
+  "name": "ButtonInputGroup",
+  "kebabName": "button-input-group",
+  "category": "input / compound",
+  "description": "Combined input field with attached action buttons on one or both sides. Used for increment/decrement, apply, copy, or other input-adjacent actions.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": ["m", "s"],
+  "props": [
+    {
+      "name": "buttonLabel",
+      "type": "string | [string, string]",
+      "required": true,
+      "description": "Button label(s): string for one side, [start, end] for both"
+    },
+    {
+      "name": "location",
+      "type": "\"start\" | \"end\" | \"both\"",
+      "required": false,
+      "default": "start",
+      "enum": ["start", "end", "both"],
+      "description": "Button position relative to input"
+    },
+    {
+      "name": "size",
+      "type": "\"s\" | \"m\"",
+      "required": false,
+      "default": "m",
+      "enum": ["s", "m"],
+      "description": "Size"
+    },
+    {
+      "name": "onStartClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Start button click"
+    },
+    {
+      "name": "onEndClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "End button click"
+    },
+    {
+      "name": "startDisabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Start button disabled"
+    },
+    {
+      "name": "endDisabled",
+      "type": "boolean",
+      "required": false,
+      "description": "End button disabled"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input",
+    "--dls-color-text-primary",
+    "--dls-color-text-disabled",
+    "--dls-color-surface-subtle",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-focus-ring-color"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Button segments use overlay tokens for hover/pressed since the button surface (surface-subtle) is a transparent/non-filled surface. Input segment has no hover state.",
+    "available": [
+      ":hover:not(:disabled)",
+      ":active:not(:disabled)",
+      ":focus-visible",
+      ":disabled",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color",
+      "--dls-color-component-input-bg-disabled",
+      "--dls-color-component-input-border-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Focus moves between buttons and input naturally",
+      "Enter/Space": "Activates the focused button"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order; inset focus ring on buttons and input via :focus-visible"
+  },
+  "figma": {
+    "nodeId": "6595:15608",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6595-15608",
+    "propertyMapping": [
+      {
+        "figmaProperty": "location",
+        "reactProp": "location",
+        "note": "Direct mapping: start, end, both."
+      },
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s"
+        },
+        "note": "Figma uppercase. In code, lowercase."
+      }
+    ]
+  },
+  "useWhen": [
+    "Input with attached action button (apply, copy, go)",
+    "Increment/decrement stepper control",
+    "Input with action on one or both sides",
+    "Compact input + button combination in tight layouts"
+  ],
+  "doNotUseFor": [
+    "Search with icon — use SearchField",
+    "Input with slot content (badges, labels) — use SlotInput",
+    "Multiple grouped buttons without an input — use ButtonGroup",
+    "Form field with label and hint — wrap in FormField"
+  ],
+  "relations": [
+    "Button",
+    "ButtonGroup",
+    "InputField",
+    "SlotInput"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-button-label",
+      "description": "Figma shows fixed 'Button' text in button segments. In code, buttonLabel prop controls the text and supports separate labels for start/end via tuple.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T13:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "39117ac2de2c0bf4"
+  }
+}

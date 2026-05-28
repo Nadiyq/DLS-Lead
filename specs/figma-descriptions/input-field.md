@@ -5,6 +5,7 @@ React: <InputField>
 Spec: specs/components/input-field.md
 TSX: apps/storybook/src/stories/input-field/InputField.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-inputfield--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=124-9046
 
 --------------------------------------------
 ## State implementation contract

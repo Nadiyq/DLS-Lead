@@ -1,0 +1,164 @@
+{
+  "name": "ButtonGroup",
+  "kebabName": "button-group",
+  "category": "action",
+  "description": "Groups related buttons into a unified segmented control. All children share the same variant, size, and visual treatment.",
+  "subComponents": [],
+  "variants": ["filled", "outline", "soft", "ghost"],
+  "intents": [],
+  "sizes": ["m", "s"],
+  "props": [
+    {
+      "name": "variant",
+      "type": "\"filled\" | \"outline\" | \"soft\" | \"ghost\"",
+      "required": false,
+      "default": "outline",
+      "enum": ["filled", "outline", "soft", "ghost"],
+      "description": "Visual style of the group container and dividers."
+    },
+    {
+      "name": "orientation",
+      "type": "\"horizontal\" | \"vertical\"",
+      "required": false,
+      "default": "horizontal",
+      "enum": ["horizontal", "vertical"],
+      "description": "Layout direction of child buttons."
+    },
+    {
+      "name": "size",
+      "type": "\"m\" | \"s\"",
+      "required": false,
+      "default": "m",
+      "enum": ["m", "s"],
+      "description": "Size of the group (passed to child buttons)."
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Button elements to group."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only."
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-button",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-on-base",
+    "--dls-color-intent-neutral-subtle",
+    "--dls-color-border-base"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "ButtonGroup is a layout wrapper. Individual child Button components handle their own hover/focus/pressed/disabled states.",
+    "available": [
+      "[data-variant=\"filled\"]",
+      "[data-variant=\"outline\"]",
+      "[data-variant=\"soft\"]",
+      "[data-variant=\"ghost\"]",
+      "[data-orientation=\"horizontal\"]",
+      "[data-orientation=\"vertical\"]",
+      "[data-size=\"m\"]",
+      "[data-size=\"s\"]"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["Button"],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 2,
+    "recommendedItems": 3
+  },
+  "accessibility": {
+    "semanticElement": "div[role=group]",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Focus moves between child buttons naturally"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order; child buttons manage their own focus rings"
+  },
+  "figma": {
+    "nodeId": "6464:794",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6464-794",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "variant",
+        "note": "Direct mapping. Figma 'type' = code 'variant'."
+      },
+      {
+        "figmaProperty": "horizontal",
+        "reactProp": "orientation",
+        "valueMapping": {
+          "true": "horizontal",
+          "false": "vertical"
+        },
+        "note": "Figma boolean. In code, orientation prop with 'horizontal' | 'vertical' values."
+      },
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s"
+        },
+        "note": "Figma uppercase. In code, lowercase."
+      },
+      {
+        "figmaProperty": "item3",
+        "reactProp": null,
+        "note": "Figma boolean to show/hide 3rd button. In code, controlled by children count."
+      },
+      {
+        "figmaProperty": "item4",
+        "reactProp": null,
+        "note": "Figma boolean to show/hide 4th button. In code, controlled by children count."
+      },
+      {
+        "figmaProperty": "item5",
+        "reactProp": null,
+        "note": "Figma boolean to show/hide 5th button. In code, controlled by children count."
+      }
+    ]
+  },
+  "useWhen": [
+    "Segmented controls (view switcher, mode toggle)",
+    "Pagination controls",
+    "Toolbar actions grouped together",
+    "Split actions (primary + dropdown)",
+    "Formatting controls (bold, italic, underline)"
+  ],
+  "doNotUseFor": [
+    "Unrelated actions — use standalone Buttons",
+    "Mixed variants — all buttons in a group share the same style",
+    "Navigation tabs — use Tabs",
+    "Toggle between two states — use Switcher"
+  ],
+  "relations": [
+    "Button",
+    "ButtonInputGroup"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-item-toggles",
+      "description": "Figma uses item3/item4/item5 booleans to control visible button count. In code, the number of buttons is determined by children. Always starts with 2 buttons visible in Figma.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-orientation",
+      "description": "Figma uses a 'horizontal' boolean (true/false). In code, orientation prop uses string values 'horizontal' | 'vertical'.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T12:30:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "63afc48ebfa9a98e"
+  }
+}

@@ -231,7 +231,7 @@
         "note": "Figma property 'type' is the React ChipRegular visual variant."
       },
       {
-        "figmaProperty": "status",
+        "figmaProperty": "intent",
         "reactProp": "intent",
         "valueMapping": {
           "neutral": "neutral",
@@ -240,7 +240,7 @@
           "warning": "warning",
           "danger": "danger"
         },
-        "note": "Figma property 'status' is the React ChipRegular intent."
+        "note": "Figma property 'intent' maps directly to the React ChipRegular intent."
       },
       {
         "figmaProperty": "state",
@@ -296,7 +296,7 @@
     }
   ],
   "_meta": {
-    "generatedAt": "2026-05-27T09:08:57.000Z",
+    "generatedAt": "2026-05-27T12:32:08.000Z",
     "generator": "claude-code-manual@1.0.0",
     "sourceHash": "fddd92b682bd57bd"
   }

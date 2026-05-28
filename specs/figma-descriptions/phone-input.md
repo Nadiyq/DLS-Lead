@@ -5,6 +5,7 @@ React: <PhoneInput>
 Spec: specs/components/phone-input.md
 TSX: apps/storybook/src/stories/phone-input/PhoneInput.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-phoneinput--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6438-829
 
 --------------------------------------------
 ## State implementation contract

@@ -53,7 +53,9 @@ export const SlotInput = React.forwardRef<HTMLInputElement, SlotInputProps>(
   ) => {
     const hasError = !!error;
     const hasValue = value !== undefined && value !== '';
-    const inputId = id || React.useId();
+    const reactId = React.useId();
+    const inputId = id || reactId;
+    const hintId = `${reactId}-hint`;
 
     return (
       <div className={['dls-slot-input', className].filter(Boolean).join(' ')}>
@@ -86,6 +88,8 @@ export const SlotInput = React.forwardRef<HTMLInputElement, SlotInputProps>(
             className="dls-slot-input__input"
             disabled={disabled}
             value={value}
+            aria-invalid={hasError || undefined}
+            aria-describedby={(hint || hasError) ? hintId : undefined}
             {...props}
           />
 
@@ -110,7 +114,7 @@ export const SlotInput = React.forwardRef<HTMLInputElement, SlotInputProps>(
         </div>
 
         {(hint || hasError) && (
-          <div className="dls-slot-input__hint" data-error={hasError || undefined}>
+          <div id={hintId} className="dls-slot-input__hint" data-error={hasError || undefined}>
             {hasError && (
               <span className="dls-slot-input__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />

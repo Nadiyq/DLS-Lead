@@ -6,6 +6,7 @@ React: <Chip>
 Spec: specs/components/chip.md
 TSX: apps/storybook/src/stories/chip/Chip.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-chip--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6452-4949
 
 --------------------------------------------
 ## State implementation contract

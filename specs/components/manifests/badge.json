@@ -1,0 +1,323 @@
+{
+  "name": "Badge",
+  "kebabName": "badge",
+  "category": "status / metadata",
+  "description": "Compact passive label for status, counts, categorical metadata, and short informational labels.",
+  "variants": [
+    "outline",
+    "soft",
+    "filled",
+    "ghost"
+  ],
+  "intents": [
+    "neutral",
+    "info",
+    "success",
+    "warning",
+    "danger"
+  ],
+  "sizes": [
+    "m",
+    "s",
+    "xs"
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "BadgeVariant",
+      "required": false,
+      "default": "outline",
+      "enum": [
+        "outline",
+        "soft",
+        "filled",
+        "ghost"
+      ],
+      "description": "Visual treatment for the status label."
+    },
+    {
+      "name": "intent",
+      "type": "BadgeIntent",
+      "required": false,
+      "default": "neutral",
+      "enum": [
+        "neutral",
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "description": "Semantic intent that controls color tokens."
+    },
+    {
+      "name": "size",
+      "type": "BadgeSize",
+      "required": false,
+      "default": "m",
+      "enum": [
+        "m",
+        "s",
+        "xs"
+      ],
+      "description": "Badge height, typography, padding, and icon slot size."
+    },
+    {
+      "name": "dot",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the ghost status dot. Only applies when variant=\"ghost\"."
+    },
+    {
+      "name": "iconStart",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional leading icon. Use lucide-react icons."
+    },
+    {
+      "name": "iconEnd",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional trailing icon. Use lucide-react icons."
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Visible badge label."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root badge."
+    }
+  ],
+  "tokens": [
+    "--dls-color-border-base",
+    "--dls-color-component-badge-danger-bg",
+    "--dls-color-component-badge-danger-border",
+    "--dls-color-component-badge-danger-fg",
+    "--dls-color-component-badge-info-bg",
+    "--dls-color-component-badge-info-border",
+    "--dls-color-component-badge-info-fg",
+    "--dls-color-component-badge-neutral-bg",
+    "--dls-color-component-badge-neutral-border",
+    "--dls-color-component-badge-neutral-fg",
+    "--dls-color-component-badge-success-bg",
+    "--dls-color-component-badge-success-border",
+    "--dls-color-component-badge-success-fg",
+    "--dls-color-component-badge-warning-bg",
+    "--dls-color-component-badge-warning-border",
+    "--dls-color-component-badge-warning-fg",
+    "--dls-color-intent-danger-base",
+    "--dls-color-intent-danger-on-base",
+    "--dls-color-intent-info-base",
+    "--dls-color-intent-info-on-base",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-on-base",
+    "--dls-color-intent-success-base",
+    "--dls-color-intent-success-on-base",
+    "--dls-color-intent-warning-base",
+    "--dls-color-intent-warning-on-base",
+    "--dls-font-family",
+    "--dls-font-weight-medium",
+    "--dls-radius-component-badge",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-text-xs-font-size",
+    "--dls-text-xs-line-height"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Badge is informational, not interactive. Visual differences are controlled by data-variant, data-intent, and data-size, with no hover, pressed, focus, disabled, or selected state contract.",
+    "available": [
+      "data-variant",
+      "data-intent",
+      "data-size"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "forbiddenChildren": [
+      "Button",
+      "Link",
+      "InputField",
+      "Dropdown",
+      "Tooltip"
+    ],
+    "forbiddenParents": [
+      "Button"
+    ],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "span",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "none"
+  },
+  "figma": {
+    "nodeId": "45:1503",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=45-1503",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s",
+          "XS": "xs"
+        }
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "variant",
+        "valueMapping": {
+          "outline": "outline",
+          "soft": "soft",
+          "filled": "filled",
+          "ghost": "ghost"
+        },
+        "note": "Figma property 'type' is the React Badge variant."
+      },
+      {
+        "figmaProperty": "intent",
+        "reactProp": "intent",
+        "valueMapping": {
+          "neutral": "neutral",
+          "info": "info",
+          "success": "success",
+          "warning": "warning",
+          "danger": "danger"
+        }
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "children"
+      },
+      {
+        "figmaProperty": "iconLeft",
+        "reactProp": "iconStart",
+        "valueMapping": {
+          "false": "undefined",
+          "true": "ReactNode"
+        },
+        "note": "Visibility toggle for the leading decorative icon slot."
+      },
+      {
+        "figmaProperty": "iconRight",
+        "reactProp": "iconEnd",
+        "valueMapping": {
+          "false": "undefined",
+          "true": "ReactNode"
+        },
+        "note": "Visibility toggle for the trailing decorative icon slot."
+      },
+      {
+        "figmaProperty": "dot",
+        "reactProp": "dot",
+        "valueMapping": {
+          "false": "false",
+          "true": "true"
+        },
+        "note": "Only applies to variant=\"ghost\". Use dot={false} for dense table statuses where colored text is enough."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "regular",
+        "nodeId": "45:1503",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=45-1503",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s",
+              "XS": "xs"
+            }
+          },
+          {
+            "figmaProperty": "type",
+            "reactProp": "variant",
+            "valueMapping": {
+              "outline": "outline",
+              "soft": "soft",
+              "filled": "filled",
+              "ghost": "ghost"
+            }
+          },
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent",
+            "valueMapping": {
+              "neutral": "neutral",
+              "info": "info",
+              "success": "success",
+              "warning": "warning",
+              "danger": "danger"
+            }
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "children"
+          },
+          {
+            "figmaProperty": "iconLeft",
+            "reactProp": "iconStart"
+          },
+          {
+            "figmaProperty": "iconRight",
+            "reactProp": "iconEnd"
+          },
+          {
+            "figmaProperty": "dot",
+            "reactProp": "dot",
+            "valueMapping": {
+              "false": "false",
+              "true": "true"
+            },
+            "note": "Only applies to variant=\"ghost\"."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Showing compact status such as Active, Pending, or Failed",
+    "Labelling a category, plan, object type, or small metadata value",
+    "Pairing a short passive label with an optional decorative icon",
+    "Showing a ghost dot plus text for lightweight status",
+    "Showing color-coded ghost status without a dot in dense table cells"
+  ],
+  "doNotUseFor": [
+    "Actions or toggles — use Button, ChipRegular, or FilterChip",
+    "Editable filters — use FilterChip or DropdownFilters",
+    "Notification counts — use BadgeNumber",
+    "Dot-only status — use BadgeIndicator",
+    "Long body text or sentence-level messages — use Text or Alert"
+  ],
+  "relations": [
+    "BadgeIndicator",
+    "BadgeNumber",
+    "ChipRegular",
+    "FilterChip",
+    "TableCell",
+    "Card"
+  ],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-05-28T06:49:18.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "e7e0350beb70d47a"
+  }
+}

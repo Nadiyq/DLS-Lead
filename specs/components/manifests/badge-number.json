@@ -1,0 +1,256 @@
+{
+  "name": "BadgeNumber",
+  "kebabName": "badge-number",
+  "category": "status / metadata",
+  "description": "Compact numeric badge for navigation counts, notification counts, and tab or menu item totals.",
+  "variants": [
+    "filled",
+    "soft",
+    "outline",
+    "text"
+  ],
+  "intents": [
+    "neutral",
+    "primary",
+    "info",
+    "success",
+    "warning",
+    "danger"
+  ],
+  "sizes": [
+    "m",
+    "s",
+    "xs"
+  ],
+  "props": [
+    {
+      "name": "value",
+      "type": "number",
+      "required": true,
+      "description": "The numeric value to display."
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "default": 99,
+      "description": "Maximum value before showing \"{max}+\"."
+    },
+    {
+      "name": "variant",
+      "type": "BadgeNumberVariant",
+      "required": false,
+      "default": "filled",
+      "enum": [
+        "filled",
+        "soft",
+        "outline",
+        "text"
+      ],
+      "description": "Visual treatment for the numeric badge."
+    },
+    {
+      "name": "intent",
+      "type": "BadgeNumberIntent",
+      "required": false,
+      "default": "danger",
+      "enum": [
+        "neutral",
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "description": "Semantic intent that controls color tokens."
+    },
+    {
+      "name": "size",
+      "type": "BadgeNumberSize",
+      "required": false,
+      "default": "m",
+      "enum": [
+        "m",
+        "s",
+        "xs"
+      ],
+      "description": "Badge dimensions and typography."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root count badge."
+    }
+  ],
+  "tokens": [
+    "--dls-color-border-base",
+    "--dls-color-component-badge-danger-bg",
+    "--dls-color-component-badge-danger-border",
+    "--dls-color-component-badge-danger-fg",
+    "--dls-color-component-badge-info-bg",
+    "--dls-color-component-badge-info-border",
+    "--dls-color-component-badge-info-fg",
+    "--dls-color-component-badge-neutral-bg",
+    "--dls-color-component-badge-neutral-border",
+    "--dls-color-component-badge-neutral-fg",
+    "--dls-color-component-badge-primary-bg",
+    "--dls-color-component-badge-primary-border",
+    "--dls-color-component-badge-primary-fg",
+    "--dls-color-component-badge-success-bg",
+    "--dls-color-component-badge-success-border",
+    "--dls-color-component-badge-success-fg",
+    "--dls-color-component-badge-warning-bg",
+    "--dls-color-component-badge-warning-border",
+    "--dls-color-component-badge-warning-fg",
+    "--dls-color-intent-danger-base",
+    "--dls-color-intent-danger-on-base",
+    "--dls-color-intent-info-base",
+    "--dls-color-intent-info-on-base",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-on-base",
+    "--dls-color-intent-primary-base",
+    "--dls-color-intent-primary-on-base",
+    "--dls-color-intent-success-base",
+    "--dls-color-intent-success-on-base",
+    "--dls-color-intent-warning-base",
+    "--dls-color-intent-warning-on-base",
+    "--dls-font-family",
+    "--dls-font-weight-medium",
+    "--dls-radius-component-badge-number",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-text-xs-font-size",
+    "--dls-text-xs-line-height"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "BadgeNumber is passive metadata. It has no hover, pressed, disabled, selected, or focus behavior; visual differences are controlled by data-variant, data-intent, and data-size.",
+    "available": [
+      "data-variant",
+      "data-intent",
+      "data-size"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "forbiddenChildren": [
+      "Button",
+      "Link",
+      "InputField",
+      "Dropdown",
+      "Tooltip"
+    ],
+    "forbiddenParents": [
+      "Button"
+    ],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "span",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "none"
+  },
+  "figma": {
+    "nodeId": "45:2398",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=45-2398",
+    "propertyMapping": [
+      {
+        "figmaProperty": "intent",
+        "reactProp": "intent",
+        "valueMapping": {
+          "neutral": "neutral",
+          "info": "info",
+          "success": "success",
+          "warning": "warning",
+          "danger": "danger"
+        },
+        "note": "React also supports primary as a code extension because badge intent tokens include primary."
+      },
+      {
+        "figmaProperty": "style",
+        "reactProp": "variant",
+        "valueMapping": {
+          "filled": "filled",
+          "soft": "soft",
+          "text": "text"
+        },
+        "note": "Figma style maps to React variant. React also supports outline as a code extension."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "value",
+        "note": "Figma stores the visible count as text; React derives the rendered text from numeric value and max."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "number",
+        "nodeId": "45:2398",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=45-2398",
+        "propertyMapping": [
+          {
+            "figmaProperty": "intent",
+            "reactProp": "intent",
+            "valueMapping": {
+              "neutral": "neutral",
+              "info": "info",
+              "success": "success",
+              "warning": "warning",
+              "danger": "danger"
+            }
+          },
+          {
+            "figmaProperty": "style",
+            "reactProp": "variant",
+            "valueMapping": {
+              "filled": "filled",
+              "soft": "soft",
+              "text": "text"
+            }
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "value",
+            "note": "React value is numeric and supports overflow via max."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Sidebar or menu item count",
+    "Tab count or item total",
+    "Unread or new notification count",
+    "Compact count that needs semantic color"
+  ],
+  "doNotUseFor": [
+    "Passive status labels; use Badge",
+    "Dot-only status; use BadgeIndicator",
+    "Interactive filter or removable values; use ChipRegular or FilterChip",
+    "Long text or helper copy; use Text"
+  ],
+  "relations": [
+    "Badge",
+    "BadgeIndicator",
+    "SidebarItem",
+    "Tabs"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-coverage",
+      "description": "Figma node 45:2398 shows filled, soft, and text styles for neutral, info, success, warning, and danger. React also keeps the existing outline variant, primary intent, and m/xs sizes as Storybook-documented code extensions.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T07:06:47Z",
+    "generator": "codex-manual@1.0.0",
+    "sourceHash": "e878161ccb761523"
+  }
+}

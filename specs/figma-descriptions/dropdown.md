@@ -5,6 +5,7 @@ React: <Dropdown>
 Spec: specs/components/dropdown.md
 TSX: apps/storybook/src/stories/dropdown/Dropdown.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-dropdown--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=124-8681
 
 --------------------------------------------
 ## State implementation contract

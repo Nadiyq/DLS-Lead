@@ -1,6 +1,6 @@
 /* ==========================================================================
    DLS Badge Number — compact numeric indicator (notification counts, etc.)
-   Variants: filled | soft | outline
+   Variants: filled | soft | outline | text
    Intents:  neutral | primary | info | success | warning | danger
    Sizes:    m | s | xs
    ========================================================================== */
@@ -124,4 +124,14 @@
 .dls-badge-number[data-variant="outline"][data-intent="neutral"],
 .dls-badge-number[data-variant="outline"]:not([data-intent]) {
   border-color: var(--dls-color-border-base);
+}
+
+/* ---------------------------------------------------------------------------
+   Variant: Text
+   --------------------------------------------------------------------------- */
+
+.dls-badge-number[data-variant="text"] {
+  background: transparent;
+  color: var(--_fg);
+  border-color: transparent;
 }

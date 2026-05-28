@@ -5,6 +5,7 @@ React: <ChipInput>
 Spec: specs/components/chip-input.md
 TSX: apps/storybook/src/stories/chip-input/ChipInput.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-chipinput--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=124-9357
 
 --------------------------------------------
 ## State implementation contract

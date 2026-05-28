@@ -4,6 +4,8 @@ Category: layout / disclosure
 React: <Accordion>
 Spec: specs/components/accordion.md
 TSX: apps/storybook/src/stories/Accordion.tsx
+Storybook: https://storybook.dlslead.com/?path=/docs/components-accordion--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6489-1187
 Companion: AccordionItem (the disclosure unit)
 
 --------------------------------------------

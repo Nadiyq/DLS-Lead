@@ -5,6 +5,7 @@ React: <DropdownAutocomplete>
 Spec: specs/components/dropdown-autocomplete.md
 TSX: apps/storybook/src/stories/dropdown-autocomplete/DropdownAutocomplete.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-dropdownautocomplete--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=124-8681
 
 --------------------------------------------
 ## State implementation contract

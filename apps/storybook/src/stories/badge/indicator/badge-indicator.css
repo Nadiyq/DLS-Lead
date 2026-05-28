@@ -13,14 +13,18 @@
   justify-content: center;
   border-radius: var(--dls-radius-component-badge);
   font-family: var(--dls-font-family);
-  font-weight: var(--dls-font-weight-medium);
+  font-weight: var(--dls-font-weight-semibold);
   font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
   white-space: nowrap;
   user-select: none;
   flex-shrink: 0;
 
   --_base: var(--dls-color-intent-neutral-base);
   --_on-base: var(--dls-color-intent-neutral-on-base);
+
+  background: var(--_base);
+  color: var(--_on-base);
 }
 
 /* ---------------------------------------------------------------------------
@@ -49,41 +53,32 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Always filled
-   --------------------------------------------------------------------------- */
-
-.dls-badge-indicator {
-  background: var(--_base);
-  color: var(--_on-base);
-}
-
-/* ---------------------------------------------------------------------------
    Sizes (match Figma: XS=8, S=16, M=24, L=32)
    --------------------------------------------------------------------------- */
 
 .dls-badge-indicator[data-size="xs"] {
-  width: 8px;
-  height: 8px;
+  width: var(--dls-spacing-2);
+  height: var(--dls-spacing-2);
   font-size: 0;
   line-height: 0;
 }
 .dls-badge-indicator[data-size="s"] {
-  width: 16px;
-  height: 16px;
-  font-size: var(--dls-text-xs-font-size);
-  line-height: var(--dls-text-xs-line-height);
+  width: var(--dls-spacing-4);
+  height: var(--dls-spacing-4);
+  font-size: var(--dls-text-avatar-3xs-font-size);
+  line-height: var(--dls-text-avatar-3xs-line-height);
 }
 .dls-badge-indicator[data-size="m"] {
-  min-width: 24px;
-  height: 24px;
+  min-width: var(--dls-spacing-6);
+  height: var(--dls-spacing-6);
   padding: 0 var(--dls-spacing-1);
-  font-size: var(--dls-text-s-font-size);
-  line-height: var(--dls-text-s-line-height);
+  font-size: var(--dls-text-avatar-2xs-font-size);
+  line-height: var(--dls-text-avatar-2xs-line-height);
 }
 .dls-badge-indicator[data-size="l"] {
-  min-width: 32px;
-  height: 32px;
+  min-width: var(--dls-spacing-8);
+  height: var(--dls-spacing-8);
   padding: 0 var(--dls-spacing-1-5);
-  font-size: var(--dls-text-s-font-size);
-  line-height: var(--dls-text-s-line-height);
+  font-size: var(--dls-text-avatar-2xs-font-size);
+  line-height: var(--dls-text-avatar-2xs-line-height);
 }

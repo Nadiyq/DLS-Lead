@@ -6,6 +6,7 @@ React: <Button variant="outline">
 Spec: specs/components/button.md
 TSX: apps/storybook/src/stories/Button.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-button--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=46-2087
 
 --------------------------------------------
 ## State implementation contract (applies to all DLS components)

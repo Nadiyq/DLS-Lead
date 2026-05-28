@@ -5,15 +5,22 @@ export type BadgeVariant = 'outline' | 'soft' | 'filled' | 'ghost';
 export type BadgeIntent = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
 export type BadgeSize = 'm' | 's' | 'xs';
 
-export interface BadgeProps {
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** Visual treatment for the status label. */
   variant?: BadgeVariant;
+  /** Semantic intent that controls color tokens. */
   intent?: BadgeIntent;
+  /** Badge height, typography, padding, and icon slot size. */
   size?: BadgeSize;
-  /** Leading icon */
+  /** Show the ghost status dot. Only applies when variant="ghost". */
+  dot?: boolean;
+  /** Optional leading icon. Use lucide-react icons. */
   iconStart?: React.ReactNode;
-  /** Trailing icon */
+  /** Optional trailing icon. Use lucide-react icons. */
   iconEnd?: React.ReactNode;
+  /** Visible badge label. */
   children: React.ReactNode;
+  /** Additional class name for the root badge. */
   className?: string;
 }
 
@@ -23,6 +30,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       variant = 'outline',
       intent = 'neutral',
       size = 'm',
+      dot = true,
       iconStart,
       iconEnd,
       children,
@@ -39,10 +47,10 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       data-size={size}
       {...props}
     >
-      {variant === 'ghost' && <span className="dls-badge__dot" />}
-      {iconStart && <span className="dls-badge__icon">{iconStart}</span>}
+      {variant === 'ghost' && dot && <span className="dls-badge__dot" aria-hidden="true" />}
+      {iconStart && <span className="dls-badge__icon" aria-hidden="true">{iconStart}</span>}
       <span>{children}</span>
-      {iconEnd && <span className="dls-badge__icon">{iconEnd}</span>}
+      {iconEnd && <span className="dls-badge__icon" aria-hidden="true">{iconEnd}</span>}
     </span>
   ),
 );

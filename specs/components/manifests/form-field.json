@@ -1,0 +1,200 @@
+{
+  "name": "FormField",
+  "kebabName": "form-field",
+  "category": "form wrapper / layout",
+  "description": "Layout wrapper that groups any input component with a consistent label, optional info icon, and hint text. Supports vertical and horizontal orientations.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text"
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "required": false,
+      "description": "Hint text"
+    },
+    {
+      "name": "showInfo",
+      "type": "boolean",
+      "required": false,
+      "description": "Show info icon next to label"
+    },
+    {
+      "name": "onInfoClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Info icon click/hover handler"
+    },
+    {
+      "name": "orientation",
+      "type": "\"vertical\" | \"horizontal\"",
+      "required": false,
+      "default": "vertical",
+      "enum": ["vertical", "horizontal"],
+      "description": "Layout orientation"
+    },
+    {
+      "name": "htmlFor",
+      "type": "string",
+      "required": false,
+      "description": "htmlFor linking to input"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disables label and hint styling."
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "The input component"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only."
+    }
+  ],
+  "tokens": [
+    "--dls-color-text-secondary",
+    "--dls-color-text-primary",
+    "--dls-color-text-disabled",
+    "--dls-state-focus-ring-color",
+    "--dls-radius-component-input"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "FormField is a pure layout wrapper. No hover/focus states on the wrapper itself — the child input handles its own states. Only the info icon has hover/focus-visible.",
+    "available": [
+      "[data-disabled]",
+      "[data-orientation=\"vertical\"]",
+      "[data-orientation=\"horizontal\"]"
+    ],
+    "tokens": [
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [
+      "InputField",
+      "SlotInput",
+      "Textarea",
+      "SearchField",
+      "PhoneInput",
+      "Dropdown",
+      "DropdownAutocomplete",
+      "ChipInput",
+      "OtpInput",
+      "DateInput",
+      "DateRangeInput"
+    ],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 1,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Focus moves to child input naturally"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order; label linked via htmlFor"
+  },
+  "figma": {
+    "nodeId": "6435:1554",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6435-1554",
+    "propertyMapping": [
+      {
+        "figmaProperty": "vertical",
+        "reactProp": "orientation",
+        "valueMapping": {
+          "true": "vertical",
+          "false": "horizontal"
+        },
+        "note": "Figma boolean. In code, orientation prop with 'vertical' | 'horizontal' values."
+      },
+      {
+        "figmaProperty": "label",
+        "reactProp": null,
+        "note": "Figma boolean toggle. In code, derived from !!label string."
+      },
+      {
+        "figmaProperty": "labelText",
+        "reactProp": "label",
+        "note": "Figma text string. Maps to label prop."
+      },
+      {
+        "figmaProperty": "hint",
+        "reactProp": null,
+        "note": "Figma boolean toggle. In code, derived from !!hint string."
+      },
+      {
+        "figmaProperty": "hintText",
+        "reactProp": "hint",
+        "note": "Figma text string. Maps to hint prop."
+      },
+      {
+        "figmaProperty": "infoIcon",
+        "reactProp": "showInfo",
+        "note": "Direct boolean mapping."
+      },
+      {
+        "figmaProperty": "changeInput",
+        "reactProp": "children",
+        "note": "Figma instance swap. In code, ReactNode children — any input component."
+      }
+    ]
+  },
+  "useWhen": [
+    "Wrapping any input with label and hint in a form",
+    "Building consistent form layouts (vertical or horizontal)",
+    "Adding an info icon tooltip next to a label"
+  ],
+  "doNotUseFor": [
+    "Rendering an input without label/hint — use the input component directly",
+    "Form-level validation or submission — use a <form> element"
+  ],
+  "relations": [
+    "InputField",
+    "SlotInput",
+    "Textarea",
+    "SearchField",
+    "PhoneInput",
+    "Dropdown",
+    "DropdownAutocomplete",
+    "ChipInput",
+    "OtpInput",
+    "DateInput",
+    "DateRangeInput"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-visibility-toggle",
+      "description": "Figma uses separate boolean toggles + text properties for label/hint visibility (label + labelText, hint + hintText). In code, a single string prop serves both — truthy means visible.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-orientation",
+      "description": "Figma uses a 'vertical' boolean (true/false). In code, orientation prop uses string values 'vertical' | 'horizontal'.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T12:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "83a518124909adaa"
+  }
+}

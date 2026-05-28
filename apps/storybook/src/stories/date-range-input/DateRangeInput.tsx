@@ -52,6 +52,8 @@ export interface DateRangeInputProps {
   min?: Date;
   /** Maximum selectable date */
   max?: Date;
+  /** Show dash separator between fields */
+  separator?: boolean;
   disabled?: boolean;
   className?: string;
 }
@@ -80,12 +82,15 @@ export const DateRangeInput = React.forwardRef<HTMLDivElement, DateRangeInputPro
       error,
       min,
       max,
+      separator = true,
       disabled = false,
       className,
     },
     ref,
   ) => {
     const hasError = !!error;
+    const reactId = React.useId();
+    const hintId = `${reactId}-hint`;
     const [activeField, setActiveField] = React.useState<'start' | 'end' | null>(null);
     const wrapperRef = React.useRef<HTMLDivElement>(null);
 
@@ -152,7 +157,12 @@ export const DateRangeInput = React.forwardRef<HTMLDivElement, DateRangeInputPro
           </label>
         )}
 
-        <div className="dls-date-range-input__row">
+        <div
+          className="dls-date-range-input__row"
+          role="group"
+          aria-label={label ? `${label} range` : 'Date range'}
+          aria-describedby={(hint || hasError) ? hintId : undefined}
+        >
           <DateInput
             value={startDisplay}
             placeholder={startPlaceholder}
@@ -162,9 +172,11 @@ export const DateRangeInput = React.forwardRef<HTMLDivElement, DateRangeInputPro
             disabled={disabled}
           />
 
-          <span className="dls-date-range-input__separator" aria-hidden="true">
-            <MinusIcon />
-          </span>
+          {separator && (
+            <span className="dls-date-range-input__separator" aria-hidden="true">
+              <MinusIcon />
+            </span>
+          )}
 
           <DateInput
             value={endDisplay}
@@ -189,7 +201,7 @@ export const DateRangeInput = React.forwardRef<HTMLDivElement, DateRangeInputPro
         </div>
 
         {(hint || hasError) && (
-          <div className="dls-date-range-input__hint" data-error={hasError || undefined}>
+          <div id={hintId} className="dls-date-range-input__hint" data-error={hasError || undefined}>
             {hasError && (
               <span className="dls-date-range-input__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />

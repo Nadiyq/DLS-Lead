@@ -85,7 +85,9 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
     const errorText = error?.trim();
     const displayValue = value ?? (selectedDate ? formatDate(selectedDate) : undefined);
     const hasValue = !!displayValue;
-    const triggerId = id || React.useId();
+    const reactId = React.useId();
+    const triggerId = id || reactId;
+    const hintId = `${reactId}-hint`;
 
     const [open, setOpen] = React.useState(false);
     const wrapperRef = React.useRef<HTMLDivElement>(null);
@@ -112,7 +114,8 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
       return () => document.removeEventListener('keydown', handler);
     }, [open]);
 
-    const handleTriggerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleTriggerClick = (e: React.MouseEvent) => {
+      if (disabled) return;
       setOpen((prev) => !prev);
       onClick?.(e);
     };
@@ -145,27 +148,37 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
           </label>
         )}
 
-        <button
-          ref={ref}
-          type="button"
-          id={triggerId}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+        <div
           className="dls-date-input__trigger"
-          disabled={disabled}
           data-error={hasError || undefined}
           data-open={open || undefined}
+          data-disabled={disabled || undefined}
           onClick={handleTriggerClick}
         >
-          <span className="dls-date-input__content">
-            <span className="dls-date-input__calendar-icon" aria-hidden="true">
-              <CalendarIcon />
+          <button
+            ref={ref}
+            type="button"
+            id={triggerId}
+            className="dls-date-input__trigger-btn"
+            disabled={disabled}
+            aria-expanded={open}
+            aria-haspopup="dialog"
+            aria-invalid={hasError || undefined}
+            aria-describedby={(hint || hasError) ? hintId : undefined}
+          >
+            <span className="dls-date-input__content">
+              <span className="dls-date-input__calendar-icon" aria-hidden="true">
+                <CalendarIcon />
+              </span>
+              <span
+                className="dls-date-input__value"
+                data-placeholder={!hasValue || undefined}
+              >
+                {displayValue || placeholder}
+              </span>
             </span>
-            <span
-              className="dls-date-input__value"
-              data-placeholder={!hasValue || undefined}
-            >
-              {displayValue || placeholder}
-            </span>
-          </span>
+          </button>
 
           {clearable && hasValue && !disabled && (
             <button
@@ -181,7 +194,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
           <span className="dls-date-input__chevron" aria-hidden="true">
             <ChevronDownIcon />
           </span>
-        </button>
+        </div>
 
         {open && onDateSelect && (
           <div className="dls-date-input__dropdown">
@@ -195,7 +208,7 @@ export const DateInput = React.forwardRef<HTMLButtonElement, DateInputProps>(
         )}
 
         {(hint || errorText) && (
-          <div className="dls-date-input__hint" data-error={hasError || undefined}>
+          <div id={hintId} className="dls-date-input__hint" data-error={hasError || undefined}>
             {errorText && (
               <span className="dls-date-input__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />

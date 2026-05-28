@@ -8,7 +8,7 @@ const meta = {
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
   argTypes: {
-    variant: { control: 'select', options: ['filled', 'soft', 'outline'] },
+    variant: { control: 'select', options: ['filled', 'soft', 'outline', 'text'] },
     intent:  { control: 'select', options: ['neutral', 'primary', 'info', 'success', 'warning', 'danger'] },
     size:    { control: 'select', options: ['m', 's', 'xs'] },
     value:   { control: { type: 'number', min: 0, max: 999 } },
@@ -44,7 +44,9 @@ const Row = ({ children }: { children: React.ReactNode }) => (
 );
 
 const intents = ['neutral', 'primary', 'info', 'success', 'warning', 'danger'] as const;
-const variants = ['filled', 'soft', 'outline'] as const;
+const variants = ['filled', 'soft', 'outline', 'text'] as const;
+const figmaIntents = ['neutral', 'info', 'success', 'warning', 'danger'] as const;
+const figmaVariants = ['filled', 'soft', 'text'] as const;
 const sizes = ['m', 's', 'xs'] as const;
 
 // ---------------------------------------------------------------------------
@@ -52,6 +54,24 @@ const sizes = ['m', 's', 'xs'] as const;
 // ---------------------------------------------------------------------------
 
 export const Playground: Story = {};
+
+// ---------------------------------------------------------------------------
+// Figma matrix
+// ---------------------------------------------------------------------------
+
+export const FigmaMatrix: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {figmaIntents.map((intent) => (
+        <Row key={intent}>
+          {figmaVariants.map((variant) => (
+            <BadgeNumber key={variant} variant={variant} intent={intent} size="s" value={1} />
+          ))}
+        </Row>
+      ))}
+    </div>
+  ),
+};
 
 // ---------------------------------------------------------------------------
 // All variants × intents

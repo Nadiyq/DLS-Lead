@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
+import { Search as SearchIcon, Mail as MailIcon, Lock as LockIcon } from 'lucide-react';
 import { SlotInput } from './SlotInput';
 
 const meta = {
@@ -30,27 +31,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
     </h3>
     {children}
   </div>
-);
-
-const SearchIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M10.5 10.5L14 14" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const MailIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" y="3.5" width="12" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M2 5.5L8 9L14 5.5" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const LockIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3.5" y="7" width="9" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M5.5 7V5a2.5 2.5 0 015 0v2" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
 );
 
 const CurrencyBadge = () => (

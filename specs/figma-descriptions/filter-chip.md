@@ -6,6 +6,7 @@ React: <FilterChip>
 Spec: specs/components/filter-chip.md
 TSX: apps/storybook/src/stories/filter-chip/FilterChip.tsx
 Storybook: https://storybook.dlslead.com/?path=/docs/components-filterchip--docs
+Figma: https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6455-7661
 
 --------------------------------------------
 ## State implementation contract

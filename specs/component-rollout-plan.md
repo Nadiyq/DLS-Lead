@@ -18,6 +18,16 @@ applied to every component in the system — both Figma and code side.
 | Seventh manifest (Dropdown) | DONE | `specs/components/manifests/dropdown.json` |
 | Eighth manifest (DropdownAutocomplete) | DONE | `specs/components/manifests/dropdown-autocomplete.json` |
 | Ninth manifest (ChipInput) | DONE | `specs/components/manifests/chip-input.json` |
+| Tenth manifest (OtpInput) | DONE | `specs/components/manifests/otp-input.json` |
+| Eleventh manifest (Badge) | DONE | `specs/components/manifests/badge.json` |
+| Twelfth manifest (DateInput) | DONE | `specs/components/manifests/date-input.json` |
+| Thirteenth manifest (BadgeNumber) | DONE | `specs/components/manifests/badge-number.json` |
+| Fourteenth manifest (DateRangeInput) | DONE | `specs/components/manifests/date-range-input.json` |
+| Fifteenth manifest (BadgeIndicator) | DONE | `specs/components/manifests/badge-indicator.json` |
+| Sixteenth manifest (SlotInput) | DONE | `specs/components/manifests/slot-input.json` |
+| Seventeenth manifest (FormField) | DONE | `specs/components/manifests/form-field.json` |
+| Eighteenth manifest (ButtonGroup) | DONE | `specs/components/manifests/button-group.json` |
+| Nineteenth manifest (ButtonInputGroup) | DONE | `specs/components/manifests/button-input-group.json` |
 | Figma description template | DONE | Accordion as reference: `specs/figma-descriptions/accordion-item.md` |
 | `llms.txt` | TODO | Gap item #4 |
 | Build script + CI hook | TODO | Gap item #3 |
@@ -106,13 +116,13 @@ prevents cascading issues.
 
 | # | Component | Spec | Inline SVG | Missing reduced-motion | L4 color tokens in JSON |
 |---|-----------|------|------------|------------------------|-------------------------|
-| 19 | **FormField** | form-field.md | No | YES | No |
+| 19 | **FormField** | form-field.md | No | FIXED | No |
 | 20 | **SearchField** | search-field.md | No | FIXED | No |
 | 21 | **Textarea** | textarea.md | No | FIXED | No |
-| 22 | **SlotInput** | slot-input.md | No | YES | No |
-| 23 | **OtpInput** | otp-input.md | No | YES | No |
+| 22 | **SlotInput** | slot-input.md | No | FIXED | No |
+| 23 | **OtpInput** | otp-input.md | No | FIXED | No |
 | 24 | **PhoneInput** | phone-input.md | No | FIXED | No |
-| 25 | **DateInput** | date-input.md | No | No | No |
+| 25 | **DateInput** | date-input.md | No | FIXED | No |
 | 26 | **DateRangeInput** | date-range-input.md | No | No | No |
 | 27 | **ChipInput** | chip-input.md | No | FIXED | No |
 
@@ -183,7 +193,7 @@ prevents cascading issues.
 | 68 | **CalendarRange** | calendar-range.md | YES | No | No |
 | 69 | **Carousel** | carousel.md | YES | YES | No |
 | 70 | **ButtonGroup** | button-group.md | No | No | No |
-| 71 | **ButtonInputGroup** | button-input-group.md | No | YES | No |
+| 71 | **ButtonInputGroup** | button-input-group.md | No | FIXED | No |
 | 72 | **Filters** | filters.md | No | YES | No |
 | 73 | **MessageComposer** | message-composer.md | No | No | No |
 | 74 | **Resizable** | resizable.md | No | YES | No |

@@ -1,0 +1,225 @@
+{
+  "name": "DateInput",
+  "kebabName": "date-input",
+  "category": "form input / date picker",
+  "description": "Single-date selection with a calendar dropdown trigger. Supports label, hint, error, clearable, and min/max date constraints.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Selected date value (display string, e.g. \"10 Sep 2023\")."
+    },
+    {
+      "name": "selectedDate",
+      "type": "Date",
+      "required": false,
+      "description": "Selected date as Date object (used with built-in calendar)."
+    },
+    {
+      "name": "onDateSelect",
+      "type": "(date: Date) => void",
+      "required": false,
+      "description": "Called when a date is selected from the calendar."
+    },
+    {
+      "name": "onClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Click handler — opens date picker (also opens built-in calendar)."
+    },
+    {
+      "name": "onClear",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Clear callback."
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "required": false,
+      "default": "MM / DD / YYYY",
+      "description": "Placeholder text."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text."
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "required": false,
+      "description": "Hint text."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "required": false,
+      "description": "Error message."
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Allow clearing the selection."
+    },
+    {
+      "name": "min",
+      "type": "Date",
+      "required": false,
+      "description": "Minimum selectable date."
+    },
+    {
+      "name": "max",
+      "type": "Date",
+      "required": false,
+      "description": "Maximum selectable date."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disables the trigger."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only — do NOT use for custom styling."
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "description": "HTML id for the trigger button."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-hover",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "DateInput trigger hover changes border color only. No background OKLCH shift or overlay on the main surface.",
+    "available": [
+      ":hover:not(:disabled):not([data-error])",
+      ":focus-visible",
+      "[data-open]",
+      "[data-error]",
+      ":disabled"
+    ],
+    "tokens": [
+      "--dls-color-component-input-border-hover",
+      "--dls-color-component-input-border-focus",
+      "--dls-color-component-input-border-disabled",
+      "--dls-color-component-input-bg-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["Calendar"],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div > button",
+    "requiredAria": [
+      "aria-expanded",
+      "aria-haspopup",
+      "aria-invalid",
+      "aria-describedby"
+    ],
+    "keyboard": {
+      "Enter/Space": "Toggle calendar dropdown",
+      "Escape": "Close calendar dropdown",
+      "Tab": "Move focus to next focusable element"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "focus returns to trigger when calendar closes"
+  },
+  "figma": {
+    "nodeId": "124:8432",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=124-8432",
+    "propertyMapping": [
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only. In code, states come from CSS pseudo-classes (:hover, :focus-visible, :disabled, [data-open]) and data attributes ([data-error])."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "value",
+        "note": "Figma display text. In code, use value prop or derived from selectedDate."
+      },
+      {
+        "figmaProperty": "placeholder",
+        "reactProp": "placeholder",
+        "note": "Direct mapping."
+      },
+      {
+        "figmaProperty": "chevronDown",
+        "reactProp": null,
+        "note": "Figma toggle for chevron visibility. In code, chevron is always shown."
+      },
+      {
+        "figmaProperty": "error",
+        "reactProp": null,
+        "note": "Figma boolean toggle. In code, derived from !!error prop string."
+      },
+      {
+        "figmaProperty": "errorText",
+        "reactProp": "error",
+        "note": "Figma error text string. Maps to error prop in code."
+      }
+    ]
+  },
+  "useWhen": [
+    "Single-date selection with calendar dropdown",
+    "Date picker trigger field with label and hint",
+    "Date entry with min/max constraints"
+  ],
+  "doNotUseFor": [
+    "Date range selection — use DateRangeInput",
+    "Free-form text date entry — use InputField with date validation",
+    "Time-only selection — use a dedicated time picker"
+  ],
+  "relations": [
+    "Calendar",
+    "DateRangeInput",
+    "InputField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-scope",
+      "description": "Figma date component does not include label or hint/error rows. In code, DateInput renders label, trigger, and hint/error as a single component.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-chevron-toggle",
+      "description": "Figma has a chevronDown boolean property to show/hide the chevron icon. In code, the chevron is always rendered.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T10:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "ccb39f58c682ac80"
+  }
+}

@@ -47,6 +47,8 @@ export const OtpInput = React.forwardRef<HTMLDivElement, OtpInputProps>(
     ref,
   ) => {
     const hasError = !!error;
+    const reactId = React.useId();
+    const hintId = `${reactId}-hint`;
     const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
     const digits = value.split('').concat(Array(length).fill('')).slice(0, length);
@@ -128,11 +130,13 @@ export const OtpInput = React.forwardRef<HTMLDivElement, OtpInputProps>(
         onPaste={handlePaste}
         onFocus={(e) => e.currentTarget.select()}
         aria-label={`Digit ${index + 1}`}
+        aria-invalid={hasError || undefined}
+        aria-describedby={(hint || hasError) ? hintId : undefined}
       />
     );
 
     const renderSeparator = (key: string) => (
-      <span key={key} className="dls-otp-input__separator">
+      <span key={key} className="dls-otp-input__separator" aria-hidden="true">
         <MinusIcon />
       </span>
     );
@@ -197,7 +201,7 @@ export const OtpInput = React.forwardRef<HTMLDivElement, OtpInputProps>(
         {renderField()}
 
         {(hint || hasError) && (
-          <div className="dls-otp-input__hint" data-error={hasError || undefined}>
+          <div id={hintId} className="dls-otp-input__hint" data-error={hasError || undefined}>
             {hasError && (
               <span className="dls-otp-input__hint-icon" aria-hidden="true">
                 <TriangleAlertIcon />

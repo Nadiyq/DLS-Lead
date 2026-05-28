@@ -1,0 +1,234 @@
+{
+  "name": "SlotInput",
+  "kebabName": "slot-input",
+  "category": "form input",
+  "description": "Text input with flexible leading/trailing slots for icons, buttons, labels, badges, or custom elements on either side.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text."
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "required": false,
+      "description": "Hint text."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "required": false,
+      "description": "Error message."
+    },
+    {
+      "name": "iconStart",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading icon element."
+    },
+    {
+      "name": "iconEnd",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Trailing icon element."
+    },
+    {
+      "name": "slotLeft",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading slot content (rendered after iconStart)."
+    },
+    {
+      "name": "slotRight",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Trailing slot content (rendered after iconEnd)."
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "required": false,
+      "description": "Show clear button when value is present."
+    },
+    {
+      "name": "onClear",
+      "type": "() => void",
+      "required": false,
+      "description": "Clear callback."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Disables the input."
+    },
+    {
+      "name": "value",
+      "type": "string | number | readonly string[]",
+      "required": false,
+      "description": "Input value (from React.InputHTMLAttributes)."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only."
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "description": "HTML id for the input element."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-hover",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "SlotInput field hover changes border color only. No background OKLCH shift or overlay on the main surface.",
+    "available": [
+      ":hover:not(:disabled):not([data-disabled]):not([data-error])",
+      ":focus-within:not(:disabled):not([data-disabled]):not([data-error])",
+      "[data-error]",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-color-component-input-border-hover",
+      "--dls-color-component-input-border-focus",
+      "--dls-color-component-input-border-disabled",
+      "--dls-color-component-input-bg-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "input",
+    "requiredAria": [
+      "aria-invalid",
+      "aria-describedby"
+    ],
+    "keyboard": {
+      "Tab": "Focus the input field",
+      "Escape": "Blur or clear depending on context"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order; focus-within ring on field wrapper"
+  },
+  "figma": {
+    "nodeId": "6441:1431",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6441-1431",
+    "propertyMapping": [
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only. In code, states come from CSS pseudo-classes (:hover, :focus-within, :disabled) and data attributes ([data-error], [data-disabled])."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "value",
+        "note": "Figma display text. In code, standard input value prop."
+      },
+      {
+        "figmaProperty": "placeholder",
+        "reactProp": "placeholder",
+        "note": "Direct mapping."
+      },
+      {
+        "figmaProperty": "iconLeft",
+        "reactProp": "iconStart",
+        "note": "Figma 'iconLeft' boolean maps to 'iconStart' ReactNode prop."
+      },
+      {
+        "figmaProperty": "iconRight",
+        "reactProp": "iconEnd",
+        "note": "Figma 'iconRight' boolean maps to 'iconEnd' ReactNode prop."
+      },
+      {
+        "figmaProperty": "slotLeft",
+        "reactProp": "slotLeft",
+        "note": "Figma boolean toggle. In code, ReactNode — truthy means visible."
+      },
+      {
+        "figmaProperty": "slotRight",
+        "reactProp": "slotRight",
+        "note": "Figma boolean toggle. In code, ReactNode — truthy means visible."
+      },
+      {
+        "figmaProperty": "slotLeftContent",
+        "reactProp": "slotLeft",
+        "note": "Figma content swap. In code, slotLeft accepts any ReactNode directly."
+      },
+      {
+        "figmaProperty": "slotRightContent",
+        "reactProp": "slotRight",
+        "note": "Figma content swap. In code, slotRight accepts any ReactNode directly."
+      },
+      {
+        "figmaProperty": "error",
+        "reactProp": null,
+        "note": "Figma boolean toggle. In code, derived from !!error string."
+      },
+      {
+        "figmaProperty": "errorText",
+        "reactProp": "error",
+        "note": "Figma error text string. Maps to error prop in code."
+      }
+    ]
+  },
+  "useWhen": [
+    "Text input with leading or trailing icons",
+    "Input with prefix/suffix labels or badges",
+    "Input with clearable action button",
+    "Structured input with custom slot content"
+  ],
+  "doNotUseFor": [
+    "OTP or verification codes — use OtpInput",
+    "Phone numbers — use PhoneInput",
+    "Plain text input without slots — use InputField",
+    "Date selection — use DateInput"
+  ],
+  "relations": [
+    "InputField",
+    "OtpInput",
+    "PhoneInput",
+    "SearchField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-scope",
+      "description": "Figma with-slots component does not include label or hint/error rows. In code, SlotInput renders label, field, and hint/error as a single component.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-slot-toggle",
+      "description": "Figma uses separate boolean + content swap properties for slots (slotLeft + slotLeftContent). In code, a single ReactNode prop serves both purposes — truthy means visible.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T10:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "0b85d9e9e4137582"
+  }
+}

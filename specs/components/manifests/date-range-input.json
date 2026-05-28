@@ -1,0 +1,228 @@
+{
+  "name": "DateRangeInput",
+  "kebabName": "date-range-input",
+  "category": "form input / date range picker",
+  "description": "Start-end date range selection composed of two DateInput triggers with a shared calendar dropdown and dash separator.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "startValue",
+      "type": "string",
+      "required": false,
+      "description": "Start date display string."
+    },
+    {
+      "name": "endValue",
+      "type": "string",
+      "required": false,
+      "description": "End date display string."
+    },
+    {
+      "name": "startDate",
+      "type": "Date",
+      "required": false,
+      "description": "Start date as Date object (used with built-in calendar)."
+    },
+    {
+      "name": "endDate",
+      "type": "Date",
+      "required": false,
+      "description": "End date as Date object (used with built-in calendar)."
+    },
+    {
+      "name": "onStartDateSelect",
+      "type": "(date: Date) => void",
+      "required": false,
+      "description": "Called when a start date is selected from the calendar."
+    },
+    {
+      "name": "onEndDateSelect",
+      "type": "(date: Date) => void",
+      "required": false,
+      "description": "Called when an end date is selected from the calendar."
+    },
+    {
+      "name": "onStartClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Click handler for start date."
+    },
+    {
+      "name": "onEndClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Click handler for end date."
+    },
+    {
+      "name": "onStartClear",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Clear start date."
+    },
+    {
+      "name": "onEndClear",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Clear end date."
+    },
+    {
+      "name": "startPlaceholder",
+      "type": "string",
+      "required": false,
+      "default": "MM / DD / YYYY",
+      "description": "Placeholder for start field."
+    },
+    {
+      "name": "endPlaceholder",
+      "type": "string",
+      "required": false,
+      "default": "MM / DD / YYYY",
+      "description": "Placeholder for end field."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text."
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "required": false,
+      "description": "Hint text."
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "required": false,
+      "description": "Error message."
+    },
+    {
+      "name": "min",
+      "type": "Date",
+      "required": false,
+      "description": "Minimum selectable date."
+    },
+    {
+      "name": "max",
+      "type": "Date",
+      "required": false,
+      "description": "Maximum selectable date."
+    },
+    {
+      "name": "separator",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show dash separator between start and end fields."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disables both date fields."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element. Layout composition only — do NOT use for custom styling."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-input-bg-base",
+    "--dls-color-component-input-bg-disabled",
+    "--dls-color-component-input-fg-base",
+    "--dls-color-component-input-fg-placeholder",
+    "--dls-color-component-input-fg-disabled",
+    "--dls-color-component-input-border-base",
+    "--dls-color-component-input-border-hover",
+    "--dls-color-component-input-border-focus",
+    "--dls-color-component-input-border-disabled",
+    "--dls-radius-component-input"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "DateRangeInput delegates state rendering to child DateInput components. No direct interactive states on the range wrapper.",
+    "available": [
+      "[data-error] (via child DateInput)",
+      ":disabled (via child DateInput)",
+      "activeField (internal: 'start' | 'end' | null)"
+    ],
+    "tokens": [
+      "--dls-color-component-input-border-hover",
+      "--dls-color-component-input-border-focus",
+      "--dls-color-component-input-border-disabled",
+      "--dls-color-component-input-bg-disabled"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["DateInput", "Calendar"],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [
+      "role=group",
+      "aria-label",
+      "aria-describedby"
+    ],
+    "keyboard": {
+      "Enter/Space": "Toggle calendar dropdown on focused date field",
+      "Escape": "Close calendar dropdown",
+      "Tab": "Move focus between start field, clear buttons, end field"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "after selecting start date, focus auto-advances to end field"
+  },
+  "figma": {
+    "nodeId": "124:8544",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=124-8544",
+    "propertyMapping": [
+      {
+        "figmaProperty": "line",
+        "reactProp": "separator",
+        "note": "Figma 'line' maps to 'separator' prop. Both boolean, default true."
+      }
+    ]
+  },
+  "useWhen": [
+    "Start-end date range selection",
+    "Date range filter with calendar dropdown",
+    "Period selection with visual range feedback"
+  ],
+  "doNotUseFor": [
+    "Single-date selection — use DateInput",
+    "Free-form date entry — use InputField with date validation",
+    "Time range selection — use dedicated time range component"
+  ],
+  "relations": [
+    "DateInput",
+    "Calendar",
+    "InputField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-scope",
+      "description": "Figma date-range component does not include label or hint/error rows. In code, DateRangeInput renders label, row, and hint/error as a single component.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-no-states",
+      "description": "Figma date-range component has no state property. States are shown on the child date component instances. In code, error styling is forwarded via a space-string error prop to child DateInput.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T10:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "36a1385e7d577c68"
+  }
+}

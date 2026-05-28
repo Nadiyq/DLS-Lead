@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Check, X } from 'lucide-react';
 import React from 'react';
 import { Badge } from './Badge';
 import { Section } from './_helpers/StoryLayout';
@@ -12,11 +13,13 @@ const meta = {
     variant: { control: 'select', options: ['outline', 'soft', 'filled', 'ghost'] },
     intent:  { control: 'select', options: ['neutral', 'info', 'success', 'warning', 'danger'] },
     size:    { control: 'select', options: ['m', 's', 'xs'] },
+    dot:     { control: 'boolean' },
   },
   args: {
     variant: 'outline',
     intent: 'neutral',
     size: 'm',
+    dot: true,
     children: 'Badge',
   },
 } satisfies Meta<typeof Badge>;
@@ -82,6 +85,63 @@ export const Sizes: Story = {
           </Badge>
         ))}
       </Row>
+    </Section>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Icon slots
+// ---------------------------------------------------------------------------
+
+export const WithIcons: Story = {
+  render: () => (
+    <Section layout="flat" title="Icon slots">
+      <Row>
+        <Badge variant="soft" intent="success" size="m" iconStart={<Check />}>
+          Approved
+        </Badge>
+        <Badge variant="outline" intent="danger" size="s" iconEnd={<X />}>
+          Rejected
+        </Badge>
+        <Badge variant="ghost" intent="info" size="xs" iconStart={<Check />}>
+          Synced
+        </Badge>
+      </Row>
+    </Section>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Table status without dot
+// ---------------------------------------------------------------------------
+
+export const TableStatus: Story = {
+  render: () => (
+    <Section layout="flat" title="Table status without dot">
+      <table style={{ borderCollapse: 'collapse', minWidth: 280 }}>
+        <thead>
+          <tr>
+            <th style={{ padding: 8, textAlign: 'left' }}>Customer</th>
+            <th style={{ padding: 8, textAlign: 'left' }}>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            ['Acme Inc.', 'Active', 'success'],
+            ['Northwind', 'Pending', 'warning'],
+            ['Globex', 'Blocked', 'danger'],
+          ].map(([customer, status, intent]) => (
+            <tr key={customer}>
+              <td style={{ padding: 8 }}>{customer}</td>
+              <td style={{ padding: 8 }}>
+                <Badge variant="ghost" intent={intent as 'success' | 'warning' | 'danger'} size="s" dot={false}>
+                  {status}
+                </Badge>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </Section>
   ),
 };

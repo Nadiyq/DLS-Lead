@@ -19,6 +19,8 @@ source_of_truth:
 ## Overview
 
 Use `Badge` for compact status, counts, and categorical labels.
+Use `dot={false}` on ghost badges when color-coded status text is
+enough on its own, especially in dense table cells.
 
 Do not use it as a button replacement or as a full filter editor trigger.
 
@@ -41,6 +43,7 @@ Do not use it as a button replacement or as a full filter editor trigger.
 - `variant`
 - `intent`
 - `size`
+- `dot`
 - `iconStart`
 - `iconEnd`
 - `children`
@@ -60,7 +63,15 @@ Do not use it as a button replacement or as a full filter editor trigger.
 </Badge>
 ```
 
+```tsx
+<Badge variant="ghost" intent="warning" size="s" dot={false}>
+  Pending
+</Badge>
+```
+
 ## Cross-References
 
+- [badge-indicator.md](badge-indicator.md)
+- [badge-number.md](badge-number.md)
 - [button.md](button.md)
 - [filter-chip.md](filter-chip.md)

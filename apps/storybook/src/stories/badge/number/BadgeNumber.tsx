@@ -1,18 +1,22 @@
 import React from 'react';
 import './badge-number.css';
 
-export type BadgeNumberVariant = 'filled' | 'soft' | 'outline';
+export type BadgeNumberVariant = 'filled' | 'soft' | 'outline' | 'text';
 export type BadgeNumberIntent = 'neutral' | 'primary' | 'info' | 'success' | 'warning' | 'danger';
 export type BadgeNumberSize = 'm' | 's' | 'xs';
 
-export interface BadgeNumberProps {
+export interface BadgeNumberProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'children'> {
   /** The numeric value to display */
   value: number;
   /** Maximum value before showing "{max}+" */
   max?: number;
+  /** Visual treatment for the numeric badge */
   variant?: BadgeNumberVariant;
+  /** Semantic intent that controls color tokens */
   intent?: BadgeNumberIntent;
+  /** Badge dimensions and typography */
   size?: BadgeNumberSize;
+  /** Additional class name for the root count badge */
   className?: string;
 }
 
