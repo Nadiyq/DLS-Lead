@@ -179,7 +179,7 @@
 .dls-avatar-stack__dropdown.dls-list {
   display: none;
   position: absolute;
-  top: calc(100% + 2px);
+  top: calc(100% + var(--dls-spacing-0-5));
   left: 50%;
   transform: translateX(-50%);
   min-width: 242px;
@@ -189,8 +189,7 @@
   box-shadow: var(--dls-shadow-surface-md);
 }
 
-.dls-avatar-stack__counter-wrap:hover:not(:disabled) .dls-avatar-stack__dropdown,
-.dls-avatar-stack__counter-wrap:focus-within .dls-avatar-stack__dropdown {
+.dls-avatar-stack__counter-wrap[data-open="true"] .dls-avatar-stack__dropdown {
   display: flex;
 }
 

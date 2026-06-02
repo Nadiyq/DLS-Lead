@@ -1,0 +1,246 @@
+{
+  "name": "ProgressBar",
+  "kebabName": "progress-bar",
+  "category": "feedback / display",
+  "description": "Progress indicator for completion states. Continuous fills proportionally; segmented shows discrete steps; small sizes provide compact bar-only progress.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": ["xs", "s", "m"],
+  "props": [
+    {
+      "name": "type",
+      "type": "\"continuous\" | \"segmented\"",
+      "required": false,
+      "default": "continuous",
+      "enum": ["continuous", "segmented"],
+      "description": "Display type"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "required": true,
+      "description": "Progress value (0-100)"
+    },
+    {
+      "name": "segments",
+      "type": "number",
+      "required": false,
+      "default": 4,
+      "description": "Number of segments (for type=\"segmented\")"
+    },
+    {
+      "name": "showLabel",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show percentage label (continuous only)"
+    },
+    {
+      "name": "hintLabel",
+      "type": "string",
+      "required": false,
+      "description": "Hint label text (segmented only)"
+    },
+    {
+      "name": "showHintIcon",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show hint info icon (segmented only)"
+    },
+    {
+      "name": "size",
+      "type": "\"xs\" | \"s\" | \"m\"",
+      "required": false,
+      "enum": ["xs", "s", "m"],
+      "description": "Fixed size for small variant (omit for full-width)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element"
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-progress-bar",
+    "--dls-color-surface-muted",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-text-primary",
+    "--dls-color-text-disabled",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-font-family",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-font-weight-normal",
+    "--dls-font-weight-medium"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "ProgressBar is a passive status indicator. It has no hover, pressed, selected, disabled, or focus-visible visual state.",
+    "available": [
+      "[data-type=\"continuous\"]",
+      "[data-type=\"segmented\"]",
+      "[data-size=\"xs\"]",
+      "[data-size=\"s\"]",
+      "[data-size=\"m\"]",
+      "[data-filled=\"true\"]",
+      "[data-empty=\"true\"]"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=progressbar]",
+    "requiredAria": [
+      "role=\"progressbar\"",
+      "aria-label",
+      "aria-valuenow",
+      "aria-valuemin",
+      "aria-valuemax"
+    ],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "Not focusable; passive status indicator"
+  },
+  "figma": {
+    "nodeId": "6604:9728",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6604-9728",
+    "propertyMapping": [
+      {
+        "figmaProperty": "percent",
+        "reactProp": "value",
+        "valueMapping": {
+          "0%": "0",
+          "25%": "25",
+          "50%": "50",
+          "75%": "75",
+          "100%": "100"
+        },
+        "note": "Figma exposes five preset percentages. Code accepts any number from 0 to 100."
+      },
+      {
+        "figmaProperty": "divided?",
+        "reactProp": "type",
+        "valueMapping": {
+          "false": "continuous",
+          "true": "segmented"
+        }
+      },
+      {
+        "figmaProperty": "label#6891:33",
+        "reactProp": null,
+        "note": "Boolean visibility toggle in Figma. Continuous code uses showLabel; segmented code uses presence of hintLabel and showHintIcon."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "regular",
+        "nodeId": "6604:9728",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6604-9728",
+        "propertyMapping": [
+          {
+            "figmaProperty": "percent",
+            "reactProp": "value",
+            "valueMapping": {
+              "0%": "0",
+              "25%": "25",
+              "50%": "50",
+              "75%": "75",
+              "100%": "100"
+            },
+            "note": "Figma exposes five preset percentages. Code accepts any number from 0 to 100."
+          },
+          {
+            "figmaProperty": "divided?",
+            "reactProp": "type",
+            "valueMapping": {
+              "false": "continuous",
+              "true": "segmented"
+            }
+          },
+          {
+            "figmaProperty": "label#6891:33",
+            "reactProp": null,
+            "note": "Boolean visibility toggle in Figma. Continuous code uses showLabel; segmented code uses presence of hintLabel and showHintIcon."
+          }
+        ]
+      },
+      {
+        "name": "small",
+        "nodeId": "6950:14102",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6950-14102",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size",
+            "valueMapping": {
+              "M": "m",
+              "S": "s",
+              "XS": "xs"
+            }
+          },
+          {
+            "figmaProperty": "(none)",
+            "reactProp": "value",
+            "note": "Code-only required prop. Small Figma set does not expose progress value."
+          },
+          {
+            "figmaProperty": "(none)",
+            "reactProp": "type",
+            "note": "Code-only for this set. Use type=\"continuous\" for small ProgressBar."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Showing task, upload, form, onboarding, or workflow progress",
+    "Showing percentage completion with a compact visual indicator",
+    "Showing step completion where discrete segments are clearer than continuous fill",
+    "Showing compact inline progress with size=\"xs\", size=\"s\", or size=\"m\""
+  ],
+  "doNotUseFor": [
+    "Indeterminate loading - use Spinner or Skeleton",
+    "Numeric values that are not completion/progress",
+    "User-editable ranges - use Slider",
+    "Status labels without measurable progress - use Badge or Text"
+  ],
+  "relations": [
+    "Spinner",
+    "Skeleton",
+    "Slider",
+    "Text"
+  ],
+  "knownDeviations": [
+    {
+      "area": "l4-color-tokens",
+      "description": "No L4 color tokens in tokens.json. Uses L2 semantic and intent tokens directly. Only --dls-radius-component-progress-bar exists as L4.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-coverage",
+      "description": "Figma regular percent variants cover only 0/25/50/75/100, while code accepts any numeric value from 0 to 100.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-coverage",
+      "description": "Figma small is a separate component set, while code uses the same ProgressBar component with the size prop.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-29T09:09:37Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "a2e863e27ac61e5d"
+  }
+}

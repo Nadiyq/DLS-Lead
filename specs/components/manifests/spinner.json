@@ -1,0 +1,98 @@
+{
+  "name": "Spinner",
+  "kebabName": "spinner",
+  "category": "loading / feedback",
+  "description": "Indeterminate loading indicator with rotating arc animation. Five sizes with proportional stroke widths.",
+  "variants": [],
+  "intents": [],
+  "sizes": ["12", "16", "20", "24", "32"],
+  "props": [
+    {
+      "name": "size",
+      "type": "\"12\" | \"16\" | \"20\" | \"24\" | \"32\"",
+      "required": false,
+      "default": "24",
+      "enum": ["12", "16", "20", "24", "32"],
+      "description": "Size of the spinner in pixels"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "required": false,
+      "default": "Loading",
+      "description": "Accessible label"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-intent-neutral-base"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Spinner is a passive loading indicator with no interactive states. Single continuous rotation animation.",
+    "available": []
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=status]",
+    "requiredAria": [
+      "role=\"status\"",
+      "aria-label"
+    ],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6443-2276",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6443-2276",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "12": "12",
+          "16": "16",
+          "20": "20",
+          "24": "24",
+          "32": "32"
+        }
+      }
+    ]
+  },
+  "useWhen": [
+    "Indeterminate loading states (data fetching, processing)",
+    "Inline loading alongside text",
+    "Button loading states (inside disabled button)",
+    "Centered container as page/section loader"
+  ],
+  "doNotUseFor": [
+    "Determinate progress — use ProgressBar",
+    "Skeleton content placeholders — use Skeleton",
+    "Long page loads with layout hints — use Skeleton"
+  ],
+  "relations": [
+    "Skeleton",
+    "ProgressBar",
+    "Button"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens in tokens.json. Uses --dls-color-intent-neutral-base directly via currentColor.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-29T13:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "03daef60097e13e1"
+  }
+}

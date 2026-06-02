@@ -1,0 +1,152 @@
+{
+  "name": "EmptyState",
+  "kebabName": "empty-state",
+  "category": "feedback / zero state",
+  "description": "Placeholder shown when no content is available — zero-data, no-results, and onboarding gaps. Provides title, description, media, and action slots.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "media",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Media slot — icon-shape, illustration, or any visual"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": false,
+      "description": "Title text"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Description text"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Action area — buttons, links, inputs"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-font-family",
+    "--dls-spacing-2",
+    "--dls-spacing-4",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-text-l-font-size",
+    "--dls-text-l-line-height",
+    "--dls-font-weight-medium",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-font-weight-normal"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Static display component. No interactive states. All interactivity delegated to child components.",
+    "available": [],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": ["EmptyState"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order (children only)"
+  },
+  "figma": {
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6607-2170",
+    "componentSets": [
+      {
+        "name": "empty",
+        "nodeId": "6607-2170",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6607-2170",
+        "propertyMapping": [
+          {
+            "figmaProperty": "title",
+            "reactProp": "title"
+          },
+          {
+            "figmaProperty": "description",
+            "reactProp": null,
+            "note": "Figma boolean toggle. React: description prop truthy = visible."
+          },
+          {
+            "figmaProperty": "descriptionText",
+            "reactProp": "description",
+            "note": "Figma text string maps to React description prop."
+          },
+          {
+            "figmaProperty": "media",
+            "reactProp": null,
+            "note": "Figma boolean toggle. React: media prop truthy = visible."
+          },
+          {
+            "figmaProperty": "mediaContent",
+            "reactProp": "media",
+            "note": "Figma instance swap (typically IconShape). React ReactNode."
+          },
+          {
+            "figmaProperty": "slot",
+            "reactProp": null,
+            "note": "Figma boolean toggle. React: children prop truthy = visible."
+          },
+          {
+            "figmaProperty": "slotContent",
+            "reactProp": "children",
+            "note": "Figma instance swap for actions area. React children."
+          }
+        ]
+      },
+      {
+        "name": "row (slot content variants)",
+        "nodeId": "6607-1068",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6607-1068",
+        "propertyMapping": []
+      }
+    ]
+  },
+  "useWhen": [
+    "Empty data tables, lists, or feeds with no items",
+    "Search or filter results returning zero matches",
+    "Onboarding states before first content is created",
+    "404 or not-found pages"
+  ],
+  "doNotUseFor": [
+    "Alert banners or error toasts — use Alert",
+    "Loading states — use Spinner or Skeleton",
+    "Inline validation errors — use FormField error state"
+  ],
+  "relations": [
+    "IconShape",
+    "Button",
+    "InputField",
+    "Card"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color or radius tokens for empty-state in tokens.json. Uses semantic tokens only.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T22:30:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "0688c111ff2f27d0"
+  }
+}

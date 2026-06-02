@@ -1,0 +1,82 @@
+{
+  "name": "List",
+  "kebabName": "list",
+  "category": "structure",
+  "description": "Container surface for grouped menu rows, selection rows, popover rows, and other list-based content. Wraps ListItem children.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "ListItem content"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-list",
+    "--dls-font-family",
+    "--dls-spacing-2",
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-shadow-surface-md"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Static container surface. All interactivity delegated to ListItem children.",
+    "available": [],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["ListItem"],
+    "forbiddenChildren": ["List"],
+    "maxDepth": 1,
+    "minItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=listbox]",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order (children only)"
+  },
+  "figma": {
+    "nodeId": "156-4635",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=156-4635",
+    "propertyMapping": []
+  },
+  "useWhen": [
+    "Wrapping ListItem rows in a dropdown, popover, or panel",
+    "Standalone selection lists",
+    "Any grouped list surface needing border + shadow treatment"
+  ],
+  "doNotUseFor": [
+    "Flat inline lists without surface treatment",
+    "Data tables -- use Table",
+    "Navigation sidebars -- use Sidebar",
+    "Context menus -- use ContextMenu"
+  ],
+  "relations": [
+    "ListItem",
+    "Dropdown",
+    "ContextMenu"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens for list in tokens.json. Uses semantic tokens. Only --dls-radius-component-list exists as L4.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T22:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "d318151fab5dd6a4"
+  }
+}

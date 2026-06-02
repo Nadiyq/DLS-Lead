@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { expect, fn, userEvent } from 'storybook/test';
 import { Avatar, UserIcon } from './Avatar';
 import type { AvatarSize } from './Avatar';
 import { Section } from './_helpers/StoryLayout';
@@ -48,6 +49,34 @@ const SizeLabel = ({ size, children }: { size: string; children: React.ReactNode
 );
 
 const SAMPLE_IMAGE = 'https://i.pravatar.cc/300?img=12';
+
+// ---------------------------------------------------------------------------
+// Figma matrix
+// ---------------------------------------------------------------------------
+
+export const FigmaMatrix: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(6, minmax(72px, 1fr))',
+        gap: 24,
+        alignItems: 'center',
+      }}
+    >
+      {SIZES.map((size) => (
+        <React.Fragment key={size}>
+          <Avatar size={size} src={SAMPLE_IMAGE} alt="User" />
+          <Avatar size={size} initials="AB" />
+          <Avatar size={size} icon={<UserIcon />} />
+          <Avatar size={size} src={SAMPLE_IMAGE} alt="User" circle />
+          <Avatar size={size} initials="AB" circle />
+          <Avatar size={size} icon={<UserIcon />} circle />
+        </React.Fragment>
+      ))}
+    </div>
+  ),
+};
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -231,7 +260,10 @@ export const ShapeComparison: Story = {
 const STACK_SIZES: AvatarSize[] = ['88', '80', '72', '48', '40', '32', '28', '24', '20', '18'];
 
 export const WithRemoveButton: Story = {
-  render: () => (
+  args: {
+    onRemove: fn(),
+  },
+  render: ({ onRemove }) => (
     <Section layout="wrap" title="Remove Button — Hover to reveal (Circle)">
       {STACK_SIZES.map((size) => (
         <SizeLabel key={size} size={size}>
@@ -240,10 +272,18 @@ export const WithRemoveButton: Story = {
             src={SAMPLE_IMAGE}
             alt="User"
             circle
-            onRemove={() => console.log(`Remove avatar ${size}`)}
+            onRemove={onRemove}
           />
         </SizeLabel>
       ))}
     </Section>
   ),
+  play: async ({ args, canvas }) => {
+    const removeButtons = await canvas.findAllByRole('button', { name: 'Remove User' });
+
+    removeButtons[0].focus();
+    await expect(removeButtons[0]).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    await expect(args.onRemove).toHaveBeenCalledTimes(1);
+  },
 };

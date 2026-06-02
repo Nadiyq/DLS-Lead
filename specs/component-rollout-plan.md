@@ -28,6 +28,42 @@ applied to every component in the system — both Figma and code side.
 | Seventeenth manifest (FormField) | DONE | `specs/components/manifests/form-field.json` |
 | Eighteenth manifest (ButtonGroup) | DONE | `specs/components/manifests/button-group.json` |
 | Nineteenth manifest (ButtonInputGroup) | DONE | `specs/components/manifests/button-input-group.json` |
+| Twentieth manifest (Breadcrumbs) | DONE | `specs/components/manifests/breadcrumbs.json` |
+| Twenty-first manifest (Kbd) | DONE | `specs/components/manifests/kbd.json` |
+| Twenty-second manifest (Avatar) | DONE | `specs/components/manifests/avatar.json` |
+| Twenty-third manifest (AvatarStack) | DONE | `specs/components/manifests/avatar-stack.json` |
+| Twenty-fourth manifest (Checkbox) | DONE | `specs/components/manifests/checkbox.json` |
+| Twenty-fifth manifest (CheckboxBox) | DONE | `specs/components/manifests/checkbox-box.json` |
+| Twenty-sixth manifest (Radiobutton) | DONE | `specs/components/manifests/radiobutton.json` |
+| Twenty-seventh manifest (RadiobuttonBox) | DONE | `specs/components/manifests/radiobutton-box.json` |
+| Twenty-eighth manifest (Switcher) | DONE | `specs/components/manifests/switcher.json` |
+| Twenty-ninth manifest (SwitcherBox) | DONE | `specs/components/manifests/switcher-box.json` |
+| Thirtieth manifest (Spinner) | DONE | `specs/components/manifests/spinner.json` |
+| Thirty-first manifest (Skeleton) | DONE | `specs/components/manifests/skeleton.json` |
+| Thirty-second manifest (Separator) | DONE | `specs/components/manifests/separator.json` |
+| Thirty-third manifest (SliderItem) | DONE | `specs/components/manifests/slider-item.json` |
+| Thirty-fourth manifest (Slider) | DONE | `specs/components/manifests/slider.json` |
+| Thirty-fifth manifest (Scroll) | DONE | `specs/components/manifests/scroll.json` |
+| Thirty-sixth manifest (Resizable) | DONE | `specs/components/manifests/resizable.json` |
+| Thirty-seventh manifest (Pagination) | DONE | `specs/components/manifests/pagination.json` |
+| Thirty-eighth manifest (IconShape) | DONE | `specs/components/manifests/icon-shape.json` |
+| Thirty-ninth manifest (Checkmark) | DONE | `specs/components/manifests/checkmark.json` |
+| Fortieth manifest (CarouselArrow) | DONE | `specs/components/manifests/carousel-arrow.json` |
+| Forty-first manifest (CarouselDots) | DONE | `specs/components/manifests/carousel-dots.json` |
+| Forty-second manifest (CarouselItem) | DONE | `specs/components/manifests/carousel-item.json` |
+| Forty-third manifest (Carousel) | DONE | `specs/components/manifests/carousel.json` |
+| Forty-fourth manifest (Calendar) | DONE | `specs/components/manifests/calendar.json` |
+| Forty-fifth manifest (CalendarRange) | DONE | `specs/components/manifests/calendar-range.json` |
+| Forty-sixth manifest (CalendarPeriods) | DONE | `specs/components/manifests/calendar-periods.json` |
+| Forty-seventh manifest (Alert) | DONE | `specs/components/manifests/alert.json` |
+| Forty-eighth manifest (Card) | DONE | `specs/components/manifests/card.json` |
+| Forty-ninth manifest (AlertDialog) | DONE | `specs/components/manifests/alert-dialog.json` |
+| Fiftieth manifest (ContextMenu) | DONE | `specs/components/manifests/context-menu.json` |
+| Fifty-first manifest (ListItem) | DONE | `specs/components/manifests/list-item.json` |
+| Fifty-second manifest (List) | DONE | `specs/components/manifests/list.json` |
+| Fifty-third manifest (EmptyState) | DONE | `specs/components/manifests/empty-state.json` |
+| Fifty-fourth manifest (Dialog) | DONE | `specs/components/manifests/dialog.json` |
+| Fifty-fifth manifest (Toolbar) | DONE | `specs/components/manifests/toolbar.json` |
 | Figma description template | DONE | Accordion as reference: `specs/figma-descriptions/accordion-item.md` |
 | `llms.txt` | TODO | Gap item #4 |
 | Build script + CI hook | TODO | Gap item #3 |
@@ -97,20 +133,20 @@ prevents cascading issues.
 | 7 | **Badge** | badge.md | No | No | Yes |
 | 8 | **Avatar** | avatar.md | No | No | Yes |
 | 9 | **Separator** | separator.md | No | No | No |
-| 10 | **Spinner** | spinner.md | YES | YES | No |
+| 10 | **Spinner** | spinner.md | FIXED | FIXED | No |
 
 ### Tier 2 — Interactive primitives
 
 | # | Component | Spec | Inline SVG | Missing reduced-motion | L4 color tokens in JSON |
 |---|-----------|------|------------|------------------------|-------------------------|
-| 11 | **Checkbox** | checkbox.md | YES | YES | No |
-| 12 | **CheckboxBox** | checkbox-box.md | No | YES | No |
+| 11 | **Checkbox** | checkbox.md | FIXED | FIXED | No |
+| 12 | **CheckboxBox** | checkbox-box.md | No | FIXED | No |
 | 13 | **Radiobutton** | radiobutton.md | No | No | No |
 | 14 | **RadiobuttonBox** | radiobutton-box.md | No | No | No |
-| 15 | **Switcher** | switcher.md | No | YES | No |
+| 15 | **Switcher** | switcher.md | No | FIXED | No |
 | 16 | **SwitcherBox** | switcher-box.md | No | No | No |
 | 17 | **Slider** | slider.md | No | No | No |
-| 18 | **Checkmark** | checkmark.md | YES | No | No |
+| 18 | **Checkmark** | checkmark.md | FIXED | No | No |
 
 ### Tier 3 — Form components
 
@@ -133,8 +169,8 @@ prevents cascading issues.
 | 28 | **Tabs** | tabs.md | No | No | Yes (as `tab`) |
 | 29 | **Sidebar** | sidebar.md | No | No | Yes |
 | 30 | **SidebarItem** | sidebar-item.md | No | YES | No |
-| 31 | **Breadcrumbs** | breadcrumbs.md | YES | YES | No |
-| 32 | **Pagination** | pagination.md | No | YES | Yes |
+| 31 | **Breadcrumbs** | breadcrumbs.md | FIXED | FIXED | No |
+| 32 | **Pagination** | pagination.md | No | FIXED | Yes |
 | 33 | **TopBar** | top-bar.md | No | YES | No |
 | 34 | **Toolbar** | toolbar.md | No | No | No |
 
@@ -153,7 +189,7 @@ prevents cascading issues.
 | 43 | **DropdownAccount** | dropdown-account.md | No | No | No |
 | 44 | **ContextMenu** | context-menu.md | No | No | No |
 | 45 | **Submenu** | submenu.md | No | No | No |
-| 46 | **Dialog** | dialog.md | YES | No | Yes |
+| 46 | **Dialog** | dialog.md | FIXED | N/A (no spatial motion) | Yes |
 | 47 | **AlertDialog** | alert-dialog.md | No | No | No |
 | 48 | **Tooltip** | tooltip.md | YES | No | No |
 
@@ -169,8 +205,8 @@ prevents cascading issues.
 | 54 | **Card** | card.md | No | No | No |
 | 55 | **Item** | item.md | No | No | No |
 | 56 | **EmptyState** | empty-state.md | No | No | No |
-| 57 | **Skeleton** | skeleton.md | No | YES | No |
-| 58 | **ProgressBar** | progress-bar.md | YES | YES | No |
+| 57 | **Skeleton** | skeleton.md | No | FIXED | No |
+| 58 | **ProgressBar** | progress-bar.md | FIXED | FIXED | No |
 
 ### Tier 7 — Feedback and status
 
@@ -181,7 +217,7 @@ prevents cascading issues.
 | 61 | **ChipRegular** | chip-regular.md | No | No | No |
 | 62 | **FilterChip** | filter-chip.md | No | No | No |
 | 63 | **Kbd** | kbd.md | No | No | No |
-| 64 | **AvatarStack** | avatar-stack.md | No | YES | No |
+| 64 | **AvatarStack** | avatar-stack.md | No | No | No |
 | 65 | **IconShape** | icon-shape.md | No | No | No |
 
 ### Tier 8 — Compound / specialized
@@ -191,13 +227,13 @@ prevents cascading issues.
 | 66 | **Calendar** | calendar.md | YES | No | No |
 | 67 | **CalendarPeriods** | calendar-periods.md | No | No | No |
 | 68 | **CalendarRange** | calendar-range.md | YES | No | No |
-| 69 | **Carousel** | carousel.md | YES | YES | No |
+| 69 | **Carousel** | carousel.md | No | FIXED | No |
 | 70 | **ButtonGroup** | button-group.md | No | No | No |
 | 71 | **ButtonInputGroup** | button-input-group.md | No | FIXED | No |
 | 72 | **Filters** | filters.md | No | YES | No |
 | 73 | **MessageComposer** | message-composer.md | No | No | No |
-| 74 | **Resizable** | resizable.md | No | YES | No |
-| 75 | **Scroll** | scroll.md | No | YES | No |
+| 74 | **Resizable** | resizable.md | FIXED | FIXED | No |
+| 75 | **Scroll** | scroll.md | No | FIXED | No |
 
 ## Cross-cutting fixes (do once, apply to all)
 
@@ -222,8 +258,8 @@ pagination, sidebar, tab, table.
 ### 3. Inline SVG migration (11 components)
 
 Components with hand-drawn `<svg>` that need lucide-react migration:
-Breadcrumbs, Calendar, CalendarRange, Carousel, CarouselArrow,
-Checkbox, Checkmark, Dialog, ProgressBar, Spinner, Tooltip.
+Breadcrumbs (FIXED), Calendar (FIXED), CalendarRange (FIXED), Carousel (N/A — uses CarouselArrow), CarouselArrow (FIXED),
+Checkbox (FIXED), Checkmark (FIXED), Dialog (FIXED), ProgressBar, Spinner (FIXED), Tooltip.
 
 Fix during each component's Phase 2.
 

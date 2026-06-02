@@ -1,0 +1,194 @@
+{
+  "name": "SwitcherBox",
+  "kebabName": "switcher-box",
+  "category": "form control / card",
+  "description": "Card-style toggle container wrapping a Switcher with label and description. Used for visually prominent toggle controls.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "checked",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Checked (on) state"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Description text"
+    },
+    {
+      "name": "textOrientation",
+      "type": "\"right\" | \"left\"",
+      "required": false,
+      "default": "right",
+      "enum": ["right", "left"],
+      "description": "Text position relative to switcher"
+    },
+    {
+      "name": "onChange",
+      "type": "(checked: boolean) => void",
+      "required": false,
+      "description": "Called on change"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Native name"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Native value"
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-toggle-box",
+    "--dls-color-border-base",
+    "--dls-color-border-focus",
+    "--dls-color-border-disabled",
+    "--dls-color-surface-disabled",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-color-text-disabled",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-2-5",
+    "--dls-spacing-3",
+    "--dls-font-family",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-font-weight-normal"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Box is a transparent surface (border-only unselected, light overlay when selected). Overlay tokens for all state changes.",
+    "available": [
+      ":hover:not(:disabled):not([data-disabled])",
+      ":focus-within:not([data-disabled])",
+      "[data-selected]",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["Switcher"],
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=switch]",
+    "requiredAria": [
+      "role=\"switch\"",
+      "aria-checked",
+      "aria-disabled"
+    ],
+    "keyboard": {
+      "Space": "Toggle checked state",
+      "Enter": "Toggle checked state",
+      "Tab": "Move focus to/from switcher box"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6602-8812",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6602-8812",
+    "propertyMapping": [
+      {
+        "figmaProperty": "selected",
+        "reactProp": "checked",
+        "valueMapping": {
+          "true": "true",
+          "false": "false"
+        }
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only in Figma. In code, states come from CSS pseudo-classes and the disabled prop."
+      },
+      {
+        "figmaProperty": "textOrientation",
+        "reactProp": "textOrientation",
+        "valueMapping": {
+          "right": "right",
+          "left": "left"
+        }
+      },
+      {
+        "figmaProperty": "description",
+        "reactProp": null,
+        "note": "Boolean toggle in Figma. In code, description presence is controlled by passing or omitting the description string prop."
+      },
+      {
+        "figmaProperty": "descriptionText",
+        "reactProp": "description"
+      },
+      {
+        "figmaProperty": "label",
+        "reactProp": "label"
+      }
+    ]
+  },
+  "useWhen": [
+    "Toggle needs visual prominence in a card layout",
+    "Group of toggle options needs bordered consistency",
+    "Settings panels where each option is a distinct card"
+  ],
+  "doNotUseFor": [
+    "Inline toggles without card treatment — use Switcher",
+    "Multi-select cards — use CheckboxBox",
+    "Mutually exclusive card selection — use RadiobuttonBox"
+  ],
+  "relations": [
+    "Switcher",
+    "CheckboxBox",
+    "RadiobuttonBox",
+    "FormField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens in tokens.json. Uses L2 semantic and L3 state tokens directly. Only --dls-radius-component-toggle-box exists as L4 (shared with CheckboxBox and RadiobuttonBox).",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-29T12:30:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "98586cac4f654405"
+  }
+}

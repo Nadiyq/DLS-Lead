@@ -44,11 +44,11 @@
    Hover
    --------------------------------------------------------------------------- */
 
-.dls-switcher-box:hover:not([data-disabled]) {
+.dls-switcher-box:hover:not(:disabled):not([data-disabled]) {
   background: var(--dls-state-hover-overlay);
 }
 
-.dls-switcher-box[data-selected]:hover:not([data-disabled]) {
+.dls-switcher-box[data-selected]:hover:not(:disabled):not([data-disabled]) {
   background: var(--dls-state-pressed-overlay);
 }
 
@@ -110,4 +110,14 @@
 .dls-switcher-box[data-disabled] .dls-switcher-box__label,
 .dls-switcher-box[data-disabled] .dls-switcher-box__description {
   color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-switcher-box {
+    transition: none;
+  }
 }

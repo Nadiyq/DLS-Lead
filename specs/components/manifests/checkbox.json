@@ -1,0 +1,200 @@
+{
+  "name": "Checkbox",
+  "kebabName": "checkbox",
+  "category": "form control",
+  "description": "Binary or indeterminate selection control with optional label and description. Supports checked, indeterminate, and disabled states with text on either side.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "checked",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Checked state"
+    },
+    {
+      "name": "indeterminate",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Indeterminate state (visual only, overrides checked appearance)"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Description text below the label"
+    },
+    {
+      "name": "textOrientation",
+      "type": "\"right\" | \"left\"",
+      "required": false,
+      "default": "right",
+      "enum": ["right", "left"],
+      "description": "Position of the text relative to the checkbox"
+    },
+    {
+      "name": "onChange",
+      "type": "(checked: boolean) => void",
+      "required": false,
+      "description": "Called on change"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Native name attribute"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Native value attribute"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "required": false,
+      "description": "Accessible label when no visible label is rendered"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element"
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-checkbox",
+    "--dls-color-surface-base",
+    "--dls-color-surface-disabled",
+    "--dls-color-border-strong",
+    "--dls-color-border-focus",
+    "--dls-color-border-disabled",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-on-base",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-color-text-disabled",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-l-delta-hover",
+    "--dls-state-l-delta-pressed",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-font-family",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-font-weight-normal"
+  ],
+  "states": {
+    "implementation": "hybrid",
+    "rationale": "Unchecked box uses overlay tokens for hover/pressed (transparent surface). Checked/indeterminate box uses OKLCH L-shift on the neutral-base fill.",
+    "available": [
+      ":hover:not(:disabled)",
+      ":active:not(:disabled)",
+      ":focus-visible",
+      ":checked",
+      ":indeterminate",
+      ":disabled"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-l-delta-hover",
+      "--dls-state-l-delta-pressed",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "input[type=\"checkbox\"]",
+    "requiredAria": ["aria-label (when no visible label)"],
+    "keyboard": {
+      "Space": "Toggles the checkbox on/off",
+      "Tab": "Moves focus to the next focusable element"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "native input focus; external focus ring via box-shadow on :focus-visible"
+  },
+  "figma": {
+    "nodeId": "59:6942",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=59-6942",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": null,
+        "note": "Figma 'unselected'/'selected'/'middle' maps to code checked=false, checked=true, and indeterminate=true respectively."
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Figma-only visual state (normal/hover/focus/pressed/disabled). In code, managed by CSS pseudo-classes and the disabled prop."
+      },
+      {
+        "figmaProperty": "checked?",
+        "reactProp": "checked",
+        "note": "Boolean toggle in Figma. Maps to checked prop in code."
+      }
+    ]
+  },
+  "useWhen": [
+    "Binary on/off selections",
+    "Multiple independent selections in a list",
+    "Indeterminate parent checkbox for select-all/some pattern",
+    "Accepting terms or toggling preferences"
+  ],
+  "doNotUseFor": [
+    "Mutually exclusive choices — use Radiobutton",
+    "Toggle with immediate effect — use Switcher",
+    "Single on/off with visual toggle — use Switcher"
+  ],
+  "relations": [
+    "CheckboxBox",
+    "Radiobutton",
+    "Switcher",
+    "FormField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "l4-color-tokens",
+      "description": "No L4 color tokens in tokens.json. Uses L2 semantic and intent tokens directly. Only --dls-radius-component-checkbox exists as an L4 token.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-label-description",
+      "description": "Figma component set (59:6942) shows only the checkbox box without label/description. In code, Checkbox includes label and description text. The full form control with label is composed at the usage level in Figma.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T15:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "67ff81140e4c1750"
+  }
+}

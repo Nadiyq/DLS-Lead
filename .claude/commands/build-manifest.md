@@ -43,6 +43,10 @@ For Figma writes, use official `use_figma` only when it is available.
 If official write access is unavailable, update the local description
 file and report that Figma write-back is blocked.
 
+When writing to Figma, use the CONDENSED summary format (not the full
+markdown). See `.claude/commands/rollout-component.md` for the exact
+format template.
+
 ## Read from Storybook MCP
 
 If the `dls-lead-storybook` MCP server is available:

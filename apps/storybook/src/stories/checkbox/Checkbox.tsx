@@ -1,4 +1,5 @@
 import React from 'react';
+import { Check as CheckIcon, Minus as MinusIcon } from 'lucide-react';
 import './checkbox.css';
 
 /* ---------------------------------------------------------------------------
@@ -30,22 +31,6 @@ export interface CheckboxProps {
   /** Accessible label when no visible label is rendered */
   'aria-label'?: string;
 }
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const CheckIcon = () => (
-  <svg className="dls-checkbox__icon-check" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 12.6667L9.33333 18L20 7.33333" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const MinusIcon = () => (
-  <svg className="dls-checkbox__icon-minus" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.33333 12H18.6667" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Component
@@ -100,8 +85,8 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         />
         <span className="dls-checkbox__box-wrapper">
           <span className="dls-checkbox__box">
-            <CheckIcon />
-            <MinusIcon />
+            <CheckIcon className="dls-checkbox__icon-check" />
+            <MinusIcon className="dls-checkbox__icon-minus" />
           </span>
         </span>
         {(label || description) && (

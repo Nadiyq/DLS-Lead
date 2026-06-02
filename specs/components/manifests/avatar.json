@@ -1,0 +1,320 @@
+{
+  "name": "Avatar",
+  "kebabName": "avatar",
+  "category": "data display / identity",
+  "description": "Compact identity mark for a user, team, account, or entity, shown as an image, initials, or placeholder icon.",
+  "variants": [],
+  "intents": [],
+  "sizes": [
+    "144",
+    "88",
+    "80",
+    "72",
+    "48",
+    "40",
+    "32",
+    "28",
+    "24",
+    "20",
+    "18"
+  ],
+  "props": [
+    {
+      "name": "size",
+      "type": "AvatarSize",
+      "required": false,
+      "default": "48",
+      "enum": [
+        "144",
+        "88",
+        "80",
+        "72",
+        "48",
+        "40",
+        "32",
+        "28",
+        "24",
+        "20",
+        "18"
+      ],
+      "description": "Pixel size of the avatar."
+    },
+    {
+      "name": "circle",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Render as circle instead of rounded square."
+    },
+    {
+      "name": "src",
+      "type": "string",
+      "required": false,
+      "description": "Image URL; takes priority over icon and initials."
+    },
+    {
+      "name": "alt",
+      "type": "string",
+      "required": false,
+      "description": "Alt text for image avatars."
+    },
+    {
+      "name": "initials",
+      "type": "string",
+      "required": false,
+      "description": "Initials to display when no src or icon is provided."
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Decorative placeholder icon shown when no src is provided."
+    },
+    {
+      "name": "dot",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show the decorative status dot indicator."
+    },
+    {
+      "name": "onRemove",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when the remove button is activated; shows the remove button on hover and focus."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root avatar."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-avatar-bg",
+    "--dls-color-component-avatar-border",
+    "--dls-color-component-avatar-dot",
+    "--dls-color-component-avatar-dot-border",
+    "--dls-color-component-avatar-fg",
+    "--dls-color-component-avatar-icon-fg",
+    "--dls-color-component-avatar-remove-btn-bg",
+    "--dls-color-component-avatar-remove-btn-fg",
+    "--dls-font-family",
+    "--dls-radius-component-avatar-2xl",
+    "--dls-radius-component-avatar-circle",
+    "--dls-radius-component-avatar-dot",
+    "--dls-radius-component-avatar-l",
+    "--dls-radius-component-avatar-m",
+    "--dls-radius-component-avatar-remove-btn",
+    "--dls-radius-component-avatar-s",
+    "--dls-radius-component-avatar-xl",
+    "--dls-shadow-focus-ring",
+    "--dls-spacing-0-5",
+    "--dls-text-avatar-2xs-font-size",
+    "--dls-text-avatar-2xs-font-weight",
+    "--dls-text-avatar-2xs-line-height",
+    "--dls-text-avatar-2xl-font-size",
+    "--dls-text-avatar-2xl-font-weight",
+    "--dls-text-avatar-2xl-line-height",
+    "--dls-text-avatar-3xs-font-size",
+    "--dls-text-avatar-3xs-font-weight",
+    "--dls-text-avatar-3xs-line-height",
+    "--dls-text-avatar-4xs-font-size",
+    "--dls-text-avatar-4xs-font-weight",
+    "--dls-text-avatar-4xs-line-height",
+    "--dls-text-avatar-l-font-size",
+    "--dls-text-avatar-l-font-weight",
+    "--dls-text-avatar-l-line-height",
+    "--dls-text-avatar-m-font-size",
+    "--dls-text-avatar-m-font-weight",
+    "--dls-text-avatar-m-line-height",
+    "--dls-text-avatar-s-font-size",
+    "--dls-text-avatar-s-font-weight",
+    "--dls-text-avatar-s-line-height",
+    "--dls-text-avatar-xl-font-size",
+    "--dls-text-avatar-xl-font-weight",
+    "--dls-text-avatar-xl-line-height",
+    "--dls-text-avatar-xs-font-size",
+    "--dls-text-avatar-xs-font-weight",
+    "--dls-text-avatar-xs-line-height"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Avatar is passive identity metadata. The root has no hover, pressed, selected, disabled, or active color state; only the optional remove button is revealed on hover/focus and uses the shared focus ring token.",
+    "available": [
+      "data-size",
+      "data-circle",
+      ":hover",
+      ":focus-within",
+      ".dls-avatar__remove:focus-visible"
+    ],
+    "tokens": [
+      "--dls-shadow-focus-ring"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": [
+      "Button",
+      "Link",
+      "InputField",
+      "Dropdown",
+      "Tooltip"
+    ],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [
+      "img alt",
+      "button aria-label"
+    ],
+    "keyboard": {
+      "Tab": "Moves focus to the remove button when onRemove is provided.",
+      "Enter/Space": "Activates the remove button through native button behavior."
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "39:1090",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=39-1090",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "144": "144",
+          "88": "88",
+          "80": "80",
+          "72": "72",
+          "48": "48",
+          "40": "40",
+          "32": "32",
+          "28": "28",
+          "24": "24",
+          "20": "20",
+          "18": "18"
+        }
+      },
+      {
+        "figmaProperty": "circle",
+        "reactProp": "circle",
+        "valueMapping": {
+          "false": "false",
+          "true": "true"
+        }
+      },
+      {
+        "figmaProperty": "dot",
+        "reactProp": "dot",
+        "valueMapping": {
+          "false": "false",
+          "true": "true"
+        }
+      },
+      {
+        "figmaProperty": "name",
+        "reactProp": "initials",
+        "note": "Figma stores initials text in the name property; React uses the initials prop."
+      },
+      {
+        "figmaProperty": "empty",
+        "reactProp": null,
+        "valueMapping": {
+          "image": "src",
+          "AA-light": "initials",
+          "icon": "icon"
+        },
+        "note": "Figma uses one content selector. React exposes explicit content props instead of an empty prop."
+      },
+      {
+        "figmaProperty": "image fill",
+        "reactProp": "src",
+        "note": "React supplies the image URL; image content takes priority over icon and initials."
+      },
+      {
+        "figmaProperty": "icon vector",
+        "reactProp": "icon",
+        "note": "Use lucide-react icons; UserIcon is exported for Storybook examples."
+      },
+      {
+        "figmaProperty": "n/a",
+        "reactProp": "alt",
+        "note": "React-only image alt text for identity images."
+      },
+      {
+        "figmaProperty": "n/a",
+        "reactProp": "onRemove",
+        "note": "React-only removable avatar action documented in Storybook."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "avatar-item",
+        "nodeId": "39:1090",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=39-1090",
+        "propertyMapping": [
+          {
+            "figmaProperty": "size",
+            "reactProp": "size"
+          },
+          {
+            "figmaProperty": "circle",
+            "reactProp": "circle"
+          },
+          {
+            "figmaProperty": "dot",
+            "reactProp": "dot"
+          },
+          {
+            "figmaProperty": "name",
+            "reactProp": "initials"
+          },
+          {
+            "figmaProperty": "empty",
+            "reactProp": null,
+            "note": "Figma content type maps to src, initials, or icon."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "User, team, account, customer, or entity identity",
+    "Avatar paired with adjacent identity text in lists, tables, cards, or navigation",
+    "Image, initials, or placeholder icon identity mark",
+    "Identity mark with an optional decorative status dot"
+  ],
+  "doNotUseFor": [
+    "Decorative icon containers; use IconShape",
+    "Dot-only status indicators; use BadgeIndicator",
+    "Passive status labels; use Badge",
+    "Multiple overlapping avatars; use AvatarStack"
+  ],
+  "relations": [
+    "AvatarStack",
+    "IconShape",
+    "TableCell",
+    "ListItem",
+    "Item",
+    "TopBar",
+    "Sidebar"
+  ],
+  "knownDeviations": [
+    {
+      "area": "react-api-shape",
+      "description": "Figma exposes a single empty property for content type, while React uses explicit content props: src, initials, and icon.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-coverage",
+      "description": "React supports onRemove as a Storybook-documented code extension. The primary Figma avatar matrix does not include this action.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T12:05:32Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "67b877f6056f6184"
+  }
+}

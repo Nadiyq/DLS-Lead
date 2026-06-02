@@ -1,0 +1,216 @@
+{
+  "name": "Calendar",
+  "kebabName": "calendar",
+  "category": "input / date picker",
+  "subComponents": ["CalendarDay"],
+  "description": "Date picker panel with single date, range highlighting, min/max constraints, and date/month/year views.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "value",
+      "type": "Date",
+      "required": false,
+      "description": "Currently selected date"
+    },
+    {
+      "name": "valueEnd",
+      "type": "Date",
+      "required": false,
+      "description": "For range mode: end date"
+    },
+    {
+      "name": "onSelect",
+      "type": "(date: Date) => void",
+      "required": false,
+      "description": "Called when a date is selected"
+    },
+    {
+      "name": "month",
+      "type": "Date",
+      "required": false,
+      "description": "Month being viewed (controlled)"
+    },
+    {
+      "name": "onMonthChange",
+      "type": "(date: Date) => void",
+      "required": false,
+      "description": "Called when month changes via navigation"
+    },
+    {
+      "name": "min",
+      "type": "Date",
+      "required": false,
+      "description": "Minimum selectable date"
+    },
+    {
+      "name": "max",
+      "type": "Date",
+      "required": false,
+      "description": "Maximum selectable date"
+    },
+    {
+      "name": "view",
+      "type": "\"date\" | \"month\" | \"year\"",
+      "required": false,
+      "enum": ["date", "month", "year"],
+      "description": "View type: date grid, month picker, or year picker"
+    },
+    {
+      "name": "onViewChange",
+      "type": "(view: CalendarView) => void",
+      "required": false,
+      "description": "Called when view changes (e.g. clicking month title)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-calendar",
+    "--dls-radius-component-calendar-day",
+    "--dls-radius-component-button",
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-shadow-surface-lg",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-color-text-disabled",
+    "--dls-color-intent-primary-subtle",
+    "--dls-color-intent-primary-border",
+    "--dls-color-intent-primary-text",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-on-base",
+    "--dls-color-intent-neutral-text",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-font-family",
+    "--dls-font-weight-medium",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Day cells are transparent surfaces. Hover uses overlay tokens. Selected uses neutral-base fill. Today uses primary-subtle.",
+    "available": [
+      ":hover:not(:disabled):not([data-selected])",
+      ":focus-visible",
+      "[data-today]",
+      "[data-selected]",
+      "[data-in-range]",
+      "[data-outside]",
+      ":disabled"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [
+      "aria-label (on day buttons)",
+      "aria-pressed (selected day)",
+      "aria-label (nav buttons)"
+    ],
+    "keyboard": {
+      "Tab": "Move focus between interactive elements",
+      "Enter/Space": "Select day, month, year, or navigate"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=143-11772",
+    "componentSets": [
+      {
+        "name": "day",
+        "nodeId": "143-11729",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=143-11729",
+        "propertyMapping": [
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only (normal/today/hover/highlight/selected/disabled). CSS data attrs + pseudo-classes in code."
+          },
+          {
+            "figmaProperty": "date",
+            "reactProp": null,
+            "note": "Day number text. Auto-generated from date grid in code."
+          }
+        ]
+      },
+      {
+        "name": "footer",
+        "nodeId": "6597-19628",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6597-19628",
+        "propertyMapping": [
+          {
+            "figmaProperty": "type",
+            "reactProp": null,
+            "note": "basic/range. Footer is not a separate React component — actions handled by consuming DateInput/CalendarRange."
+          },
+          {
+            "figmaProperty": "timePicker",
+            "reactProp": null,
+            "note": "Time picker is a future feature."
+          },
+          {
+            "figmaProperty": "actions",
+            "reactProp": null,
+            "note": "Cancel/Confirm buttons handled by consuming components."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Date selection in forms",
+    "Calendar dropdown in DateInput",
+    "Range selection in CalendarRange",
+    "Standalone date picker"
+  ],
+  "doNotUseFor": [
+    "Date range with two panels — use CalendarRange",
+    "Date text input only — use DateInput",
+    "Time-only selection — use time picker components"
+  ],
+  "relations": [
+    "CalendarDay",
+    "CalendarRange",
+    "CalendarPeriods",
+    "DateInput",
+    "DateRangeInput"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens for calendar in tokens.json. Uses semantic and intent tokens directly. Only radius tokens exist as L4.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-coverage",
+      "description": "Footer (time picker + actions) exists as Figma component (6597:19628) but is not a separate React component. Actions handled by consuming DateInput/CalendarRange.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T17:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "a269ee8a3d05a38c"
+  }
+}

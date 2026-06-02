@@ -146,3 +146,13 @@
 .dls-progress-bar[data-size="m"] {
   flex-direction: row;
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-progress-bar__fill {
+    transition: none;
+  }
+}

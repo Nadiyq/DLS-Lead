@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { User as UserIcon, Lock as LockIcon, Eye as EyeIcon } from 'lucide-react';
 import { Dialog } from './Dialog';
 import { Button } from '../Button';
+import { FormField } from '../form-field/FormField';
+import { InputField } from '../input-field/InputField';
 
 const meta = {
   title: 'Components/Dialog',
@@ -42,7 +45,7 @@ export const Playground: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// Desktop with slot content
+// Desktop with slot content (text)
 // ---------------------------------------------------------------------------
 
 export const DesktopWithContent: Story = {
@@ -66,13 +69,11 @@ export const DesktopWithContent: Story = {
         </>
       }
     >
-      <div className="dls-dialog__content">
-        <div className="dls-dialog__title" style={{ fontSize: 'var(--dls-text-l-font-size)', lineHeight: 'var(--dls-text-l-line-height)', fontWeight: 'var(--dls-font-weight-medium)' }}>Subtitle</div>
-        <div style={{ fontSize: 'var(--dls-text-m-font-size)', color: 'var(--dls-color-text-primary)', lineHeight: 'var(--dls-text-m-line-height)', fontFamily: 'var(--dls-font-family)' }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </div>
+      <div className="dls-dialog__subtitle">Subtitle</div>
+      <div className="dls-dialog__body">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+        ullamco laboris nisi ut aliquip ex ea commodo consequat.
       </div>
     </Dialog>
   ),
@@ -103,54 +104,12 @@ export const DesktopWithForm: Story = {
         </>
       }
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <label style={{ fontSize: 'var(--dls-text-s-font-size)', fontWeight: 'var(--dls-font-weight-medium)', color: 'var(--dls-color-text-primary)', fontFamily: 'var(--dls-font-family)' }}>
-            Name
-          </label>
-          <input
-            type="text"
-            placeholder="Enter name"
-            style={{
-              all: 'unset',
-              boxSizing: 'border-box',
-              display: 'block',
-              width: '100%',
-              height: 32,
-              padding: '0 8px',
-              borderRadius: 'var(--dls-radius-component-input)',
-              fontSize: 'var(--dls-text-m-font-size)',
-              fontFamily: 'var(--dls-font-family)',
-              border: '1px solid var(--dls-color-border-base)',
-              color: 'var(--dls-color-text-primary)',
-            }}
-          />
-          <span style={{ fontSize: 'var(--dls-text-s-font-size)', color: 'var(--dls-color-text-secondary)', fontFamily: 'var(--dls-font-family)' }}>Hint</span>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <label style={{ fontSize: 'var(--dls-text-s-font-size)', fontWeight: 'var(--dls-font-weight-medium)', color: 'var(--dls-color-text-primary)', fontFamily: 'var(--dls-font-family)' }}>
-            Email
-          </label>
-          <input
-            type="email"
-            placeholder="Enter email"
-            style={{
-              all: 'unset',
-              boxSizing: 'border-box',
-              display: 'block',
-              width: '100%',
-              height: 32,
-              padding: '0 8px',
-              borderRadius: 'var(--dls-radius-component-input)',
-              fontSize: 'var(--dls-text-m-font-size)',
-              fontFamily: 'var(--dls-font-family)',
-              border: '1px solid var(--dls-color-border-base)',
-              color: 'var(--dls-color-text-primary)',
-            }}
-          />
-          <span style={{ fontSize: 'var(--dls-text-s-font-size)', color: 'var(--dls-color-text-secondary)', fontFamily: 'var(--dls-font-family)' }}>Hint</span>
-        </div>
-      </div>
+      <FormField label="Name">
+        <InputField placeholder="Type..." iconStart={<UserIcon aria-hidden="true" />} />
+      </FormField>
+      <FormField label="Password">
+        <InputField placeholder="Type..." iconStart={<LockIcon aria-hidden="true" />} iconEnd={<EyeIcon aria-hidden="true" />} />
+      </FormField>
     </Dialog>
   ),
 };
@@ -180,7 +139,7 @@ export const MobileLayout: Story = {
         </>
       }
     >
-      <div style={{ fontSize: 'var(--dls-text-m-font-size)', color: 'var(--dls-color-text-primary)', lineHeight: 'var(--dls-text-m-line-height)', fontFamily: 'var(--dls-font-family)' }}>
+      <div className="dls-dialog__body">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua.
       </div>

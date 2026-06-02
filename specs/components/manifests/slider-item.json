@@ -1,0 +1,173 @@
+{
+  "name": "SliderItem",
+  "kebabName": "slider-item",
+  "category": "form input / control",
+  "description": "Draggable slider thumb primitive used inside Slider. Provides the 16px handle, slider semantics, aria value metadata, and visual states.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled state"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "required": false,
+      "description": "Current value for aria-valuenow"
+    },
+    {
+      "name": "min",
+      "type": "number",
+      "required": false,
+      "description": "Minimum value for aria-valuemin"
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "description": "Maximum value for aria-valuemax"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "required": false,
+      "description": "Accessible label"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element"
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-slider-item",
+    "--dls-color-surface-base",
+    "--dls-color-border-focus",
+    "--dls-shadow-surface-sm",
+    "--dls-color-surface-muted",
+    "--dls-shadow-surface-md",
+    "--dls-state-focus-ring-color",
+    "--dls-color-surface-disabled",
+    "--dls-color-border-disabled"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "SliderItem uses semantic token swaps for hover, focus, pressed, and disabled states. It does not use the overlay or OKLCH state systems, so the manifest uses none for state technique classification.",
+    "available": [
+      ":hover:not(:disabled):not([data-disabled])",
+      ":focus-visible",
+      ":active",
+      "[data-disabled]",
+      "[aria-disabled]"
+    ],
+    "tokens": [
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=\"slider\"]",
+    "requiredAria": [
+      "role=\"slider\"",
+      "aria-label",
+      "aria-valuenow",
+      "aria-valuemin",
+      "aria-valuemax",
+      "aria-disabled"
+    ],
+    "keyboard": {
+      "Tab": "Moves focus to the enabled thumb",
+      "Arrow keys": "Parent Slider behavior should update value; SliderItem does not implement standalone value changes"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Enabled thumb uses tabIndex=0; disabled thumb uses tabIndex=-1"
+  },
+  "figma": {
+    "nodeId": "6618:12103",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6618-12103",
+    "propertyMapping": [
+      {
+        "figmaProperty": "state",
+        "reactProp": "disabled",
+        "valueMapping": {
+          "normal": "false; base CSS",
+          "hover": "false; :hover:not(:disabled):not([data-disabled])",
+          "focus": "false; :focus-visible",
+          "disabled": "true"
+        },
+        "note": "Figma state combines visual pseudo-states with the disabled prop mapping. Only state=disabled maps to disabled={true}; normal, hover, and focus keep disabled false."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "value",
+        "note": "Code-only aria value metadata."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "min",
+        "note": "Code-only aria minimum metadata."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "max",
+        "note": "Code-only aria maximum metadata."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "aria-label",
+        "note": "Code-only accessible name."
+      }
+    ]
+  },
+  "useWhen": [
+    "Rendering the thumb primitive inside Slider",
+    "Demonstrating normal, hover, focus, or disabled thumb states",
+    "Showing one-thumb or two-thumb slider track compositions"
+  ],
+  "doNotUseFor": [
+    "Standalone user-editable range input - use Slider",
+    "Passive progress indication - use ProgressBar",
+    "Binary on/off choices - use Switcher",
+    "Controls without an accessible name and value bounds"
+  ],
+  "relations": [
+    "Slider",
+    "ProgressBar",
+    "Switcher"
+  ],
+  "knownDeviations": [
+    {
+      "area": "l4-color-tokens",
+      "description": "No L4 color tokens in tokens.json for SliderItem color, border, or shadow states. Uses L2 semantic and shadow tokens directly. Only the radius token is component-scoped.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-coverage",
+      "description": "Figma exposes normal, hover, focus, and disabled variants. Active/pressed is code-supported but not a separate Figma variant.",
+      "severity": "low"
+    },
+    {
+      "area": "keyboard-behavior",
+      "description": "SliderItem exposes slider semantics but does not implement standalone keyboard value changes. Parent Slider behavior must own value updates.",
+      "severity": "medium"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T07:34:39Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "d47b85102fa15a4b"
+  }
+}

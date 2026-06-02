@@ -1,0 +1,108 @@
+{
+  "name": "CarouselArrow",
+  "kebabName": "carousel-arrow",
+  "category": "content / navigation",
+  "description": "Circular navigation button for carousel prev/next. Four directions with matching lucide-react arrow icons.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "direction",
+      "type": "\"left\" | \"right\" | \"up\" | \"down\"",
+      "required": false,
+      "default": "right",
+      "enum": ["left", "right", "up", "down"],
+      "description": "Arrow direction"
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-carousel-arrow",
+    "--dls-color-intent-neutral-subtle",
+    "--dls-color-intent-neutral-text",
+    "--dls-color-border-base",
+    "--dls-color-overlay-scrim",
+    "--dls-color-surface-disabled",
+    "--dls-color-text-disabled",
+    "--dls-color-border-disabled",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-2"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Subtle-fill surface with border and drop shadow. Hover/pressed use overlay tokens.",
+    "available": [
+      ":hover:not(:disabled)",
+      ":active:not(:disabled)",
+      ":focus-visible",
+      ":disabled"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "button",
+    "requiredAria": [
+      "aria-label"
+    ],
+    "keyboard": {
+      "Enter/Space": "Activate arrow button",
+      "Tab": "Move focus to/from arrow"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6601-4940",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6601-4940",
+    "propertyMapping": [
+      {
+        "figmaProperty": "direction",
+        "reactProp": "direction",
+        "valueMapping": {
+          "right": "right",
+          "left": "left",
+          "up": "up",
+          "down": "down"
+        }
+      }
+    ]
+  },
+  "useWhen": [
+    "Carousel prev/next navigation",
+    "Directional navigation in scrollable areas",
+    "Step-through controls for content panels"
+  ],
+  "doNotUseFor": [
+    "General buttons — use Button",
+    "Pagination — use Pagination",
+    "Tab switching — use Tabs"
+  ],
+  "relations": [
+    "Carousel",
+    "CarouselDots",
+    "CarouselItem",
+    "Button"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens in tokens.json. Uses intent and semantic tokens directly. Only --dls-radius-component-carousel-arrow exists as L4.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T15:30:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "d131ef7d1f002694"
+  }
+}

@@ -3,7 +3,7 @@ import React from 'react';
 import {
   MessagesSquare as MessagesSquareIcon,
   OctagonAlert as OctagonAlertIcon,
-  Bell as BellIcon,
+  BellIcon,
   ClipboardMinus as ClipboardMinusIcon,
   CircleHelp as CircleHelpIcon,
   Search as SearchIcon,
@@ -50,44 +50,10 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 
 export const Playground: Story = {
   args: {
-    variant: 'borderless',
     title: 'No results found',
     description: 'Try adjusting your filters or searching with different keywords.',
     media: <IconShape intent="warning" size="s"><OctagonAlertIcon /></IconShape>,
   },
-};
-
-/* ---------------------------------------------------------------------------
-   Variants
-   --------------------------------------------------------------------------- */
-
-export const Variants: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <Section title="Borderless (default)">
-        <EmptyState
-          variant="borderless"
-          media={<IconShape intent="warning" size="s"><OctagonAlertIcon /></IconShape>}
-          title="No results found"
-          description="Try adjusting your filters or searching with different keywords."
-        >
-          <div style={{ display: 'flex', gap: 8 }}>
-            <Button variant="outline" intent="neutral" size="m">Clear filters</Button>
-            <Button variant="filled" intent="neutral" size="m">New search</Button>
-          </div>
-        </EmptyState>
-      </Section>
-
-      <Section title="Bordered (card-like)">
-        <EmptyState
-          variant="bordered"
-          media={<IconShape intent="danger" size="m"><MessagesSquareIcon /></IconShape>}
-          title="No messages yet"
-          description="When someone sends you a message, it will appear here."
-        />
-      </Section>
-    </div>
-  ),
 };
 
 /* ---------------------------------------------------------------------------
@@ -123,9 +89,8 @@ export const WithActions: Story = {
         </EmptyState>
       </Section>
 
-      <Section title="Bordered with three actions">
+      <Section title="With three actions">
         <EmptyState
-          variant="bordered"
           media={<IconShape intent="primary" size="m"><BellIcon /></IconShape>}
           title="You're all caught up"
           description="You don't have any new notifications right now."
@@ -183,13 +148,12 @@ export const ContentVariations: Story = {
 };
 
 /* ---------------------------------------------------------------------------
-   Bordered with input
+   With input
    --------------------------------------------------------------------------- */
 
-export const BorderedWithInput: Story = {
+export const WithInput: Story = {
   render: () => (
     <EmptyState
-      variant="bordered"
       media={<IconShape intent="danger" size="m"><MessagesSquareIcon /></IconShape>}
       title="No messages yet"
       description="When someone sends you a message, it will appear here."

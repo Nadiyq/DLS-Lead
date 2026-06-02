@@ -97,6 +97,24 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Content slot helpers — subtitle + body text
+   --------------------------------------------------------------------------- */
+
+.dls-dialog__subtitle {
+  font-size: var(--dls-text-l-font-size);
+  line-height: var(--dls-text-l-line-height);
+  font-weight: var(--dls-font-weight-medium);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-dialog__body {
+  font-size: var(--dls-text-m-font-size);
+  line-height: var(--dls-text-m-line-height);
+  font-weight: var(--dls-font-weight-normal);
+  color: var(--dls-color-text-primary);
+}
+
+/* ---------------------------------------------------------------------------
    Actions — desktop: horizontal right-aligned, mobile: vertical stacked
    --------------------------------------------------------------------------- */
 

@@ -1,0 +1,104 @@
+{
+  "name": "CarouselDots",
+  "kebabName": "carousel-dots",
+  "category": "content / navigation indicator",
+  "description": "Pagination dots for Carousel. Row of clickable circular indicators with one active/current dot highlighted.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "total",
+      "type": "number",
+      "required": true,
+      "description": "Total number of dots"
+    },
+    {
+      "name": "current",
+      "type": "number",
+      "required": false,
+      "default": 0,
+      "description": "Index of the current/active dot (0-based)"
+    },
+    {
+      "name": "onDotClick",
+      "type": "(index: number) => void",
+      "required": false,
+      "description": "Called when a dot is clicked"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-carousel-dot",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-info-base",
+    "--dls-color-intent-neutral-text",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-2"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Minimal interaction — inactive dots use neutral-base, current uses info-base, hover shifts inactive to neutral-text. No overlay or OKLCH pattern.",
+    "available": [
+      ":hover:not(:disabled):not([data-current])",
+      ":focus-visible",
+      "[data-current]"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=tablist]",
+    "requiredAria": [
+      "role=\"tablist\"",
+      "aria-label=\"Slide navigation\"",
+      "role=\"tab\" (each dot)",
+      "aria-selected (each dot)"
+    ],
+    "keyboard": {
+      "Tab": "Move focus between dots",
+      "Enter/Space": "Navigate to that slide"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6601-4952",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6601-4952",
+    "propertyMapping": []
+  },
+  "useWhen": [
+    "Carousel slide indicators",
+    "Image gallery pagination",
+    "Onboarding step indicators"
+  ],
+  "doNotUseFor": [
+    "Numbered pagination — use Pagination",
+    "Tab navigation — use Tabs",
+    "Progress steps — use a stepper pattern"
+  ],
+  "relations": [
+    "Carousel",
+    "CarouselArrow",
+    "CarouselItem"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens in tokens.json. Uses intent tokens directly. Only --dls-radius-component-carousel-dot exists as L4.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T16:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "08fb703524c08e40"
+  }
+}

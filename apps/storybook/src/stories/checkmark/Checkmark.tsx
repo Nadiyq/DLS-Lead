@@ -1,4 +1,5 @@
 import React from 'react';
+import { Check as CheckIcon } from 'lucide-react';
 import './checkmark.css';
 
 /* ---------------------------------------------------------------------------
@@ -14,20 +15,8 @@ export interface CheckmarkProps {
 }
 
 /* ---------------------------------------------------------------------------
-   Default check icon
+   Stroke width per size (matches Figma)
    --------------------------------------------------------------------------- */
-
-const CheckIcon = ({ strokeWidth }: { strokeWidth: number }) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M5 13L9 17L19 7"
-      stroke="currentColor"
-      strokeWidth={strokeWidth}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 const STROKE_BY_SIZE: Record<CheckmarkSize, number> = {
   m: 2,
@@ -47,7 +36,7 @@ export const Checkmark = React.forwardRef<HTMLDivElement, CheckmarkProps>(
         className={['dls-checkmark', className].filter(Boolean).join(' ')}
         data-size={size}
       >
-        <CheckIcon strokeWidth={STROKE_BY_SIZE[size]} />
+        <CheckIcon strokeWidth={STROKE_BY_SIZE[size]} aria-hidden="true" />
       </div>
     );
   },

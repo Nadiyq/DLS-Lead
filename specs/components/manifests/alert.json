@@ -1,0 +1,255 @@
+{
+  "name": "Alert",
+  "kebabName": "alert",
+  "category": "feedback",
+  "description": "Persistent inline status message for important contextual feedback, warnings, errors, and successful outcomes.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [
+    "neutral",
+    "primary",
+    "info",
+    "success",
+    "warning",
+    "danger"
+  ],
+  "sizes": [
+    "m",
+    "s"
+  ],
+  "props": [
+    {
+      "name": "intent",
+      "type": "AlertIntent",
+      "required": false,
+      "default": "neutral",
+      "enum": [
+        "neutral",
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "description": "Semantic intent that controls alert color tokens and icon choice."
+    },
+    {
+      "name": "size",
+      "type": "AlertSize",
+      "required": false,
+      "default": "m",
+      "enum": [
+        "m",
+        "s"
+      ],
+      "description": "Alert density, typography, and vertical sizing."
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional leading decorative icon. Use lucide-react icons."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": false,
+      "description": "Optional alert title."
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Optional supporting alert description."
+    },
+    {
+      "name": "action",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional trailing action, usually a single Button related to the message."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root alert."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-alert-neutral-bg",
+    "--dls-color-component-alert-neutral-fg",
+    "--dls-color-component-alert-neutral-border",
+    "--dls-color-component-alert-primary-bg",
+    "--dls-color-component-alert-primary-fg",
+    "--dls-color-component-alert-primary-border",
+    "--dls-color-component-alert-info-bg",
+    "--dls-color-component-alert-info-fg",
+    "--dls-color-component-alert-info-border",
+    "--dls-color-component-alert-success-bg",
+    "--dls-color-component-alert-success-fg",
+    "--dls-color-component-alert-success-border",
+    "--dls-color-component-alert-warning-bg",
+    "--dls-color-component-alert-warning-fg",
+    "--dls-color-component-alert-warning-border",
+    "--dls-color-component-alert-danger-bg",
+    "--dls-color-component-alert-danger-fg",
+    "--dls-color-component-alert-danger-border",
+    "--dls-font-family",
+    "--dls-font-weight-normal",
+    "--dls-font-weight-semibold",
+    "--dls-radius-component-alert",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Alert is passive and persistent. Visual variation is controlled by data-intent, data-size, and slot presence; the root has no hover, pressed, focus, selected, or disabled state.",
+    "available": [
+      "data-intent",
+      "data-size"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [
+      "Button"
+    ],
+    "forbiddenChildren": [
+      "FormField",
+      "Dropdown",
+      "Alert",
+      "AlertDialog"
+    ],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=\"alert\"]",
+    "requiredAria": [
+      "role=\"alert\""
+    ],
+    "keyboard": {
+      "Tab": "Moves to the action child if present; the alert root itself is not focusable"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Passive root is not focusable; action child owns its own focus behavior"
+  },
+  "figma": {
+    "nodeId": "201:5623",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=201-5623",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s"
+        }
+      },
+      {
+        "figmaProperty": "intent",
+        "reactProp": "intent",
+        "valueMapping": {
+          "neutral": "neutral",
+          "primary": "primary",
+          "info": "info",
+          "success": "success",
+          "warning": "warning",
+          "danger": "danger"
+        }
+      },
+      {
+        "figmaProperty": "icon",
+        "reactProp": "icon",
+        "valueMapping": {
+          "true": "provide icon ReactNode",
+          "false": "omit icon"
+        },
+        "note": "Visibility toggle for the leading decorative icon slot."
+      },
+      {
+        "figmaProperty": "title",
+        "reactProp": "title",
+        "valueMapping": {
+          "true": "provide title string",
+          "false": "omit title"
+        },
+        "note": "Figma boolean controls title slot visibility. Code uses the title string prop for both visibility and content."
+      },
+      {
+        "figmaProperty": "titleText",
+        "reactProp": "title",
+        "note": "Figma text override maps to the code title string."
+      },
+      {
+        "figmaProperty": "description",
+        "reactProp": "description",
+        "valueMapping": {
+          "true": "provide description string",
+          "false": "omit description"
+        },
+        "note": "Figma boolean controls description slot visibility. Code uses the description string prop for both visibility and content."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "description",
+        "note": "Figma text override maps to the code description string."
+      },
+      {
+        "figmaProperty": "button",
+        "reactProp": "action",
+        "valueMapping": {
+          "true": "provide action ReactNode",
+          "false": "omit action"
+        },
+        "note": "Figma names the action slot button. Code accepts an action ReactNode, usually a Button."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "className",
+        "note": "Code-only root class extension."
+      }
+    ]
+  },
+  "useWhen": [
+    "Communicating the result of an action",
+    "Showing important system status or contextual guidance",
+    "Warning about a risk while allowing work to continue",
+    "Explaining an error or failure that needs attention",
+    "Presenting one directly related action to resolve the message"
+  ],
+  "doNotUseFor": [
+    "Temporary notifications that disappear automatically - use Toast when available",
+    "Blocking confirmations - use AlertDialog or Dialog",
+    "Long-form instructional content",
+    "Marketing or promotional messages",
+    "Compact status labels - use Badge",
+    "Passive progress - use ProgressBar"
+  ],
+  "relations": [
+    "AlertDialog",
+    "Dialog",
+    "Button",
+    "Badge",
+    "ProgressBar"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-sizing",
+      "description": "Figma examples are fixed at 364px. Code is fluid width and relies on the parent container for sizing.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T12:07:25Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "589a5d6cc0ec7f77"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "name": "Toolbar",
+  "kebabName": "toolbar",
+  "category": "navigation / editor controls",
+  "description": "Horizontal row of action controls for text formatting, editor operations, and grouped contextual actions. Supports floating (default) and sticky surface treatments.",
+  "subComponents": ["ToolbarGroup"],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "sticky",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Sticky mode — flat, no radius, no shadow"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-color-border-base",
+    "--dls-radius-component-input-toolbar",
+    "--dls-shadow-surface-sm",
+    "--dls-color-intent-neutral-subtle",
+    "--dls-spacing-1",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "The Toolbar root is a static surface with no interactive states of its own. Interactive states (hover/pressed/focus) live on the Ghost Buttons composed inside, which use overlay tokens. The toolbar repaints a subtle background on child buttons that carry data-active.",
+    "available": ["[data-sticky]"],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["Button", "ToolbarGroup", "Separator"],
+    "forbiddenChildren": ["Toolbar"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=toolbar]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {
+      "Tab": "Move focus to next control inside the toolbar",
+      "Shift+Tab": "Move focus to previous control inside the toolbar"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Natural tab order across child buttons. Toggle buttons expose aria-pressed; consumers may add a roving tabindex pattern via the Button children if richer keyboard navigation is needed."
+  },
+  "figma": {
+    "nodeId": "94:10637",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=94-10637",
+    "propertyMapping": [
+      {
+        "figmaProperty": "sticky",
+        "reactProp": "sticky",
+        "valueMapping": {
+          "false": "false",
+          "true": "true"
+        }
+      }
+    ]
+  },
+  "useWhen": [
+    "Text formatting controls in a rich-text editor (bold, italic, underline, alignment, lists, link)",
+    "Floating toolbar that appears after a text selection",
+    "Editor / canvas toolbar (movable, sticky, or floating)",
+    "Grouped icon-button actions that share a single labeled surface"
+  ],
+  "doNotUseFor": [
+    "Page-level primary navigation → use Sidebar or TopBar",
+    "Tab switching → use Tabs",
+    "A single action → use Button directly",
+    "Dropdown menus → use Dropdown (Toolbar may contain a trigger that opens a Dropdown for overflow actions)"
+  ],
+  "relations": ["Button", "Separator", "MessageComposer", "Dropdown"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Active-button background uses the L2 token --dls-color-intent-neutral-subtle directly. A dedicated L4 token (e.g. --dls-color-component-toolbar-button-bg-active) would be preferable; deferred until a Toolbar token group is added to tokens.json.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T14:45:00.022Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "0f20da30b98c5a1d"
+  }
+}

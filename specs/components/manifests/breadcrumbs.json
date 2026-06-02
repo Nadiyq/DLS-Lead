@@ -1,0 +1,172 @@
+{
+  "name": "Breadcrumbs",
+  "kebabName": "breadcrumbs",
+  "category": "navigation",
+  "description": "Hierarchical page navigation trail showing the user's current location within a site structure. Supports regular links, dropdown triggers, collapsed ellipsis, and a current page indicator.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "items",
+      "type": "BreadcrumbItem[]",
+      "required": true,
+      "description": "Array of breadcrumb items to display"
+    },
+    {
+      "name": "separator",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Custom separator element. Defaults to ChevronRight icon."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root nav element"
+    }
+  ],
+  "tokens": [
+    "--dls-color-text-placeholder",
+    "--dls-color-text-secondary",
+    "--dls-color-text-primary",
+    "--dls-color-surface-base",
+    "--dls-radius-component-breadcrumb",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-font-family",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-font-weight-normal",
+    "--dls-font-weight-medium"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Links change color on hover/focus using L2 semantic text tokens. No filled surface or overlay; color transitions only.",
+    "available": [
+      ":hover:not(:disabled)",
+      ":focus-visible",
+      "aria-current=\"page\""
+    ],
+    "tokens": [
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 1,
+    "recommendedItems": 4
+  },
+  "accessibility": {
+    "semanticElement": "nav[aria-label=\"Breadcrumb\"]",
+    "requiredAria": ["aria-label", "aria-current"],
+    "keyboard": {
+      "Tab": "Moves focus between breadcrumb links and buttons in natural DOM order",
+      "Enter/Space": "Activates the focused link or button",
+      "Escape": "No special handling — default browser behavior"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order; external focus ring via box-shadow on :focus-visible"
+  },
+  "figma": {
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6564-7317",
+    "componentSets": [
+      {
+        "name": "breadcrumb-item",
+        "nodeId": "6564:7317",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6564-7317",
+        "propertyMapping": [
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Figma-only visual state (normal, focus, hover). In code, managed by CSS pseudo-classes."
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "label",
+            "note": "Figma shows editable text instance. In code, label prop on BreadcrumbItem."
+          },
+          {
+            "figmaProperty": "type",
+            "reactProp": "type",
+            "note": "Direct mapping: regular, dropdown, more, current."
+          }
+        ]
+      },
+      {
+        "name": "breadcrumbs",
+        "nodeId": "6564:7381",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6564-7381",
+        "propertyMapping": [
+          {
+            "figmaProperty": "change",
+            "reactProp": "separator",
+            "note": "Figma instance swap slot for separator icon. In code, separator prop accepts any ReactNode."
+          },
+          {
+            "figmaProperty": "item1",
+            "reactProp": null,
+            "note": "Boolean toggle showing/hiding item 1. In code, controlled by items array length."
+          },
+          {
+            "figmaProperty": "item2",
+            "reactProp": null,
+            "note": "Boolean toggle showing/hiding item 2. In code, controlled by items array length."
+          },
+          {
+            "figmaProperty": "item3",
+            "reactProp": null,
+            "note": "Boolean toggle showing/hiding item 3. In code, controlled by items array length."
+          },
+          {
+            "figmaProperty": "item4",
+            "reactProp": null,
+            "note": "Boolean toggle showing/hiding item 4. In code, controlled by items array length."
+          },
+          {
+            "figmaProperty": "item5",
+            "reactProp": null,
+            "note": "Boolean toggle showing/hiding item 5. In code, controlled by items array length."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Hierarchical page navigation (Home > Section > Page)",
+    "Multi-level site structure where user needs orientation",
+    "Deep navigation paths that benefit from collapsed (more) items"
+  ],
+  "doNotUseFor": [
+    "Flat navigation — use Tabs",
+    "Step-by-step wizard — use Stepper or Tabs",
+    "Single-level navigation — use Sidebar or TopBar"
+  ],
+  "relations": [
+    "Tabs",
+    "Sidebar",
+    "TopBar",
+    "Pagination"
+  ],
+  "knownDeviations": [
+    {
+      "area": "l4-color-tokens",
+      "description": "No L4 color tokens in tokens.json. Uses L2 semantic text/surface tokens directly. Only --dls-radius-component-breadcrumb exists as an L4 token.",
+      "severity": "low"
+    },
+    {
+      "area": "focus-ring-implementation",
+      "description": "Focus ring uses outline-style box-shadow (0 0 0 3px) instead of inset ring. Appropriate for breadcrumb links which are inline elements without a filled container.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T14:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "e48d9739cfd056da"
+  }
+}

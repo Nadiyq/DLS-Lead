@@ -45,12 +45,41 @@ and Phase 3.
 For Phase 2 manifest generation, also apply the detailed extraction and
 cross-validation rules from `.claude/commands/build-manifest.md`.
 
+## Figma description format — two outputs, two formats
+
+Each component produces TWO description artifacts:
+
+1. **Local markdown** (`specs/figma-descriptions/<component-kebab>.md`)
+   Full detailed spec with all sections: anatomy, props, tokens,
+   states, accessibility, composition, code examples, cross-refs.
+
+2. **Figma component panel** (via `use_figma`)
+   CONDENSED summary only. Use this exact format:
+   ```
+   [One-line purpose]
+
+   Figma properties:
+   • [figmaProp] → [reactProp]
+   ...
+
+   Key tokens:
+   • [up to 6 most important tokens]
+   ...
+
+   State model: [overlay | hybrid | oklch-shift | none]
+   • [1-2 lines about key state behavior]
+
+   Accessibility: [One-line: semantic element, keyboard, focus, motion.]
+   ```
+   Never paste the full markdown into Figma.
+
 ## Outputs
 
 Create or update:
 
-- `specs/figma-descriptions/<component-kebab>.md`
+- `specs/figma-descriptions/<component-kebab>.md` (full spec)
 - `specs/components/manifests/<component-kebab>.json`
+- Figma component description (condensed summary via `use_figma`)
 - component TSX/CSS/stories only when needed to fix scoped rollout gaps
 - `specs/component-rollout-plan.md` only for completed factual status
 

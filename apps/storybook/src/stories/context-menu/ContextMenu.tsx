@@ -84,7 +84,7 @@ export const ContextMenuItem = React.forwardRef<HTMLButtonElement, ContextMenuIt
 ContextMenuItem.displayName = 'ContextMenuItem';
 
 /* ---------------------------------------------------------------------------
-   ContextMenuSubmenu — item that reveals a nested menu on hover
+   ContextMenuSubmenu — item that reveals a nested menu on hover/keyboard
    --------------------------------------------------------------------------- */
 
 export const ContextMenuSubmenu: React.FC<ContextMenuSubmenuProps> = ({
@@ -93,22 +93,58 @@ export const ContextMenuSubmenu: React.FC<ContextMenuSubmenuProps> = ({
   children,
 }) => {
   const [open, setOpen] = React.useState(false);
+  const submenuRef = React.useRef<HTMLDivElement>(null);
+
+  const openSubmenu = React.useCallback(() => setOpen(true), []);
+  const closeSubmenu = React.useCallback(() => setOpen(false), []);
+
+  /* Focus the first focusable item inside the submenu after it opens */
+  React.useEffect(() => {
+    if (open && submenuRef.current) {
+      const first = submenuRef.current.querySelector<HTMLElement>(
+        'button, [tabindex]:not([tabindex="-1"])',
+      );
+      first?.focus();
+    }
+  }, [open]);
+
+  const handleKeyDown = React.useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'ArrowRight' && !open) {
+        e.preventDefault();
+        openSubmenu();
+      } else if ((e.key === 'ArrowLeft' || e.key === 'Escape') && open) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeSubmenu();
+        /* Return focus to the trigger */
+        const trigger = (e.currentTarget as HTMLElement).querySelector<HTMLElement>(
+          'button, [tabindex]:not([tabindex="-1"])',
+        );
+        trigger?.focus();
+      }
+    },
+    [open, openSubmenu, closeSubmenu],
+  );
 
   return (
     <div
       className="dls-context-menu__submenu"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={openSubmenu}
+      onMouseLeave={closeSubmenu}
+      onKeyDown={handleKeyDown}
     >
       <ListItem
         type="with-slots"
         text={label}
         iconStart={icon}
         iconEnd={<ChevronRightIcon />}
+        aria-haspopup="menu"
+        aria-expanded={open}
       />
 
       {open && (
-        <div className="dls-context-menu__submenu-content">
+        <div className="dls-context-menu__submenu-content" ref={submenuRef}>
           <ContextMenu>{children}</ContextMenu>
         </div>
       )}

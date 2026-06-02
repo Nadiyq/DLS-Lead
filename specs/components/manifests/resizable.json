@@ -1,0 +1,159 @@
+{
+  "name": "Resizable",
+  "kebabName": "resizable",
+  "category": "layout / interaction",
+  "description": "Drag handle between resizable panels. Vertical strip with grip icon, supporting pointer drag and keyboard arrows.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled state"
+    },
+    {
+      "name": "onResize",
+      "type": "(deltaX: number) => void",
+      "required": false,
+      "description": "Called while dragging with the horizontal delta in pixels"
+    },
+    {
+      "name": "onResizeStart",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when drag starts"
+    },
+    {
+      "name": "onResizeEnd",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when drag ends"
+    },
+    {
+      "name": "valueNow",
+      "type": "number",
+      "required": false,
+      "default": 0,
+      "description": "Current value for screen readers"
+    },
+    {
+      "name": "valueMin",
+      "type": "number",
+      "required": false,
+      "default": 0,
+      "description": "Minimum value for screen readers"
+    },
+    {
+      "name": "valueMax",
+      "type": "number",
+      "required": false,
+      "default": 100,
+      "description": "Maximum value for screen readers"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "required": false,
+      "default": "Resize",
+      "description": "Accessible label"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-resizable",
+    "--dls-radius-component-resizable-handle",
+    "--dls-color-border-base",
+    "--dls-color-surface-strong",
+    "--dls-color-intent-neutral-text",
+    "--dls-color-intent-info-border",
+    "--dls-color-text-inverse",
+    "--dls-color-border-disabled",
+    "--dls-color-surface-disabled",
+    "--dls-color-text-disabled",
+    "--dls-state-hover-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-0-5"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Transparent surface between panels. Hover/focus use overlay bg and info-border accent colors.",
+    "available": [
+      ":hover:not(:disabled):not([data-disabled])",
+      ":focus-visible",
+      "[data-active]",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=separator]",
+    "requiredAria": [
+      "role=\"separator\"",
+      "aria-orientation=\"vertical\"",
+      "aria-label",
+      "aria-valuenow",
+      "aria-valuemin",
+      "aria-valuemax"
+    ],
+    "keyboard": {
+      "ArrowLeft": "Resize left by 1px",
+      "ArrowRight": "Resize right by 1px",
+      "Shift+ArrowLeft": "Resize left by 10px",
+      "Shift+ArrowRight": "Resize right by 10px"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6605-11566",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6605-11566",
+    "propertyMapping": [
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only in Figma (normal/focus). In code: CSS :hover, :focus-visible, [data-active], [data-disabled]."
+      }
+    ]
+  },
+  "useWhen": [
+    "Resizable sidebar/panel layouts",
+    "Split-pane views with adjustable column widths",
+    "Multi-column layouts with adjustable proportions"
+  ],
+  "doNotUseFor": [
+    "Static visual dividers — use Separator",
+    "Scroll position — use Scroll",
+    "Form slider input — use Slider"
+  ],
+  "relations": [
+    "Separator",
+    "Scroll",
+    "Slider"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens in tokens.json. Uses L2 semantic and intent tokens directly. L4 radius tokens added during rollout.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T13:30:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "83e40e03c78b8f58"
+  }
+}

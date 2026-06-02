@@ -1,0 +1,125 @@
+{
+  "name": "IconShape",
+  "kebabName": "icon-shape",
+  "category": "icon container",
+  "description": "Semantic icon badge — a colored subtle background shape wrapping a lucide-react icon. Intent controls the color scheme.",
+  "variants": [],
+  "intents": ["primary", "success", "warning", "danger", "info", "neutral"],
+  "sizes": ["m", "s", "xs"],
+  "props": [
+    {
+      "name": "intent",
+      "type": "\"primary\" | \"success\" | \"warning\" | \"danger\" | \"info\" | \"neutral\"",
+      "required": false,
+      "default": "neutral",
+      "enum": ["primary", "success", "warning", "danger", "info", "neutral"],
+      "description": "Intent color"
+    },
+    {
+      "name": "size",
+      "type": "\"m\" | \"s\" | \"xs\"",
+      "required": false,
+      "default": "m",
+      "enum": ["m", "s", "xs"],
+      "description": "Size"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Icon element (SVG)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-icon-shape",
+    "--dls-radius-component-icon-shape-xs",
+    "--dls-color-intent-primary-subtle",
+    "--dls-color-intent-primary-text",
+    "--dls-color-intent-success-subtle",
+    "--dls-color-intent-success-text",
+    "--dls-color-intent-warning-subtle",
+    "--dls-color-intent-warning-text",
+    "--dls-color-intent-danger-subtle",
+    "--dls-color-intent-danger-text",
+    "--dls-color-intent-info-subtle",
+    "--dls-color-intent-info-text",
+    "--dls-color-intent-neutral-subtle",
+    "--dls-color-intent-neutral-text",
+    "--dls-spacing-2",
+    "--dls-spacing-1-5",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "IconShape is a static display component with no interactive states, transitions, or animations.",
+    "available": []
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6594-8253",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6594-8253",
+    "propertyMapping": [
+      {
+        "figmaProperty": "intent",
+        "reactProp": "intent",
+        "valueMapping": {
+          "primary": "primary",
+          "success": "success",
+          "warning": "warning",
+          "danger": "danger",
+          "info": "info",
+          "neutral": "neutral"
+        }
+      },
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s",
+          "XS": "xs"
+        },
+        "note": "Figma uses uppercase (M/S/XS), code uses lowercase (m/s/xs)."
+      }
+    ]
+  },
+  "useWhen": [
+    "Status indicators in cards or dialogs",
+    "Empty state illustrations with semantic color",
+    "Feature highlights or info callouts",
+    "Alert or notification icon badges"
+  ],
+  "doNotUseFor": [
+    "User/entity identity — use Avatar",
+    "Interactive icon buttons — use Button with icon-only",
+    "Status dots — use BadgeIndicator"
+  ],
+  "relations": [
+    "Avatar",
+    "Badge",
+    "BadgeIndicator",
+    "Checkmark"
+  ],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-02T14:30:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "7a4d27ff112fe0aa"
+  }
+}

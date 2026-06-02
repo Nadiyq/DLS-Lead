@@ -1,0 +1,78 @@
+{
+  "name": "CarouselItem",
+  "kebabName": "carousel-item",
+  "category": "content / slide container",
+  "description": "Rounded content container for individual carousel slides. Holds images, text, cards, or any content.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Slide content"
+    },
+    {
+      "name": "width",
+      "type": "number | string",
+      "required": false,
+      "description": "Fixed width"
+    },
+    {
+      "name": "height",
+      "type": "number | string",
+      "required": false,
+      "description": "Fixed height"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-carousel-item"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "CarouselItem is a static content container with no interactive states.",
+    "available": []
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6602-3066",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6602-3066",
+    "propertyMapping": []
+  },
+  "useWhen": [
+    "Individual slides inside a Carousel",
+    "Image gallery items",
+    "Card carousel entries"
+  ],
+  "doNotUseFor": [
+    "Standalone cards — use Card",
+    "Grid items outside carousel context — use direct layout"
+  ],
+  "relations": [
+    "Carousel",
+    "CarouselArrow",
+    "CarouselDots"
+  ],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-02T16:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "0b0bae4a47a8e957"
+  }
+}

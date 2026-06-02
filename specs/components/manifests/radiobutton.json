@@ -1,0 +1,183 @@
+{
+  "name": "Radiobutton",
+  "kebabName": "radiobutton",
+  "category": "form control",
+  "description": "Mutually exclusive single-selection control within a group. Supports label, description, and text orientation. Uses a native radio input with a visual circle and inner dot.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "checked",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Selected state"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Description text below the label"
+    },
+    {
+      "name": "textOrientation",
+      "type": "\"right\" | \"left\"",
+      "required": false,
+      "default": "right",
+      "enum": ["right", "left"],
+      "description": "Position of the text relative to the radio"
+    },
+    {
+      "name": "onChange",
+      "type": "(checked: boolean) => void",
+      "required": false,
+      "description": "Called on change"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Native name attribute"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Native value attribute"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element"
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-radiobutton",
+    "--dls-color-surface-base",
+    "--dls-color-surface-inverse",
+    "--dls-color-surface-disabled",
+    "--dls-color-border-strong",
+    "--dls-color-border-focus",
+    "--dls-color-border-disabled",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-color-text-disabled",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-font-family",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-font-weight-normal"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Both selected and unselected states use overlay tokens for hover/pressed. The circle is always a non-filled surface (surface-base or overlay).",
+    "available": [
+      ":hover:not(:disabled)",
+      ":active:not(:disabled)",
+      ":focus-visible",
+      ":checked",
+      ":disabled"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "input[type=\"radio\"]",
+    "requiredAria": [],
+    "keyboard": {
+      "Space": "Selects the focused radio button",
+      "Arrow Up/Down": "Moves focus and selection within a radio group",
+      "Arrow Left/Right": "Moves focus and selection within a radio group",
+      "Tab": "Moves focus to/from the radio group"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "native radio input focus; external focus ring via box-shadow on :focus-visible"
+  },
+  "figma": {
+    "nodeId": "59:7022",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=59-7022",
+    "propertyMapping": [
+      {
+        "figmaProperty": "selected",
+        "reactProp": "checked",
+        "note": "Boolean. Figma 'selected' maps to code 'checked'."
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Figma-only visual state (normal/hover/focus/disable). In code, CSS pseudo-classes and disabled prop. Note: Figma uses 'disable' not 'disabled'."
+      }
+    ]
+  },
+  "useWhen": [
+    "Mutually exclusive single-selection within a group",
+    "Settings where only one option can be active",
+    "Plan or tier selection",
+    "Form fields requiring exactly one choice"
+  ],
+  "doNotUseFor": [
+    "Binary on/off toggle — use Checkbox or Switcher",
+    "Multiple simultaneous selections — use Checkbox",
+    "Navigation or filtering — use Tabs or Dropdown"
+  ],
+  "relations": [
+    "RadiobuttonBox",
+    "Checkbox",
+    "Switcher",
+    "FormField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "l4-color-tokens",
+      "description": "No L4 color tokens in tokens.json. Uses L2 semantic tokens directly. Only --dls-radius-component-radiobutton exists as L4.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-label-description",
+      "description": "Figma component (59:7022) shows only the radio circle. In code, Radiobutton includes label and description text. The full form control with label is composed at usage level in Figma.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-state-name",
+      "description": "Figma uses 'disable' (no d) instead of 'disabled' for the disabled state value.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-29T10:30:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "5afbbecda81fe05f"
+  }
+}

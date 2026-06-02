@@ -5,11 +5,7 @@ import './empty-state.css';
    Types
    --------------------------------------------------------------------------- */
 
-export type EmptyStateVariant = 'borderless' | 'bordered';
-
 export interface EmptyStateProps {
-  /** Visual variant */
-  variant?: EmptyStateVariant;
   /** Media slot — icon-shape, illustration, or any visual */
   media?: React.ReactNode;
   /** Title text */
@@ -28,7 +24,6 @@ export interface EmptyStateProps {
 export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
   (
     {
-      variant = 'borderless',
       media,
       title,
       description,
@@ -43,7 +38,6 @@ export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
       <div
         ref={ref}
         className={['dls-empty-state', className].filter(Boolean).join(' ')}
-        data-variant={variant}
       >
         {media && <div className="dls-empty-state__media">{media}</div>}
 

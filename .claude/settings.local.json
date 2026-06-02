@@ -53,7 +53,15 @@
       "Bash(node -e 'const s = require\\('\\\\''./specs/schemas/component.v1.json'\\\\''\\); console.log\\('\\\\''Valid JSON. Top-level required:'\\\\'', s.required\\); console.log\\('\\\\''Prop defs:'\\\\'', Object.keys\\(s.$defs\\)\\); console.log\\('\\\\''Total properties:'\\\\'', Object.keys\\(s.properties\\).length\\)')",
       "Bash(xargs -I{} basename {} .md)",
       "Bash(grep -E '\\\\.tsx$')",
-      "Bash(grep -rl '<svg' /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories --include='*.tsx' ! -name '*.stories.tsx' ! -path '*/_*')"
+      "Bash(grep -rl '<svg' /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories --include='*.tsx' ! -name '*.stories.tsx' ! -path '*/_*')",
+      "Bash(shasum -a 256)",
+      "Bash(npx ajv *)",
+      "Bash(node -e \"console.log\\(Object.keys\\(require\\('ajv/package.json'\\)\\).includes\\('version'\\) ? require\\('ajv/package.json'\\).version : 'unknown'\\)\")",
+      "Bash(cat /tmp/figma-code-0.js)",
+      "Bash(node tokens/figma-sync-4layer.js)",
+      "Bash(node -e ' *)",
+      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/toolbar/toolbar.css)",
+      "Bash(npx --yes ajv-cli@5 validate -s specs/schemas/component.v1.json -d specs/components/manifests/toolbar.json --strict=false --spec=draft2020)"
     ]
   },
   "enabledMcpjsonServers": [

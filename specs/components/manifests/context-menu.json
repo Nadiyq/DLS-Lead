@@ -1,0 +1,91 @@
+{
+  "name": "ContextMenu",
+  "kebabName": "context-menu",
+  "category": "menu / navigation",
+  "subComponents": ["ContextMenuItem", "ContextMenuSubmenu", "ContextMenuDivider", "ContextMenuLabel"],
+  "description": "Right-click or triggered menu with contextual actions, keyboard shortcuts, submenus, section labels, and dividers. Built on ListItem rows.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Menu content (ContextMenuItem, ContextMenuSubmenu, ContextMenuDivider, ContextMenuLabel)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-list",
+    "--dls-font-family",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-shadow-surface-md"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Container has no interactive states. All interactivity delegated to ListItem children (overlay model for hover/focus).",
+    "available": [],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["ContextMenuItem", "ContextMenuSubmenu", "ContextMenuDivider", "ContextMenuLabel"],
+    "forbiddenChildren": [],
+    "maxDepth": 2,
+    "minItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=menu]",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Move focus between menu items",
+      "Enter/Space": "Activate item",
+      "ArrowRight": "Open submenu, focus first item",
+      "ArrowLeft": "Close submenu, return focus to trigger",
+      "Escape": "Close submenu or menu (consumer responsibility for root)"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6605-4492",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6605-4492",
+    "propertyMapping": []
+  },
+  "useWhen": [
+    "Right-click context menus",
+    "Action menus triggered by button or gesture",
+    "Menus with keyboard shortcuts displayed inline",
+    "Menus with nested submenu groups"
+  ],
+  "doNotUseFor": [
+    "Primary navigation -- use Sidebar or Tabs",
+    "Form select dropdowns -- use Dropdown",
+    "Filter lists -- use DropdownFilters"
+  ],
+  "relations": [
+    "ListItem",
+    "Kbd",
+    "Dropdown",
+    "Submenu"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens for context-menu. Uses --dls-radius-component-list (same visual as --dls-radius-component-context-menu which exists but is unused).",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T21:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "9b26360900ae712e"
+  }
+}

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { expect, fn, userEvent } from 'storybook/test';
 import { AvatarStack } from './AvatarStack';
 import { Avatar, UserIcon } from './Avatar';
 import type { AvatarStackSize, OverflowUser } from './AvatarStack';
@@ -92,12 +93,32 @@ export const AllSizes: Story = {
 // ---------------------------------------------------------------------------
 
 const OVERFLOW_USERS: OverflowUser[] = [
-  { name: 'Malik Roberson', src: 'https://i.pravatar.cc/300?img=21' },
-  { name: 'Kenton Jerde', src: 'https://i.pravatar.cc/300?img=33' },
-  { name: 'Talia Kubiak', initials: 'TK' },
-  { name: 'Jayson Wintheiser', src: 'https://i.pravatar.cc/300?img=14' },
-  { name: 'Shea Trantow', src: 'https://i.pravatar.cc/300?img=9' },
+  { name: 'Malik Roberson', secondaryText: 'malik@example.com', src: 'https://i.pravatar.cc/300?img=21' },
+  { name: 'Kenton Jerde', secondaryText: 'kenton@example.com', src: 'https://i.pravatar.cc/300?img=33' },
+  { name: 'Talia Kubiak', secondaryText: 'talia@example.com', initials: 'TK' },
+  { name: 'Jayson Wintheiser', secondaryText: 'jayson@example.com', src: 'https://i.pravatar.cc/300?img=14' },
+  { name: 'Shea Trantow', secondaryText: 'shea@example.com', src: 'https://i.pravatar.cc/300?img=9' },
 ];
+
+// ---------------------------------------------------------------------------
+// Figma matrix — 2 visible avatars + +20 counter
+// ---------------------------------------------------------------------------
+
+export const FigmaMatrix: Story = {
+  render: () => (
+    <Section layout="wrap" innerGap={24} title="Figma Matrix — 2 Avatars + Counter">
+      {SIZES.map((size) => (
+        <SizeLabel key={size} size={size}>
+          <AvatarStack size={size} max={2} total={22}>
+            <Avatar src={SAMPLE_IMAGES[0]} alt="User 1" />
+            <Avatar src={SAMPLE_IMAGES[1]} alt="User 2" />
+            <Avatar src={SAMPLE_IMAGES[2]} alt="User 3" />
+          </AvatarStack>
+        </SizeLabel>
+      ))}
+    </Section>
+  ),
+};
 
 export const WithCounter: Story = {
   render: () => {
@@ -136,6 +157,41 @@ export const AllSizesWithCounter: Story = {
       ))}
     </Section>
   ),
+};
+
+export const CounterInteraction: Story = {
+  args: {
+    onCounterClick: fn(),
+    onOverflowUserClick: fn(),
+  },
+  render: ({ onCounterClick, onOverflowUserClick }) => (
+    <Section layout="wrap" innerGap={24} title="Counter Interaction">
+      <AvatarStack
+        size="48"
+        max={2}
+        total={7}
+        overflowUsers={OVERFLOW_USERS}
+        onCounterClick={onCounterClick}
+        onOverflowUserClick={onOverflowUserClick}
+      >
+        <Avatar src={SAMPLE_IMAGES[0]} alt="User 1" />
+        <Avatar src={SAMPLE_IMAGES[1]} alt="User 2" />
+        <Avatar src={SAMPLE_IMAGES[2]} alt="User 3" />
+        <Avatar src={SAMPLE_IMAGES[3]} alt="User 4" />
+      </AvatarStack>
+    </Section>
+  ),
+  play: async ({ args, canvas }) => {
+    const counter = await canvas.findByRole('button', { name: '5 more users' });
+
+    await userEvent.click(counter);
+    await expect(counter).toHaveAttribute('aria-expanded', 'true');
+    await expect(args.onCounterClick).toHaveBeenCalledTimes(1);
+
+    const overflowUser = await canvas.findByRole('button', { name: /Malik Roberson/ });
+    await userEvent.click(overflowUser);
+    await expect(args.onOverflowUserClick).toHaveBeenCalledTimes(1);
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -199,6 +255,26 @@ export const MixedContent: Story = {
         <Avatar src={SAMPLE_IMAGES[0]} alt="User 1" />
         <Avatar src={SAMPLE_IMAGES[1]} alt="User 2" />
         <Avatar initials="JD" />
+        <Avatar initials="MK" />
+      </AvatarStack>
+    </Section>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Removable avatar — maps to Figma hovered state
+// ---------------------------------------------------------------------------
+
+export const WithRemovableAvatar: Story = {
+  args: {
+    onCounterClick: fn(),
+  },
+  render: ({ onCounterClick }) => (
+    <Section layout="wrap" innerGap={24} title="Removable Avatar">
+      <AvatarStack size="48" max={3} total={12} onCounterClick={onCounterClick}>
+        <Avatar src={SAMPLE_IMAGES[0]} alt="User 1" />
+        <Avatar src={SAMPLE_IMAGES[1]} alt="User 2" />
+        <Avatar src={SAMPLE_IMAGES[2]} alt="User 3" onRemove={fn()} />
         <Avatar initials="MK" />
       </AvatarStack>
     </Section>

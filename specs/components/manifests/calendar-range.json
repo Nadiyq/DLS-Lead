@@ -1,0 +1,197 @@
+{
+  "name": "CalendarRange",
+  "kebabName": "calendar-range",
+  "category": "input / date range picker",
+  "description": "Dual-panel date range picker showing two consecutive months. Uses CalendarDay for cells, Dropdown for time, Tabs for AM/PM.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "startDate",
+      "type": "Date | null",
+      "required": false,
+      "description": "Range start date"
+    },
+    {
+      "name": "endDate",
+      "type": "Date | null",
+      "required": false,
+      "description": "Range end date"
+    },
+    {
+      "name": "onRangeChange",
+      "type": "(start: Date | null, end: Date | null) => void",
+      "required": false,
+      "description": "Called when range changes"
+    },
+    {
+      "name": "today",
+      "type": "Date",
+      "required": false,
+      "description": "Today override"
+    },
+    {
+      "name": "minDate",
+      "type": "Date",
+      "required": false,
+      "description": "Min selectable date"
+    },
+    {
+      "name": "maxDate",
+      "type": "Date",
+      "required": false,
+      "description": "Max selectable date"
+    },
+    {
+      "name": "layout",
+      "type": "\"horizontal\" | \"vertical\"",
+      "required": false,
+      "default": "horizontal",
+      "enum": ["horizontal", "vertical"],
+      "description": "Layout"
+    },
+    {
+      "name": "weekStartsOn",
+      "type": "0 | 1",
+      "required": false,
+      "default": 0,
+      "description": "First day of the week: 0 = Sunday, 1 = Monday"
+    },
+    {
+      "name": "showTimePicker",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show time picker in footer"
+    },
+    {
+      "name": "hour",
+      "type": "string",
+      "required": false,
+      "default": "09",
+      "description": "Selected hour (1-12)"
+    },
+    {
+      "name": "minute",
+      "type": "string",
+      "required": false,
+      "default": "15",
+      "description": "Selected minute (00-59)"
+    },
+    {
+      "name": "period",
+      "type": "\"AM\" | \"PM\"",
+      "required": false,
+      "default": "AM",
+      "enum": ["AM", "PM"],
+      "description": "AM or PM"
+    },
+    {
+      "name": "onTimeChange",
+      "type": "(hour: string, minute: string, period: TimePeriod) => void",
+      "required": false,
+      "description": "Called when time changes"
+    },
+    {
+      "name": "footer",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Footer content (e.g. action buttons)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-calendar",
+    "--dls-radius-component-calendar-day",
+    "--dls-radius-component-button",
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-color-border-base",
+    "--dls-shadow-surface-lg",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-color-text-disabled",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-spacing-4",
+    "--dls-font-family",
+    "--dls-font-weight-medium",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Day cells delegated to CalendarDay (overlay model). Nav buttons use overlay hover/pressed. No direct interactive states on container.",
+    "available": [
+      ":hover:not(:disabled) (nav)",
+      ":active:not(:disabled) (nav)",
+      ":focus-visible (nav)"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["CalendarDay"],
+    "forbiddenChildren": [],
+    "minItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [
+      "aria-label (nav buttons)"
+    ],
+    "keyboard": {
+      "Tab": "Move focus between interactive elements",
+      "Enter/Space": "Select day, navigate month"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6597-19819",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6597-19819",
+    "propertyMapping": []
+  },
+  "useWhen": [
+    "Date range selection (check-in/check-out, start/end)",
+    "Calendar dropdown in DateRangeInput",
+    "Booking or scheduling date spans"
+  ],
+  "doNotUseFor": [
+    "Single date selection — use Calendar",
+    "Date text input — use DateInput or DateRangeInput"
+  ],
+  "relations": [
+    "Calendar",
+    "CalendarDay",
+    "CalendarPeriods",
+    "DateRangeInput",
+    "Dropdown",
+    "Tabs"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens for calendar-range. Uses semantic and intent tokens. Only radius tokens exist as L4.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T17:30:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "cffea0ad22637241"
+  }
+}

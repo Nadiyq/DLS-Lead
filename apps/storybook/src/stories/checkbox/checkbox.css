@@ -109,18 +109,18 @@
    Hover — unselected
    --------------------------------------------------------------------------- */
 
-.dls-checkbox__input:not(:checked):not(:indeterminate):not(:disabled):hover + .dls-checkbox__box-wrapper .dls-checkbox__box,
-.dls-checkbox:hover .dls-checkbox__input:not(:checked):not(:indeterminate):not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box {
+.dls-checkbox__input:not(:checked):not(:indeterminate):hover:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box,
+.dls-checkbox:hover:not(:disabled) .dls-checkbox__input:not(:checked):not(:indeterminate):not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box {
   background: var(--dls-state-hover-overlay);
   border-color: var(--dls-color-border-focus);
 }
 
 /* Hover — selected / indeterminate */
 
-.dls-checkbox__input:checked:not(:disabled):hover + .dls-checkbox__box-wrapper .dls-checkbox__box,
-.dls-checkbox:hover .dls-checkbox__input:checked:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box,
-.dls-checkbox__input:indeterminate:not(:disabled):hover + .dls-checkbox__box-wrapper .dls-checkbox__box,
-.dls-checkbox:hover .dls-checkbox__input:indeterminate:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box {
+.dls-checkbox__input:checked:hover:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box,
+.dls-checkbox:hover:not(:disabled) .dls-checkbox__input:checked:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box,
+.dls-checkbox__input:indeterminate:hover:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box,
+.dls-checkbox:hover:not(:disabled) .dls-checkbox__input:indeterminate:not(:disabled) + .dls-checkbox__box-wrapper .dls-checkbox__box {
   background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
 
@@ -208,4 +208,15 @@
 .dls-checkbox__input:disabled ~ .dls-checkbox__text .dls-checkbox__label,
 .dls-checkbox__input:disabled ~ .dls-checkbox__text .dls-checkbox__description {
   color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-checkbox__box,
+  .dls-checkbox__box svg {
+    transition: none;
+  }
 }

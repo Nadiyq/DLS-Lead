@@ -311,7 +311,7 @@
   /* Alert (per variant) */
   --dls-color-component-alert-neutral-bg: var(--dls-color-surface-muted);
   --dls-color-component-alert-neutral-fg: var(--dls-color-text-primary);
-  --dls-color-component-alert-neutral-border: var(--dls-color-border-base);
+  --dls-color-component-alert-neutral-border: var(--dls-color-border-subtle);
   --dls-color-component-alert-primary-bg: var(--dls-color-intent-primary-subtle);
   --dls-color-component-alert-primary-fg: var(--dls-color-intent-primary-text);
   --dls-color-component-alert-primary-border: var(--dls-color-intent-primary-border);
@@ -573,6 +573,8 @@
   --dls-radius-component-pagination: var(--dls-radius-m);
   --dls-radius-component-progress-bar: var(--dls-radius-full);
   --dls-radius-component-radiobutton: var(--dls-radius-full);
+  --dls-radius-component-resizable: var(--dls-radius-s);
+  --dls-radius-component-resizable-handle: var(--dls-radius-xs);
   --dls-radius-component-scroll: var(--dls-radius-l);
   --dls-radius-component-scroll-thumb: var(--dls-radius-full);
   --dls-radius-component-skeleton-line: var(--dls-radius-full);

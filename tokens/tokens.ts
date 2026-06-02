@@ -284,7 +284,7 @@ function getComponentTokens(theme: keyof typeof semantic) {
       removeBtnFg: s.text.primary,
     },
     alert: {
-      neutral: { bg: s.surface.muted, fg: s.text.primary, border: s.border.base },
+      neutral: { bg: s.surface.muted, fg: s.text.primary, border: s.border.subtle },
       primary: { bg: s.intent.primary.subtle, fg: s.intent.primary.text, border: s.intent.primary.border },
       success: { bg: s.intent.success.subtle, fg: s.intent.success.text, border: s.intent.success.border },
       warning: { bg: s.intent.warning.subtle, fg: s.intent.warning.text, border: s.intent.warning.border },
@@ -510,6 +510,8 @@ export const radius = {
     pagination:     6,
     "progress-bar": 9999,
     radiobutton:    9999,
+    resizable:      4,
+    "resizable-handle": 2,
     scroll:         8,
     "scroll-thumb": 9999,
     "skeleton-line": 9999,

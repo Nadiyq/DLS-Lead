@@ -1,0 +1,306 @@
+{
+  "name": "AlertDialog",
+  "kebabName": "alert-dialog",
+  "category": "feedback / modal",
+  "description": "Blocking modal decision surface for confirmations, warnings, destructive actions, and other choices that require an explicit response.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [
+    "neutral",
+    "primary",
+    "info",
+    "success",
+    "warning",
+    "danger"
+  ],
+  "sizes": [],
+  "props": [
+    {
+      "name": "intent",
+      "type": "AlertDialogIntent",
+      "required": false,
+      "default": "neutral",
+      "enum": [
+        "neutral",
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "description": "Semantic intent that controls icon color and action button intent."
+    },
+    {
+      "name": "breakpoint",
+      "type": "AlertDialogBreakpoint",
+      "required": false,
+      "enum": [
+        "desktop",
+        "mobile"
+      ],
+      "description": "Layout mode for desktop or stacked mobile compositions."
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the native dialog is shown with showModal()."
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional leading decorative icon. Use lucide-react icons."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": false,
+      "description": "Dialog title used as the accessible name when present."
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Optional supporting text used as the accessible description when present."
+    },
+    {
+      "name": "primaryAction",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Primary action slot, usually a filled Button."
+    },
+    {
+      "name": "secondaryAction",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Secondary action slot, usually an outline Button."
+    },
+    {
+      "name": "onClose",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when native cancel, such as Escape, requests the dialog to close."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root dialog."
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-dialog-overlay",
+    "--dls-color-component-dialog-bg",
+    "--dls-color-component-dialog-border",
+    "--dls-color-intent-neutral-text",
+    "--dls-color-intent-primary-text",
+    "--dls-color-intent-info-text",
+    "--dls-color-intent-success-text",
+    "--dls-color-intent-warning-text",
+    "--dls-color-intent-danger-text",
+    "--dls-color-text-primary",
+    "--dls-font-family",
+    "--dls-font-weight-normal",
+    "--dls-font-weight-semibold",
+    "--dls-radius-component-modal",
+    "--dls-shadow-surface-lg",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-spacing-4",
+    "--dls-spacing-6",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-xl-font-size",
+    "--dls-text-xl-line-height"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "AlertDialog root has controlled open/closed modal state and layout/intent attributes, but it does not define hover, pressed, focus, selected, or disabled visual states. Interactive states are owned by Button children in the action slots.",
+    "available": [
+      "open",
+      "closed",
+      "data-intent",
+      "data-breakpoint",
+      "responsive"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [
+      "Button"
+    ],
+    "forbiddenChildren": [
+      "FormField",
+      "Dropdown",
+      "Dialog",
+      "AlertDialog",
+      "Table"
+    ],
+    "forbiddenParents": [
+      "AlertDialog",
+      "Dialog"
+    ],
+    "maxDepth": 1,
+    "minItems": 1,
+    "recommendedItems": 2
+  },
+  "accessibility": {
+    "semanticElement": "dialog",
+    "requiredAria": [
+      "aria-labelledby when title is present",
+      "aria-describedby when description is present"
+    ],
+    "keyboard": {
+      "Escape": "Triggers native cancel, prevents uncontrolled close, and calls onClose",
+      "Tab": "Moves through focusable action children while native modal dialog containment is active",
+      "Shift+Tab": "Moves backward through focusable action children while native modal dialog containment is active",
+      "Enter/Space": "Activates focused Button actions through native button behavior"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Native showModal() places the dialog in the modal top layer and provides modal focus containment; action children follow natural tab order"
+  },
+  "figma": {
+    "nodeId": "143:12251",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=143-12251",
+    "propertyMapping": [
+      {
+        "figmaProperty": "breakpoint",
+        "reactProp": "breakpoint",
+        "valueMapping": {
+          "desktop": "desktop",
+          "mobile": "mobile"
+        },
+        "note": "Code may omit breakpoint to use responsive CSS auto-detect."
+      },
+      {
+        "figmaProperty": "intent",
+        "reactProp": "intent",
+        "valueMapping": {
+          "neutral": "neutral",
+          "primary": "primary",
+          "info": "info",
+          "success": "success",
+          "warning": "warning",
+          "danger": "danger"
+        }
+      },
+      {
+        "figmaProperty": "icon",
+        "reactProp": "icon",
+        "valueMapping": {
+          "true": "provide icon ReactNode",
+          "false": "omit icon"
+        },
+        "note": "Visibility toggle for the leading decorative icon slot."
+      },
+      {
+        "figmaProperty": "title",
+        "reactProp": "title",
+        "note": "Figma text override maps to the code title string."
+      },
+      {
+        "figmaProperty": "description",
+        "reactProp": "description",
+        "note": "Figma text override maps to the code description string."
+      },
+      {
+        "figmaProperty": "subtitle",
+        "reactProp": "description",
+        "valueMapping": {
+          "true": "provide description string",
+          "false": "omit description"
+        },
+        "note": "Figma boolean controls supporting text visibility. Code uses the description prop for both content and visibility."
+      },
+      {
+        "figmaProperty": "actions",
+        "reactProp": null,
+        "valueMapping": {
+          "true": "provide primaryAction and/or secondaryAction",
+          "false": "omit both action props"
+        },
+        "note": "Figma controls the action row directly. Code derives row visibility from primaryAction or secondaryAction presence."
+      },
+      {
+        "figmaProperty": "action-primary",
+        "reactProp": "primaryAction",
+        "valueMapping": {
+          "true": "provide primary action ReactNode",
+          "false": "omit primaryAction"
+        }
+      },
+      {
+        "figmaProperty": "action-secondary",
+        "reactProp": "secondaryAction",
+        "valueMapping": {
+          "true": "provide secondary action ReactNode",
+          "false": "omit secondaryAction"
+        }
+      },
+      {
+        "figmaProperty": "slot",
+        "reactProp": null,
+        "note": "Figma-only arbitrary content slot toggle. Code does not expose a general content slot."
+      },
+      {
+        "figmaProperty": "slot-content",
+        "reactProp": null,
+        "note": "Figma-only slot target. Code does not expose a general content slot."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "open",
+        "note": "Code-only controlled native dialog state."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "onClose",
+        "note": "Code-only close request callback."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "className",
+        "note": "Code-only root class extension."
+      }
+    ]
+  },
+  "useWhen": [
+    "Confirming a destructive or irreversible action",
+    "Asking users to approve or reject an important operation",
+    "Requiring acknowledgement before task progress can continue",
+    "Explaining an error state that blocks the workflow",
+    "Presenting one focused decision with one primary resolution path"
+  ],
+  "doNotUseFor": [
+    "Inline contextual messages - use Alert",
+    "Temporary notifications that disappear automatically - use Toast when available",
+    "Complex forms, long content, or multi-step workflows - use Dialog",
+    "Low-priority confirmations that do not justify interruption",
+    "Educational, help, or marketing content"
+  ],
+  "relations": [
+    "Alert",
+    "Dialog",
+    "Button"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-slot-content",
+      "description": "Figma exposes slot and slot-content for arbitrary inserted content. Code does not expose a general content slot; it supports title, description, icon, primary action, and secondary action only.",
+      "severity": "medium"
+    },
+    {
+      "area": "figma-static-preview",
+      "description": "Figma examples are static panels for documentation. Code uses native modal dialog behavior through showModal().",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T13:42:52Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "e5b900984bdd5ccd"
+  }
+}

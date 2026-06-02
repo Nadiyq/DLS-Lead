@@ -39,10 +39,20 @@
    Dot states
    --------------------------------------------------------------------------- */
 
-.dls-carousel-dot:hover:not([data-current]):not(:disabled) {
+.dls-carousel-dot:hover:not(:disabled):not([data-current]) {
   background: var(--dls-color-intent-neutral-text);
 }
 
 .dls-carousel-dot:focus-visible {
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-carousel-dot {
+    transition: none;
+  }
 }

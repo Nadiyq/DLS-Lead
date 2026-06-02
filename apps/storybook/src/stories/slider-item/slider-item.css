@@ -27,7 +27,7 @@
    Hover
    --------------------------------------------------------------------------- */
 
-.dls-slider-item:hover:not([data-disabled]) {
+.dls-slider-item:hover:not(:disabled):not([data-disabled]) {
   background: var(--dls-color-surface-muted);
   box-shadow: var(--dls-shadow-surface-md);
 }
@@ -60,4 +60,14 @@
   box-shadow: none;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-slider-item {
+    transition: none;
+  }
 }

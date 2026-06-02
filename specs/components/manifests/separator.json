@@ -1,0 +1,90 @@
+{
+  "name": "Separator",
+  "kebabName": "separator",
+  "category": "layout / visual divider",
+  "description": "Visual divider line between content sections, list items, or toolbar groups. Horizontal or vertical.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "orientation",
+      "type": "\"horizontal\" | \"vertical\"",
+      "required": false,
+      "default": "horizontal",
+      "enum": ["horizontal", "vertical"],
+      "description": "Orientation of the separator"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-border-base"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Separator is a static visual divider with no interactive states, transitions, or animations.",
+    "available": []
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=separator]",
+    "requiredAria": [
+      "role=\"separator\"",
+      "aria-orientation"
+    ],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6597-19415",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6597-19415",
+    "propertyMapping": [
+      {
+        "figmaProperty": "vertical",
+        "reactProp": "orientation",
+        "valueMapping": {
+          "false": "horizontal",
+          "true": "vertical"
+        },
+        "note": "Figma uses boolean vertical; code uses string orientation."
+      }
+    ]
+  },
+  "useWhen": [
+    "Dividing content sections vertically",
+    "Separating list items",
+    "Grouping toolbar actions",
+    "Creating visual breaks between card sections"
+  ],
+  "doNotUseFor": [
+    "Decorative borders on containers — use border tokens",
+    "Spacing between elements — use spacing tokens",
+    "Content grouping with headings — use section headings"
+  ],
+  "relations": [
+    "Resizable",
+    "List",
+    "ListItem",
+    "Toolbar"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 component tokens in tokens.json. Uses --dls-color-border-base directly.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T12:30:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "d56bc6ee34c70617"
+  }
+}

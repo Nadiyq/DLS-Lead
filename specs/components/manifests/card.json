@@ -1,0 +1,187 @@
+{
+  "name": "Card",
+  "kebabName": "card",
+  "category": "surface",
+  "description": "Flexible container that groups related content, metadata, and actions into a single visual unit with regular, outline, and muted types.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "\"regular\" | \"outline\" | \"muted\"",
+      "required": false,
+      "default": "regular",
+      "enum": ["regular", "outline", "muted"],
+      "description": "Visual type"
+    },
+    {
+      "name": "headerIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Header icon (16×16)"
+    },
+    {
+      "name": "headerContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Custom header content (slot)"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": false,
+      "description": "Card title"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Card description"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Custom content placed below title/description (slot)"
+    },
+    {
+      "name": "footer",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Footer content (slot)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-card",
+    "--dls-font-family",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-spacing-4",
+    "--dls-color-border-base",
+    "--dls-color-surface-muted",
+    "--dls-color-border-subtle",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-text-xl-font-size",
+    "--dls-text-xl-line-height",
+    "--dls-font-weight-medium",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-font-weight-normal"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Card is a static container. No interactive states. All interactivity delegated to child components.",
+    "available": [],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": ["Card"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order (children only)"
+  },
+  "figma": {
+    "nodeId": "6953-8834",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6953-8834",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "regular": "regular",
+          "outline": "outline",
+          "muted": "muted"
+        }
+      },
+      {
+        "figmaProperty": "header",
+        "reactProp": null,
+        "note": "Figma boolean toggle. In React, header renders when headerIcon or headerContent is truthy."
+      },
+      {
+        "figmaProperty": "icon",
+        "reactProp": "headerIcon",
+        "note": "Figma boolean toggle. React uses ReactNode: truthy renders icon."
+      },
+      {
+        "figmaProperty": "headerContent",
+        "reactProp": "headerContent",
+        "note": "Figma instance swap slot."
+      },
+      {
+        "figmaProperty": "title",
+        "reactProp": "title"
+      },
+      {
+        "figmaProperty": "description",
+        "reactProp": null,
+        "note": "Figma boolean toggle for visibility. In React, description prop truthy = visible."
+      },
+      {
+        "figmaProperty": "descriptionText",
+        "reactProp": "description",
+        "note": "Figma text string maps to React description prop."
+      },
+      {
+        "figmaProperty": "content",
+        "reactProp": "children",
+        "note": "Figma instance swap slot maps to React children."
+      },
+      {
+        "figmaProperty": "footer",
+        "reactProp": null,
+        "note": "Figma boolean toggle. In React, footer prop truthy = visible."
+      },
+      {
+        "figmaProperty": "footerContent",
+        "reactProp": "footer",
+        "note": "Figma instance swap slot maps to React footer ReactNode."
+      }
+    ]
+  },
+  "useWhen": [
+    "Displaying a distinct piece of content or data",
+    "Grouping information and actions for the same object",
+    "Presenting collections in lists, grids, dashboards, or feeds",
+    "Creating reusable content blocks with consistent structure"
+  ],
+  "doNotUseFor": [
+    "Simple spacing without meaningful grouping",
+    "Large multi-step workflows -- use dedicated pages",
+    "Temporary notifications -- use Alert or Toast",
+    "Modal interactions -- use Dialog"
+  ],
+  "relations": [
+    "Button",
+    "Badge",
+    "Avatar",
+    "Table",
+    "EmptyState"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens for card in tokens.json. Uses semantic tokens. Only --dls-radius-component-card exists as L4.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T20:30:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "0c73fb40b5cf986b"
+  }
+}

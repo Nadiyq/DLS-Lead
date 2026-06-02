@@ -216,3 +216,14 @@
   align-items: center;
   gap: var(--dls-spacing-1);
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-items-per-page__trigger,
+  .dls-items-per-page__select-icon {
+    transition: none;
+  }
+}

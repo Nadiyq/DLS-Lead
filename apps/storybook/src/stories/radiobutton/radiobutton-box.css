@@ -44,11 +44,11 @@
    Hover
    --------------------------------------------------------------------------- */
 
-.dls-radiobutton-box:hover:not([data-disabled]) {
+.dls-radiobutton-box:hover:not(:disabled):not([data-disabled]) {
   background: var(--dls-state-hover-overlay);
 }
 
-.dls-radiobutton-box[data-selected]:hover:not([data-disabled]) {
+.dls-radiobutton-box[data-selected]:hover:not(:disabled):not([data-disabled]) {
   background: var(--dls-state-pressed-overlay);
 }
 
@@ -110,4 +110,14 @@
 .dls-radiobutton-box[data-disabled] .dls-radiobutton-box__label,
 .dls-radiobutton-box[data-disabled] .dls-radiobutton-box__description {
   color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-radiobutton-box {
+    transition: none;
+  }
 }

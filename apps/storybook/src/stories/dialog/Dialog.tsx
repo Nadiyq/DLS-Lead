@@ -1,4 +1,5 @@
 import React from 'react';
+import { X as XIcon } from 'lucide-react';
 import './dialog.css';
 import { Button } from '../Button';
 
@@ -27,16 +28,6 @@ export interface DialogProps {
 }
 
 /* ---------------------------------------------------------------------------
-   Close icon
-   --------------------------------------------------------------------------- */
-
-const CloseIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-/* ---------------------------------------------------------------------------
    Component
    --------------------------------------------------------------------------- */
 
@@ -56,6 +47,8 @@ export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
   ) => {
     const innerRef = React.useRef<HTMLDialogElement>(null);
     const dialogRef = (ref as React.RefObject<HTMLDialogElement>) || innerRef;
+    const titleId = React.useId();
+    const descriptionId = React.useId();
 
     /* Sync open state with native <dialog> */
     React.useEffect(() => {
@@ -86,15 +79,17 @@ export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
         ref={dialogRef}
         className={['dls-dialog', className].filter(Boolean).join(' ')}
         data-breakpoint={breakpoint}
+        aria-labelledby={titleId}
+        aria-describedby={description ? descriptionId : undefined}
         onClick={handleBackdropClick}
         onCancel={handleCancel}
       >
         {/* Top bar — title + close */}
         <div className="dls-dialog__top">
           <div className="dls-dialog__title-block">
-            <div className="dls-dialog__title">{title}</div>
+            <div id={titleId} className="dls-dialog__title">{title}</div>
             {description && (
-              <div className="dls-dialog__description">{description}</div>
+              <div id={descriptionId} className="dls-dialog__description">{description}</div>
             )}
           </div>
           {onClose && (
@@ -102,7 +97,7 @@ export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
               variant="ghost"
               intent="neutral"
               size="m"
-              icon={<CloseIcon />}
+              icon={<XIcon aria-hidden="true" />}
               iconOnly
               aria-label="Close"
               onClick={onClose}

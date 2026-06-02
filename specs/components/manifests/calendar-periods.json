@@ -1,0 +1,161 @@
+{
+  "name": "CalendarPeriods",
+  "kebabName": "calendar-periods",
+  "category": "input / date picker",
+  "description": "Preset date-range picker with a sidebar of quick-pick periods alongside two consecutive month calendars for custom range selection.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "periods",
+      "type": "PeriodOption[]",
+      "required": true,
+      "description": "Preset period options"
+    },
+    {
+      "name": "selectedPeriod",
+      "type": "string",
+      "required": false,
+      "description": "Currently selected period value"
+    },
+    {
+      "name": "onPeriodChange",
+      "type": "(value: string, start?: Date, end?: Date) => void",
+      "required": false,
+      "description": "Called when a period is selected"
+    },
+    {
+      "name": "startDate",
+      "type": "Date | null",
+      "required": false,
+      "description": "Range start date (for custom selection)"
+    },
+    {
+      "name": "endDate",
+      "type": "Date | null",
+      "required": false,
+      "description": "Range end date"
+    },
+    {
+      "name": "onRangeChange",
+      "type": "(start: Date | null, end: Date | null) => void",
+      "required": false,
+      "description": "Called when date range changes via calendar click"
+    },
+    {
+      "name": "today",
+      "type": "Date",
+      "required": false,
+      "description": "Today override"
+    },
+    {
+      "name": "weekStartsOn",
+      "type": "0 | 1",
+      "required": false,
+      "default": 0,
+      "enum": ["0", "1"],
+      "description": "First day of week: 0 = Sunday, 1 = Monday"
+    },
+    {
+      "name": "footer",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Footer content"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-calendar",
+    "--dls-radius-component-calendar-day",
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-color-border-base",
+    "--dls-shadow-surface-lg",
+    "--dls-color-text-secondary",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-font-family",
+    "--dls-font-weight-medium",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Container has no interactive states. All interactivity delegated to CalendarDay (overlay) and ListItem (overlay) children.",
+    "available": [],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["CalendarDay", "ListItem"],
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Move focus between ListItem rows and CalendarDay buttons",
+      "Enter/Space": "Select period or day"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "143-12036",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=143-12036",
+    "propertyMapping": [
+      {
+        "figmaProperty": "footer",
+        "reactProp": "footer",
+        "valueMapping": {
+          "true": "ReactNode (visible)",
+          "false": "undefined (hidden)"
+        },
+        "note": "Figma boolean toggle. React uses ReactNode: truthy renders footer, falsy hides it."
+      }
+    ]
+  },
+  "useWhen": [
+    "Predefined date ranges alongside custom selection",
+    "Analytics dashboards with common time filters",
+    "Reports with Last N days / All time options"
+  ],
+  "doNotUseFor": [
+    "Single date selection — use Calendar",
+    "Date range without presets — use CalendarRange",
+    "Date text input only — use DateInput or DateRangeInput"
+  ],
+  "relations": [
+    "Calendar",
+    "CalendarDay",
+    "CalendarRange",
+    "ListItem",
+    "DateRangeInput"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens for calendar-periods in tokens.json. Uses semantic and intent tokens directly. Only radius tokens exist as L4.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-coverage",
+      "description": "Figma footer includes time picker (hour/minute dropdowns + AM/PM tabs) not implemented in CalendarPeriods. The code footer is a simple ReactNode slot.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T20:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "03f2e8c9bb99e99f"
+  }
+}

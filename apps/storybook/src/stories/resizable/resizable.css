@@ -45,7 +45,7 @@
   width: 12px;
   height: 16px;
   padding: var(--dls-spacing-0-5) 0;
-  border-radius: 2px;
+  border-radius: var(--dls-radius-component-resizable-handle);
   background: var(--dls-color-surface-strong);
   flex-shrink: 0;
   transition: background 150ms ease;
@@ -66,28 +66,28 @@
 }
 
 .dls-resizable__icon svg {
-  width: 4px;
-  height: 8px;
+  width: 100%;
+  height: 100%;
 }
 
 /* ---------------------------------------------------------------------------
    Hover
    --------------------------------------------------------------------------- */
 
-.dls-resizable:hover:not([data-disabled]) {
+.dls-resizable:hover:not(:disabled):not([data-disabled]) {
   background: var(--dls-state-hover-overlay);
-  border-radius: 4px;
+  border-radius: var(--dls-radius-component-resizable);
 }
 
-.dls-resizable:hover:not([data-disabled]) .dls-resizable__line {
+.dls-resizable:hover:not(:disabled):not([data-disabled]) .dls-resizable__line {
   background: var(--dls-color-intent-info-border);
 }
 
-.dls-resizable:hover:not([data-disabled]) .dls-resizable__handle {
+.dls-resizable:hover:not(:disabled):not([data-disabled]) .dls-resizable__handle {
   background: var(--dls-color-intent-info-border);
 }
 
-.dls-resizable:hover:not([data-disabled]) .dls-resizable__icon {
+.dls-resizable:hover:not(:disabled):not([data-disabled]) .dls-resizable__icon {
   color: var(--dls-color-text-inverse);
 }
 
@@ -97,7 +97,7 @@
 
 .dls-resizable:focus-visible {
   background: var(--dls-state-hover-overlay);
-  border-radius: 4px;
+  border-radius: var(--dls-radius-component-resizable);
   box-shadow: 0 0 0 3px var(--dls-state-focus-ring-color);
 }
 
@@ -146,4 +146,17 @@
 
 .dls-resizable[data-disabled] .dls-resizable__icon {
   color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-resizable,
+  .dls-resizable__line,
+  .dls-resizable__handle,
+  .dls-resizable__icon {
+    transition: none;
+  }
 }

@@ -78,3 +78,13 @@
   font-weight: var(--dls-font-weight-medium);
   color: var(--dls-color-text-secondary);
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-carousel__track {
+    transition: none;
+  }
+}

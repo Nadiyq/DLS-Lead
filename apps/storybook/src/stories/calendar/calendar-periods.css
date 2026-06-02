@@ -16,7 +16,7 @@
   border: 1px solid var(--dls-color-border-subtle);
   border-radius: var(--dls-radius-component-calendar);
   font-family: var(--dls-font-family);
-  box-shadow: 0 4px 12px var(--dls-color-overlay-scrim);
+  box-shadow: var(--dls-shadow-surface-lg);
   overflow: hidden;
 }
 

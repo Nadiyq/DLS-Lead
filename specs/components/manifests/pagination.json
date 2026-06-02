@@ -1,0 +1,185 @@
+{
+  "name": "Pagination",
+  "kebabName": "pagination",
+  "category": "navigation",
+  "subComponents": ["PageButton", "ItemsPerPage"],
+  "description": "Paged data navigation with page number buttons, smart ellipsis, prev/next arrows, and optional items-per-page selector.",
+  "variants": ["bordered", "borderless"],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "variant",
+      "type": "\"bordered\" | \"borderless\"",
+      "required": false,
+      "default": "bordered",
+      "enum": ["bordered", "borderless"],
+      "description": "Visual variant"
+    },
+    {
+      "name": "currentPage",
+      "type": "number",
+      "required": true,
+      "description": "Current page (1-based)"
+    },
+    {
+      "name": "totalPages",
+      "type": "number",
+      "required": true,
+      "description": "Total number of pages"
+    },
+    {
+      "name": "totalItems",
+      "type": "number",
+      "required": false,
+      "description": "Total item count (for ItemsPerPage)"
+    },
+    {
+      "name": "pageSize",
+      "type": "number",
+      "required": false,
+      "description": "Current page size"
+    },
+    {
+      "name": "pageSizeOptions",
+      "type": "number[]",
+      "required": false,
+      "description": "Page size options"
+    },
+    {
+      "name": "onPageChange",
+      "type": "(page: number) => void",
+      "required": false,
+      "description": "Page change handler"
+    },
+    {
+      "name": "onPageSizeChange",
+      "type": "(size: number) => void",
+      "required": false,
+      "description": "Page size change handler"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-pagination",
+    "--dls-color-component-pagination-fg-base",
+    "--dls-color-component-pagination-fg-disabled",
+    "--dls-color-component-pagination-bg-base",
+    "--dls-color-component-pagination-bg-active",
+    "--dls-color-surface-base",
+    "--dls-color-surface-disabled",
+    "--dls-color-intent-neutral-text",
+    "--dls-color-text-disabled",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-color-border-base",
+    "--dls-color-border-subtle",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-shadow-surface-md",
+    "--dls-radius-component-input",
+    "--dls-font-family",
+    "--dls-font-weight-normal",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-spacing-2-5",
+    "--dls-spacing-3",
+    "--dls-spacing-4"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "PageButton is a transparent surface. Hover/pressed use overlay tokens. Selected state adds a border.",
+    "available": [
+      ":hover:not(:disabled)",
+      ":active:not(:disabled)",
+      ":focus-visible",
+      "[data-selected=\"true\"]",
+      ":disabled"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["PageButton", "ItemsPerPage"],
+    "forbiddenChildren": [],
+    "minItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "nav",
+    "requiredAria": [
+      "aria-label=\"Pagination\"",
+      "aria-current=\"page\" (on selected PageButton)"
+    ],
+    "keyboard": {
+      "Tab": "Move focus between page buttons",
+      "Enter/Space": "Activate page button",
+      "Escape": "Close ItemsPerPage dropdown"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6115-12644",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6115-12644",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "number": "number",
+          "more": "more",
+          "previous": "previous",
+          "next": "next"
+        }
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only in Figma (normal/hover/focus/pressed/selected/disabled). In code: CSS pseudo-classes + selected/disabled props."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "children",
+        "note": "Page number text for type='number'."
+      }
+    ]
+  },
+  "useWhen": [
+    "Paginated data tables",
+    "Search results with pages",
+    "Any paged content navigation"
+  ],
+  "doNotUseFor": [
+    "In-page section navigation — use Tabs",
+    "Infinite scroll — handle programmatically",
+    "Step-by-step wizards — use Stepper"
+  ],
+  "relations": [
+    "Table",
+    "List",
+    "ListItem"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-coverage",
+      "description": "Figma 'page' component set only covers PageButton. ItemsPerPage and Pagination bar are code-only compositions.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T14:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "386cfcbf9c369f3f"
+  }
+}

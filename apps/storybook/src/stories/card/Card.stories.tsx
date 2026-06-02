@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { Folder as FolderIcon, Image as ImageIcon } from 'lucide-react';
 import { Card } from './Card';
 import { Button } from '../Button';
 import { Badge } from '../Badge';
@@ -28,19 +29,6 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </div>
 );
 
-const FolderIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 4.5C2 3.67 2.67 3 3.5 3H6.17C6.7 3 7.2 3.24 7.55 3.65L8 4.2C8.35 4.61 8.85 4.85 9.38 4.85H12.5C13.33 4.85 14 5.52 14 6.35V11.5C14 12.33 13.33 13 12.5 13H3.5C2.67 13 2 12.33 2 11.5V4.5Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-  </svg>
-);
-
-const ImageIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" strokeWidth="1.33" />
-    <circle cx="5.5" cy="5.5" r="1.5" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M2 11L5.5 7.5L8 10L10.5 7.5L14 11" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 // ---------------------------------------------------------------------------
 // Playground

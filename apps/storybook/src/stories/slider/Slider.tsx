@@ -25,8 +25,11 @@ export interface SliderProps {
   onRangeChange?: (range: [number, number]) => void;
   /** Accessible label */
   'aria-label'?: string;
+  /** Additional CSS class for the root element */
   className?: string;
 }
+
+type SliderThumb = 'single' | 'start' | 'end';
 
 /* ---------------------------------------------------------------------------
    Helpers
@@ -128,6 +131,69 @@ export const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
       draggingRef.current = null;
     }, []);
 
+    const commitThumbValue = React.useCallback(
+      (thumb: SliderThumb, rawValue: number) => {
+        if (disabled) return;
+
+        const nextValue = clamp(snapToStep(rawValue, min, step), min, max);
+
+        if (isRange) {
+          if (thumb === 'start') {
+            onRangeChange?.([Math.min(nextValue, rangeEnd), rangeEnd]);
+          } else {
+            onRangeChange?.([rangeStart, Math.max(nextValue, rangeStart)]);
+          }
+        } else {
+          onChange?.(nextValue);
+        }
+      },
+      [disabled, isRange, max, min, onChange, onRangeChange, rangeEnd, rangeStart, step],
+    );
+
+    const handleThumbKeyDown = React.useCallback(
+      (e: React.KeyboardEvent, thumb: SliderThumb) => {
+        if (disabled) return;
+
+        const current =
+          thumb === 'start'
+            ? rangeStart
+            : thumb === 'end'
+              ? rangeEnd
+              : singleVal;
+
+        let nextValue: number | null = null;
+
+        switch (e.key) {
+          case 'ArrowLeft':
+          case 'ArrowDown':
+            nextValue = current - step;
+            break;
+          case 'ArrowRight':
+          case 'ArrowUp':
+            nextValue = current + step;
+            break;
+          case 'PageDown':
+            nextValue = current - step * 10;
+            break;
+          case 'PageUp':
+            nextValue = current + step * 10;
+            break;
+          case 'Home':
+            nextValue = min;
+            break;
+          case 'End':
+            nextValue = max;
+            break;
+          default:
+            return;
+        }
+
+        e.preventDefault();
+        commitThumbValue(thumb, nextValue);
+      },
+      [commitThumbValue, disabled, max, min, rangeEnd, rangeStart, singleVal, step],
+    );
+
     /* Track positioning */
     const trackLeft = isRange
       ? `${toPercent(rangeStart, min, max)}%`
@@ -156,6 +222,7 @@ export const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
             <div
               className="dls-slider__thumb"
               style={{ left: `${toPercent(rangeStart, min, max)}%` }}
+              onKeyDown={(e) => handleThumbKeyDown(e, 'start')}
             >
               <SliderItem
                 value={rangeStart}
@@ -168,6 +235,7 @@ export const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
             <div
               className="dls-slider__thumb"
               style={{ left: `${toPercent(rangeEnd, min, max)}%` }}
+              onKeyDown={(e) => handleThumbKeyDown(e, 'end')}
             >
               <SliderItem
                 value={rangeEnd}
@@ -182,6 +250,7 @@ export const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
           <div
             className="dls-slider__thumb"
             style={{ left: `${toPercent(singleVal, min, max)}%` }}
+            onKeyDown={(e) => handleThumbKeyDown(e, 'single')}
           >
             <SliderItem
               value={singleVal}

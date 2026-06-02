@@ -1,0 +1,192 @@
+{
+  "name": "CheckboxBox",
+  "kebabName": "checkbox-box",
+  "category": "form control / card",
+  "description": "Card-style checkbox selection — a bordered box wrapping a Checkbox with label and description. Used for visually prominent toggle selections, consistent with RadiobuttonBox and SwitcherBox.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "checked",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Checked state"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Description text"
+    },
+    {
+      "name": "textOrientation",
+      "type": "\"right\" | \"left\"",
+      "required": false,
+      "default": "right",
+      "enum": ["right", "left"],
+      "description": "Text position relative to checkbox"
+    },
+    {
+      "name": "onChange",
+      "type": "(checked: boolean) => void",
+      "required": false,
+      "description": "Called on change"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Native name"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Native value"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element"
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-toggle-box",
+    "--dls-color-border-base",
+    "--dls-color-border-focus",
+    "--dls-color-border-disabled",
+    "--dls-color-surface-disabled",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-color-text-disabled",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-2-5",
+    "--dls-spacing-3",
+    "--dls-font-family",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-font-weight-normal"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Container uses overlay tokens for hover. Selected container uses pressed-overlay as background with border-focus. Non-filled surface.",
+    "available": [
+      ":hover:not([data-disabled])",
+      ":focus-within",
+      "[data-selected]",
+      "[data-disabled]"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["Checkbox"],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=\"checkbox\"]",
+    "requiredAria": ["aria-checked", "aria-disabled"],
+    "keyboard": {
+      "Space": "Toggles checked state",
+      "Enter": "Toggles checked state",
+      "Tab": "Moves focus to the next focusable element"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "tabIndex=0 on container; focus-within ring via box-shadow"
+  },
+  "figma": {
+    "nodeId": "6602:6368",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6602-6368",
+    "propertyMapping": [
+      {
+        "figmaProperty": "selected",
+        "reactProp": "checked",
+        "note": "Boolean. Figma 'selected' maps to code 'checked'."
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Figma-only visual state (normal/hover/focus/pressed/disabled). CSS pseudo-classes + disabled prop in code."
+      },
+      {
+        "figmaProperty": "textOrientation",
+        "reactProp": "textOrientation",
+        "note": "Direct mapping: right, left."
+      },
+      {
+        "figmaProperty": "label",
+        "reactProp": "label",
+        "note": "Editable text in Figma. String prop in code."
+      },
+      {
+        "figmaProperty": "description",
+        "reactProp": null,
+        "note": "Boolean toggle in Figma (show/hide). In code, presence of description string prop controls visibility."
+      },
+      {
+        "figmaProperty": "descriptionText",
+        "reactProp": "description",
+        "note": "Editable text in Figma. description string prop in code."
+      }
+    ]
+  },
+  "useWhen": [
+    "Visually prominent checkbox selections in card layouts",
+    "Settings panels with toggle options",
+    "Multi-select card grids",
+    "Consistent with RadiobuttonBox and SwitcherBox toggle patterns"
+  ],
+  "doNotUseFor": [
+    "Simple inline checkbox — use Checkbox",
+    "Mutually exclusive card selections — use RadiobuttonBox",
+    "Toggle with immediate effect card — use SwitcherBox",
+    "Small inline toggles — use Checkbox or Switcher"
+  ],
+  "relations": [
+    "Checkbox",
+    "RadiobuttonBox",
+    "SwitcherBox",
+    "FormField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "l4-color-tokens",
+      "description": "No L4 color tokens in tokens.json. Uses L2 semantic tokens directly. Only --dls-radius-component-toggle-box exists as L4 (shared across toggle boxes).",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-29T10:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "66eba59e96fa75a8"
+  }
+}

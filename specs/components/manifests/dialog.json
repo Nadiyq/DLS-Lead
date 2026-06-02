@@ -1,0 +1,174 @@
+{
+  "name": "Dialog",
+  "kebabName": "dialog",
+  "category": "modal / overlay",
+  "description": "Modal container that presents focused content, forms, or workflows above the current interface using the native <dialog> element with showModal().",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the dialog is open"
+    },
+    {
+      "name": "breakpoint",
+      "type": "\"desktop\" | \"mobile\"",
+      "required": false,
+      "default": "desktop",
+      "enum": ["desktop", "mobile"],
+      "description": "Breakpoint layout mode"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Dialog title"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Optional description below title"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Slot content — any ReactNode placed between title and actions"
+    },
+    {
+      "name": "actions",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Action buttons slot"
+    },
+    {
+      "name": "onClose",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when the close button is clicked or backdrop is clicked"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-dialog-overlay",
+    "--dls-color-component-dialog-bg",
+    "--dls-color-component-dialog-border",
+    "--dls-color-text-primary",
+    "--dls-radius-component-modal",
+    "--dls-shadow-surface-lg",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-spacing-4",
+    "--dls-spacing-6",
+    "--dls-text-xl-font-size",
+    "--dls-text-xl-line-height",
+    "--dls-text-l-font-size",
+    "--dls-text-l-line-height",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-font-weight-semibold",
+    "--dls-font-weight-medium",
+    "--dls-font-weight-normal",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "The dialog panel is a static surface with no interactive states of its own. Interactive states (hover/pressed/focus) live on the close Button and on action Buttons composed inside the actions slot.",
+    "available": ["[open]"],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [
+      "FormField",
+      "InputField",
+      "Textarea",
+      "SearchField",
+      "Checkbox",
+      "Radiobutton",
+      "Switcher",
+      "Dropdown",
+      "DropdownAutocomplete",
+      "List",
+      "ListItem",
+      "Card",
+      "Alert",
+      "Button"
+    ],
+    "forbiddenChildren": ["Dialog", "AlertDialog"],
+    "maxDepth": 1,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "dialog",
+    "requiredAria": ["aria-labelledby", "aria-describedby"],
+    "keyboard": {
+      "Escape": "Close dialog (calls onClose)",
+      "Tab": "Cycle focus within dialog (native focus trap)",
+      "Shift+Tab": "Cycle focus backwards within dialog"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Native <dialog>.showModal() traps focus inside the dialog and restores it to the opener element on close."
+  },
+  "figma": {
+    "nodeId": "6605:6884",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6605-6884",
+    "propertyMapping": [
+      {
+        "figmaProperty": "breakpoint",
+        "reactProp": "breakpoint",
+        "valueMapping": {
+          "mobile": "mobile",
+          "desktop": "desktop"
+        }
+      },
+      {
+        "figmaProperty": "title",
+        "reactProp": "title"
+      },
+      {
+        "figmaProperty": "description",
+        "reactProp": "description"
+      },
+      {
+        "figmaProperty": "slot",
+        "reactProp": null,
+        "note": "Figma visibility toggle for the content slot. In code, the slot is rendered whenever children is provided."
+      },
+      {
+        "figmaProperty": "secondaryButton",
+        "reactProp": null,
+        "note": "Figma toggle for showing a Cancel button. In code, the consumer composes the actions slot with one or two Button children."
+      }
+    ]
+  },
+  "useWhen": [
+    "User needs to complete a short form or configuration task",
+    "Reviewing and editing information without leaving the current page",
+    "Creating or updating an object",
+    "A focused workflow with multiple fields",
+    "Content that requires temporary focus"
+  ],
+  "doNotUseFor": [
+    "Simple confirmations or destructive action approvals → use AlertDialog",
+    "Non-blocking information → use Alert or Toast",
+    "Complex workflows that require extensive navigation → use a dedicated screen",
+    "Large content pages better suited for dedicated screens"
+  ],
+  "relations": ["AlertDialog", "FormField", "InputField", "Button"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-02T14:33:12.078Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "cedbcdba84aa16fe"
+  }
+}

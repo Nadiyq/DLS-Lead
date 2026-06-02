@@ -61,3 +61,13 @@
 .dls-scroll:hover:not(:disabled) .dls-scroll__thumb {
   opacity: 0.8;
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-scroll__thumb {
+    transition: none;
+  }
+}

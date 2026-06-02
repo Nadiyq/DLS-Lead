@@ -5,7 +5,7 @@ export { UserIcon };
 
 export type AvatarSize = '144' | '88' | '80' | '72' | '48' | '40' | '32' | '28' | '24' | '20' | '18';
 
-export interface AvatarProps {
+export interface AvatarProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** Pixel size of the avatar */
   size?: AvatarSize;
   /** Render as circle instead of rounded square */
@@ -22,6 +22,7 @@ export interface AvatarProps {
   dot?: boolean;
   /** Called when remove button is clicked — shows X button on hover */
   onRemove?: () => void;
+  /** Additional class name for the root avatar */
   className?: string;
 }
 
@@ -44,10 +45,12 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
     const content = src ? (
       <img className="dls-avatar__image" src={src} alt={alt || ''} />
     ) : icon ? (
-      <span className="dls-avatar__icon">{icon}</span>
+      <span className="dls-avatar__icon" aria-hidden="true">{icon}</span>
     ) : initials ? (
       <span className="dls-avatar__initials">{initials}</span>
     ) : null;
+
+    const removeLabel = alt ? `Remove ${alt}` : initials ? `Remove ${initials}` : 'Remove avatar';
 
     return (
       <div
@@ -58,15 +61,15 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
         {...props}
       >
         {content}
-        {dot && <span className="dls-avatar__dot" />}
+        {dot && <span className="dls-avatar__dot" aria-hidden="true" />}
         {onRemove && (
           <button
             className="dls-avatar__remove"
             onClick={(e) => { e.stopPropagation(); onRemove(); }}
-            aria-label="Remove"
+            aria-label={removeLabel}
             type="button"
           >
-            <XIcon />
+            <XIcon aria-hidden="true" />
           </button>
         )}
       </div>

@@ -1,0 +1,226 @@
+{
+  "name": "Slider",
+  "kebabName": "slider",
+  "category": "form input / control",
+  "description": "Controlled numeric slider for selecting one value or a two-thumb range by pointer drag or keyboard.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "value",
+      "type": "number",
+      "required": false,
+      "description": "Current value (single mode)"
+    },
+    {
+      "name": "range",
+      "type": "[number, number]",
+      "required": false,
+      "description": "Range values [min, max] (range mode)"
+    },
+    {
+      "name": "min",
+      "type": "number",
+      "required": false,
+      "default": 0,
+      "description": "Minimum value"
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "default": 100,
+      "description": "Maximum value"
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "required": false,
+      "default": 1,
+      "description": "Step increment"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled state"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: number) => void",
+      "required": false,
+      "description": "Called when value changes (single mode)"
+    },
+    {
+      "name": "onRangeChange",
+      "type": "(range: [number, number]) => void",
+      "required": false,
+      "description": "Called when range changes (range mode)"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "required": false,
+      "description": "Accessible label"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element"
+    }
+  ],
+  "tokens": [
+    "--dls-font-family",
+    "--dls-radius-component-slider-item",
+    "--dls-color-surface-strong",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-surface-disabled"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Slider track uses semantic/intent token swaps for disabled state and no overlay or OKLCH interactive state system. Thumb hover, focus, active, and disabled states are owned by SliderItem; disabled Slider passes disabled to SliderItem, matching Figma SliderItem state=disabled.",
+    "available": [
+      "[data-disabled]"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "SliderItem thumbs: div[role=\"slider\"]",
+    "requiredAria": [
+      "role=\"slider\"",
+      "aria-label",
+      "aria-valuenow",
+      "aria-valuemin",
+      "aria-valuemax",
+      "aria-disabled"
+    ],
+    "keyboard": {
+      "ArrowLeft": "Decrements the focused thumb by step",
+      "ArrowDown": "Decrements the focused thumb by step",
+      "ArrowRight": "Increments the focused thumb by step",
+      "ArrowUp": "Increments the focused thumb by step",
+      "PageDown": "Decrements the focused thumb by step * 10",
+      "PageUp": "Increments the focused thumb by step * 10",
+      "Home": "Moves the focused thumb to the lower bound",
+      "End": "Moves the focused thumb to the upper bound"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Natural tab order on enabled SliderItem thumbs; disabled thumbs use tabIndex=-1"
+  },
+  "figma": {
+    "nodeId": "6618:3459",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6618-3459",
+    "propertyMapping": [
+      {
+        "figmaProperty": "range?",
+        "reactProp": "range",
+        "valueMapping": {
+          "false": "omit range; use value",
+          "true": "provide range={[min, max]}"
+        },
+        "note": "Figma boolean controls visual mode. Code uses the presence of the numeric range tuple for range mode."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "value",
+        "note": "Code-only numeric value for single mode."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "min",
+        "note": "Code-only lower bound."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "max",
+        "note": "Code-only upper bound."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "step",
+        "note": "Code-only increment."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "disabled",
+        "note": "Code-only on the Slider Figma set. Disabled thumb visuals are covered by related SliderItem state=disabled (6618:12103)."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "onChange",
+        "note": "Code-only single value callback."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "onRangeChange",
+        "note": "Code-only range callback."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "aria-label",
+        "note": "Code-only accessible label prefix."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "className",
+        "note": "Code-only root class extension."
+      }
+    ]
+  },
+  "useWhen": [
+    "Selecting a bounded numeric value",
+    "Selecting a bounded numeric range",
+    "Adjusting settings like volume, brightness, price, or thresholds",
+    "Users benefit from quick visual fine-tuning"
+  ],
+  "doNotUseFor": [
+    "Passive progress indication - use ProgressBar",
+    "Binary on/off choices - use Switcher",
+    "Precise typed numeric entry - use InputField",
+    "Unbounded values or values without clear min/max"
+  ],
+  "relations": [
+    "SliderItem",
+    "ProgressBar",
+    "Switcher",
+    "InputField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "l4-color-tokens",
+      "description": "No L4 Slider color tokens in tokens.json. Track uses L2 semantic and intent tokens directly; radius uses the shared SliderItem radius token.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-mapping",
+      "description": "Figma range? is a boolean visual variant, while React range is a numeric tuple that controls both mode and values.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-disabled-coverage",
+      "description": "Slider Figma set has no whole-component disabled variant. Disabled thumb visuals are represented by SliderItem state=disabled; disabled track styling remains Slider code/documentation.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-sizing",
+      "description": "Figma examples are fixed at 400px. Code is fluid width and relies on the parent container for sizing.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T07:42:16Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "8612c6eb6b9f632c"
+  }
+}

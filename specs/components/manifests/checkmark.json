@@ -1,0 +1,88 @@
+{
+  "name": "Checkmark",
+  "kebabName": "checkmark",
+  "category": "icon / indicator",
+  "description": "Standalone success/completion indicator — a filled neutral circle with a check icon inside. Three sizes with proportional stroke widths.",
+  "variants": [],
+  "intents": [],
+  "sizes": ["m", "s", "xs"],
+  "props": [
+    {
+      "name": "size",
+      "type": "\"m\" | \"s\" | \"xs\"",
+      "required": false,
+      "default": "m",
+      "enum": ["m", "s", "xs"],
+      "description": "Size"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-checkmark",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-on-base"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Checkmark is a static display indicator with no interactive states, transitions, or animations.",
+    "available": []
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6950-14099",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6950-14099",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s",
+          "XS": "xs"
+        },
+        "note": "Figma uses uppercase (M/S/XS), code uses lowercase (m/s/xs)."
+      }
+    ]
+  },
+  "useWhen": [
+    "Step completion indicators (stepper, wizard)",
+    "Success confirmation in dialogs or toasts",
+    "List item completion markers",
+    "Inline success badges"
+  ],
+  "doNotUseFor": [
+    "Toggleable checkbox — use Checkbox",
+    "Intent-colored icon backgrounds — use IconShape",
+    "Interactive success actions — use Button with intent"
+  ],
+  "relations": [
+    "IconShape",
+    "Checkbox"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens in tokens.json. Uses intent tokens directly. Only --dls-radius-component-checkmark exists as L4.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T15:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "56f56e32fe8bcce9"
+  }
+}

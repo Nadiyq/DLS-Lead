@@ -1,0 +1,168 @@
+{
+  "name": "Kbd",
+  "kebabName": "kbd",
+  "category": "typography / display",
+  "description": "Keyboard key indicator for shortcut hints. Kbd renders a single key; KbdGroup combines multiple keys in regular (adjacent) or separated (+ joined) layout.",
+  "subComponents": ["KbdGroup"],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Key label text"
+    },
+    {
+      "name": "iconStart",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading icon"
+    },
+    {
+      "name": "iconEnd",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Trailing icon"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional CSS class for the root element"
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-muted",
+    "--dls-color-text-secondary",
+    "--dls-radius-component-kbd",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-font-family",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-font-weight-medium"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Purely static display component — no interactive states, transitions, or animations.",
+    "available": []
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [],
+    "maxDepth": 1,
+    "minItems": 1,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "kbd",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable — display only"
+  },
+  "figma": {
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6441-656",
+    "componentSets": [
+      {
+        "name": "kbd",
+        "nodeId": "6441:656",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6441-656",
+        "propertyMapping": [
+          {
+            "figmaProperty": "text",
+            "reactProp": "children",
+            "note": "Editable text in Figma. children prop in code."
+          },
+          {
+            "figmaProperty": "iconLeft",
+            "reactProp": "iconStart",
+            "note": "Boolean toggle in Figma controls visibility. In code, presence of iconStart prop controls visibility."
+          },
+          {
+            "figmaProperty": "iconRight",
+            "reactProp": "iconEnd",
+            "note": "Boolean toggle in Figma controls visibility. In code, presence of iconEnd prop controls visibility."
+          },
+          {
+            "figmaProperty": "changeLeft",
+            "reactProp": "iconStart",
+            "note": "Instance swap slot for left icon. In code, iconStart accepts ReactNode."
+          },
+          {
+            "figmaProperty": "changeRight",
+            "reactProp": "iconEnd",
+            "note": "Instance swap slot for right icon. In code, iconEnd accepts ReactNode."
+          }
+        ]
+      },
+      {
+        "name": "kbd-group",
+        "nodeId": "6443:1696",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6443-1696",
+        "propertyMapping": [
+          {
+            "figmaProperty": "type",
+            "reactProp": "type",
+            "valueMapping": {
+              "regular": "regular",
+              "+ separated": "separated"
+            },
+            "note": "Figma uses '+ separated'. Code uses 'separated'."
+          },
+          {
+            "figmaProperty": "kbd1",
+            "reactProp": null,
+            "note": "Boolean toggle in Figma. In code, controlled by children count."
+          },
+          {
+            "figmaProperty": "kbd2",
+            "reactProp": null,
+            "note": "Boolean toggle in Figma. In code, controlled by children count."
+          },
+          {
+            "figmaProperty": "kbd3",
+            "reactProp": null,
+            "note": "Boolean toggle in Figma. In code, controlled by children count."
+          },
+          {
+            "figmaProperty": "kbd4",
+            "reactProp": null,
+            "note": "Boolean toggle in Figma. In code, controlled by children count."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Display keyboard shortcut hints (Ctrl+S, ⌘+C)",
+    "Inline shortcut references in documentation or tooltips",
+    "Tables of keyboard commands",
+    "Onboarding flows showing key combinations",
+    "type=regular: keys pressed simultaneously as one chord — system shortcuts, editor shortcuts, power-user interactions, dense documentation",
+    "type=separated: keys with standalone meaning or sequential actions — tutorial flows, gaming controls, onboarding, cheat sheets"
+  ],
+  "doNotUseFor": [
+    "Interactive buttons — use Button",
+    "Status badges — use Badge or Chip",
+    "Code snippets — use inline code or a code block"
+  ],
+  "relations": [
+    "Tooltip",
+    "Badge"
+  ],
+  "knownDeviations": [
+    {
+      "area": "l4-color-tokens",
+      "description": "No L4 color tokens in tokens.json. Uses L2 semantic tokens (surface-muted, text-secondary) directly. Only --dls-radius-component-kbd exists as an L4 token.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-28T14:30:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "319f70857490888f"
+  }
+}

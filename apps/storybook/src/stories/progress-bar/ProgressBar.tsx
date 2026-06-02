@@ -1,4 +1,5 @@
 import React from 'react';
+import { Info as InfoIcon } from 'lucide-react';
 import './progress-bar.css';
 
 /* ---------------------------------------------------------------------------
@@ -25,18 +26,6 @@ export interface ProgressBarProps {
   size?: ProgressBarSize;
   className?: string;
 }
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const InfoIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1" />
-    <path d="M8 7V11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    <circle cx="8" cy="5.5" r="0.75" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Component
@@ -67,6 +56,7 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
         data-type={type}
         data-size={size || undefined}
         role="progressbar"
+        aria-label={type === 'segmented' && hintLabel ? hintLabel : 'Progress'}
         aria-valuenow={clamped}
         aria-valuemin={0}
         aria-valuemax={100}

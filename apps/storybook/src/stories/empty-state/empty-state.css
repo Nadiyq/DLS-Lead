@@ -1,6 +1,5 @@
 /* ==========================================================================
    DLS Empty State — placeholder for empty content areas
-   Variants: bordered | borderless (default)
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
@@ -16,28 +15,6 @@
   gap: var(--dls-spacing-4);
   font-family: var(--dls-font-family);
   text-align: center;
-}
-
-/* ---------------------------------------------------------------------------
-   Variant: borderless (default)
-   --------------------------------------------------------------------------- */
-
-.dls-empty-state,
-.dls-empty-state[data-variant="borderless"] {
-  background: transparent;
-  border: none;
-  padding: 0;
-}
-
-/* ---------------------------------------------------------------------------
-   Variant: bordered (card-like container)
-   --------------------------------------------------------------------------- */
-
-.dls-empty-state[data-variant="bordered"] {
-  padding: var(--dls-spacing-6);
-  border-radius: var(--dls-radius-component-empty-state);
-  background: var(--dls-color-surface-base);
-  border: 1px solid var(--dls-color-border-subtle);
 }
 
 /* ---------------------------------------------------------------------------

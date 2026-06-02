@@ -8,11 +8,12 @@ export type AvatarStackSize = '88' | '80' | '72' | '48' | '40' | '32' | '28' | '
 
 export interface OverflowUser {
   name: string;
+  secondaryText?: string;
   src?: string;
   initials?: string;
 }
 
-export interface AvatarStackProps {
+export interface AvatarStackProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** Shared size for all avatars in the stack */
   size?: AvatarStackSize;
   /** Avatar elements to render */
@@ -29,6 +30,7 @@ export interface AvatarStackProps {
   onCounterClick?: () => void;
   /** Called when an overflow user is clicked */
   onOverflowUserClick?: (user: OverflowUser, index: number) => void;
+  /** Additional class name for the root avatar stack */
   className?: string;
 }
 
@@ -46,12 +48,30 @@ function extractOverflowFromChildren(
 
 export const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
   ({ size = '48', children, max, total, overflowUsers, selectedIndex, onCounterClick, onOverflowUserClick, className, ...props }, ref) => {
+    const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
     const items = React.Children.toArray(children);
     const visibleCount = max != null ? Math.min(items.length, max) : items.length;
     const visible = items.slice(0, visibleCount);
     const overflow = total != null ? total - visibleCount : items.length - visibleCount;
 
     const hiddenUsers = overflowUsers ?? extractOverflowFromChildren(items, visibleCount);
+    const hasDropdown = overflow > 0 && hiddenUsers.length > 0;
+
+    const closeDropdown = () => setIsDropdownOpen(false);
+
+    const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+      const nextTarget = event.relatedTarget as Node | null;
+      if (!nextTarget || !event.currentTarget.contains(nextTarget)) {
+        closeDropdown();
+      }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === 'Escape') {
+        closeDropdown();
+        event.currentTarget.querySelector<HTMLButtonElement>('.dls-avatar-stack__counter')?.focus();
+      }
+    };
 
     return (
       <div
@@ -70,28 +90,45 @@ export const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
             : child,
         )}
         {overflow > 0 && (
-          <div className="dls-avatar-stack__counter-wrap">
+          <div
+            className="dls-avatar-stack__counter-wrap"
+            data-open={isDropdownOpen || undefined}
+            onMouseEnter={() => setIsDropdownOpen(true)}
+            onMouseLeave={closeDropdown}
+            onFocusCapture={() => setIsDropdownOpen(true)}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+          >
             <button
               type="button"
               className="dls-avatar-stack__counter"
-              onClick={onCounterClick}
+              onClick={() => {
+                setIsDropdownOpen(true);
+                onCounterClick?.();
+              }}
               aria-label={`${overflow} more users`}
+              aria-expanded={hasDropdown ? isDropdownOpen : undefined}
+              aria-haspopup={hasDropdown ? 'listbox' : undefined}
             >
               +{overflow}
             </button>
 
-            {hiddenUsers.length > 0 && (
+            {hasDropdown && (
               <List className="dls-avatar-stack__dropdown">
                 {hiddenUsers.map((user, i) => (
                   <ListItem
                     key={i}
-                    type="with-slots"
+                    type={user.secondaryText ? 'two-line-slots' : 'with-slots'}
                     text={user.name}
+                    secondaryText={user.secondaryText}
                     slotLeft={
                       <Avatar size="24" circle src={user.src} initials={user.initials} />
                     }
                     selected={selectedIndex === i}
-                    onClick={() => onOverflowUserClick?.(user, i)}
+                    onClick={() => {
+                      onOverflowUserClick?.(user, i);
+                      closeDropdown();
+                    }}
                   />
                 ))}
               </List>

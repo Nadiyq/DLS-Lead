@@ -87,15 +87,15 @@
    Hover — unselected
    --------------------------------------------------------------------------- */
 
-.dls-switcher__input:not(:checked):not(:disabled):hover + .dls-switcher__track-wrapper .dls-switcher__track,
-.dls-switcher:hover .dls-switcher__input:not(:checked):not(:disabled) + .dls-switcher__track-wrapper .dls-switcher__track {
+.dls-switcher__input:not(:checked):hover:not(:disabled) + .dls-switcher__track-wrapper .dls-switcher__track,
+.dls-switcher:hover:not(:disabled) .dls-switcher__input:not(:checked):not(:disabled) + .dls-switcher__track-wrapper .dls-switcher__track {
   background: var(--dls-state-hover-overlay);
 }
 
 /* Hover — selected */
 
-.dls-switcher__input:checked:not(:disabled):hover + .dls-switcher__track-wrapper .dls-switcher__track,
-.dls-switcher:hover .dls-switcher__input:checked:not(:disabled) + .dls-switcher__track-wrapper .dls-switcher__track {
+.dls-switcher__input:checked:hover:not(:disabled) + .dls-switcher__track-wrapper .dls-switcher__track,
+.dls-switcher:hover:not(:disabled) .dls-switcher__input:checked:not(:disabled) + .dls-switcher__track-wrapper .dls-switcher__track {
   background: oklch(from var(--dls-color-intent-neutral-base) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
 
@@ -189,4 +189,18 @@
 .dls-switcher__input:disabled ~ .dls-switcher__text .dls-switcher__label,
 .dls-switcher__input:disabled ~ .dls-switcher__text .dls-switcher__description {
   color: var(--dls-color-text-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-switcher__track {
+    transition: none;
+  }
+
+  .dls-switcher__toggle {
+    transition: none;
+  }
 }

@@ -106,3 +106,15 @@
   0%, 100% { opacity: 1; }
   50%      { opacity: 0.4; }
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-skeleton__avatar,
+  .dls-skeleton__line,
+  .dls-skeleton__image {
+    animation: none;
+  }
+}

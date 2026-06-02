@@ -1,0 +1,95 @@
+{
+  "name": "Skeleton",
+  "kebabName": "skeleton",
+  "category": "loading / placeholder",
+  "description": "Loading placeholder that mimics content shape with pulsing opacity animation. Three layout types: regular, card, text.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "\"regular\" | \"card\" | \"text\"",
+      "required": false,
+      "default": "regular",
+      "enum": ["regular", "card", "text"],
+      "description": "Skeleton layout type"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-skeleton-avatar",
+    "--dls-radius-component-skeleton-line",
+    "--dls-radius-component-skeleton-image",
+    "--dls-color-surface-muted",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-spacing-4",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Skeleton is a passive decorative placeholder with no interactive states. Continuous opacity pulse animation.",
+    "available": []
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[aria-hidden=true]",
+    "requiredAria": [
+      "aria-hidden=\"true\""
+    ],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6603-8027",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6603-8027",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "regular": "regular",
+          "card": "card",
+          "text": "text"
+        }
+      }
+    ]
+  },
+  "useWhen": [
+    "Initial page/section load with known layout structure",
+    "List loading where each item shape is predictable",
+    "Card grid placeholders",
+    "Content areas where Spinner alone is insufficient"
+  ],
+  "doNotUseFor": [
+    "Indeterminate loading with no layout hint — use Spinner",
+    "Determinate progress — use ProgressBar",
+    "Empty states after loading — use EmptyState"
+  ],
+  "relations": [
+    "Spinner",
+    "ProgressBar",
+    "EmptyState"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens in tokens.json. Uses --dls-color-surface-muted directly for all placeholder backgrounds.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T12:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "1a9503cf890e79b7"
+  }
+}

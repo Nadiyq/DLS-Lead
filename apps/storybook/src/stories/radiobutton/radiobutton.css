@@ -82,16 +82,16 @@
    Hover — unselected
    --------------------------------------------------------------------------- */
 
-.dls-radiobutton__input:not(:checked):not(:disabled):hover + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle,
-.dls-radiobutton:hover .dls-radiobutton__input:not(:checked):not(:disabled) + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
+.dls-radiobutton__input:not(:checked):hover:not(:disabled) + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle,
+.dls-radiobutton:hover:not(:disabled) .dls-radiobutton__input:not(:checked):not(:disabled) + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
   background: var(--dls-state-hover-overlay);
   border-color: var(--dls-color-border-focus);
 }
 
 /* Hover — selected */
 
-.dls-radiobutton__input:checked:not(:disabled):hover + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle,
-.dls-radiobutton:hover .dls-radiobutton__input:checked:not(:disabled) + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
+.dls-radiobutton__input:checked:hover:not(:disabled) + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle,
+.dls-radiobutton:hover:not(:disabled) .dls-radiobutton__input:checked:not(:disabled) + .dls-radiobutton__circle-wrapper .dls-radiobutton__circle {
   background: var(--dls-state-hover-overlay);
 }
 

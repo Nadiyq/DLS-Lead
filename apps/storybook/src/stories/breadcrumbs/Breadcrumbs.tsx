@@ -1,35 +1,14 @@
 import React from 'react';
+import {
+  ChevronRight as ChevronRightIcon,
+  ChevronDown as ChevronDownIcon,
+  Slash as SlashIcon,
+  Ellipsis as EllipsisIcon,
+} from 'lucide-react';
 import './breadcrumbs.css';
 
-/* ---------------------------------------------------------------------------
-   Icons (inline SVGs matching Figma 16×16 icons)
-   --------------------------------------------------------------------------- */
-
-const ChevronRight = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronDown = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-export const Slash = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 3L6 13" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
-
-const Ellipsis = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="3" cy="8" r="1" fill="currentColor" />
-    <circle cx="8" cy="8" r="1" fill="currentColor" />
-    <circle cx="13" cy="8" r="1" fill="currentColor" />
-  </svg>
-);
+/* Re-export Slash icon for stories (separator variant) */
+export const Slash = SlashIcon;
 
 /* ---------------------------------------------------------------------------
    BreadcrumbItem types
@@ -93,7 +72,7 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
             {i < items.length - 1 && (
               <li className="dls-breadcrumbs__item" aria-hidden="true">
                 <span className="dls-breadcrumbs__separator">
-                  {separator ?? <ChevronRight />}
+                  {separator ?? <ChevronRightIcon />}
                 </span>
               </li>
             )}
@@ -129,7 +108,7 @@ function BreadcrumbItemRenderer({ item, isLast }: { item: BreadcrumbItem; isLast
         onClick={(item as BreadcrumbItemMore).onClick}
         aria-label="Show more breadcrumbs"
       >
-        <Ellipsis />
+        <EllipsisIcon />
       </button>
     );
   }
@@ -148,7 +127,7 @@ function BreadcrumbItemRenderer({ item, isLast }: { item: BreadcrumbItem; isLast
       <span>{label}</span>
       {type === 'dropdown' && (
         <span className="dls-breadcrumbs__dropdown-icon">
-          <ChevronDown />
+          <ChevronDownIcon />
         </span>
       )}
     </Tag>

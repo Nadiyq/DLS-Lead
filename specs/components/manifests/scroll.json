@@ -1,0 +1,115 @@
+{
+  "name": "Scroll",
+  "kebabName": "scroll",
+  "category": "display / indicator",
+  "description": "Display-only custom scrollbar indicator. Renders a thumb at a given position and size within a track.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "orientation",
+      "type": "\"vertical\" | \"horizontal\"",
+      "required": false,
+      "default": "vertical",
+      "enum": ["vertical", "horizontal"],
+      "description": "Scroll direction"
+    },
+    {
+      "name": "thumbSize",
+      "type": "number",
+      "required": false,
+      "default": 50,
+      "description": "Thumb size as a percentage (0–100) of the track"
+    },
+    {
+      "name": "thumbPosition",
+      "type": "number",
+      "required": false,
+      "default": 0,
+      "description": "Thumb position as a percentage (0–100) along the track"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-scroll",
+    "--dls-radius-component-scroll-thumb",
+    "--dls-color-intent-neutral-base",
+    "--dls-spacing-0-5"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Display-only indicator with minor hover opacity change. No interactive color states.",
+    "available": [
+      ":hover:not(:disabled)"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=scrollbar]",
+    "requiredAria": [
+      "role=\"scrollbar\"",
+      "aria-orientation",
+      "aria-valuenow",
+      "aria-valuemin",
+      "aria-valuemax"
+    ],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6464-7266",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6464-7266",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "orientation",
+        "valueMapping": {
+          "vertical": "vertical",
+          "horizontal": "horizontal"
+        },
+        "note": "Figma uses 'type'; code uses 'orientation' for consistency with Separator."
+      }
+    ]
+  },
+  "useWhen": [
+    "Custom scrollbar appearance alongside hidden native scrollbars",
+    "Scroll position visualization in panels or lists",
+    "When native scrollbar styling is insufficient"
+  ],
+  "doNotUseFor": [
+    "Actual scroll behavior — use native overflow: auto",
+    "Progress indication — use ProgressBar",
+    "Navigation — use Tabs, Sidebar, or Pagination"
+  ],
+  "relations": [
+    "Separator",
+    "Resizable",
+    "ProgressBar"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens in tokens.json. Uses --dls-color-intent-neutral-base directly for thumb color.",
+      "severity": "low"
+    },
+    {
+      "area": "token-layer",
+      "description": "Hover uses hardcoded opacity value (0.8) instead of a token.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T13:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "b6c07793a9986ce5"
+  }
+}

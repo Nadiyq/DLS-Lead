@@ -5,16 +5,27 @@ export { Info as InfoIcon, CheckCircle as CheckCircleIcon, AlertTriangle as Aler
 export type AlertDialogIntent = 'neutral' | 'primary' | 'info' | 'success' | 'warning' | 'danger';
 export type AlertDialogBreakpoint = 'desktop' | 'mobile';
 
-export interface AlertDialogProps {
+export interface AlertDialogProps
+  extends Omit<React.DialogHTMLAttributes<HTMLDialogElement>, 'open' | 'onClose'> {
+  /** Semantic intent that controls icon color and action button intent. */
   intent?: AlertDialogIntent;
+  /** Layout mode for desktop or stacked mobile compositions. */
   breakpoint?: AlertDialogBreakpoint;
+  /** Whether the native dialog is shown with showModal(). */
   open?: boolean;
+  /** Optional leading decorative icon. Use lucide-react icons. */
   icon?: React.ReactNode;
+  /** Dialog title used as the accessible name when present. */
   title?: string;
+  /** Optional supporting text used as the accessible description when present. */
   description?: string;
+  /** Primary action slot, usually a filled Button. */
   primaryAction?: React.ReactNode;
+  /** Secondary action slot, usually an outline Button. */
   secondaryAction?: React.ReactNode;
+  /** Called when native cancel, such as Escape, requests the dialog to close. */
   onClose?: () => void;
+  /** Additional class name for the root dialog. */
   className?: string;
 }
 
@@ -30,6 +41,7 @@ export const AlertDialog = React.forwardRef<HTMLDialogElement, AlertDialogProps>
       primaryAction,
       secondaryAction,
       onClose,
+      onCancel: onCancelProp,
       className,
       ...props
     },
@@ -37,6 +49,11 @@ export const AlertDialog = React.forwardRef<HTMLDialogElement, AlertDialogProps>
   ) => {
     const dialogRef = React.useRef<HTMLDialogElement>(null);
     const mergedRef = useMergedRef(ref, dialogRef);
+    const reactId = React.useId();
+    const titleId = `${reactId}-title`;
+    const descriptionId = `${reactId}-description`;
+    const labelledBy = props['aria-labelledby'] ?? (title ? titleId : undefined);
+    const describedBy = props['aria-describedby'] ?? (description ? descriptionId : undefined);
 
     React.useEffect(() => {
       const el = dialogRef.current;
@@ -48,8 +65,9 @@ export const AlertDialog = React.forwardRef<HTMLDialogElement, AlertDialogProps>
       }
     }, [open]);
 
-    const handleCancel = (e: React.SyntheticEvent) => {
+    const handleCancel = (e: React.SyntheticEvent<HTMLDialogElement>) => {
       e.preventDefault();
+      onCancelProp?.(e);
       onClose?.();
     };
 
@@ -61,15 +79,21 @@ export const AlertDialog = React.forwardRef<HTMLDialogElement, AlertDialogProps>
         className={['dls-alert-dialog', className].filter(Boolean).join(' ')}
         data-intent={intent}
         data-breakpoint={breakpoint || undefined}
-        onCancel={handleCancel}
         {...props}
+        onCancel={handleCancel}
+        aria-labelledby={labelledBy}
+        aria-describedby={describedBy}
       >
         <div className="dls-alert-dialog__content">
-          {icon && <span className="dls-alert-dialog__icon">{icon}</span>}
+          {icon && <span className="dls-alert-dialog__icon" aria-hidden="true">{icon}</span>}
           {(title || description) && (
             <div className="dls-alert-dialog__text">
-              {title && <div className="dls-alert-dialog__title">{title}</div>}
-              {description && <div className="dls-alert-dialog__description">{description}</div>}
+              {title && <div className="dls-alert-dialog__title" id={titleId}>{title}</div>}
+              {description && (
+                <div className="dls-alert-dialog__description" id={descriptionId}>
+                  {description}
+                </div>
+              )}
             </div>
           )}
         </div>

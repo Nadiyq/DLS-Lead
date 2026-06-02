@@ -1,0 +1,256 @@
+{
+  "name": "ListItem",
+  "kebabName": "list-item",
+  "category": "structure / row",
+  "description": "Foundational row component for every visible item inside dropdowns, menus, context menus, command palettes, and selection lists.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "\"text\" | \"label\" | \"with-slots\" | \"two-line\" | \"two-line-slots\" | \"buttons\" | \"search\" | \"empty-state\" | \"chips\" | \"divider\"",
+      "required": false,
+      "default": "text",
+      "enum": ["text", "label", "with-slots", "two-line", "two-line-slots", "buttons", "search", "empty-state", "chips", "divider"],
+      "description": "Item type"
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "required": false,
+      "description": "Primary text"
+    },
+    {
+      "name": "secondaryText",
+      "type": "string",
+      "required": false,
+      "description": "Secondary line text (two-line types)"
+    },
+    {
+      "name": "secondaryContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Secondary line custom content (two-line types)"
+    },
+    {
+      "name": "iconStart",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading icon"
+    },
+    {
+      "name": "iconEnd",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Trailing icon"
+    },
+    {
+      "name": "slotLeft",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Left slot content"
+    },
+    {
+      "name": "slotRight",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Right slot content"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Children — for buttons, chips, search types"
+    },
+    {
+      "name": "selected",
+      "type": "boolean",
+      "required": false,
+      "description": "Persistent selected state"
+    },
+    {
+      "name": "onClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Click handler"
+    },
+    {
+      "name": "interactive",
+      "type": "boolean",
+      "required": false,
+      "description": "Force render tag — overrides type-based auto-detection. Use false when row contains its own form control."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-list-item",
+    "--dls-font-family",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-color-surface-base",
+    "--dls-color-intent-neutral-text",
+    "--dls-color-text-secondary",
+    "--dls-color-text-placeholder",
+    "--dls-color-border-base",
+    "--dls-state-hover-overlay",
+    "--dls-color-intent-info-subtle",
+    "--dls-state-l-delta-hover",
+    "--dls-state-focus-ring-color",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-font-weight-normal",
+    "--dls-font-weight-medium"
+  ],
+  "states": {
+    "implementation": "hybrid",
+    "rationale": "Unselected hover uses overlay token (transparent surface). Selected state uses info-subtle fill; selected+hover uses OKLCH L-shift on that fill.",
+    "available": [
+      ":hover:not(:disabled):not([data-selected])",
+      ":active",
+      "[data-selected]",
+      "[data-selected]:hover:not(:disabled)",
+      ":focus-visible"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-l-delta-hover",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": ["ListItem"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "button (interactive types) | div (non-interactive types)",
+    "requiredAria": [
+      "aria-selected (when selected)"
+    ],
+    "keyboard": {
+      "Tab": "Focus item",
+      "Enter/Space": "Activate item"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "86-2429",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=86-2429",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "text": "text",
+          "with slots": "with-slots",
+          "two-line": "two-line",
+          "two-line+slots": "two-line-slots",
+          "label": "label",
+          "chips": "chips",
+          "search": "search",
+          "buttons": "buttons",
+          "empty state": "empty-state",
+          "divider": "divider"
+        }
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only (normal/hover/pressed/focus). CSS pseudo-classes + data-selected in code."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "text"
+      },
+      {
+        "figmaProperty": "iconLeft",
+        "reactProp": "iconStart",
+        "note": "Figma boolean toggle. React uses ReactNode."
+      },
+      {
+        "figmaProperty": "iconRight",
+        "reactProp": "iconEnd",
+        "note": "Figma boolean toggle. React uses ReactNode."
+      },
+      {
+        "figmaProperty": "slotLeft",
+        "reactProp": null,
+        "note": "Figma boolean toggle for visibility. React slotLeft truthy = visible."
+      },
+      {
+        "figmaProperty": "slotContentLeft",
+        "reactProp": "slotLeft",
+        "note": "Figma instance swap maps to React slotLeft ReactNode."
+      },
+      {
+        "figmaProperty": "slotRight",
+        "reactProp": null,
+        "note": "Figma boolean toggle for visibility. React slotRight truthy = visible."
+      },
+      {
+        "figmaProperty": "slotContentRight",
+        "reactProp": "slotRight",
+        "note": "Figma instance swap maps to React slotRight ReactNode."
+      },
+      {
+        "figmaProperty": "slotSecondLine",
+        "reactProp": null,
+        "note": "Figma boolean for second line visibility. React: secondaryText truthy = visible."
+      },
+      {
+        "figmaProperty": "slotSecondLineContent",
+        "reactProp": "secondaryContent",
+        "note": "Figma instance swap maps to React secondaryContent ReactNode."
+      },
+      {
+        "figmaProperty": "slot",
+        "reactProp": "children",
+        "note": "Figma instance swap for buttons/chips/search types maps to React children."
+      },
+      {
+        "figmaProperty": "button2",
+        "reactProp": null,
+        "note": "Figma-only toggle for second button in buttons type. In React, all buttons passed as children."
+      }
+    ]
+  },
+  "useWhen": [
+    "Options inside Dropdown or DropdownAutocomplete",
+    "Actions inside ContextMenu",
+    "Navigation menus and command palettes",
+    "Selectable items within a List"
+  ],
+  "doNotUseFor": [
+    "Data-heavy tabular information — use Table",
+    "Standalone buttons outside a list",
+    "Content containers — use Card"
+  ],
+  "relations": [
+    "List",
+    "Dropdown",
+    "DropdownAutocomplete",
+    "ContextMenu",
+    "Submenu",
+    "Kbd",
+    "Badge"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens for list-item in tokens.json. Uses semantic and intent tokens directly. Only --dls-radius-component-list-item exists as L4.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T21:30:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "8c10af21237e3aec"
+  }
+}

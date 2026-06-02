@@ -1,0 +1,176 @@
+{
+  "name": "Switcher",
+  "kebabName": "switcher",
+  "category": "form control",
+  "description": "On/off toggle control rendered as a native checkbox with role=\"switch\". Supports label, description, and text orientation.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "checked",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Checked (on) state"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Label text"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Description text below the label"
+    },
+    {
+      "name": "textOrientation",
+      "type": "\"right\" | \"left\"",
+      "required": false,
+      "default": "right",
+      "enum": ["right", "left"],
+      "description": "Position of the text relative to the switcher"
+    },
+    {
+      "name": "onChange",
+      "type": "(checked: boolean) => void",
+      "required": false,
+      "description": "Called on change"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Native name attribute"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Native value attribute"
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-switcher",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-on-base",
+    "--dls-color-intent-neutral-text",
+    "--dls-color-intent-neutral-subtle",
+    "--dls-color-surface-disabled",
+    "--dls-color-border-base",
+    "--dls-color-border-disabled",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-color-text-disabled",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-font-family",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-font-weight-normal"
+  ],
+  "states": {
+    "implementation": "hybrid",
+    "rationale": "Unchecked track uses overlay tokens (subtle bg). Checked track uses OKLCH L-shift on neutral-base fill.",
+    "available": [
+      ":hover:not(:disabled)",
+      ":active:not(:disabled)",
+      ":focus-visible",
+      ":disabled",
+      ":checked"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": [],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "input[type=checkbox][role=switch]",
+    "requiredAria": [
+      "role=\"switch\""
+    ],
+    "keyboard": {
+      "Space": "Toggle checked state",
+      "Tab": "Move focus to/from switcher"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "59-7103",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=59-7103",
+    "propertyMapping": [
+      {
+        "figmaProperty": "selected",
+        "reactProp": "checked",
+        "valueMapping": {
+          "true": "true",
+          "false": "false"
+        }
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Visual-only in Figma. In code, states come from CSS pseudo-classes (:hover, :focus-visible, :active) and the disabled prop."
+      }
+    ]
+  },
+  "useWhen": [
+    "Immediate on/off toggles (notifications, features)",
+    "Settings that take effect right away",
+    "Single binary choice with visual toggle feedback"
+  ],
+  "doNotUseFor": [
+    "Multi-option selection — use Checkbox",
+    "Mutually exclusive choices — use Radiobutton",
+    "Form submission toggles that only apply on save — prefer Checkbox"
+  ],
+  "relations": [
+    "SwitcherBox",
+    "Checkbox",
+    "Radiobutton",
+    "FormField"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color tokens in tokens.json. Uses L2 semantic and intent tokens directly. Only --dls-radius-component-switcher exists as L4.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-coverage",
+      "description": "Figma component (59:7103) shows only the track + toggle. Label and description are code-only props composed at usage level.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-05-29T12:00:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "6b17ecc245423e4c"
+  }
+}

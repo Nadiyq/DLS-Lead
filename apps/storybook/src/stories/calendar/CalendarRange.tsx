@@ -1,24 +1,9 @@
 import React from 'react';
+import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from 'lucide-react';
 import { CalendarDay } from './CalendarDay';
 import { Dropdown } from '../dropdown/Dropdown';
 import { Tabs } from '../tabs/Tabs';
 import './calendar-range.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const ChevronLeft = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 4L6 8L10 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronRight = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Types
@@ -213,7 +198,7 @@ export const CalendarRange = React.forwardRef<HTMLDivElement, CalendarRangeProps
               onClick={() => navigateLeft(-1)}
               aria-label="Previous month"
             >
-              <ChevronLeft />
+              <ChevronLeftIcon aria-hidden="true" />
             </button>
             <span className="dls-calendar-range__month-title">
               {MONTH_NAMES[month]} {year}
@@ -226,7 +211,7 @@ export const CalendarRange = React.forwardRef<HTMLDivElement, CalendarRangeProps
               onClick={() => navigateLeft(1)}
               aria-label="Next month"
             >
-              <ChevronRight />
+              <ChevronRightIcon aria-hidden="true" />
             </button>
           </div>
 

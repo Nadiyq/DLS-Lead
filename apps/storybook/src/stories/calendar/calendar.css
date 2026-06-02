@@ -19,17 +19,17 @@
   border: 1px solid var(--dls-color-border-subtle);
   border-radius: var(--dls-radius-component-calendar);
   font-family: var(--dls-font-family);
-  box-shadow: 0 4px 12px var(--dls-color-overlay-scrim);
+  box-shadow: var(--dls-shadow-surface-lg);
 }
 
 /* Month & year views use smaller gap */
-.dls-calendar--month,
-.dls-calendar--year {
+.dls-calendar.dls-calendar--month,
+.dls-calendar.dls-calendar--year {
   gap: var(--dls-spacing-2);
 }
 
-.dls-calendar--month .dls-calendar__header,
-.dls-calendar--year .dls-calendar__header {
+.dls-calendar.dls-calendar--month .dls-calendar__header,
+.dls-calendar.dls-calendar--year .dls-calendar__header {
   margin-bottom: 0;
 }
 
@@ -100,7 +100,7 @@
   padding: var(--dls-spacing-1) var(--dls-spacing-2);
 }
 
-.dls-calendar__title:hover {
+.dls-calendar__title:hover:not(:disabled) {
   background: var(--dls-state-hover-overlay);
 }
 
@@ -233,7 +233,7 @@
   cursor: pointer;
 }
 
-.dls-calendar__month-cell:hover:not([data-selected]) {
+.dls-calendar__month-cell:hover:not(:disabled):not([data-selected]) {
   background: var(--dls-state-hover-overlay);
 }
 
@@ -274,7 +274,7 @@
   cursor: pointer;
 }
 
-.dls-calendar__year-cell:hover:not([data-selected]) {
+.dls-calendar__year-cell:hover:not(:disabled):not([data-selected]) {
   background: var(--dls-state-hover-overlay);
 }
 

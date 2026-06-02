@@ -382,7 +382,7 @@ $dls-component-pagination-fg: (base: $dls-color-text-primary, disabled: $dls-col
 $dls-component-pagination-bg: (base: transparent, active: $dls-color-surface-muted);
 
 $dls-component-avatar: (bg: $dls-color-surface-subtle, border: $dls-color-border-subtle, fg: $dls-color-text-primary, icon-fg: $dls-color-text-secondary, dot: $dls-color-success-500, dot-border: $dls-color-surface-base, stack-border: $dls-color-border-inverse, counter-bg: $dls-color-intent-primary-base, counter-fg: $dls-color-intent-primary-on-base, remove-btn-bg: $dls-color-surface-base, remove-btn-fg: $dls-color-text-primary);
-$dls-component-alert-neutral: (bg: $dls-color-surface-muted, fg: $dls-color-text-primary, border: $dls-color-border-base);
+$dls-component-alert-neutral: (bg: $dls-color-surface-muted, fg: $dls-color-text-primary, border: $dls-color-border-subtle);
 $dls-component-alert-primary: (bg: $dls-color-intent-primary-subtle, fg: $dls-color-intent-primary-text, border: $dls-color-intent-primary-border);
 $dls-component-alert-success: (bg: $dls-color-intent-success-subtle, fg: $dls-color-intent-success-text, border: $dls-color-intent-success-border);
 $dls-component-alert-warning: (bg: $dls-color-intent-warning-subtle, fg: $dls-color-intent-warning-text, border: $dls-color-intent-warning-border);
@@ -551,6 +551,8 @@ $dls-radius-component-otp-slot: $dls-radius-m;
 $dls-radius-component-pagination: $dls-radius-m;
 $dls-radius-component-progress-bar: $dls-radius-full;
 $dls-radius-component-radiobutton: $dls-radius-full;
+$dls-radius-component-resizable: $dls-radius-s;
+$dls-radius-component-resizable-handle: $dls-radius-xs;
 $dls-radius-component-scroll: $dls-radius-l;
 $dls-radius-component-scroll-thumb: $dls-radius-full;
 $dls-radius-component-skeleton-line: $dls-radius-full;

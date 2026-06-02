@@ -17,7 +17,7 @@
   background: var(--dls-color-surface-base);
   border: 1px solid var(--dls-color-border-subtle);
   border-radius: var(--dls-radius-component-list);
-  box-shadow: var(--dls-shadow-surface-raised);
+  box-shadow: var(--dls-shadow-surface-md);
   font-family: var(--dls-font-family);
 }
 

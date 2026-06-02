@@ -1,0 +1,161 @@
+{
+  "name": "Carousel",
+  "kebabName": "carousel",
+  "category": "content / layout",
+  "subComponents": ["CarouselArrow", "CarouselDots", "CarouselItem"],
+  "description": "Paginated content viewer for image galleries, card decks, or feature highlights. Composes CarouselArrow, CarouselDots, and CarouselItem.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Slide elements"
+    },
+    {
+      "name": "orientation",
+      "type": "\"horizontal\" | \"vertical\"",
+      "required": false,
+      "default": "horizontal",
+      "enum": ["horizontal", "vertical"],
+      "description": "Layout direction"
+    },
+    {
+      "name": "visibleItems",
+      "type": "number",
+      "required": false,
+      "default": 1,
+      "description": "Number of items visible at once"
+    },
+    {
+      "name": "showLabel",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show \"Slide X of Y\" label"
+    },
+    {
+      "name": "showDots",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show pagination dots"
+    },
+    {
+      "name": "showArrows",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show navigation arrows"
+    },
+    {
+      "name": "current",
+      "type": "number",
+      "required": false,
+      "description": "Controlled current index"
+    },
+    {
+      "name": "onSlideChange",
+      "type": "(index: number) => void",
+      "required": false,
+      "description": "Called when slide changes"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-font-family",
+    "--dls-font-weight-medium",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-color-text-secondary"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Carousel root has no interactive states. States are delegated to composed children (CarouselArrow, CarouselDots). Track has a transform transition.",
+    "available": []
+  },
+  "composition": {
+    "allowedChildren": ["CarouselItem"],
+    "forbiddenChildren": [],
+    "minItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[aria-roledescription=carousel]",
+    "requiredAria": [
+      "aria-roledescription=\"carousel\"",
+      "aria-label",
+      "role=\"group\" (per slide)",
+      "aria-roledescription=\"slide\" (per slide)"
+    ],
+    "keyboard": {
+      "Tab": "Move focus between arrows and dots",
+      "Enter/Space": "Activate arrow or dot"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6602-3071",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6602-3071",
+    "propertyMapping": [
+      {
+        "figmaProperty": "vertical",
+        "reactProp": "orientation",
+        "valueMapping": {
+          "false": "horizontal",
+          "true": "vertical"
+        },
+        "note": "Figma uses boolean; code uses string."
+      },
+      {
+        "figmaProperty": "paginationDots",
+        "reactProp": "showDots"
+      },
+      {
+        "figmaProperty": "paginationText",
+        "reactProp": "showLabel"
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": null,
+        "note": "Figma-only. In code, label auto-generates from current/total."
+      }
+    ]
+  },
+  "useWhen": [
+    "Image galleries",
+    "Feature/product card decks",
+    "Onboarding or walkthrough slides",
+    "Content exceeding viewport width in controlled way"
+  ],
+  "doNotUseFor": [
+    "Tab-based content switching — use Tabs",
+    "Scrollable lists — use native scroll or Scroll",
+    "Single image display — use img directly"
+  ],
+  "relations": [
+    "CarouselArrow",
+    "CarouselDots",
+    "CarouselItem"
+  ],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "No L4 color/radius tokens for carousel root. Uses semantic tokens. Child components have their own L4 radius tokens.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-02T16:30:00Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "da3c7eb4932ac5f8"
+  }
+}

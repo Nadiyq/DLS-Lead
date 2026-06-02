@@ -1,4 +1,5 @@
 import React from 'react';
+import { GripVertical as GripVerticalIcon } from 'lucide-react';
 import './resizable.css';
 
 /* ---------------------------------------------------------------------------
@@ -24,21 +25,6 @@ export interface ResizableProps {
   'aria-label'?: string;
   className?: string;
 }
-
-/* ---------------------------------------------------------------------------
-   Grip icon — 6-dot vertical grip
-   --------------------------------------------------------------------------- */
-
-const GripIcon = () => (
-  <svg viewBox="0 0 4 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="1" cy="1" r="0.75" fill="currentColor" />
-    <circle cx="3" cy="1" r="0.75" fill="currentColor" />
-    <circle cx="1" cy="4" r="0.75" fill="currentColor" />
-    <circle cx="3" cy="4" r="0.75" fill="currentColor" />
-    <circle cx="1" cy="7" r="0.75" fill="currentColor" />
-    <circle cx="3" cy="7" r="0.75" fill="currentColor" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Component
@@ -125,7 +111,7 @@ export const Resizable = React.forwardRef<HTMLDivElement, ResizableProps>(
         <span className="dls-resizable__line" />
         <span className="dls-resizable__handle">
           <span className="dls-resizable__icon">
-            <GripIcon />
+            <GripVerticalIcon aria-hidden="true" />
           </span>
         </span>
         <span className="dls-resizable__line" />

@@ -1,21 +1,6 @@
 import React from 'react';
+import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from 'lucide-react';
 import './calendar.css';
-
-/* ---------------------------------------------------------------------------
-   Icons
-   --------------------------------------------------------------------------- */
-
-const ChevronLeft = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M10 4L6 8L10 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ChevronRight = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 /* ---------------------------------------------------------------------------
    Types
@@ -228,7 +213,7 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
               onClick={() => navigateMonth(-1)}
               aria-label="Previous month"
             >
-              <ChevronLeft />
+              <ChevronLeftIcon aria-hidden="true" />
             </button>
             <button
               type="button"
@@ -244,7 +229,7 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
               onClick={() => navigateMonth(1)}
               aria-label="Next month"
             >
-              <ChevronRight />
+              <ChevronRightIcon aria-hidden="true" />
             </button>
           </div>
 
@@ -307,7 +292,7 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
               onClick={() => navigateYear(-1)}
               aria-label="Previous year"
             >
-              <ChevronLeft />
+              <ChevronLeftIcon aria-hidden="true" />
             </button>
             <button
               type="button"
@@ -323,7 +308,7 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
               onClick={() => navigateYear(1)}
               aria-label="Next year"
             >
-              <ChevronRight />
+              <ChevronRightIcon aria-hidden="true" />
             </button>
           </div>
 
@@ -366,7 +351,7 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
             onClick={() => navigateYearRange(-1)}
             aria-label="Previous year range"
           >
-            <ChevronLeft />
+            <ChevronLeftIcon aria-hidden="true" />
           </button>
           <span className="dls-calendar__title">{rangeStart}–{rangeEnd}</span>
           <button
@@ -375,7 +360,7 @@ export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
             onClick={() => navigateYearRange(1)}
             aria-label="Next year range"
           >
-            <ChevronRight />
+            <ChevronRightIcon aria-hidden="true" />
           </button>
         </div>
 

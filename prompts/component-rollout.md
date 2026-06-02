@@ -85,9 +85,42 @@ Phase 1 - Figma description:
    - known deviations
    - code example
    - cross-references
-5. If official `use_figma` is available and the user requested Figma
-   write-back, set the component description and Storybook docs link
-   through official MCP only. Otherwise stop at the local file.
+5. If official `use_figma` is available, write a CONDENSED summary
+   to the Figma component description field and set the Storybook
+   docs link. Otherwise stop at the local file.
+
+   IMPORTANT: The Figma component panel description and the local
+   markdown file use DIFFERENT formats:
+
+   - `specs/figma-descriptions/[component].md` — FULL detailed spec
+     with all sections (anatomy, props, tokens, states, a11y,
+     composition, code examples, cross-references). This is the
+     machine-readable reference for AI agents and developers.
+
+   - Figma component description (via `use_figma`) — CONDENSED
+     summary only. Follow this exact format:
+
+     ```
+     [One-line purpose]
+
+     Figma properties:
+     • [figmaProp] → [reactProp]
+     • [figmaProp] → Figma-only (CSS pseudo-classes)
+     ...
+
+     Key tokens:
+     • [up to 6 most important tokens]
+     ...
+
+     State model: [overlay | hybrid | oklch-shift | none]
+     • [1-2 lines about key state behavior]
+
+     Accessibility: [One-line summary: semantic element, keyboard,
+     focus ring, reduced-motion.]
+     ```
+
+   Never paste the full markdown into Figma. The condensed format
+   is designed for designers reading the component panel inline.
 
 Phase 2 - Code fixes and manifest:
 1. Apply the `/build-manifest` logic from
@@ -112,10 +145,12 @@ Phase 2 - Code fixes and manifest:
    this rollout.
 
 Phase 3 - Corrected Figma description:
-1. Update the local description file with anything fixed in Phase 2.
+1. Update the local markdown file with anything fixed in Phase 2.
 2. Remove resolved known gaps from the description, but keep real
    deviations that still exist.
-3. Write back to Figma only with official `use_figma` if available.
+3. Write the CONDENSED summary to Figma with official `use_figma`
+   if available. Use the condensed format from Phase 1 step 5 —
+   never paste the full markdown into Figma.
 4. If official Figma write access is unavailable, report the exact local
    description file to paste into Figma and do not use any fallback tool.
 
