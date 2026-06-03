@@ -1,0 +1,157 @@
+{
+  "name": "DropdownOptions",
+  "kebabName": "dropdown-options",
+  "category": "menu / container",
+  "description": "Generic action menu triggered by an icon Button. Body is a List with ListItem rows — supports labels, dividers, and drill-in submenus rendered adjacent to the main panel.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Menu content — typically List + ListItem components"
+    },
+    {
+      "name": "align",
+      "type": "\"start\" | \"end\"",
+      "required": false,
+      "default": "end",
+      "enum": ["start", "end"],
+      "description": "Horizontal alignment of the panel relative to trigger"
+    },
+    {
+      "name": "side",
+      "type": "\"top\" | \"bottom\"",
+      "required": false,
+      "default": "bottom",
+      "enum": ["top", "bottom"],
+      "description": "Which side of the trigger to open on"
+    },
+    {
+      "name": "triggerIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Custom trigger icon (defaults to 3-dot kebab — lucide MoreVertical)"
+    },
+    {
+      "name": "triggerLabel",
+      "type": "string",
+      "required": false,
+      "default": "Options",
+      "description": "Accessible label for the trigger button"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled state"
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": false,
+      "description": "Controlled open state. When provided, the component is in controlled mode and the consumer must keep the state in sync via onOpenChange. Use this when a child action needs to dismiss the menu programmatically (e.g. a DropdownFilters chip handoff)."
+    },
+    {
+      "name": "onOpenChange",
+      "type": "(open: boolean) => void",
+      "required": false,
+      "description": "Called whenever the menu wants to change its open state (trigger click, outside click, Escape). Required in controlled mode."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-radius-component-list",
+    "--dls-shadow-surface-md",
+    "--dls-spacing-2",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "The dropdown panel is a passive floating surface. Interactive states live on the trigger Button (hybrid — soft variant uses OKLCH L-shift) and on the composed ListItem children (overlay hover, info-subtle fill on selected). The panel renders in a React portal positioned via the trigger wrapper's bounding rect.",
+    "available": [
+      "[data-open]",
+      "[data-align=start]",
+      "[data-align=end]",
+      "[data-side=top]",
+      "[data-side=bottom]",
+      "aria-expanded",
+      "aria-haspopup"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["List", "ListItem", "DropdownColumns", "DropdownFilters", "DropdownExport", "DropdownSorting"],
+    "forbiddenChildren": ["DropdownOptions", "Dialog", "AlertDialog", "TableCell", "TableHeaderCell"],
+    "forbiddenParents": ["Button", "ListItem"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "button[aria-haspopup=\"menu\"] + portal div[role=\"menu\"]",
+    "requiredAria": ["aria-haspopup=\"menu\"", "aria-expanded", "aria-label (via triggerLabel)"],
+    "keyboard": {
+      "Tab": "Move focus to the trigger button",
+      "Enter": "Open the menu (native button activation)",
+      "Space": "Open the menu (native button activation)",
+      "Escape": "Close the menu when open"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Trigger is a native <button> with native focus and aria-expanded tracking open state. Panel is rendered in a portal with role=\"menu\". Closes on click outside (mousedown listener on wrapper + portal) or Escape. ListItem children own their own keyboard / focus contracts."
+  },
+  "figma": {
+    "nodeId": "6122:16148",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6122-16148",
+    "propertyMapping": [
+      {
+        "figmaProperty": "(panel slot)",
+        "reactProp": "children",
+        "note": "The menu body — typically a <List> with <ListItem> children (type=label / divider / text / with-slots)."
+      },
+      {
+        "figmaProperty": "(trigger icon)",
+        "reactProp": "triggerIcon",
+        "note": "Defaults to lucide MoreVertical. Override with any lucide icon for context-specific triggers (Ellipsis, Settings, Filter, etc.)."
+      }
+    ]
+  },
+  "useWhen": [
+    "Overflow / 'more' menu on a row, card, toolbar, or table top bar",
+    "Contextual action menu with 2–7 actions that should not crowd the surface",
+    "Settings / customization entry point that drills into submenus (Columns / Filters / Export)"
+  ],
+  "doNotUseFor": [
+    "Selection lists with multi-select → use Dropdown / DropdownAutocomplete",
+    "Sort controls → use DropdownSorting",
+    "Column visibility → use DropdownColumns",
+    "Filter management → use DropdownFilters",
+    "Free-form popovers without an items list → use Dialog or Tooltip"
+  ],
+  "relations": ["List", "ListItem", "Button", "DropdownColumns", "DropdownFilters", "DropdownExport", "DropdownSorting", "ContextMenu", "TableTopBar"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Spec mentions --dls-color-component-dropdown-options-* and --dls-radius-component-dropdown-options tokens but they do not exist in tokens.json. CSS uses semantic surface/border tokens directly and reuses --dls-radius-component-list for the panel radius.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-contract",
+      "description": "The Figma dropdown-options frame contains the panel only — the trigger is part of the host pattern. In code, the trigger is rendered inside the same React component for ergonomics; pass triggerIcon and triggerLabel to customize.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T12:33:53.005Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "680c6cba88e24bde"
+  }
+}

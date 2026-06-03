@@ -6,7 +6,7 @@
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
-   Container — positioned wrapper
+   Container - positioned wrapper
    --------------------------------------------------------------------------- */
 
 .dls-tooltip {
@@ -21,7 +21,7 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Body — text + optional slot
+   Body - text + optional slot
    --------------------------------------------------------------------------- */
 
 .dls-tooltip__body {
@@ -48,7 +48,7 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Arrow — 12×8 SVG with two filled paths (border + fill)
+   Arrow - 12x8 decorative triangle
    Overlaps body by 1px so border colors merge seamlessly
    --------------------------------------------------------------------------- */
 
@@ -58,16 +58,32 @@
   flex-shrink: 0;
   display: block;
   margin-top: -1px;
+  position: relative;
+  color: var(--dls-color-border-subtle);
 }
 
-/* General arrow colors */
-
-.dls-tooltip__arrow-stroke {
-  fill: var(--dls-color-border-subtle);
+.dls-tooltip__arrow::before,
+.dls-tooltip__arrow::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
 }
 
-.dls-tooltip__arrow-fill {
-  fill: var(--dls-color-surface-base);
+.dls-tooltip__arrow::before {
+  top: 0;
+  border-top: 8px solid currentColor;
+}
+
+.dls-tooltip__arrow::after {
+  top: 0;
+  border-left-width: 5px;
+  border-right-width: 5px;
+  border-top: 7px solid var(--dls-color-surface-base);
 }
 
 /* ---------------------------------------------------------------------------
@@ -79,25 +95,25 @@
   border-color: var(--dls-color-intent-danger-border);
 }
 
-.dls-tooltip[data-type="error"] .dls-tooltip__arrow-stroke {
-  fill: var(--dls-color-intent-danger-border);
+.dls-tooltip[data-type="error"] .dls-tooltip__arrow {
+  color: var(--dls-color-intent-danger-border);
 }
 
-.dls-tooltip[data-type="error"] .dls-tooltip__arrow-fill {
-  fill: var(--dls-color-intent-danger-subtle);
+.dls-tooltip[data-type="error"] .dls-tooltip__arrow::after {
+  border-top-color: var(--dls-color-intent-danger-subtle);
 }
 
 /* ---------------------------------------------------------------------------
-   Orientation — arrow placement
+   Orientation - arrow placement
    --------------------------------------------------------------------------- */
 
-/* Top orientations — arrow below body, points down */
+/* Top orientations - arrow below body, points down */
 
 .dls-tooltip[data-orientation^="top"] {
   flex-direction: column;
 }
 
-/* Bottom orientations — arrow above body, points up */
+/* Bottom orientations - arrow above body, points up */
 
 .dls-tooltip[data-orientation^="bottom"] {
   flex-direction: column-reverse;
@@ -109,7 +125,7 @@
   margin-bottom: -1px;
 }
 
-/* Left — arrow to the right of body, points right */
+/* Left - arrow to the right of body, points right */
 
 .dls-tooltip[data-orientation="left"] {
   flex-direction: row;
@@ -121,7 +137,7 @@
   margin-left: -4px;
 }
 
-/* Right — arrow to the left of body, points left */
+/* Right - arrow to the left of body, points left */
 
 .dls-tooltip[data-orientation="right"] {
   flex-direction: row-reverse;
@@ -151,7 +167,7 @@
   margin-right: var(--dls-spacing-2);
 }
 
-/* Left/right — vertical centering */
+/* Left/right - vertical centering */
 
 .dls-tooltip[data-orientation="left"],
 .dls-tooltip[data-orientation="right"] {

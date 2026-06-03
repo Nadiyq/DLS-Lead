@@ -79,6 +79,29 @@
   min-width: 0;
 }
 
+/* ChipInput inside the recipients field-row: drop its border + background so
+   only the chips themselves carry visual weight (matches Figma "to:" row). */
+.dls-message-composer__field-value > .dls-chip-input {
+  width: 100%;
+}
+
+.dls-message-composer__field-value > .dls-chip-input .dls-chip-input__box {
+  background: transparent;
+  border-color: transparent;
+  padding: 0;
+  height: auto;
+  min-height: 24px;
+}
+
+.dls-message-composer__field-value > .dls-chip-input .dls-chip-input__box:hover:not(:disabled):not([data-disabled]):not([data-error]) {
+  border-color: transparent;
+}
+
+.dls-message-composer__field-value > .dls-chip-input .dls-chip-input__box:focus-within:not([data-disabled]) {
+  border-color: transparent;
+  box-shadow: none;
+}
+
 /* ---------------------------------------------------------------------------
    Toolbar section — sticky formatting bar
    --------------------------------------------------------------------------- */

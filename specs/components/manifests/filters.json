@@ -1,0 +1,167 @@
+{
+  "name": "Filters",
+  "kebabName": "filters",
+  "category": "layout / table-control",
+  "description": "Dedicated filter row that sits between TableTopBar and the table body. Hosts a Sort chip + separator + FilterChip groups + an add-filter Plus button with an optional dropdown of available filter columns.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": ["m", "s"],
+  "props": [
+    {
+      "name": "groups",
+      "type": "FilterGroup[]",
+      "required": true,
+      "description": "Filter groups to display"
+    },
+    {
+      "name": "size",
+      "type": "\"m\" | \"s\"",
+      "required": false,
+      "default": "m",
+      "enum": ["m", "s"],
+      "description": "Size of the filter bar"
+    },
+    {
+      "name": "showAdd",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Whether to show the add-filter button"
+    },
+    {
+      "name": "onAdd",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when the add-filter button is clicked (only used when addMenu is NOT provided)"
+    },
+    {
+      "name": "addMenu",
+      "type": "React.ReactNode | ((close: () => void) => React.ReactNode)",
+      "required": false,
+      "description": "Optional menu attached to the add-filter Plus button. When provided, clicking Plus toggles the menu open/closed instead of firing onAdd directly. Typically a <List> of <ListItem>s representing available filter columns."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Disabled state"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-intent-neutral-subtle",
+    "--dls-color-border-base",
+    "--dls-color-border-disabled",
+    "--dls-color-surface-disabled",
+    "--dls-color-text-secondary",
+    "--dls-color-text-disabled",
+    "--dls-radius-component-button",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-state-l-delta-hover",
+    "--dls-state-l-delta-pressed",
+    "--dls-state-focus-ring-color",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "hybrid",
+    "rationale": "The Filters root is a passive layout container with no state of its own. The trailing Plus add-filter Button has a tinted intent-neutral-subtle fill, so its hover/pressed states use OKLCH L-shift on that fill. Focus uses the shared focus-ring shadow. Composed children (Sort chip, FilterChips, popover lists) own their own state contracts.",
+    "available": [
+      "[data-size=m]",
+      "[data-size=s]",
+      ":hover:not(:disabled):not([data-disabled])",
+      ":active:not(:disabled):not([data-disabled])",
+      ":focus-visible",
+      "[data-disabled]",
+      "aria-expanded",
+      "aria-haspopup"
+    ],
+    "tokens": [
+      "--dls-state-l-delta-hover",
+      "--dls-state-l-delta-pressed",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["FilterChip", "ChipRegular", "DropdownSorting", "DropdownFilters", "List", "ListItem"],
+    "forbiddenChildren": ["Filters", "Table", "Dialog", "AlertDialog"],
+    "forbiddenParents": ["Button", "ListItem", "TableCell", "TableHeaderCell"],
+    "maxDepth": 1,
+    "minItems": 0
+  },
+  "accessibility": {
+    "semanticElement": "div[role=toolbar]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {
+      "Tab": "Move focus to the next control inside the filter row",
+      "Shift+Tab": "Move focus to the previous control",
+      "Enter": "Activate the Plus add-filter button (when focused)",
+      "Space": "Activate the Plus add-filter button (when focused)",
+      "Escape": "Close the add-filter menu when open"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Natural tab order across composed children. The Plus button is a native <button>. When addMenu is provided, the Plus exposes aria-haspopup=\"menu\" + aria-expanded. The popover root carries role=\"menu\". The popover closes on click-outside, Escape, or any click on a ListItem inside."
+  },
+  "figma": {
+    "nodeId": "6115:13366",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6115-13366",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s"
+        }
+      },
+      {
+        "figmaProperty": "selected",
+        "reactProp": null,
+        "valueMapping": {
+          "true": "groups includes FilterChip entries",
+          "false": "groups has Sort group only (no FilterChip entries)"
+        },
+        "note": "Figma-only structural toggle. selected=true shows Sort + filter chips + Plus; selected=false shows Sort + Plus only. In code, the presence/absence of FilterChip groups in the groups array drives this."
+      },
+      {
+        "figmaProperty": "(slot content)",
+        "reactProp": "groups",
+        "note": "Each Figma chip in the slot corresponds to a groups[i].children entry. Dividers between groups are auto-rendered by Filters."
+      }
+    ]
+  },
+  "useWhen": [
+    "Between a TableTopBar and the table body for sort + filter controls",
+    "Inside any view combining sort + multi-criteria filtering in a single horizontal bar"
+  ],
+  "doNotUseFor": [
+    "Primary action buttons → use the right slot of TableTopBar",
+    "Search → use SearchField in the left slot of TableTopBar",
+    "Column visibility / management → use DropdownColumns",
+    "Bulk row actions → use a toolbar row anchored to selection"
+  ],
+  "relations": ["TableTopBar", "FilterChip", "ChipRegular", "DropdownSorting", "DropdownFilters", "List", "ListItem", "Button"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Spec mentions --dls-color-component-filters-* tokens but they do not exist in tokens.json. CSS uses semantic surface/border/state tokens directly. Backfilling deferred.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-contract",
+      "description": "The Figma selected boolean is a structural toggle showing different default slot contents (with vs without filter chips). In code, selected does not exist as a prop — the consumer drives the same effect via the groups array.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T11:24:44.885Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "bad0bff39a9e48f6"
+  }
+}

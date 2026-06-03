@@ -54,3 +54,20 @@
 .dls-dropdown-columns .dls-list-item[data-drag-row][data-drag-over] {
   background: var(--dls-color-intent-info-subtle);
 }
+
+/* Keyboard focus ring on the row (drag rows are tabbable via tabIndex=0). */
+.dls-dropdown-columns .dls-list-item[data-drag-row]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--dls-state-focus-ring-color);
+  border-radius: var(--dls-radius-component-list-item);
+}
+
+/* Locked rows: lock-icon cursor + no grab affordance. The Lock icon
+   is muted slightly so it reads as informational rather than active. */
+.dls-dropdown-columns .dls-list-item[data-drag-row][data-locked] {
+  cursor: default;
+}
+
+.dls-dropdown-columns .dls-list-item[data-drag-row][data-locked] .dls-list-item__icon {
+  color: var(--dls-color-text-disabled);
+}

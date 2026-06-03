@@ -1,0 +1,117 @@
+{
+  "name": "DropdownFilters",
+  "kebabName": "dropdown-filters",
+  "category": "menu / table-utility",
+  "description": "Read-only 'active filters' mini-panel adjacent to the main DropdownOptions. Mirrors the FilterChips pinned to the TableTopBar filter row — clicking a chip jumps focus to the matching top-bar chip and opens its value-side dropdown. Filter addition is NOT supported from this panel (use Filters.addMenu instead).",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Custom filter chip content. When provided, options is ignored. Pass FilterChip instances directly for stateful / interactive use."
+    },
+    {
+      "name": "options",
+      "type": "FilterOption[]",
+      "required": false,
+      "description": "Convenience: simple filter options ({ id, label }[]) rendered as size-S FilterChip with 'All' as the value summary. Useful for static demos."
+    },
+    {
+      "name": "onSelect",
+      "type": "(id: string) => void",
+      "required": false,
+      "description": "Called when a simple option chip's chevron is clicked (only used by the options code path)."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-shadow-surface-md",
+    "--dls-radius-component-list",
+    "--dls-spacing-2",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "The panel surface itself is a passive floating container — no panel-level hover/pressed/focus. The empty state is purely conditional rendering. Interactive states live on the composed FilterChip children (chip-level overlay hover, focus ring on the value-side chevron Button) and inherit from List + ListItem styling.",
+    "available": [],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["FilterChip", "List", "ListItem"],
+    "forbiddenChildren": ["DropdownFilters", "Dialog", "AlertDialog", "TableCell", "TableHeaderCell"],
+    "forbiddenParents": ["Button", "ListItem"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=dialog]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {
+      "Tab": "Move focus to the next FilterChip (label part / value-side chevron) inside the panel",
+      "Shift+Tab": "Move focus to the previous focusable element",
+      "Enter": "On a focused FilterChip label: toggle visibility (aria-pressed). On a focused value-side chevron: open the chip's value dropdown.",
+      "Space": "Same as Enter for native buttons",
+      "Escape": "Closes any open chip value-dropdown (handled by FilterChip itself)"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Root is role=\"dialog\" with aria-label=\"Filters\". The panel does not own focus management beyond rendering — each composed FilterChip carries its own keyboard / focus contract (Space/Enter on the label toggles visibility; chevron opens the value popover). The cross-surface focus-handoff (click a chip here → jump to and open the matching top-bar chip) is the consumer's responsibility."
+  },
+  "figma": {
+    "nodeId": "7311:4843",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=7311-4843",
+    "propertyMapping": [
+      {
+        "figmaProperty": "empty",
+        "reactProp": null,
+        "valueMapping": {
+          "false": "renders chips list",
+          "true": "renders an empty-state ListItem"
+        },
+        "note": "Derived in code — there is no empty prop on the React component. Whether children or options were provided drives which path renders."
+      },
+      {
+        "figmaProperty": "(chips slot)",
+        "reactProp": "children",
+        "note": "Custom FilterChip instances. When provided, the options shortcut is ignored. Use for stateful chips with their own value lists."
+      }
+    ]
+  },
+  "useWhen": [
+    "Adjacent to the main DropdownOptions panel, opened from its 'Filters' row",
+    "Quick way to inspect / jump to active filters when the top-bar filter row is not currently visible"
+  ],
+  "doNotUseFor": [
+    "Adding a new filter → use the Plus button at the end of the Filters row (driven by Filters.addMenu)",
+    "Sort column / direction → use DropdownSorting",
+    "Column visibility → use DropdownColumns",
+    "Export → use DropdownExport",
+    "Selection / multi-choice value lists → use Dropdown / DropdownAutocomplete"
+  ],
+  "relations": ["DropdownOptions", "Filters", "FilterChip", "TableTopBar", "List", "ListItem"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Spec mentions --dls-color-component-dropdown-filters-* tokens but they do not exist in tokens.json. CSS uses semantic surface/border tokens directly via the composed <List>.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-contract",
+      "description": "The Figma empty boolean is derived in code from whether children/options were provided. There is no empty prop on the React component.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T12:23:30.586Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "06cf8d2e04491cfa"
+  }
+}

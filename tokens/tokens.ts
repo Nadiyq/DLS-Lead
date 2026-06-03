@@ -283,6 +283,9 @@ function getComponentTokens(theme: keyof typeof semantic) {
       removeBtnBg: s.surface.base,
       removeBtnFg: s.text.primary,
     },
+    legendItem: {
+      swatch: color.additional,
+    },
     alert: {
       neutral: { bg: s.surface.muted, fg: s.text.primary, border: s.border.subtle },
       primary: { bg: s.intent.primary.subtle, fg: s.intent.primary.text, border: s.intent.primary.border },
@@ -503,6 +506,7 @@ export const radius = {
     "input-toolbar": 6,
     item:           8,
     kbd:            6,
+    "legend-item-swatch": 9999,
     list:           12,
     "list-item":    4,
     modal:          12,

@@ -1,0 +1,225 @@
+{
+  "name": "Item",
+  "kebabName": "item",
+  "category": "content / list item",
+  "description": "Standalone content row with leading media, stacked title + description, and trailing controls. Use outside of List / Dropdown contexts — for settings rows, file entries, integration listings, and similar 'media + text + actions' rows.",
+  "subComponents": [],
+  "variants": ["regular", "outline", "muted"],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "\"regular\" | \"outline\" | \"muted\"",
+      "required": false,
+      "default": "regular",
+      "enum": ["regular", "outline", "muted"],
+      "description": "Visual type"
+    },
+    {
+      "name": "media",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading media slot — icon-shape, avatar, or image"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": false,
+      "description": "Title text"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Description text"
+    },
+    {
+      "name": "innerContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Additional content below title/description"
+    },
+    {
+      "name": "controls",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Trailing controls — buttons, icons, badges"
+    },
+    {
+      "name": "interactive",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the item is interactive (clickable)"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Disabled state"
+    },
+    {
+      "name": "onClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "Click handler"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-item",
+    "--dls-color-surface-muted",
+    "--dls-color-border-base",
+    "--dls-color-border-subtle",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-color-text-disabled",
+    "--dls-state-hover-overlay",
+    "--dls-state-pressed-overlay",
+    "--dls-state-l-delta-hover",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-spacing-4",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-font-weight-medium",
+    "--dls-font-weight-normal",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "hybrid",
+    "rationale": "States apply only when interactive=true. Regular and outline types are transparent surfaces → use overlay tokens for hover/pressed. Muted type has a tinted fill (--dls-color-surface-muted) → OKLCH L-shift on hover. Focus uses the shared focus-ring shadow.",
+    "available": [
+      "[data-type=regular]",
+      "[data-type=outline]",
+      "[data-type=muted]",
+      "[data-interactive]",
+      ":hover:not(:disabled):not([data-interactive=\"false\"])",
+      ":active:not(:disabled):not([data-interactive=\"false\"])",
+      ":focus-visible",
+      ":disabled"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-pressed-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["IconShape", "Avatar", "Button", "ButtonGroup", "Badge", "Chip", "Kbd"],
+    "forbiddenChildren": ["Item", "Dialog", "AlertDialog", "Dropdown"],
+    "forbiddenParents": ["List", "Dropdown", "Tabs", "Button"],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div (passive) or button (when interactive=true)",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Move focus to the Item when interactive=true",
+      "Space": "Activate the Item (native button)",
+      "Enter": "Activate the Item (native button)"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Natural tab order. When interactive=true, root is a native <button type=\"button\"> with native focus and disabled support; :focus-visible draws a box-shadow ring via --dls-state-focus-ring-color."
+  },
+  "figma": {
+    "nodeId": "6613:2913",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6613-2913",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "regular": "regular",
+          "outline": "outline",
+          "muted": "muted"
+        }
+      },
+      {
+        "figmaProperty": "title",
+        "reactProp": "title"
+      },
+      {
+        "figmaProperty": "description",
+        "reactProp": "description",
+        "valueMapping": {
+          "false": "omit description prop",
+          "true": "pass description string"
+        },
+        "note": "Figma boolean toggles the description line; in code, presence of the description string drives rendering."
+      },
+      {
+        "figmaProperty": "descriptionText",
+        "reactProp": "description",
+        "note": "Figma text override → React description string."
+      },
+      {
+        "figmaProperty": "media",
+        "reactProp": "media",
+        "valueMapping": {
+          "false": "omit media",
+          "true": "pass media ReactNode"
+        },
+        "note": "Figma boolean toggles the media slot; in code, the slot renders when the media ReactNode is provided."
+      },
+      {
+        "figmaProperty": "mediaContent",
+        "reactProp": "media",
+        "note": "Figma media slot → React media ReactNode (IconShape, Avatar, or image)."
+      },
+      {
+        "figmaProperty": "content",
+        "reactProp": "innerContent",
+        "note": "Figma custom-content slot replaces the default title/description block."
+      },
+      {
+        "figmaProperty": "controls",
+        "reactProp": "controls",
+        "valueMapping": {
+          "false": "omit controls",
+          "true": "pass controls ReactNode"
+        },
+        "note": "Figma boolean toggles the trailing controls slot."
+      },
+      {
+        "figmaProperty": "controlsContent",
+        "reactProp": "controls",
+        "note": "Figma controls slot → React controls ReactNode (typically one or more Buttons)."
+      }
+    ]
+  },
+  "useWhen": [
+    "Settings / preferences rows with a leading icon-shape and trailing edit/configure button",
+    "File or account entries with media, title, and quick actions",
+    "Integrations / connections lists",
+    "Any 'media + text + actions' row that lives outside a List or Dropdown context"
+  ],
+  "doNotUseFor": [
+    "Rows inside dropdowns, menus, or selection popovers → use ListItem composed inside a List",
+    "Arbitrary card content → use Card",
+    "Standalone actions → use Button or ButtonGroup",
+    "Tabular data → use Table / TableCell"
+  ],
+  "relations": ["ListItem", "Card", "IconShape", "Avatar", "Button"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "The Item spec references --dls-color-component-item-* tokens but those do not exist in tokens.json. The CSS uses semantic surface/border/text tokens directly. Backfilling a dedicated item color token group is deferred until consumers need it.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T07:10:14.351Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "5e45741bed3dd201"
+  }
+}

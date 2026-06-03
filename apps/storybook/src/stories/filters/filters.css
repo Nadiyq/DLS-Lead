@@ -74,11 +74,11 @@
 
 /* Hover / active / focus */
 
-.dls-filters__add:hover:not([data-disabled]) {
+.dls-filters__add:hover:not(:disabled):not([data-disabled]) {
   background: oklch(from var(--dls-color-intent-neutral-subtle) calc(l + var(--dls-state-l-delta-hover)) c h);
 }
 
-.dls-filters__add:active:not([data-disabled]) {
+.dls-filters__add:active:not(:disabled):not([data-disabled]) {
   background: oklch(from var(--dls-color-intent-neutral-subtle) calc(l + var(--dls-state-l-delta-pressed)) c h);
 }
 
@@ -91,4 +91,21 @@
   border-color: var(--dls-color-border-disabled);
   color: var(--dls-color-text-disabled);
   cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Add-filter menu — popover anchored to the Plus button
+   --------------------------------------------------------------------------- */
+
+.dls-filters__add-wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.dls-filters__add-menu {
+  position: absolute;
+  top: calc(100% + var(--dls-spacing-1));
+  left: 0;
+  z-index: 20;
 }

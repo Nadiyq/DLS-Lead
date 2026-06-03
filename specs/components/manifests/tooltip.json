@@ -1,0 +1,234 @@
+{
+  "name": "Tooltip",
+  "kebabName": "tooltip",
+  "category": "overlay / informational",
+  "description": "Passive contextual help surface for concise trigger hints, control explanations, unavailable-action context, and keyboard shortcuts.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [
+    "general",
+    "error"
+  ],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "TooltipType",
+      "required": false,
+      "default": "general",
+      "enum": [
+        "general",
+        "error"
+      ],
+      "description": "Visual type: general information or validation/error message."
+    },
+    {
+      "name": "orientation",
+      "type": "TooltipOrientation",
+      "required": false,
+      "default": "top-center",
+      "enum": [
+        "top-center",
+        "top-left",
+        "top-right",
+        "bottom-center",
+        "bottom-left",
+        "bottom-right",
+        "left",
+        "right"
+      ],
+      "description": "Arrow orientation relative to the tooltip body."
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "required": true,
+      "description": "Tooltip text."
+    },
+    {
+      "name": "slotContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional trailing content, such as a Kbd shortcut."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root tooltip."
+    }
+  ],
+  "tokens": [
+    "--dls-font-family",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-radius-component-tooltip",
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-shadow-surface-sm",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-font-weight-normal",
+    "--dls-color-text-primary",
+    "--dls-color-intent-danger-subtle",
+    "--dls-color-intent-danger-border"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Tooltip is a passive display surface. Type, orientation, and slot presence control visual output; trigger hover/focus/open behavior is owned by the consumer.",
+    "available": [
+      "[data-type=\"error\"]",
+      "[data-orientation=\"top-center\"]",
+      "[data-orientation=\"top-left\"]",
+      "[data-orientation=\"top-right\"]",
+      "[data-orientation=\"bottom-center\"]",
+      "[data-orientation=\"bottom-left\"]",
+      "[data-orientation=\"bottom-right\"]",
+      "[data-orientation=\"left\"]",
+      "[data-orientation=\"right\"]"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [
+      "Kbd",
+      "KbdGroup",
+      "Badge",
+      "IconShape"
+    ],
+    "forbiddenChildren": [
+      "Button",
+      "InputField",
+      "Textarea",
+      "Dropdown",
+      "Dialog",
+      "AlertDialog",
+      "Tooltip"
+    ],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=\"tooltip\"]",
+    "requiredAria": [
+      "role=\"tooltip\""
+    ],
+    "keyboard": {
+      "Trigger focus": "Show the tooltip from the associated trigger and reference it with aria-describedby",
+      "Escape": "May dismiss tooltip visibility when implemented by the trigger/positioning layer"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Tooltip root is not focusable; trigger owns focus and open/close behavior"
+  },
+  "figma": {
+    "nodeId": "62:3906",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=62-3906",
+    "propertyMapping": [
+      {
+        "figmaProperty": "intent",
+        "reactProp": "type",
+        "valueMapping": {
+          "general": "general",
+          "error": "error"
+        },
+        "note": "Figma calls this property intent. Code keeps the documented Tooltip type prop."
+      },
+      {
+        "figmaProperty": "orientation",
+        "reactProp": "orientation",
+        "valueMapping": {
+          "top-center": "top-center",
+          "top-left": "top-left",
+          "top-right": "top-right",
+          "left": "left",
+          "right": "right",
+          "bottom-center": "bottom-center",
+          "bottom-left": "bottom-left",
+          "bottom-right": "bottom-right"
+        }
+      },
+      {
+        "figmaProperty": "Text#162:253",
+        "reactProp": "text",
+        "note": "Figma text override maps to the required React text string."
+      },
+      {
+        "figmaProperty": "slot#6949:382",
+        "reactProp": "slotContent",
+        "valueMapping": {
+          "true": "provide slotContent",
+          "false": "omit slotContent"
+        },
+        "note": "Figma boolean controls slot visibility. Code uses slotContent presence."
+      },
+      {
+        "figmaProperty": "slot-content#6949:365",
+        "reactProp": "slotContent",
+        "note": "Figma slot target maps to the React slotContent node. Recommended content includes Kbd, KbdGroup, small badges, icons, or compact metadata."
+      },
+      {
+        "figmaProperty": "pointer#162:266",
+        "reactProp": null,
+        "valueMapping": {
+          "true": "default code arrow",
+          "false": "no code counterpart"
+        },
+        "note": "Figma-only arrow visibility toggle. Code always renders the decorative arrow."
+      },
+      {
+        "figmaProperty": "(none)",
+        "reactProp": "className",
+        "note": "Code-only root class extension."
+      }
+    ]
+  },
+  "useWhen": [
+    "Explaining icons or controls without visible labels",
+    "Clarifying compact actions, statuses, or affordances",
+    "Showing a keyboard shortcut next to a short hint",
+    "Explaining why a control is unavailable",
+    "Providing helpful context that is not required to complete the task"
+  ],
+  "doNotUseFor": [
+    "Critical information users must see",
+    "Required form errors or recovery steps",
+    "Long-form instructions or documentation",
+    "Interactive content such as buttons, links, forms, or menus",
+    "Blocking acknowledgement or confirmation"
+  ],
+  "relations": [
+    "Kbd",
+    "KbdGroup",
+    "Alert",
+    "AlertDialog",
+    "Dialog"
+  ],
+  "knownDeviations": [
+    {
+      "area": "l4-color-tokens",
+      "description": "No L4 color component tokens exist in tokens.json for Tooltip. Code and Figma use semantic surface, border, text, danger, and shadow tokens directly; only --dls-radius-component-tooltip is component-scoped.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-property",
+      "description": "Figma exposes a pointer boolean. Code always renders the decorative arrow.",
+      "severity": "low"
+    },
+    {
+      "area": "slot-model",
+      "description": "Figma separates slot visibility from the slot-content target. Code derives slot visibility from whether slotContent is provided.",
+      "severity": "low"
+    },
+    {
+      "area": "behavior",
+      "description": "Tooltip trigger behavior, positioning, visibility, and viewport collision are consumer responsibilities in code.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T05:30:06.657Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "ddf9e36b5375cde2"
+  }
+}

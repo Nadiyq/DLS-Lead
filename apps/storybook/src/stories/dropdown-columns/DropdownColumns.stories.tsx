@@ -80,6 +80,31 @@ export const ManyHidden: Story = {
 };
 
 // ---------------------------------------------------------------------------
+// With locked columns
+// Locked columns: cannot be reordered, hidden, or have pin toggled.
+// Render a Lock icon instead of the GripVertical handle, and omit the
+// trailing Pin Button.
+// ---------------------------------------------------------------------------
+
+export const WithLockedColumns: Story = {
+  args: {
+    shown: [
+      // Primary identifier column — always first, locked.
+      { id: 'id', label: 'ID', locked: true },
+      // First content column — also locked.
+      { id: 'name', label: 'Name', pinned: true, locked: true },
+      { id: 'email', label: 'Email' },
+      { id: 'role', label: 'Role' },
+      { id: 'status', label: 'Status' },
+    ],
+    hidden: [
+      { id: 'phone', label: 'Phone' },
+      { id: 'department', label: 'Department' },
+    ],
+  },
+};
+
+// ---------------------------------------------------------------------------
 // Interactive — full workflow
 // ---------------------------------------------------------------------------
 

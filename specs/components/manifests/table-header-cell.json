@@ -1,0 +1,247 @@
+{
+  "name": "TableHeaderCell",
+  "kebabName": "table-header-cell",
+  "category": "table / data display",
+  "description": "Column header cell for data tables. Three type presets cover text (sortable label + on-hover column-actions chevron), control (select-all checkbox slot), and empty (alignment filler).",
+  "subComponents": [],
+  "variants": ["text", "control", "empty"],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "TableHeaderCellType",
+      "required": false,
+      "default": "text",
+      "enum": ["text", "control", "empty"],
+      "description": "Cell type"
+    },
+    {
+      "name": "align",
+      "type": "\"left\" | \"center\" | \"right\"",
+      "required": false,
+      "default": "left",
+      "enum": ["left", "center", "right"],
+      "description": "Text alignment"
+    },
+    {
+      "name": "padding",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Whether to include horizontal padding"
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "required": false,
+      "description": "Column label (text type)"
+    },
+    {
+      "name": "sortable",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether column is sortable"
+    },
+    {
+      "name": "sortDirection",
+      "type": "\"asc\" | \"desc\" | \"none\"",
+      "required": false,
+      "default": "none",
+      "enum": ["asc", "desc", "none"],
+      "description": "Current sort direction"
+    },
+    {
+      "name": "onSort",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when sort is toggled"
+    },
+    {
+      "name": "onMenuClick",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when column menu trigger is clicked"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Slot content (control type — checkbox, etc.)"
+    },
+    {
+      "name": "floatingMenu",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Floating menu content anchored to the header cell"
+    },
+    {
+      "name": "resizeHandle",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Column resize handle"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-intent-neutral-subtle",
+    "--dls-color-border-subtle",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-radius-component-button",
+    "--dls-state-l-delta-hover",
+    "--dls-state-hover-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-font-weight-normal",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "oklch-shift",
+    "rationale": "The header surface uses a tinted fill (--dls-color-intent-neutral-subtle). Hover on sortable cells applies an OKLCH L-shift on that fill. Non-sortable cells have no hover. The menu trigger uses overlay tokens for its own ghost-button hover.",
+    "available": [
+      "[data-type=control]",
+      "[data-type=empty]",
+      "[data-align=left]",
+      "[data-align=center]",
+      "[data-align=right]",
+      "[data-padding=\"false\"]",
+      "[data-sortable]",
+      ":hover:not(:disabled):not([data-disabled])",
+      ":focus-visible",
+      "aria-sort"
+    ],
+    "tokens": [
+      "--dls-state-l-delta-hover",
+      "--dls-state-hover-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["Checkbox", "Resizable"],
+    "forbiddenChildren": ["TableHeaderCell", "Table", "Dialog", "AlertDialog"],
+    "forbiddenParents": ["Button", "ListItem"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=columnheader]",
+    "requiredAria": ["aria-sort (when sortable)"],
+    "keyboard": {
+      "Tab": "Move focus to the header cell when sortable=true",
+      "Enter": "Toggle sort (when sortable=true)",
+      "Space": "Toggle sort (when sortable=true)"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Sortable cells receive tabIndex=0. The menu-trigger button is a native <button> with its own :focus-visible ring."
+  },
+  "figma": {
+    "nodeId": "6481:5725",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6481-5725",
+    "propertyMapping": [
+      {
+        "figmaProperty": "(component set name)",
+        "reactProp": "type",
+        "note": "Each of the 3 Figma component sets maps 1:1 to a value of the type prop."
+      },
+      {
+        "figmaProperty": "align",
+        "reactProp": "align",
+        "valueMapping": {
+          "left": "left",
+          "center": "center",
+          "right": "right"
+        },
+        "note": "Present on text only — empty and control are alignment-less."
+      },
+      {
+        "figmaProperty": "padding",
+        "reactProp": "padding",
+        "valueMapping": {
+          "true": "true",
+          "false": "false"
+        },
+        "note": "Present on text and control."
+      },
+      {
+        "figmaProperty": "hover",
+        "reactProp": null,
+        "note": "Figma-only visual state. In code, hover is driven by CSS :hover:not(:disabled) and is gated by data-sortable; non-sortable headers have no hover state."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "text",
+        "nodeId": "6481:5725",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6481-5725",
+        "propertyMapping": [
+          { "figmaProperty": "align", "reactProp": "align" },
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          { "figmaProperty": "hover", "reactProp": null, "note": "Figma-only; CSS :hover when sortable." },
+          { "figmaProperty": "text", "reactProp": "text" },
+          { "figmaProperty": "slotSorting", "reactProp": "sortable", "note": "Figma boolean toggles the sort icon; in code, set sortable=true and pair with sortDirection + onSort." }
+        ]
+      },
+      {
+        "name": "empty",
+        "nodeId": "6481:5807",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6481-5807",
+        "propertyMapping": [
+          { "figmaProperty": "hover", "reactProp": null, "note": "Figma-only; no hover state in code (empty type renders only the background)." }
+        ]
+      },
+      {
+        "name": "control",
+        "nodeId": "6481:5691",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6481-5691",
+        "propertyMapping": [
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          { "figmaProperty": "hover", "reactProp": null, "note": "Figma-only visual state." },
+          { "figmaProperty": "(slot)", "reactProp": "children", "note": "Compose a <Checkbox> for the select-all column." }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Rendering the first row of a data table",
+    "Sortable columns with directional indicators",
+    "Select-all checkbox at the leading column",
+    "Alignment-only filler cell at the start/end of a header row"
+  ],
+  "doNotUseFor": [
+    "Body rows → use TableCell",
+    "Non-table headings → use semantic <h2>/<h3>",
+    "Form labels → use FormField or <label>"
+  ],
+  "relations": ["Table", "TableCell", "TableColumn", "Checkbox", "Resizable"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Spec mentions --dls-color-component-table-header-cell-* tokens but they do not exist in tokens.json. The CSS uses semantic surface/border/text tokens directly. Backfilling deferred.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-contract",
+      "description": "The Figma text set exposes a hover boolean as a variant. In code, hover is driven by CSS pseudo-classes and is gated by data-sortable — non-sortable headers have no hover state.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T10:35:02.982Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "65890cfb11f351c3"
+  }
+}

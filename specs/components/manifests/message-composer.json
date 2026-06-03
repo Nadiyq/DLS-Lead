@@ -1,0 +1,233 @@
+{
+  "name": "MessageComposer",
+  "kebabName": "message-composer",
+  "category": "form / composition",
+  "description": "Bordered slotted composer surface for SMS or email messaging, with channel tabs, status chip, alert, optional email fields (subject, recipients), text input, sticky or floating formatting toolbar, and a footer with quick actions and a send group.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "channel",
+      "type": "\"sms\" | \"email\"",
+      "required": false,
+      "default": "sms",
+      "enum": ["sms", "email"],
+      "description": "Channel type"
+    },
+    {
+      "name": "tabs",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Tabs / channel switcher slot"
+    },
+    {
+      "name": "channelStatus",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Channel status slot (right side of top bar)"
+    },
+    {
+      "name": "alert",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Alert banner slot"
+    },
+    {
+      "name": "subject",
+      "type": "string",
+      "required": false,
+      "description": "Subject field value (email only)"
+    },
+    {
+      "name": "onSubjectChange",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Subject change handler"
+    },
+    {
+      "name": "subjectPlaceholder",
+      "type": "string",
+      "required": false,
+      "default": "Enter subject...",
+      "description": "Subject placeholder"
+    },
+    {
+      "name": "recipients",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Recipients slot (email only). Pass a ChipInput or a static node."
+    },
+    {
+      "name": "recipientsInputId",
+      "type": "string",
+      "required": false,
+      "description": "DOM id of the focusable recipients control inside the recipients slot. Wires the \"to:\" label via htmlFor."
+    },
+    {
+      "name": "toolbar",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Sticky toolbar slot (embedded in header area)"
+    },
+    {
+      "name": "floatingToolbar",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Floating toolbar slot (appears on text selection)"
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "required": false,
+      "default": "Enter...",
+      "description": "Text field placeholder"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Text field value"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Text change handler"
+    },
+    {
+      "name": "actionsLeft",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Left action buttons slot"
+    },
+    {
+      "name": "actionsRight",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Right action buttons slot (submit)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-base",
+    "--dls-color-border-subtle",
+    "--dls-color-text-primary",
+    "--dls-color-text-placeholder",
+    "--dls-radius-component-input",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-font-weight-normal",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "The MessageComposer panel is a static surface with no interactive states of its own. Interactive behavior lives on the composed children: Tabs, ChipRegular status, Alert, Toolbar buttons, action Buttons, and the Send ButtonGroup. The floating toolbar visibility is gated by a text-selection effect inside the component.",
+    "available": ["[data-channel=sms]", "[data-channel=email]"],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [
+      "Tabs",
+      "ChipRegular",
+      "ChipInput",
+      "Alert",
+      "Toolbar",
+      "DropdownOptions",
+      "List",
+      "ListItem",
+      "Button",
+      "ButtonGroup",
+      "Separator"
+    ],
+    "forbiddenChildren": ["MessageComposer", "Dialog", "AlertDialog"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Move focus to next interactive control inside the composer (tab → status chip → toolbar buttons → textarea → action buttons → send)",
+      "Shift+Tab": "Move focus to previous interactive control",
+      "Type / select / clipboard shortcuts": "Native textarea behavior; selecting text triggers the floating toolbar if provided"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Natural tab order across composed children. The native <textarea> owns text input focus; the floating toolbar appears on selection but does not steal focus from the textarea."
+  },
+  "figma": {
+    "nodeId": "95:10945",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=95-10945",
+    "propertyMapping": [
+      {
+        "figmaProperty": "channel",
+        "reactProp": "channel",
+        "valueMapping": {
+          "sms": "sms",
+          "email": "email"
+        }
+      },
+      {
+        "figmaProperty": "alert",
+        "reactProp": "alert",
+        "note": "Figma boolean visibility toggle. In code, the alert region renders when an alert ReactNode is passed."
+      },
+      {
+        "figmaProperty": "status",
+        "reactProp": "channelStatus",
+        "note": "Figma boolean toggles the channel-status group; in code, pass status label + ChipRegular via channelStatus."
+      },
+      {
+        "figmaProperty": "statusTabs",
+        "reactProp": "tabs",
+        "note": "Figma boolean toggles the tabs row; in code, pass a Tabs component via the tabs prop."
+      },
+      {
+        "figmaProperty": "tabGroup",
+        "reactProp": null,
+        "note": "Figma sub-toggle controlling whether the tab group is rendered inside the tabs slot. Already covered by passing or omitting the tabs prop in code."
+      },
+      {
+        "figmaProperty": "toolbar",
+        "reactProp": "floatingToolbar",
+        "note": "Figma boolean toggles the *floating* selection-aware toolbar."
+      },
+      {
+        "figmaProperty": "toolbarSticky",
+        "reactProp": "toolbar",
+        "note": "Figma boolean toggles the *sticky* embedded toolbar."
+      }
+    ]
+  },
+  "useWhen": [
+    "Inbox or conversation composer for staff replies (internal or external notes)",
+    "SMS reply field with sticky or floating formatting toolbar",
+    "Email reply / new-message field with subject and recipient chips",
+    "Surface combining channel context (tabs), delivery status, and a focused message-entry workflow"
+  ],
+  "doNotUseFor": [
+    "A standalone Textarea → use Textarea",
+    "A pure plain-text input → use InputField / Textarea",
+    "A persistent action bar without text entry → use Toolbar on its own or in a Card footer",
+    "Modal forms → use Dialog"
+  ],
+  "relations": ["Toolbar", "Textarea", "Tabs", "ChipRegular", "ChipInput", "Alert", "Button", "ButtonGroup", "DropdownOptions", "List", "ListItem"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Tokens scoped to MessageComposer (--dls-color-component-message-composer-*, --dls-radius-component-message-composer) referenced by the spec do not exist in tokens.json. The CSS currently reuses --dls-radius-component-input and L2 surface/border tokens. Backfilling a component token group is deferred.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T06:17:23.574Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "6781b9d9ab22867c"
+  }
+}

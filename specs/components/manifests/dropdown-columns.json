@@ -1,0 +1,178 @@
+{
+  "name": "DropdownColumns",
+  "kebabName": "dropdown-columns",
+  "category": "menu / table-utility",
+  "description": "Column customization panel adjacent to the main DropdownOptions. Drag-and-drop reorder, show/hide via Shown/Hidden sections, pin toggle, and staged Apply / Cancel. Uses pointer events (not HTML5 native drag) for reliable cross-browser, sandboxed-iframe, and nested-button behavior.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "shown",
+      "type": "ColumnItem[]",
+      "required": true,
+      "description": "Columns currently shown. ColumnItem: { id, label, pinned?, locked? }. Order in the array drives render order. locked=true: row is fixed (no drag, no hide, no pin toggle, Lock icon replaces GripVertical)."
+    },
+    {
+      "name": "hidden",
+      "type": "ColumnItem[]",
+      "required": true,
+      "description": "Columns currently hidden. Same ColumnItem shape; locked items here are non-interactive (no drag, no click-to-show)."
+    },
+    {
+      "name": "onChange",
+      "type": "(shown: ColumnItem[], hidden: ColumnItem[]) => void",
+      "required": false,
+      "description": "Called when column configuration changes"
+    },
+    {
+      "name": "onApply",
+      "type": "(shown: ColumnItem[], hidden: ColumnItem[]) => void",
+      "required": false,
+      "description": "Called when user clicks Apply"
+    },
+    {
+      "name": "onCancel",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when user clicks Cancel"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-list",
+    "--dls-radius-component-list-item",
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-color-border-base",
+    "--dls-shadow-surface-md",
+    "--dls-shadow-surface-lg",
+    "--dls-color-intent-info-subtle",
+    "--dls-state-hover-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-font-weight-normal",
+    "--dls-font-weight-medium",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "hybrid",
+    "rationale": "The panel surface itself is passive. Composed ListItem rows use overlay hover. Dragging row drops to half opacity for visual feedback; drag-over target uses info-subtle fill. Pin toggle and Apply/Cancel Buttons carry their own state contracts via their Button variants.",
+    "available": [
+      "[data-dragging]",
+      "[data-drag-over]",
+      "[data-locked]",
+      "[tabindex]",
+      ":hover:not(:disabled)",
+      ":focus-visible",
+      "aria-disabled"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["ListItem", "Badge", "Button"],
+    "forbiddenChildren": ["DropdownColumns", "Dialog", "AlertDialog"],
+    "forbiddenParents": ["Button", "ListItem"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=listbox]",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Move focus to the next focusable element — rows are tabbable (tabIndex=0) when not locked; nested Pin Buttons and footer Apply/Cancel are also in tab order",
+      "Shift+Tab": "Move focus to the previous focusable element",
+      "Alt+ArrowUp": "Move the focused row one position up within its section (Shown or Hidden). Locked rows in the path are skipped; the row jumps over them.",
+      "Alt+ArrowDown": "Move the focused row one position down within its section (same locked-skip rules).",
+      "Enter": "On a focused Hidden row, show the column (moves it to the end of the Shown list). On a focused Pin / Apply / Cancel Button: native button activation.",
+      "Space": "Same as Enter on Hidden rows and native buttons.",
+      "Delete": "On a focused Shown row, hide the column (moves it to the end of the Hidden list). Locked columns are immune."
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Each row is a non-interactive <div> (ListItem interactive=false) so the nested Pin <button> is the focusable child without nesting buttons. Rows are tabbable via tabIndex=0 (not set on locked rows). After any keyboard reorder, focus follows the row to its new index via requestAnimationFrame so consecutive Alt+Arrow presses keep working. Row :focus-visible draws a 2px box-shadow ring via --dls-state-focus-ring-color."
+  },
+  "figma": {
+    "nodeId": "6122:14397",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6122-14397",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": null,
+        "valueMapping": {
+          "normal": "no special prop",
+          "draggable": "no special prop (drag always enabled)"
+        },
+        "note": "Figma 'draggable' variant is a visual hint of the drag-handle / cursor. In code, all rows render the GripVertical handle and respond to pointer-down. The type variant is informational only."
+      },
+      {
+        "figmaProperty": "(shown rows)",
+        "reactProp": "shown",
+        "note": "Array of ColumnItem { id, label, pinned? }. Order in the array drives the rendered order."
+      },
+      {
+        "figmaProperty": "(hidden rows)",
+        "reactProp": "hidden",
+        "note": "Array of ColumnItem { id, label }."
+      },
+      {
+        "figmaProperty": "(Pin toggle in row)",
+        "reactProp": null,
+        "note": "Pin state is part of the ColumnItem shape. Toggling fires onChange with the new shown[] (pinned flag flipped). Icon: lucide Pin / PinOff. Pin Button is omitted for locked columns."
+      },
+      {
+        "figmaProperty": "(Lock icon in row)",
+        "reactProp": null,
+        "note": "Driven by ColumnItem.locked. When true: replaces GripVertical handle with lucide Lock icon, disables drag (both as source and target via [data-locked] / :not([data-locked]) selectors), omits Pin Button, and adds aria-label=\"{label} (locked)\"."
+      },
+      {
+        "figmaProperty": "(Apply button)",
+        "reactProp": "onApply",
+        "note": "Filled Button in the footer ListItem. Receives the staged (shown, hidden) payload."
+      },
+      {
+        "figmaProperty": "(Cancel button)",
+        "reactProp": "onCancel",
+        "note": "Outline Button in the footer ListItem."
+      }
+    ]
+  },
+  "useWhen": [
+    "Below the 'Columns' item in the DropdownOptions menu on a table top bar",
+    "Anywhere a user needs to choose which columns to show + pin in a data table"
+  ],
+  "doNotUseFor": [
+    "Filter management → use DropdownFilters",
+    "Sort controls → use DropdownSorting",
+    "Export options → use DropdownExport",
+    "Column-level actions (rename, hide, pin from header) → use DropdownColumnActions",
+    "Selection / row-expansion utility columns — those control table behavior, not data display, and should not appear in this dropdown"
+  ],
+  "relations": ["DropdownOptions", "DropdownFilters", "DropdownSorting", "DropdownExport", "DropdownColumnActions", "List", "ListItem", "Badge", "Button", "TableTopBar"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Spec mentions --dls-color-component-dropdown-columns-* tokens but they do not exist in tokens.json. CSS uses semantic surface/border/state tokens directly.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-contract",
+      "description": "The Figma type=draggable variant is informational; in code all non-locked rows are draggable. The variant exists in Figma to document the drag affordance visually.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T12:18:36.127Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "58355da3e3a0745f"
+  }
+}

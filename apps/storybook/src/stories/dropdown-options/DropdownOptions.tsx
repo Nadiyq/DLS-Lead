@@ -24,6 +24,12 @@ export interface DropdownOptionsProps {
   triggerLabel?: string;
   /** Disabled state */
   disabled?: boolean;
+  /** Controlled open state. When provided, the component is in controlled mode
+   *  and the consumer must keep the state in sync via onOpenChange. */
+  open?: boolean;
+  /** Called whenever the menu wants to change its open state (trigger click,
+   *  outside click, Escape). Required in controlled mode. */
+  onOpenChange?: (open: boolean) => void;
   className?: string;
 }
 
@@ -40,11 +46,19 @@ export const DropdownOptions = React.forwardRef<HTMLDivElement, DropdownOptionsP
       triggerIcon,
       triggerLabel = 'Options',
       disabled = false,
+      open: controlledOpen,
+      onOpenChange,
       className,
     },
     ref,
   ) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [internalOpen, setInternalOpen] = useState(false);
+    const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;
+    const setIsOpen = useCallback((next: boolean | ((prev: boolean) => boolean)) => {
+      const resolved = typeof next === 'function' ? next(isOpen) : next;
+      if (controlledOpen === undefined) setInternalOpen(resolved);
+      onOpenChange?.(resolved);
+    }, [controlledOpen, isOpen, onOpenChange]);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const panelRef = useRef<HTMLDivElement>(null);
     const [panelPos, setPanelPos] = useState<{ top: number; left: number } | null>(null);

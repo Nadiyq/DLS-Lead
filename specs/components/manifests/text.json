@@ -1,0 +1,122 @@
+{
+  "name": "Text",
+  "kebabName": "text",
+  "category": "content / typography pair",
+  "description": "Paired typographic block — optional title above a description, or description alone — used as compact slot content inside host components.",
+  "variants": [],
+  "intents": [],
+  "sizes": ["m", "s", "xs"],
+  "props": [
+    {
+      "name": "size",
+      "type": "\"m\" | \"s\" | \"xs\"",
+      "required": false,
+      "default": "m",
+      "enum": ["m", "s", "xs"],
+      "description": "Size variant"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": false,
+      "description": "Title text (optional — omit for single-line description only)"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": true,
+      "description": "Description text"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-font-family",
+    "--dls-spacing-1",
+    "--dls-font-weight-medium",
+    "--dls-font-weight-normal",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-text-l-font-size",
+    "--dls-text-l-line-height",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-text-xs-font-size",
+    "--dls-text-xs-line-height"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Text is a passive typographic pair with no interactive states. Visual output is fully driven by data-size + presence of the title prop.",
+    "available": ["[data-size=m]", "[data-size=s]", "[data-size=xs]"],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": ["Text", "Button", "InputField", "Dropdown", "Dialog", "AlertDialog"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "Text is non-focusable. Consumers using Text as a host's heading should wrap or label the host with appropriate semantics."
+  },
+  "figma": {
+    "nodeId": "6950:15518",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6950-15518",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "M": "m",
+          "S": "s",
+          "XS": "xs"
+        }
+      },
+      {
+        "figmaProperty": "secondLine",
+        "reactProp": "title",
+        "valueMapping": {
+          "false": "omit title",
+          "true": "provide title"
+        },
+        "note": "Figma boolean toggles the title row. In code, pass or omit the title prop to achieve the same effect."
+      },
+      {
+        "figmaProperty": "title",
+        "reactProp": "title",
+        "note": "String value rendered only when present (secondLine=true in Figma)."
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "description",
+        "note": "Always rendered."
+      }
+    ]
+  },
+  "useWhen": [
+    "Title + description slot inside a Card, ListItem, EmptyState, or similar host",
+    "Compact label + supporting line in dense rows",
+    "Optional title with always-present description"
+  ],
+  "doNotUseFor": [
+    "Page-level headings → use semantic <h1>…<h6>",
+    "Free body paragraphs → use semantic <p> with typography tokens",
+    "Interactive text (links, button labels) → use <a> / Button",
+    "Form labels → use FormField or <label> paired with the input"
+  ],
+  "relations": ["Card", "ListItem", "EmptyState", "Tooltip", "Dialog"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-03T05:55:56.413Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "145af66f394040f9"
+  }
+}

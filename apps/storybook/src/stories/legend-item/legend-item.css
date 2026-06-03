@@ -1,0 +1,90 @@
+/* ==========================================================================
+   DLS Legend Item - chart legend row
+   Color: additional palette hue
+   Tone: 100 | 300 | 500 | 700
+   ========================================================================== */
+
+.dls-legend-item {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  gap: var(--dls-spacing-2);
+  font-family: var(--dls-font-family);
+  color: var(--dls-color-text-primary);
+
+  --_swatch: var(--dls-color-component-legend-item-swatch-green-500);
+}
+
+.dls-legend-item__swatch {
+  box-sizing: border-box;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: var(--dls-spacing-2-5);
+  height: var(--dls-spacing-2-5);
+  border-radius: var(--dls-radius-component-legend-item-swatch);
+  background: var(--_swatch);
+}
+
+.dls-legend-item__label,
+.dls-legend-item__value {
+  min-width: 0;
+  font-size: var(--dls-text-paragraph-m-font-size);
+  line-height: var(--dls-text-paragraph-m-line-height);
+  color: var(--dls-color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dls-legend-item__label {
+  font-weight: var(--dls-text-paragraph-m-light-font-weight);
+}
+
+.dls-legend-item__value {
+  font-weight: var(--dls-text-paragraph-m-heavy-font-weight);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.dls-legend-item[data-color="purple"][data-tone="100"] { --_swatch: var(--dls-color-component-legend-item-swatch-purple-100); }
+.dls-legend-item[data-color="purple"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-purple-300); }
+.dls-legend-item[data-color="purple"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-purple-500); }
+.dls-legend-item[data-color="purple"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-purple-700); }
+.dls-legend-item[data-color="violet"][data-tone="100"] { --_swatch: var(--dls-color-component-legend-item-swatch-violet-100); }
+.dls-legend-item[data-color="violet"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-violet-300); }
+.dls-legend-item[data-color="violet"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-violet-500); }
+.dls-legend-item[data-color="violet"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-violet-700); }
+.dls-legend-item[data-color="pink"][data-tone="100"] { --_swatch: var(--dls-color-component-legend-item-swatch-pink-100); }
+.dls-legend-item[data-color="pink"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-pink-300); }
+.dls-legend-item[data-color="pink"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-pink-500); }
+.dls-legend-item[data-color="pink"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-pink-700); }
+.dls-legend-item[data-color="blue"][data-tone="100"] { --_swatch: var(--dls-color-component-legend-item-swatch-blue-100); }
+.dls-legend-item[data-color="blue"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-blue-300); }
+.dls-legend-item[data-color="blue"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-blue-500); }
+.dls-legend-item[data-color="blue"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-blue-700); }
+.dls-legend-item[data-color="teal"][data-tone="100"] { --_swatch: var(--dls-color-component-legend-item-swatch-teal-100); }
+.dls-legend-item[data-color="teal"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-teal-300); }
+.dls-legend-item[data-color="teal"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-teal-500); }
+.dls-legend-item[data-color="teal"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-teal-700); }
+.dls-legend-item[data-color="yellow"][data-tone="100"] { --_swatch: var(--dls-color-component-legend-item-swatch-yellow-100); }
+.dls-legend-item[data-color="yellow"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-yellow-300); }
+.dls-legend-item[data-color="yellow"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-yellow-500); }
+.dls-legend-item[data-color="yellow"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-yellow-700); }
+.dls-legend-item[data-color="green"][data-tone="100"] { --_swatch: var(--dls-color-component-legend-item-swatch-green-100); }
+.dls-legend-item[data-color="green"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-green-300); }
+.dls-legend-item[data-color="green"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-green-500); }
+.dls-legend-item[data-color="green"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-green-700); }
+.dls-legend-item[data-color="gold"][data-tone="100"] { --_swatch: var(--dls-color-component-legend-item-swatch-gold-100); }
+.dls-legend-item[data-color="gold"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-gold-300); }
+.dls-legend-item[data-color="gold"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-gold-500); }
+.dls-legend-item[data-color="gold"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-gold-700); }
+.dls-legend-item[data-color="cinnamon"][data-tone="100"] { --_swatch: var(--dls-color-component-legend-item-swatch-cinnamon-100); }
+.dls-legend-item[data-color="cinnamon"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-cinnamon-300); }
+.dls-legend-item[data-color="cinnamon"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-cinnamon-500); }
+.dls-legend-item[data-color="cinnamon"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-cinnamon-700); }
+.dls-legend-item[data-color="orange"][data-tone="100"] { --_swatch: var(--dls-color-component-legend-item-swatch-orange-100); }
+.dls-legend-item[data-color="orange"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-orange-300); }
+.dls-legend-item[data-color="orange"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-orange-500); }
+.dls-legend-item[data-color="orange"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-orange-700); }

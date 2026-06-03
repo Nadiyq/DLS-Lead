@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { House as HomeIcon, Settings as SettingsIcon } from 'lucide-react';
 import { Tabs } from './Tabs';
 import { Section } from '../_helpers/StoryLayout';
 
@@ -12,19 +13,6 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-const HomeIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 8L8 2L14 8M4 6.5V13H7V10H9V13H12V6.5" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const SettingsIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.33" />
-    <path d="M8 1V3M8 13V15M1 8H3M13 8H15M3.05 3.05L4.46 4.46M11.54 11.54L12.95 12.95M12.95 3.05L11.54 4.46M4.46 11.54L3.05 12.95" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" />
-  </svg>
-);
 
 const defaultItems = [
   { value: 'tab1', label: 'Tab 1' },

@@ -1,0 +1,309 @@
+{
+  "name": "TableCell",
+  "kebabName": "table-cell",
+  "category": "table / data display",
+  "description": "Single content cell for a data table row. Nine type presets cover plain text, two-line entity, badge, trend, button, action group, free slot, stacked avatars, and credit card mark. TableCell is purely layout — row-level state (hover, selection, focus) lives on the parent Table / TableRow.",
+  "subComponents": [],
+  "variants": [
+    "text",
+    "two-line",
+    "badge",
+    "trend",
+    "button",
+    "actions",
+    "slot",
+    "users-stacked",
+    "credit-card"
+  ],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "TableCellType",
+      "required": false,
+      "default": "text",
+      "enum": [
+        "text",
+        "two-line",
+        "badge",
+        "trend",
+        "button",
+        "actions",
+        "slot",
+        "users-stacked",
+        "credit-card"
+      ],
+      "description": "Cell content type"
+    },
+    {
+      "name": "align",
+      "type": "\"left\" | \"center\" | \"right\"",
+      "required": false,
+      "default": "left",
+      "enum": ["left", "center", "right"],
+      "description": "Text alignment"
+    },
+    {
+      "name": "padding",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Whether to include horizontal padding"
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "required": false,
+      "description": "Primary text content"
+    },
+    {
+      "name": "secondaryText",
+      "type": "string",
+      "required": false,
+      "description": "Secondary text (for two-line type)"
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading icon (text type)"
+    },
+    {
+      "name": "slotLeft",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading slot (checkbox, avatar, etc.)"
+    },
+    {
+      "name": "slotRight",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Trailing slot"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Generic children (for badge, button, actions, slot, trend, users-stacked, credit-card types)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-text-primary",
+    "--dls-color-text-placeholder",
+    "--dls-color-text-secondary",
+    "--dls-color-border-subtle",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height",
+    "--dls-text-s-font-size",
+    "--dls-text-s-line-height",
+    "--dls-font-weight-normal",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "TableCell is a passive layout container. Row hover, selection, focus, and disabled live on the parent Table / TableRow. The cell has no interactive states of its own.",
+    "available": [
+      "[data-type=text]",
+      "[data-type=two-line]",
+      "[data-type=badge]",
+      "[data-type=trend]",
+      "[data-type=button]",
+      "[data-type=actions]",
+      "[data-type=slot]",
+      "[data-type=users-stacked]",
+      "[data-type=credit-card]",
+      "[data-align=left]",
+      "[data-align=center]",
+      "[data-align=right]",
+      "[data-padding=\"false\"]"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["Badge", "Button", "Avatar", "AvatarStack", "Checkbox", "Chip", "ChipRegular", "IconShape", "Kbd"],
+    "forbiddenChildren": ["TableCell", "Table", "Dialog", "AlertDialog"],
+    "forbiddenParents": ["Button", "ListItem"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=cell]",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "No focus management at the cell level. Interactive children (Checkbox, Button, etc.) own their own focus, keyboard, and ARIA semantics."
+  },
+  "figma": {
+    "nodeId": "6097:25506",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6097-25506",
+    "propertyMapping": [
+      {
+        "figmaProperty": "align",
+        "reactProp": "align",
+        "valueMapping": {
+          "left": "left",
+          "center": "center",
+          "right": "right"
+        }
+      },
+      {
+        "figmaProperty": "padding",
+        "reactProp": "padding",
+        "valueMapping": {
+          "false": "false",
+          "true": "true"
+        }
+      },
+      {
+        "figmaProperty": "(component set name)",
+        "reactProp": "type",
+        "note": "Each of the 9 Figma component sets maps 1:1 to a value of the type prop."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "text",
+        "nodeId": "6097:25506",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6097-25506",
+        "propertyMapping": [
+          { "figmaProperty": "align", "reactProp": "align" },
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          {
+            "figmaProperty": "type",
+            "reactProp": null,
+            "note": "Figma sub-variant text / with slots / with checkbox / with icon collapses into the React text type. Use icon, slotLeft, slotRight props instead of switching variants."
+          },
+          { "figmaProperty": "text", "reactProp": "text" },
+          { "figmaProperty": "slotLeft", "reactProp": "slotLeft" },
+          { "figmaProperty": "slotLeftContent", "reactProp": "slotLeft" },
+          { "figmaProperty": "slotRight", "reactProp": "slotRight" },
+          { "figmaProperty": "slotRightContent", "reactProp": "slotRight" }
+        ]
+      },
+      {
+        "name": "two-line",
+        "nodeId": "6481:3990",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6481-3990",
+        "propertyMapping": [
+          { "figmaProperty": "align", "reactProp": "align" },
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          { "figmaProperty": "text", "reactProp": "text" },
+          { "figmaProperty": "secondary", "reactProp": "secondaryText" },
+          { "figmaProperty": "slotLeft", "reactProp": "slotLeft" }
+        ]
+      },
+      {
+        "name": "badge",
+        "nodeId": "6478:6508",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6478-6508",
+        "propertyMapping": [
+          { "figmaProperty": "align", "reactProp": "align" },
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          { "figmaProperty": "(badge slot)", "reactProp": "children", "note": "Compose a <Badge> directly as the child." }
+        ]
+      },
+      {
+        "name": "trend",
+        "nodeId": "6812:61070",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6812-61070",
+        "propertyMapping": [
+          { "figmaProperty": "align", "reactProp": "align" },
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          { "figmaProperty": "direction", "reactProp": "children", "note": "Render a TrendingUp / TrendingDown lucide icon with a value, using --dls-color-intent-success-text or --dls-color-intent-danger-text." }
+        ]
+      },
+      {
+        "name": "button",
+        "nodeId": "6478:6530",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6478-6530",
+        "propertyMapping": [
+          { "figmaProperty": "align", "reactProp": "align" },
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          { "figmaProperty": "(button slot)", "reactProp": "children", "note": "Compose a single <Button variant=\"soft|ghost\" size=\"m\"> as the child." }
+        ]
+      },
+      {
+        "name": "actions",
+        "nodeId": "6108:9131",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6108-9131",
+        "propertyMapping": [
+          { "figmaProperty": "align", "reactProp": "align" },
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          { "figmaProperty": "(actions slot)", "reactProp": "children", "note": "Compose a row of ghost icon-only <Button>s (Edit, Copy, Delete, More) with aria-label each." }
+        ]
+      },
+      {
+        "name": "slot",
+        "nodeId": "6478:5051",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6478-5051",
+        "propertyMapping": [
+          { "figmaProperty": "align", "reactProp": "align" },
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          { "figmaProperty": "(slot)", "reactProp": "children", "note": "Free-form slot for patterns not covered by the other 8 types." }
+        ]
+      },
+      {
+        "name": "users-stacked",
+        "nodeId": "6478:6615",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6478-6615",
+        "propertyMapping": [
+          { "figmaProperty": "align", "reactProp": "align" },
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          { "figmaProperty": "(avatar group)", "reactProp": "children", "note": "Compose an <AvatarStack> as the child." }
+        ]
+      },
+      {
+        "name": "credit-card",
+        "nodeId": "6478:6649",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6478-6649",
+        "propertyMapping": [
+          { "figmaProperty": "align", "reactProp": "align" },
+          { "figmaProperty": "padding", "reactProp": "padding" },
+          { "figmaProperty": "(card mark + digits)", "reactProp": "children", "note": "Compose the brand mark followed by masked card digits (e.g. •••• 1234)." }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Rendering individual content cells inside data tables",
+    "Need one of the 9 canonical patterns (text, two-line, badge, trend, button, actions, slot, users-stacked, credit-card)",
+    "Need consistent alignment, padding, and bottom-border across a row of cells"
+  ],
+  "doNotUseFor": [
+    "Header rows → use TableHeaderCell",
+    "Whole-row containers → use the table row primitive",
+    "Non-tabular content → use Item, Card, or ListItem",
+    "Action grids outside tables → use ButtonGroup"
+  ],
+  "relations": ["Table", "TableHeaderCell", "TableColumn", "Avatar", "AvatarStack", "Badge", "Button", "Checkbox", "Chip", "ChipRegular"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "The component spec mentions --dls-color-component-table-cell-* tokens but they do not exist in tokens.json. The CSS uses semantic text / border / spacing tokens directly. Backfilling a dedicated table-cell token group is deferred.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-contract",
+      "description": "Figma defines text as a single component set with sub-variants (text / with slots / with checkbox / with icon). The React component collapses these into one type=\"text\" and exposes icon / slotLeft / slotRight props instead of switching variants.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T07:43:57.516Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "445509ae342c2917"
+  }
+}

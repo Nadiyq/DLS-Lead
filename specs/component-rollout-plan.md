@@ -64,6 +64,18 @@ applied to every component in the system — both Figma and code side.
 | Fifty-third manifest (EmptyState) | DONE | `specs/components/manifests/empty-state.json` |
 | Fifty-fourth manifest (Dialog) | DONE | `specs/components/manifests/dialog.json` |
 | Fifty-fifth manifest (Toolbar) | DONE | `specs/components/manifests/toolbar.json` |
+| Fifty-sixth manifest (MessageComposer) | DONE | `specs/components/manifests/message-composer.json` |
+| Fifty-seventh manifest (Tooltip) | DONE | `specs/components/manifests/tooltip.json` |
+| Fifty-eighth manifest (Text) | DONE | `specs/components/manifests/text.json` |
+| Fifty-ninth manifest (Tabs) | DONE | `specs/components/manifests/tabs.json` |
+| Sixtieth manifest (Item) | DONE | `specs/components/manifests/item.json` |
+| Sixty-first manifest (TableCell) | DONE | `specs/components/manifests/table-cell.json` |
+| Sixty-second manifest (TableHeaderCell) | DONE | `specs/components/manifests/table-header-cell.json` |
+| Sixty-third manifest (TableTopBar) | DONE | `specs/components/manifests/table-top-bar.json` |
+| Sixty-fourth manifest (Filters) | DONE | `specs/components/manifests/filters.json` |
+| Sixty-fifth manifest (DropdownOptions) | DONE | `specs/components/manifests/dropdown-options.json` |
+| Sixty-sixth manifest (DropdownColumns) | DONE | `specs/components/manifests/dropdown-columns.json` |
+| Sixty-seventh manifest (DropdownFilters) | DONE | `specs/components/manifests/dropdown-filters.json` |
 | Figma description template | DONE | Accordion as reference: `specs/figma-descriptions/accordion-item.md` |
 | `llms.txt` | TODO | Gap item #4 |
 | Build script + CI hook | TODO | Gap item #3 |
@@ -166,7 +178,7 @@ prevents cascading issues.
 
 | # | Component | Spec | Inline SVG | Missing reduced-motion | L4 color tokens in JSON |
 |---|-----------|------|------------|------------------------|-------------------------|
-| 28 | **Tabs** | tabs.md | No | No | Yes (as `tab`) |
+| 28 | **Tabs** | tabs.md | FIXED | No | Yes (as `tab`) |
 | 29 | **Sidebar** | sidebar.md | No | No | Yes |
 | 30 | **SidebarItem** | sidebar-item.md | No | YES | No |
 | 31 | **Breadcrumbs** | breadcrumbs.md | FIXED | FIXED | No |
@@ -191,7 +203,7 @@ prevents cascading issues.
 | 45 | **Submenu** | submenu.md | No | No | No |
 | 46 | **Dialog** | dialog.md | FIXED | N/A (no spatial motion) | Yes |
 | 47 | **AlertDialog** | alert-dialog.md | No | No | No |
-| 48 | **Tooltip** | tooltip.md | YES | No | No |
+| 48 | **Tooltip** | tooltip.md | FIXED | No | No |
 
 ### Tier 6 — Data display
 
@@ -259,7 +271,7 @@ pagination, sidebar, tab, table.
 
 Components with hand-drawn `<svg>` that need lucide-react migration:
 Breadcrumbs (FIXED), Calendar (FIXED), CalendarRange (FIXED), Carousel (N/A — uses CarouselArrow), CarouselArrow (FIXED),
-Checkbox (FIXED), Checkmark (FIXED), Dialog (FIXED), ProgressBar, Spinner (FIXED), Tooltip.
+Checkbox (FIXED), Checkmark (FIXED), Dialog (FIXED), ProgressBar, Spinner (FIXED), Tooltip (FIXED).
 
 Fix during each component's Phase 2.
 

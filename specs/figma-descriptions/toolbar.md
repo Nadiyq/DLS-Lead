@@ -54,13 +54,21 @@ sticky page header).
 | Figma property | React prop  | Values                       |
 |----------------|-------------|------------------------------|
 | sticky         | sticky      | false (default) / true       |
-| (slot)         | children    | ReactNode (Button / Separator / ToolbarGroup) |
+| options        | —           | Figma-only structural toggle for the trailing overflow dropdown. In code, consumers attach a `<DropdownOptions>` (or any dropdown) as the final child of `<Toolbar>`. |
+| (slot)         | children    | ReactNode (Button / ToolbarGroup / Separator / DropdownOptions) |
 | —              | className   | string                       |
 
 `ToolbarGroup` is a code-only helper that has no separate Figma
 component. In Figma, button clusters between separators read as
 inline `button-button` (Button Group) instances; in code those
 become `<ToolbarGroup>` wrappers.
+
+When `options=true` in Figma, the Toolbar shows an overflow dropdown
+anchored to the trailing Ellipsis button. The dropdown contains
+contextual actions for the host surface — in MessageComposer it's a
+Pin / Unpin pair that flips the toolbar between the sticky/pinned
+slot above the input and the selection-aware floating slot. See the
+`composition` section below and `message-composer.md` for the pattern.
 
 ## Anatomy
 
@@ -128,13 +136,48 @@ Color transitions on child Buttons live in the Button component.
 ## Composition rules
 
 - Children must be one of: `Button` (ghost variant strongly preferred),
-  `ToolbarGroup`, `Separator`.
+  `ToolbarGroup`, `Separator`, `DropdownOptions`.
 - Use `ToolbarGroup` to cluster related buttons without gaps
   (e.g. alignment trio, list trio).
 - Use `Separator` between groups for visual breathing room.
 - Do not nest Toolbar inside Toolbar.
-- The overflow action ("more") should be the final child, with its
-  associated menu opened via a `Dropdown` outside the toolbar tree.
+- The overflow action ("more") should be the final child. Replace
+  the plain Ellipsis Button with a `<DropdownOptions triggerIcon={<Ellipsis/>}>`
+  to open a contextual menu (e.g. Pin / Unpin in MessageComposer).
+  The `selected` prop on the active `<ListItem>` paints
+  `--dls-color-intent-info-subtle` — matches the Figma highlight
+  for the currently-active option.
+
+### Pin / Unpin pattern (MessageComposer convention)
+
+Used inside MessageComposer to let the user choose between a
+toolbar that's always visible above the input (pinned) and one
+that only surfaces on text selection (unpinned / floating):
+
+```tsx
+<DropdownOptions triggerIcon={<EllipsisIcon />} triggerLabel="Toolbar options">
+  <List>
+    <ListItem
+      type="text"
+      text="Unpin"
+      iconStart={<PinOffIcon />}
+      selected={mode === 'floating'}
+      onClick={() => setMode('floating')}
+    />
+    <ListItem
+      type="text"
+      text="Pin"
+      iconStart={<PinIcon />}
+      selected={mode === 'pinned'}
+      onClick={() => setMode('pinned')}
+    />
+  </List>
+</DropdownOptions>
+```
+
+The consumer (MessageComposer) renders the same Toolbar element
+into either its `toolbar` slot (`sticky` prop set, mode=pinned) or
+its `floatingToolbar` slot (selection-only, mode=floating).
 
 ## Known deviations
 

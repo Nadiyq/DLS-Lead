@@ -4,6 +4,8 @@ category: component
 status: active
 source_of_truth:
   - apps/storybook/src/stories/tabs/Tabs.tsx
+  - apps/storybook/src/stories/tabs/Tabs.stories.tsx
+  - apps/storybook/src/stories/tabs/tabs.css
   - tokens/tokens.json
 ---
 
@@ -13,12 +15,15 @@ source_of_truth:
 
 - Category: navigation / view switcher
 - Types: `pill | folder`
+- States: `normal | hover | focus | selected | disabled`
 
 ## Overview
 
 Use `Tabs` to switch between sibling views or content sections in the same context.
 
-Do not use it as the global site navigation.
+Use it for local view switching, settings sections, entity detail subviews, and compact same-context navigation.
+
+Do not use it as the global site navigation, a breadcrumb trail, a filter chip, or a primary action row.
 
 ## Anatomy
 
@@ -30,9 +35,17 @@ Do not use it as the global site navigation.
 
 ## Tokens Used
 
-- `color.component.tab.*`
+- `--dls-color-surface-muted`
+- `--dls-color-surface-base`
+- `--dls-color-border-base`
+- `--dls-color-text-primary`
+- `--dls-color-text-disabled`
 - `--dls-radius-component-tab`
-- text semantic tokens
+- `--dls-radius-component-tab-group`
+- `--dls-state-hover-overlay`
+- `--dls-state-focus-ring-color`
+- `--dls-shadow-surface-sm`
+- text, spacing, and font weight tokens
 
 ## Props / API
 
@@ -55,7 +68,11 @@ Tab item shape:
 - default
 - selected
 - hover
+- focus-visible
 - disabled
+
+Tabs use roving tab focus. Arrow keys move and activate enabled tabs.
+The selected tab exposes `aria-selected`.
 
 ## Code Example
 
@@ -74,4 +91,6 @@ Tab item shape:
 ## Cross-References
 
 - [button.md](button.md)
+- [breadcrumbs.md](breadcrumbs.md)
+- [pagination.md](pagination.md)
 - [../patterns/component-selection.md](../patterns/component-selection.md)

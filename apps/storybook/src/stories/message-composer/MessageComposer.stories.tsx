@@ -1,5 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import {
+  Bold as BoldIcon,
+  Italic as ItalicIcon,
+  Underline as UnderlineIcon,
+  AlignLeft as AlignLeftIcon,
+  AlignCenter as AlignCenterIcon,
+  AlignRight as AlignRightIcon,
+  List as ListBulletIcon,
+  ListOrdered as ListNumberedIcon,
+  ListChecks as ListCheckIcon,
+  Link2 as LinkIcon,
+  Ellipsis as MoreIcon,
+  Pin as PinIcon,
+  PinOff as PinOffIcon,
+  SmilePlus as EmojiIcon,
+  Paperclip as AttachIcon,
+  Send as SendIcon,
+  MessageSquareWarning as WarningIcon,
+} from 'lucide-react';
 import { MessageComposer } from './MessageComposer';
 import { Toolbar, ToolbarGroup } from '../toolbar/Toolbar';
 import { Button } from '../Button';
@@ -7,7 +26,11 @@ import { ButtonGroup } from '../button-group/ButtonGroup';
 import { Separator } from '../separator/Separator';
 import { Tabs } from '../tabs/Tabs';
 import { ChipRegular } from '../chip/ChipRegular';
+import { ChipInput, type ChipInputOption } from '../chip-input/ChipInput';
 import { Alert } from '../Alert';
+import { DropdownOptions } from '../dropdown-options/DropdownOptions';
+import { List } from '../list-item/List';
+import { ListItem } from '../list-item/ListItem';
 
 const meta = {
   title: 'Components/MessageComposer',
@@ -20,144 +43,229 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // ---------------------------------------------------------------------------
-// Icons
-// ---------------------------------------------------------------------------
-
-const BoldIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7 5H13C14.1046 5 15 5.89543 15 7V9C15 10.1046 14.1046 11 13 11H7V5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    <path d="M7 11H14C15.1046 11 16 11.8954 16 13V15C16 16.1046 15.1046 17 14 17H7V11Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-  </svg>
-);
-
-const ItalicIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 5H16M8 19H14M13 5L11 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const UnderlineIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7 5V11C7 13.7614 9.23858 16 12 16C14.7614 16 17 13.7614 17 11V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M6 19H18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-const AlignLeftIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6H20M4 10H14M4 14H20M4 18H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-const AlignCenterIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6H20M7 10H17M4 14H20M7 18H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-const AlignRightIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 6H20M10 10H20M4 14H20M10 18H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-const ListBulletIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9 6H20M9 12H20M9 18H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="5" cy="6" r="1" fill="currentColor" />
-    <circle cx="5" cy="12" r="1" fill="currentColor" />
-    <circle cx="5" cy="18" r="1" fill="currentColor" />
-  </svg>
-);
-
-const ListNumberedIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 6H20M10 12H20M10 18H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M5 5V9M5 5L4 6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M4 15C4 13.8954 4.89543 13 6 13C7.10457 13 7 14.5 5 16H7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const ListCheckIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 6H20M10 12H20M10 18H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M4 6L5.5 7.5L8 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M4 12L5.5 13.5L8 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M4 18L5.5 19.5L8 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const LinkIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 14L14 10M8.5 11.5L6.5 13.5C5.11929 14.8807 5.11929 17.1193 6.5 18.5C7.88071 19.8807 10.1193 19.8807 11.5 18.5L13.5 16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M15.5 12.5L17.5 10.5C18.8807 9.11929 18.8807 6.88071 17.5 5.5C16.1193 4.11929 13.8807 4.11929 12.5 5.5L10.5 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-const MoreIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="6" cy="12" r="1.5" fill="currentColor" />
-    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-    <circle cx="18" cy="12" r="1.5" fill="currentColor" />
-  </svg>
-);
-
-const EmojiIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="9" cy="10" r="1" fill="currentColor" />
-    <circle cx="15" cy="10" r="1" fill="currentColor" />
-    <path d="M8.5 14.5C9.33 15.83 10.67 16.5 12 16.5C13.33 16.5 14.67 15.83 15.5 14.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-const AttachIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14.5 7L7.5 14C6.67 14.83 6.67 16.17 7.5 17C8.33 17.83 9.67 17.83 10.5 17L17.5 10C19.16 8.34 19.16 5.66 17.5 4C15.84 2.34 13.16 2.34 11.5 4L4.5 11C2 13.5 2 17.5 4.5 20C7 22.5 11 22.5 13.5 20L20 13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-const SendIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 12L3 4L21 12L3 20L5 12ZM5 12H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const WarningIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M12 8V13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="12" cy="16" r="1" fill="currentColor" />
-  </svg>
-);
-
-// ---------------------------------------------------------------------------
 // Shared formatting toolbar (matches Figma: B I U | align×3 | list×3 | link | more)
+//
+// Toggle buttons (B/I/U + alignment) keep their own active state so clicks
+// produce visible feedback. The trailing overflow (Ellipsis) opens a
+// Pin/Unpin DropdownOptions menu — Pin makes the toolbar render in the
+// sticky/pinned slot of MessageComposer; Unpin makes it render in the
+// selection-only floating slot.
 // ---------------------------------------------------------------------------
 
-const FormattingToolbar = ({ sticky }: { sticky?: boolean }) => (
-  <Toolbar sticky={sticky}>
-    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<BoldIcon />} aria-label="Bold" />
-    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<ItalicIcon />} aria-label="Italic" />
-    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<UnderlineIcon />} aria-label="Underline" />
-    <Separator orientation="vertical" />
-    <ToolbarGroup>
-      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<AlignLeftIcon />} aria-label="Align left" />
-      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<AlignCenterIcon />} aria-label="Align center" />
-      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<AlignRightIcon />} aria-label="Align right" />
-    </ToolbarGroup>
-    <Separator orientation="vertical" />
-    <ToolbarGroup>
-      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<ListBulletIcon />} aria-label="Bulleted list" />
-      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<ListNumberedIcon />} aria-label="Numbered list" />
-      <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<ListCheckIcon />} aria-label="Checklist" />
-    </ToolbarGroup>
-    <Separator orientation="vertical" />
-    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<LinkIcon />} aria-label="Link" />
-    <Separator orientation="vertical" />
-    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<MoreIcon />} aria-label="More" />
-  </Toolbar>
-);
+type Toggleable = 'bold' | 'italic' | 'underline';
+type Align = 'left' | 'center' | 'right';
+type ToolbarMode = 'pinned' | 'floating';
+
+interface FormattingToolbarProps {
+  /** Selects which slot of MessageComposer the toolbar renders into. */
+  mode: ToolbarMode;
+  /** Pin / Unpin callback fired from the overflow menu. */
+  onModeChange: (mode: ToolbarMode) => void;
+  /** Whether to attach the Pin/Unpin overflow menu to the trailing Ellipsis. */
+  options?: boolean;
+  /** Ref to the underlying <textarea> from MessageComposer — needed to
+   *  read selectionStart / selectionEnd and mutate the textarea value. */
+  textareaRef?: React.RefObject<HTMLTextAreaElement | null>;
+  /** Setter for the controlled textarea value. Wrapping/prefixing is
+   *  applied by reading textareaRef.current and calling this with the
+   *  new string. */
+  onValueChange?: (next: string) => void;
+}
+
+/** Wrap the current selection in the textarea with the given prefix / suffix
+ *  markers, restore the selection over the wrapped content, and return the
+ *  new value. No-op when nothing is selected. */
+const wrapSelection = (
+  ta: HTMLTextAreaElement | null,
+  prefix: string,
+  suffix: string,
+  setValue: (v: string) => void,
+) => {
+  if (!ta) return;
+  const start = ta.selectionStart;
+  const end = ta.selectionEnd;
+  if (start === end) return; // nothing selected
+  const value = ta.value;
+  const next =
+    value.slice(0, start) + prefix + value.slice(start, end) + suffix + value.slice(end);
+  setValue(next);
+  // Restore the selection over the *content* (after the prefix, before the suffix).
+  requestAnimationFrame(() => {
+    ta.focus();
+    ta.setSelectionRange(start + prefix.length, end + prefix.length);
+  });
+};
+
+/** Prefix every selected line with the given prefix. Used for list buttons. */
+const prefixLines = (
+  ta: HTMLTextAreaElement | null,
+  linePrefix: string | ((index: number) => string),
+  setValue: (v: string) => void,
+) => {
+  if (!ta) return;
+  const value = ta.value;
+  const start = ta.selectionStart;
+  const end = ta.selectionEnd;
+  // Expand selection to the start of the first line and end of the last line.
+  const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+  const lineEnd = value.indexOf('\n', end);
+  const sliceEnd = lineEnd === -1 ? value.length : lineEnd;
+  const block = value.slice(lineStart, sliceEnd);
+  const lines = block.split('\n');
+  const prefixed = lines
+    .map((ln, i) => (typeof linePrefix === 'string' ? linePrefix : linePrefix(i)) + ln)
+    .join('\n');
+  const next = value.slice(0, lineStart) + prefixed + value.slice(sliceEnd);
+  setValue(next);
+  const delta = prefixed.length - block.length;
+  requestAnimationFrame(() => {
+    ta.focus();
+    ta.setSelectionRange(lineStart, sliceEnd + delta);
+  });
+};
+
+const FormattingToolbar = ({
+  mode,
+  onModeChange,
+  options = true,
+  textareaRef,
+  onValueChange,
+}: FormattingToolbarProps) => {
+  const sticky = mode === 'pinned';
+  const [marks, setMarks] = React.useState<Record<Toggleable, boolean>>({
+    bold: false, italic: false, underline: false,
+  });
+  const [align, setAlign] = React.useState<Align>('left');
+  const toggle = (k: Toggleable) => setMarks(m => ({ ...m, [k]: !m[k] }));
+
+  // Apply a wrap to the textarea selection. Also toggles the visual
+  // "pressed" state so the button confirms the click registered.
+  const applyWrap = (key: Toggleable, prefix: string, suffix = prefix) => {
+    toggle(key);
+    if (onValueChange) {
+      wrapSelection(textareaRef?.current ?? null, prefix, suffix, onValueChange);
+    }
+  };
+
+  const markBtn = (
+    key: Toggleable,
+    label: string,
+    Icon: React.ComponentType,
+    prefix: string,
+    suffix = prefix,
+  ) => (
+    <Button
+      variant="ghost"
+      intent="neutral"
+      size="m"
+      iconOnly
+      icon={<Icon />}
+      aria-label={label}
+      aria-pressed={marks[key]}
+      data-active={marks[key] ? '' : undefined}
+      onClick={() => applyWrap(key, prefix, suffix)}
+    />
+  );
+  const alignBtn = (key: Align, label: string, Icon: React.ComponentType) => (
+    <Button
+      variant="ghost"
+      intent="neutral"
+      size="m"
+      iconOnly
+      icon={<Icon />}
+      aria-label={label}
+      aria-pressed={align === key}
+      data-active={align === key ? '' : undefined}
+      onClick={() => setAlign(key)}
+    />
+  );
+  const listBtn = (
+    label: string,
+    Icon: React.ComponentType,
+    linePrefix: string | ((i: number) => string),
+  ) => (
+    <Button
+      variant="ghost"
+      intent="neutral"
+      size="m"
+      iconOnly
+      icon={<Icon />}
+      aria-label={label}
+      onClick={() => {
+        if (onValueChange) prefixLines(textareaRef?.current ?? null, linePrefix, onValueChange);
+      }}
+    />
+  );
+
+  // Overflow menu (Pin / Unpin) — only shown when options is enabled.
+  // Matches Figma "options" boolean on the Toolbar component (94:10637).
+  const overflow = options ? (
+    <DropdownOptions
+      triggerIcon={<MoreIcon />}
+      triggerLabel="Toolbar options"
+      align="end"
+      side="bottom"
+    >
+      <List>
+        <ListItem
+          type="with-slots"
+          text="Unpin"
+          iconStart={<PinOffIcon aria-hidden="true" />}
+          selected={mode === 'floating'}
+          aria-selected={mode === 'floating'}
+          onClick={() => onModeChange('floating')}
+        />
+        <ListItem
+          type="with-slots"
+          text="Pin"
+          iconStart={<PinIcon aria-hidden="true" />}
+          selected={mode === 'pinned'}
+          aria-selected={mode === 'pinned'}
+          onClick={() => onModeChange('pinned')}
+        />
+      </List>
+    </DropdownOptions>
+  ) : (
+    <Button variant="ghost" intent="neutral" size="m" iconOnly icon={<MoreIcon />} aria-label="More" onClick={() => {}} />
+  );
+
+  return (
+    <Toolbar sticky={sticky}>
+      {markBtn('bold',      'Bold',      BoldIcon,      '**')}
+      {markBtn('italic',    'Italic',    ItalicIcon,    '*')}
+      {markBtn('underline', 'Underline', UnderlineIcon, '__')}
+      <Separator orientation="vertical" />
+      <ToolbarGroup>
+        {alignBtn('left',   'Align left',   AlignLeftIcon)}
+        {alignBtn('center', 'Align center', AlignCenterIcon)}
+        {alignBtn('right',  'Align right',  AlignRightIcon)}
+      </ToolbarGroup>
+      <Separator orientation="vertical" />
+      <ToolbarGroup>
+        {listBtn('Bulleted list', ListBulletIcon, '- ')}
+        {listBtn('Numbered list', ListNumberedIcon, (i: number) => `${i + 1}. `)}
+        {listBtn('Checklist',     ListCheckIcon,    '- [ ] ')}
+      </ToolbarGroup>
+      <Separator orientation="vertical" />
+      <Button
+        variant="ghost"
+        intent="neutral"
+        size="m"
+        iconOnly
+        icon={<LinkIcon />}
+        aria-label="Link"
+        onClick={() => {
+          if (!onValueChange || !textareaRef?.current) return;
+          const url = window.prompt('Enter URL', 'https://');
+          if (!url) return;
+          wrapSelection(textareaRef.current, '[', `](${url})`, onValueChange);
+        }}
+      />
+      <Separator orientation="vertical" />
+      {overflow}
+    </Toolbar>
+  );
+};
 
 // ---------------------------------------------------------------------------
 // Shared slots
@@ -197,12 +305,35 @@ const actionsRightSlot = (
   </ButtonGroup>
 );
 
-const recipientsSlot = (
-  <>
-    <ChipRegular variant="outline" label="Anthony Bricks" avatar={{ initials: 'AB' }} chevron size="s" />
-    <ChipRegular variant="outline" label="John Smith" avatar={{ initials: 'JS' }} chevron size="s" />
-  </>
-);
+// Stub avatars (deterministic, no network) for the recipients picker.
+const recipientOptions: ChipInputOption[] = [
+  { value: 'anthony.bricks',  label: 'Anthony Bricks',  avatarInitials: 'AB' },
+  { value: 'john.smith',      label: 'John Smith',      avatarInitials: 'JS' },
+  { value: 'maria.gomez',     label: 'Maria Gomez',     avatarInitials: 'MG' },
+  { value: 'liam.chen',       label: 'Liam Chen',       avatarInitials: 'LC' },
+  { value: 'priya.iyer',      label: 'Priya Iyer',      avatarInitials: 'PI' },
+  { value: 'oliver.park',     label: 'Oliver Park',     avatarInitials: 'OP' },
+];
+
+// Stateful recipients chip-input. Each chip uses the cross (remove) action.
+const RecipientsField = ({
+  initial = ['anthony.bricks', 'john.smith'],
+  id,
+}: {
+  initial?: string[];
+  id?: string;
+}) => {
+  const [values, setValues] = React.useState<string[]>(initial);
+  return (
+    <ChipInput
+      id={id}
+      options={recipientOptions}
+      values={values}
+      onValuesChange={setValues}
+      placeholder="Add recipient..."
+    />
+  );
+};
 
 // ---------------------------------------------------------------------------
 // 1. SMS with floating toolbar (text selection) — Figma variant 1
@@ -210,20 +341,37 @@ const recipientsSlot = (
 
 export const SmsWithFloatingToolbar: Story = {
   args: { channel: 'sms' },
-  render: () => (
-    <div style={{ width: 540 }}>
-      <MessageComposer
-        channel="sms"
-        tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
-        channelStatus={statusSlot}
-        alert={alertSlot}
-        value="hello"
-        floatingToolbar={<FormattingToolbar />}
-        actionsLeft={actionsLeftSlot}
-        actionsRight={actionsRightSlot}
+  render: () => {
+    const [tab, setTab] = React.useState('internal');
+    const [text, setText] = React.useState('hello');
+    const [mode, setMode] = React.useState<ToolbarMode>('floating');
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const ft = (
+      <FormattingToolbar
+        mode={mode}
+        onModeChange={setMode}
+        textareaRef={textareaRef}
+        onValueChange={setText}
       />
-    </div>
-  ),
+    );
+    return (
+      <div style={{ width: 540 }}>
+        <MessageComposer
+          channel="sms"
+          tabs={<Tabs type="pill" items={channelTabs} value={tab} onChange={setTab} />}
+          channelStatus={statusSlot}
+          alert={alertSlot}
+          value={text}
+          onChange={setText}
+          textareaRef={textareaRef}
+          toolbar={mode === 'pinned' ? ft : undefined}
+          floatingToolbar={mode === 'floating' ? ft : undefined}
+          actionsLeft={actionsLeftSlot}
+          actionsRight={actionsRightSlot}
+        />
+      </div>
+    );
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -232,17 +380,34 @@ export const SmsWithFloatingToolbar: Story = {
 
 export const SmsStatusOnly: Story = {
   args: { channel: 'sms' },
-  render: () => (
-    <div style={{ width: 540 }}>
-      <MessageComposer
-        channel="sms"
-        channelStatus={statusSlot}
-        toolbar={<FormattingToolbar sticky />}
-        actionsLeft={actionsLeftSlot}
-        actionsRight={actionsRightSlot}
+  render: () => {
+    const [mode, setMode] = React.useState<ToolbarMode>('pinned');
+    const [text, setText] = React.useState('');
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const ft = (
+      <FormattingToolbar
+        mode={mode}
+        onModeChange={setMode}
+        textareaRef={textareaRef}
+        onValueChange={setText}
       />
-    </div>
-  ),
+    );
+    return (
+      <div style={{ width: 540 }}>
+        <MessageComposer
+          channel="sms"
+          channelStatus={statusSlot}
+          value={text}
+          onChange={setText}
+          textareaRef={textareaRef}
+          toolbar={mode === 'pinned' ? ft : undefined}
+          floatingToolbar={mode === 'floating' ? ft : undefined}
+          actionsLeft={actionsLeftSlot}
+          actionsRight={actionsRightSlot}
+        />
+      </div>
+    );
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -251,17 +416,35 @@ export const SmsStatusOnly: Story = {
 
 export const SmsTabsOnly: Story = {
   args: { channel: 'sms' },
-  render: () => (
-    <div style={{ width: 540 }}>
-      <MessageComposer
-        channel="sms"
-        tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
-        toolbar={<FormattingToolbar sticky />}
-        actionsLeft={actionsLeftSlot}
-        actionsRight={actionsRightSlot}
+  render: () => {
+    const [tab, setTab] = React.useState('internal');
+    const [mode, setMode] = React.useState<ToolbarMode>('pinned');
+    const [text, setText] = React.useState('');
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const ft = (
+      <FormattingToolbar
+        mode={mode}
+        onModeChange={setMode}
+        textareaRef={textareaRef}
+        onValueChange={setText}
       />
-    </div>
-  ),
+    );
+    return (
+      <div style={{ width: 540 }}>
+        <MessageComposer
+          channel="sms"
+          tabs={<Tabs type="pill" items={channelTabs} value={tab} onChange={setTab} />}
+          value={text}
+          onChange={setText}
+          textareaRef={textareaRef}
+          toolbar={mode === 'pinned' ? ft : undefined}
+          floatingToolbar={mode === 'floating' ? ft : undefined}
+          actionsLeft={actionsLeftSlot}
+          actionsRight={actionsRightSlot}
+        />
+      </div>
+    );
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -270,18 +453,39 @@ export const SmsTabsOnly: Story = {
 
 export const EmailBasic: Story = {
   args: { channel: 'email' },
-  render: () => (
-    <div style={{ width: 540 }}>
-      <MessageComposer
-        channel="email"
-        subject=""
-        recipients={recipientsSlot}
-        toolbar={<FormattingToolbar sticky />}
-        actionsLeft={actionsLeftSlot}
-        actionsRight={actionsRightSlot}
+  render: () => {
+    const [subject, setSubject] = React.useState('');
+    const recipientsInputId = React.useId();
+    const [mode, setMode] = React.useState<ToolbarMode>('pinned');
+    const [text, setText] = React.useState('');
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const ft = (
+      <FormattingToolbar
+        mode={mode}
+        onModeChange={setMode}
+        textareaRef={textareaRef}
+        onValueChange={setText}
       />
-    </div>
-  ),
+    );
+    return (
+      <div style={{ width: 540 }}>
+        <MessageComposer
+          channel="email"
+          subject={subject}
+          onSubjectChange={setSubject}
+          recipientsInputId={recipientsInputId}
+          recipients={<RecipientsField id={recipientsInputId} />}
+          value={text}
+          onChange={setText}
+          textareaRef={textareaRef}
+          toolbar={mode === 'pinned' ? ft : undefined}
+          floatingToolbar={mode === 'floating' ? ft : undefined}
+          actionsLeft={actionsLeftSlot}
+          actionsRight={actionsRightSlot}
+        />
+      </div>
+    );
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -290,21 +494,43 @@ export const EmailBasic: Story = {
 
 export const EmailFull: Story = {
   args: { channel: 'email' },
-  render: () => (
-    <div style={{ width: 540 }}>
-      <MessageComposer
-        channel="email"
-        tabs={<Tabs type="pill" items={channelTabs} value="internal" onChange={() => {}} />}
-        channelStatus={statusSlot}
-        alert={alertSlot}
-        subject=""
-        recipients={recipientsSlot}
-        toolbar={<FormattingToolbar sticky />}
-        actionsLeft={actionsLeftSlot}
-        actionsRight={actionsRightSlot}
+  render: () => {
+    const [tab, setTab] = React.useState('internal');
+    const [subject, setSubject] = React.useState('');
+    const recipientsInputId = React.useId();
+    const [mode, setMode] = React.useState<ToolbarMode>('pinned');
+    const [text, setText] = React.useState('');
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const ft = (
+      <FormattingToolbar
+        mode={mode}
+        onModeChange={setMode}
+        textareaRef={textareaRef}
+        onValueChange={setText}
       />
-    </div>
-  ),
+    );
+    return (
+      <div style={{ width: 540 }}>
+        <MessageComposer
+          channel="email"
+          tabs={<Tabs type="pill" items={channelTabs} value={tab} onChange={setTab} />}
+          channelStatus={statusSlot}
+          alert={alertSlot}
+          subject={subject}
+          onSubjectChange={setSubject}
+          recipientsInputId={recipientsInputId}
+          recipients={<RecipientsField id={recipientsInputId} />}
+          value={text}
+          onChange={setText}
+          textareaRef={textareaRef}
+          toolbar={mode === 'pinned' ? ft : undefined}
+          floatingToolbar={mode === 'floating' ? ft : undefined}
+          actionsLeft={actionsLeftSlot}
+          actionsRight={actionsRightSlot}
+        />
+      </div>
+    );
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -313,16 +539,33 @@ export const EmailFull: Story = {
 
 export const ToolbarOnly: Story = {
   args: { channel: 'sms' },
-  render: () => (
-    <div style={{ width: 540 }}>
-      <MessageComposer
-        channel="sms"
-        toolbar={<FormattingToolbar sticky />}
-        actionsLeft={actionsLeftSlot}
-        actionsRight={actionsRightSlot}
+  render: () => {
+    const [mode, setMode] = React.useState<ToolbarMode>('pinned');
+    const [text, setText] = React.useState('');
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const ft = (
+      <FormattingToolbar
+        mode={mode}
+        onModeChange={setMode}
+        textareaRef={textareaRef}
+        onValueChange={setText}
       />
-    </div>
-  ),
+    );
+    return (
+      <div style={{ width: 540 }}>
+        <MessageComposer
+          channel="sms"
+          value={text}
+          onChange={setText}
+          textareaRef={textareaRef}
+          toolbar={mode === 'pinned' ? ft : undefined}
+          floatingToolbar={mode === 'floating' ? ft : undefined}
+          actionsLeft={actionsLeftSlot}
+          actionsRight={actionsRightSlot}
+        />
+      </div>
+    );
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -356,6 +599,17 @@ export const Playground: Story = {
     const [tab, setTab] = React.useState('internal');
     const [text, setText] = React.useState('');
     const [subject, setSubject] = React.useState('');
+    const recipientsInputId = React.useId();
+    const [mode, setMode] = React.useState<ToolbarMode>('pinned');
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const ft = (
+      <FormattingToolbar
+        mode={mode}
+        onModeChange={setMode}
+        textareaRef={textareaRef}
+        onValueChange={setText}
+      />
+    );
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'center' }}>
@@ -376,17 +630,20 @@ export const Playground: Story = {
             channelStatus={statusSlot}
             subject={channel === 'email' ? subject : undefined}
             onSubjectChange={setSubject}
-            recipients={channel === 'email' ? recipientsSlot : undefined}
-            toolbar={<FormattingToolbar sticky />}
+            recipientsInputId={channel === 'email' ? recipientsInputId : undefined}
+            recipients={channel === 'email' ? <RecipientsField id={recipientsInputId} /> : undefined}
+            toolbar={mode === 'pinned' ? ft : undefined}
+            floatingToolbar={mode === 'floating' ? ft : undefined}
             placeholder={args.placeholder}
             value={text}
             onChange={setText}
+            textareaRef={textareaRef}
             actionsLeft={actionsLeftSlot}
             actionsRight={actionsRightSlot}
           />
         </div>
-        <span style={{ fontFamily: 'var(--dls-font-family)', fontSize: 13, color: 'var(--dls-color-text-secondary)' }}>
-          Channel: {channel} | Tab: {tab} | Characters: {text.length}
+        <span>
+          Channel: {channel} | Tab: {tab} | Toolbar mode: {mode} | Characters: {text.length}
         </span>
       </div>
     );

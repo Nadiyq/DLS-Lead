@@ -20,8 +20,12 @@ export interface MessageComposerProps {
   subject?: string;
   /** Subject change handler */
   onSubjectChange?: (value: string) => void;
-  /** Recipients slot (email only) */
+  /** Subject placeholder */
+  subjectPlaceholder?: string;
+  /** Recipients slot (email only). Pass a ChipInput or a static node. */
   recipients?: React.ReactNode;
+  /** DOM id of the focusable recipients control inside the recipients slot. Wires the "to:" label via htmlFor. */
+  recipientsInputId?: string;
   /** Sticky toolbar slot (embedded in header area) */
   toolbar?: React.ReactNode;
   /** Floating toolbar slot (appears on text selection) */
@@ -36,6 +40,10 @@ export interface MessageComposerProps {
   actionsLeft?: React.ReactNode;
   /** Right action buttons slot (submit) */
   actionsRight?: React.ReactNode;
+  /** External ref to the underlying <textarea>. Useful for formatting
+   *  toolbars that need to read selectionStart/selectionEnd and mutate
+   *  the textarea value. */
+  textareaRef?: React.RefObject<HTMLTextAreaElement | null>;
   className?: string;
 }
 
@@ -52,7 +60,9 @@ export const MessageComposer = React.forwardRef<HTMLDivElement, MessageComposerP
       alert,
       subject,
       onSubjectChange,
+      subjectPlaceholder = 'Enter subject...',
       recipients,
+      recipientsInputId,
       toolbar,
       floatingToolbar,
       placeholder = 'Enter...',
@@ -60,6 +70,7 @@ export const MessageComposer = React.forwardRef<HTMLDivElement, MessageComposerP
       onChange,
       actionsLeft,
       actionsRight,
+      textareaRef: externalTextareaRef,
       className,
     },
     ref,
@@ -67,6 +78,17 @@ export const MessageComposer = React.forwardRef<HTMLDivElement, MessageComposerP
     const isEmail = channel === 'email';
     const [hasSelection, setHasSelection] = React.useState(false);
     const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const subjectId = React.useId();
+    // Mirror the textarea ref into the consumer's ref if provided.
+    const assignTextareaRef = React.useCallback(
+      (el: HTMLTextAreaElement | null) => {
+        (textareaRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = el;
+        if (externalTextareaRef) {
+          (externalTextareaRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = el;
+        }
+      },
+      [externalTextareaRef],
+    );
 
     React.useEffect(() => {
       if (!floatingToolbar) return;
@@ -77,19 +99,31 @@ export const MessageComposer = React.forwardRef<HTMLDivElement, MessageComposerP
         const { selectionStart, selectionEnd } = textarea;
         setHasSelection(selectionStart !== selectionEnd);
       };
+      const clear = () => setHasSelection(false);
 
       textarea.addEventListener('select', check);
       textarea.addEventListener('mouseup', check);
       textarea.addEventListener('keyup', check);
-      textarea.addEventListener('blur', () => setHasSelection(false));
+      textarea.addEventListener('blur', clear);
 
       return () => {
         textarea.removeEventListener('select', check);
         textarea.removeEventListener('mouseup', check);
         textarea.removeEventListener('keyup', check);
-        textarea.removeEventListener('blur', () => setHasSelection(false));
+        textarea.removeEventListener('blur', clear);
       };
     }, [floatingToolbar]);
+
+    /* Keep the textarea focused (and its selection alive) while the user
+       interacts with the floating toolbar — without preventDefault on
+       mousedown the textarea blurs, hasSelection flips to false, and the
+       toolbar unmounts before the button click can fire. */
+    const preserveSelectionOnPointer = React.useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+      },
+      [],
+    );
 
     return (
       <div
@@ -113,20 +147,35 @@ export const MessageComposer = React.forwardRef<HTMLDivElement, MessageComposerP
         {/* Email-only fields */}
         {isEmail && subject !== undefined && (
           <div className="dls-message-composer__field-row">
-            <span className="dls-message-composer__field-label">Subject:</span>
+            <label
+              className="dls-message-composer__field-label"
+              htmlFor={subjectId}
+            >
+              Subject:
+            </label>
             <input
+              id={subjectId}
               className="dls-message-composer__textarea"
               type="text"
               value={subject}
               onChange={e => onSubjectChange?.(e.target.value)}
-              placeholder="Enter subject..."
+              placeholder={subjectPlaceholder}
             />
           </div>
         )}
 
         {isEmail && recipients && (
           <div className="dls-message-composer__field-row">
-            <span className="dls-message-composer__field-label">to:</span>
+            {recipientsInputId ? (
+              <label
+                className="dls-message-composer__field-label"
+                htmlFor={recipientsInputId}
+              >
+                to:
+              </label>
+            ) : (
+              <span className="dls-message-composer__field-label">to:</span>
+            )}
             <div className="dls-message-composer__field-value">{recipients}</div>
           </div>
         )}
@@ -137,16 +186,23 @@ export const MessageComposer = React.forwardRef<HTMLDivElement, MessageComposerP
         {/* Text input */}
         <div className="dls-message-composer__input">
           <textarea
-            ref={textareaRef}
+            ref={assignTextareaRef}
             className="dls-message-composer__textarea"
             placeholder={placeholder}
             value={value}
             onChange={e => onChange?.(e.target.value)}
             rows={2}
           />
-          {/* Floating toolbar — only visible when text is selected */}
+          {/* Floating toolbar — only visible when text is selected.
+              onMouseDown preventDefault keeps the textarea focused so the
+              selection survives the click on a toolbar button. */}
           {floatingToolbar && hasSelection && (
-            <div className="dls-message-composer__floating-toolbar">{floatingToolbar}</div>
+            <div
+              className="dls-message-composer__floating-toolbar"
+              onMouseDown={preserveSelectionOnPointer}
+            >
+              {floatingToolbar}
+            </div>
           )}
         </div>
 

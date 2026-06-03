@@ -13,7 +13,10 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  background: var(--dls-color-surface-base);
+  /* Background inherits from the parent (Card/Table surface).
+     A bg here would cover the parent's rounded-corner border when
+     TableTopBar is the first child of a card-like container. */
+  background: transparent;
   font-family: var(--dls-font-family);
   position: relative;
   z-index: 6;

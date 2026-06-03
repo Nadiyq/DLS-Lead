@@ -4,6 +4,7 @@ import {
   Pin as PinIcon,
   PinOff as PinOffIcon,
   EyeOff as EyeOffIcon,
+  Lock as LockIcon,
 } from 'lucide-react';
 import './dropdown-columns.css';
 import { ListItem } from '../list-item/ListItem';
@@ -21,6 +22,13 @@ export interface ColumnItem {
   label: string;
   /** Whether column is pinned */
   pinned?: boolean;
+  /** Whether the column is locked. Locked columns:
+   *  - cannot be reordered (no drag source, no drop target),
+   *  - cannot be hidden (excluded from move-to-Hidden),
+   *  - cannot have their pin state toggled (Pin button hidden),
+   *  - render a Lock icon in place of the GripVertical handle.
+   *  Used for primary-identifier / business-critical columns. */
+  locked?: boolean;
 }
 
 export interface DropdownColumnsProps {
@@ -87,14 +95,77 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
     };
 
     const togglePin = (id: string) => {
+      const col = shown.find((c) => c.id === id);
+      if (!col || col.locked) return; // locked columns cannot toggle pin
       const next = shown.map((c) => (c.id === id ? { ...c, pinned: !c.pinned } : c));
       update(next, hidden);
     };
 
     const showColumn = (id: string) => {
       const col = hidden.find((c) => c.id === id);
-      if (!col) return;
+      if (!col || col.locked) return; // locked columns cannot be re-shown via click (they shouldn't appear in hidden anyway)
       update([...shown, col], hidden.filter((c) => c.id !== id));
+    };
+
+    const hideColumn = (id: string) => {
+      const col = shown.find((c) => c.id === id);
+      if (!col || col.locked) return; // locked columns cannot be hidden
+      update(shown.filter((c) => c.id !== id), [...hidden, col]);
+    };
+
+    /* --- Keyboard reordering ---
+       Alt+ArrowUp / Alt+ArrowDown moves the focused row within its
+       section. Locked rows in the destination path are skipped so
+       they keep their fixed position. Focus follows the row to its
+       new index so consecutive presses keep working. */
+
+    const moveInSection = (section: Section, fromIdx: number, delta: 1 | -1) => {
+      const list = section === 'shown' ? [...shown] : [...hidden];
+      if (list[fromIdx]?.locked) return; // source is locked — should be unreachable
+      // Find next non-locked destination index in the requested direction.
+      let toIdx = fromIdx + delta;
+      while (toIdx >= 0 && toIdx < list.length && list[toIdx]?.locked) {
+        toIdx += delta;
+      }
+      if (toIdx < 0 || toIdx >= list.length) return; // no valid destination
+      const [moved] = list.splice(fromIdx, 1);
+      list.splice(toIdx, 0, moved);
+      if (section === 'shown') update(list, hidden);
+      else update(shown, list);
+      // Move focus to the row's new index after React re-renders.
+      requestAnimationFrame(() => {
+        const root = rootRef.current;
+        if (!root) return;
+        const next = root.querySelector<HTMLElement>(
+          `[data-drag-row][data-drag-section="${section}"][data-drag-idx="${toIdx}"]`,
+        );
+        next?.focus();
+      });
+    };
+
+    const handleKeyDown = (
+      e: React.KeyboardEvent,
+      idx: number,
+      section: Section,
+      col: ColumnItem,
+    ) => {
+      if (col.locked) return;
+      // Don't intercept keys that originate from a nested control
+      // (e.g. the Pin Button) — let those bubble naturally.
+      if ((e.target as HTMLElement).closest('.dls-list-item') !== e.currentTarget) return;
+      if (e.altKey && e.key === 'ArrowUp') {
+        e.preventDefault();
+        moveInSection(section, idx, -1);
+      } else if (e.altKey && e.key === 'ArrowDown') {
+        e.preventDefault();
+        moveInSection(section, idx, 1);
+      } else if (section === 'hidden' && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        showColumn(col.id);
+      } else if (section === 'shown' && e.key === 'Delete') {
+        e.preventDefault();
+        hideColumn(col.id);
+      }
     };
 
     /* --- Pointer-based drag --- */
@@ -113,6 +184,10 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
         // Click originated on the nested Pin <button>, let it handle the click.
         return;
       }
+      // Locked columns cannot initiate a drag.
+      const list = section === 'shown' ? shown : hidden;
+      const col = list[idx];
+      if (col?.locked) return;
       e.preventDefault();
       setDrag({ section, idx, id });
     };
@@ -125,7 +200,10 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
         | null => {
         const root = rootRef.current;
         if (!root) return null;
-        const rows = root.querySelectorAll<HTMLElement>('[data-drag-row]');
+        // Locked rows are excluded as drop targets so they keep their
+        // fixed position. (They also opt out as sources via the
+        // pointer-down guard.)
+        const rows = root.querySelectorAll<HTMLElement>('[data-drag-row]:not([data-locked])');
         for (const row of Array.from(rows)) {
           const rect = row.getBoundingClientRect();
           if (y >= rect.top && y <= rect.bottom && x >= rect.left && x <= rect.right) {
@@ -137,10 +215,10 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
         }
         // Fallback: figure out which section the point is over (hit above/below rows).
         const shownRows = root.querySelectorAll<HTMLElement>(
-          '[data-drag-row][data-drag-section="shown"]',
+          '[data-drag-row][data-drag-section="shown"]:not([data-locked])',
         );
         const hiddenRows = root.querySelectorAll<HTMLElement>(
-          '[data-drag-row][data-drag-section="hidden"]',
+          '[data-drag-row][data-drag-section="hidden"]:not([data-locked])',
         );
         const midOfFirst = (nodes: NodeListOf<HTMLElement>) => {
           if (!nodes.length) return null;
@@ -203,16 +281,32 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [drag]);
 
-    const rowDragProps = (idx: number, section: Section, id: string) => ({
+    const rowDragProps = (
+      idx: number,
+      section: Section,
+      col: ColumnItem,
+    ) => ({
       'data-drag-row': '',
       'data-drag-idx': String(idx),
       'data-drag-section': section,
+      'data-locked': col.locked ? '' : undefined,
       'data-dragging': drag?.section === section && drag?.idx === idx ? '' : undefined,
       'data-drag-over':
         over?.section === section && over?.idx === idx && !(drag?.section === section && drag?.idx === idx)
           ? ''
           : undefined,
-      onPointerDown: (e: React.PointerEvent) => handlePointerDown(e, idx, section, id),
+      // Locked rows skip the pointer-down handler entirely so they
+      // don't even fire preventDefault — text selection / clicks work
+      // as on any non-interactive row.
+      onPointerDown: col.locked
+        ? undefined
+        : (e: React.PointerEvent) => handlePointerDown(e, idx, section, col.id),
+      // Non-locked rows are keyboard-focusable. Alt+Up/Down reorder,
+      // Enter/Space (Hidden) shows, Delete (Shown) hides.
+      tabIndex: col.locked ? undefined : 0,
+      onKeyDown: col.locked
+        ? undefined
+        : (e: React.KeyboardEvent) => handleKeyDown(e, idx, section, col),
     });
 
     return (
@@ -240,25 +334,28 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
           }
         />
 
-        {/* Shown columns — pointer-draggable rows */}
+        {/* Shown columns — pointer-draggable rows (locked rows are static) */}
         {shown.map((col, i) => (
           <ListItem
             key={col.id}
             type="with-slots"
             interactive={false}
-            {...rowDragProps(i, 'shown', col.id)}
-            iconStart={<GripVerticalIcon />}
+            {...rowDragProps(i, 'shown', col)}
+            iconStart={col.locked ? <LockIcon aria-hidden="true" /> : <GripVerticalIcon aria-hidden="true" />}
             text={col.label}
+            aria-label={col.locked ? `${col.label} (locked)` : undefined}
             slotRight={
-              <Button
-                variant="ghost"
-                intent="neutral"
-                size="s"
-                icon={col.pinned ? <PinIcon /> : <PinOffIcon />}
-                iconOnly
-                aria-label={col.pinned ? `Unpin ${col.label}` : `Pin ${col.label}`}
-                onClick={() => togglePin(col.id)}
-              />
+              col.locked ? undefined : (
+                <Button
+                  variant="ghost"
+                  intent="neutral"
+                  size="s"
+                  icon={col.pinned ? <PinIcon /> : <PinOffIcon />}
+                  iconOnly
+                  aria-label={col.pinned ? `Unpin ${col.label}` : `Pin ${col.label}`}
+                  onClick={() => togglePin(col.id)}
+                />
+              )
             }
           />
         ))}
@@ -273,16 +370,18 @@ export const DropdownColumns = React.forwardRef<HTMLDivElement, DropdownColumnsP
           iconEnd={<EyeOffIcon />}
         />
 
-        {/* Hidden columns — pointer-draggable; click-to-show fires on pointer up without drag movement */}
+        {/* Hidden columns — pointer-draggable; click-to-show fires on pointer up without drag movement.
+            Locked columns should not appear here in practice, but if they do, they are non-interactive. */}
         {hidden.map((col, i) => (
           <ListItem
             key={col.id}
             type="with-slots"
             interactive={false}
-            {...rowDragProps(i, 'hidden', col.id)}
-            iconStart={<GripVerticalIcon />}
+            {...rowDragProps(i, 'hidden', col)}
+            iconStart={col.locked ? <LockIcon aria-hidden="true" /> : <GripVerticalIcon aria-hidden="true" />}
             text={col.label}
-            onClick={() => showColumn(col.id)}
+            aria-label={col.locked ? `${col.label} (locked)` : undefined}
+            onClick={col.locked ? undefined : () => showColumn(col.id)}
           />
         ))}
 

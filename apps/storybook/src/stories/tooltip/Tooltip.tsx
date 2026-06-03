@@ -11,34 +11,24 @@ export type TooltipOrientation =
   | 'bottom-center' | 'bottom-left' | 'bottom-right'
   | 'left' | 'right';
 
-export interface TooltipProps {
-  /** Visual type */
+export interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Visual type: general information or validation/error message. */
   type?: TooltipType;
-  /** Arrow orientation relative to the tooltip body */
+  /** Arrow orientation relative to the tooltip body. */
   orientation?: TooltipOrientation;
-  /** Tooltip text */
+  /** Tooltip text. */
   text: string;
-  /** Optional trailing content (e.g. Kbd shortcut) */
+  /** Optional trailing content, such as a Kbd shortcut. */
   slotContent?: React.ReactNode;
+  /** Additional class name for the root tooltip. */
   className?: string;
 }
 
 /* ---------------------------------------------------------------------------
-   Arrow SVG — 12×8 triangle
+   Arrow - 12x8 decorative triangle, styled in CSS
    --------------------------------------------------------------------------- */
 
-const Arrow = () => (
-  <svg
-    className="dls-tooltip__arrow"
-    width="12"
-    height="8"
-    viewBox="0 0 12 8"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path className="dls-tooltip__arrow-stroke" d="M0 0L6 8L12 0Z" />
-    <path className="dls-tooltip__arrow-fill" d="M1 0L6 6.5L11 0Z" />
-  </svg>
-);
+const Arrow = () => <span className="dls-tooltip__arrow" aria-hidden="true" />;
 
 /* ---------------------------------------------------------------------------
    Component
@@ -52,6 +42,7 @@ export const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
       text,
       slotContent,
       className,
+      ...props
     },
     ref,
   ) => {
@@ -59,6 +50,7 @@ export const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
       <div
         ref={ref}
         className={['dls-tooltip', className].filter(Boolean).join(' ')}
+        {...props}
         data-type={type !== 'general' ? type : undefined}
         data-orientation={orientation}
         role="tooltip"

@@ -1,0 +1,282 @@
+{
+  "name": "Tabs",
+  "kebabName": "tabs",
+  "category": "navigation / view switcher",
+  "description": "Local tablist for switching between related sibling views or content sections without leaving the current page.",
+  "subComponents": [],
+  "variants": [
+    "pill",
+    "folder"
+  ],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "items",
+      "type": "TabItem[]",
+      "required": true,
+      "description": "Tab items to render. Each item has value, label, optional icon, optional slotContent, and optional disabled state."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Currently selected tab value."
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Called when a tab is selected."
+    },
+    {
+      "name": "type",
+      "type": "TabType",
+      "required": false,
+      "default": "pill",
+      "enum": [
+        "pill",
+        "folder"
+      ],
+      "description": "Visual type."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Additional class name for the root tablist."
+    }
+  ],
+  "tokens": [
+    "--dls-color-border-base",
+    "--dls-color-surface-base",
+    "--dls-color-surface-muted",
+    "--dls-color-text-disabled",
+    "--dls-color-text-primary",
+    "--dls-font-family",
+    "--dls-font-weight-medium",
+    "--dls-font-weight-normal",
+    "--dls-radius-component-tab",
+    "--dls-radius-component-tab-group",
+    "--dls-shadow-surface-sm",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-state-focus-ring-color",
+    "--dls-state-hover-overlay",
+    "--dls-text-m-font-size",
+    "--dls-text-m-line-height"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Unselected enabled tabs use the shared hover overlay token. Selected tabs use base surface, active border, medium text, and small shadow for pill tabs. Focus uses the shared focus-ring token.",
+    "available": [
+      "data-type",
+      "data-selected",
+      ":hover:not(:disabled):not([data-selected])",
+      ":focus-visible",
+      ":disabled",
+      "aria-selected"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": [],
+    "forbiddenChildren": [
+      "Button",
+      "InputField",
+      "Dropdown",
+      "Tooltip"
+    ],
+    "forbiddenParents": [
+      "Button"
+    ],
+    "maxDepth": 1,
+    "minItems": 2,
+    "recommendedItems": 3
+  },
+  "accessibility": {
+    "semanticElement": "div[role=tablist] with button[role=tab] items",
+    "requiredAria": [
+      "aria-selected on each tab",
+      "aria-disabled on disabled tabs"
+    ],
+    "keyboard": {
+      "Tab": "Move focus to the selected tab in the tablist",
+      "ArrowLeft": "Select and focus the previous enabled tab",
+      "ArrowUp": "Select and focus the previous enabled tab",
+      "ArrowRight": "Select and focus the next enabled tab",
+      "ArrowDown": "Select and focus the next enabled tab",
+      "Home": "Select and focus the first enabled tab",
+      "End": "Select and focus the last enabled tab",
+      "Space": "Activate the focused tab button",
+      "Enter": "Activate the focused tab button"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "roving tabindex"
+  },
+  "figma": {
+    "nodeId": "328:4689",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=328-4689",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "pill": "pill",
+          "folder": "folder"
+        }
+      },
+      {
+        "figmaProperty": "tab1",
+        "reactProp": "items",
+        "valueMapping": {
+          "true": "include item",
+          "false": "omit item"
+        },
+        "note": "Figma visibility toggle. In code, item count and order come from the items array."
+      },
+      {
+        "figmaProperty": "tab2",
+        "reactProp": "items",
+        "valueMapping": {
+          "true": "include item",
+          "false": "omit item"
+        },
+        "note": "Figma visibility toggle. In code, item count and order come from the items array."
+      },
+      {
+        "figmaProperty": "tab3",
+        "reactProp": "items",
+        "valueMapping": {
+          "true": "include item",
+          "false": "omit item"
+        },
+        "note": "Figma visibility toggle. In code, item count and order come from the items array."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "tab-group",
+        "nodeId": "328:4689",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=328-4689",
+        "propertyMapping": [
+          {
+            "figmaProperty": "type",
+            "reactProp": "type",
+            "valueMapping": {
+              "pill": "pill",
+              "folder": "folder"
+            }
+          },
+          {
+            "figmaProperty": "tab1",
+            "reactProp": "items",
+            "note": "Figma visibility toggle. In code, item count and order come from the items array."
+          },
+          {
+            "figmaProperty": "tab2",
+            "reactProp": "items",
+            "note": "Figma visibility toggle. In code, item count and order come from the items array."
+          },
+          {
+            "figmaProperty": "tab3",
+            "reactProp": "items",
+            "note": "Figma visibility toggle. In code, item count and order come from the items array."
+          }
+        ]
+      },
+      {
+        "name": "tab-item",
+        "nodeId": "60:2050",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=60-2050",
+        "propertyMapping": [
+          {
+            "figmaProperty": "type",
+            "reactProp": "type",
+            "valueMapping": {
+              "pill": "pill",
+              "folder": "folder"
+            }
+          },
+          {
+            "figmaProperty": "state",
+            "reactProp": null,
+            "note": "Visual-only Figma property. Selected maps to value === item.value; hover and focus come from CSS pseudo-classes."
+          },
+          {
+            "figmaProperty": "icon",
+            "reactProp": "items",
+            "valueMapping": {
+              "false": "omit items[].icon",
+              "true": "items[].icon"
+            }
+          },
+          {
+            "figmaProperty": "slot",
+            "reactProp": "items",
+            "valueMapping": {
+              "false": "omit items[].slotContent",
+              "true": "items[].slotContent"
+            }
+          },
+          {
+            "figmaProperty": "text",
+            "reactProp": "items",
+            "note": "Figma editable text maps to items[].label."
+          }
+        ]
+      }
+    ]
+  },
+  "useWhen": [
+    "Switching between sibling views in the same local context",
+    "Entity detail pages with compact subviews",
+    "Settings or admin pages with related sections",
+    "Dense interfaces that need a low-height view switcher"
+  ],
+  "doNotUseFor": [
+    "Global navigation - use Sidebar or TopBar",
+    "Breadcrumb trails - use Breadcrumbs",
+    "Primary or secondary actions - use Button",
+    "Step-by-step progress or wizard flow",
+    "Filters, chips, badges, or tags"
+  ],
+  "relations": [
+    "Button",
+    "Breadcrumbs",
+    "Pagination",
+    "Sidebar"
+  ],
+  "knownDeviations": [
+    {
+      "area": "figma-code-contract",
+      "description": "Figma exposes tab-item as a separate component set, but React does not export TabItem. Tab items are configured through the Tabs items array.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-contract",
+      "description": "Figma tab-group exposes fixed tab1/tab2/tab3 visibility toggles. React uses a dynamic items array for count, order, labels, icons, slot content, and disabled state.",
+      "severity": "low"
+    },
+    {
+      "area": "accessibility-panels",
+      "description": "Tabs currently does not own tab panels or panel IDs, so tab buttons do not set aria-controls.",
+      "severity": "medium"
+    },
+    {
+      "area": "token-layer",
+      "description": "L4 tab foreground tokens exist in tokens.json, but current CSS uses semantic text tokens to match Figma text/primary bindings.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T06:03:24.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "6700446324669794"
+  }
+}

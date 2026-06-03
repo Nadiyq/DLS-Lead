@@ -1,0 +1,176 @@
+{
+  "name": "TableTopBar",
+  "kebabName": "table-top-bar",
+  "category": "table / toolbar",
+  "description": "Toolbar above a data table. Left slot hosts discovery / refinement controls (search, filter trigger); right slot hosts row-level actions (primary CTA, overflow). An optional filters row toggles open below the main row to host sort + filter chips.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "slotLeft",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Left slot content (search, icon buttons, etc.)"
+    },
+    {
+      "name": "slotRight",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Right slot content (action buttons, etc.)"
+    },
+    {
+      "name": "showFilters",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether to show the filters row"
+    },
+    {
+      "name": "filters",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Filters row content"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-spacing-4",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "TableTopBar is a passive layout container. Interactive behavior (hover/pressed/focus) lives on the composed children (SearchField, Button, FilterChip, Dropdown, etc.). The toolbar itself only positions content.",
+    "available": [],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": [
+      "SearchField",
+      "Button",
+      "ButtonGroup",
+      "FilterChip",
+      "ChipRegular",
+      "Separator",
+      "Dropdown",
+      "DropdownOptions",
+      "DropdownSorting",
+      "DropdownFilters",
+      "AvatarStack",
+      "BadgeIndicator"
+    ],
+    "forbiddenChildren": ["TableTopBar", "Table", "Dialog", "AlertDialog"],
+    "forbiddenParents": ["Button", "ListItem", "TableCell", "TableHeaderCell"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=toolbar]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {
+      "Tab": "Move focus to the next control inside the toolbar (natural tab order across slots)",
+      "Shift+Tab": "Move focus to the previous control inside the toolbar"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Natural tab order. The toolbar root carries role=\"toolbar\" + aria-label. The Filter icon-Button in slotLeft should expose aria-expanded + aria-controls pointing at the filters row when it controls the row."
+  },
+  "figma": {
+    "nodeId": "6120:13580",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6120-13580",
+    "propertyMapping": [
+      {
+        "figmaProperty": "slotLeft",
+        "reactProp": "slotLeft",
+        "valueMapping": {
+          "false": "omit slotLeft",
+          "true": "pass slotLeft ReactNode"
+        },
+        "note": "Figma boolean toggles the left slot; in code, presence of the slotLeft ReactNode drives rendering."
+      },
+      {
+        "figmaProperty": "slotLeftContent",
+        "reactProp": "slotLeft",
+        "note": "Figma slot for the left content; pass SearchField + Filter icon Button (and other discovery controls) here."
+      },
+      {
+        "figmaProperty": "filter",
+        "reactProp": null,
+        "note": "Figma boolean inside slotLeftContent toggles the canonical Filter icon button. In code, the consumer composes the filter trigger inside slotLeft."
+      },
+      {
+        "figmaProperty": "slotRight",
+        "reactProp": "slotRight",
+        "valueMapping": {
+          "false": "omit slotRight",
+          "true": "pass slotRight ReactNode"
+        }
+      },
+      {
+        "figmaProperty": "slotRightContent",
+        "reactProp": "slotRight",
+        "note": "Figma slot for the right content; pass a primary Button + overflow icon-Button here."
+      },
+      {
+        "figmaProperty": "button",
+        "reactProp": null,
+        "note": "Figma boolean inside slotRightContent toggles the canonical primary Button. In code, the consumer composes it inside slotRight."
+      },
+      {
+        "figmaProperty": "more",
+        "reactProp": null,
+        "note": "Figma boolean inside slotRightContent toggles the canonical overflow icon-Button. In code, compose it inside slotRight."
+      },
+      {
+        "figmaProperty": "showFilters",
+        "reactProp": "showFilters",
+        "valueMapping": {
+          "false": "false",
+          "true": "true"
+        },
+        "note": "Figma boolean toggles the secondary filters row. In code, also requires `filters` ReactNode to be provided."
+      },
+      {
+        "figmaProperty": "(secondary slot)",
+        "reactProp": "filters",
+        "note": "Figma secondary row content (sort chip, separator, filter chips, add-filter trigger)."
+      }
+    ]
+  },
+  "useWhen": [
+    "Above any data table that needs search, filtering, and row-level actions in one consistent surface",
+    "Inbox / list view headers that mix search with primary action(s)",
+    "Settings or admin tables where the secondary filter row is toggled by a Filter icon button in the left slot"
+  ],
+  "doNotUseFor": [
+    "Page-level navigation → use TopBar",
+    "Page-level primary headings → use a semantic <h1> outside the table region",
+    "Editor / canvas toolbars → use Toolbar",
+    "Form actions → use a form footer with a ButtonGroup"
+  ],
+  "relations": ["Table", "TableCell", "TableHeaderCell", "Filters", "FilterChip", "SearchField", "Button", "Dropdown", "DropdownSorting", "DropdownFilters", "BadgeIndicator"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Spec mentions --dls-color-component-table-top-bar-* tokens but they do not exist in tokens.json. The CSS uses semantic surface/border/spacing tokens directly. Backfilling deferred.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-contract",
+      "description": "The Figma component embeds canonical default slot content (Search + Filter icon-button on the left; primary Button + overflow on the right; full Filters row with sample chips). In code, those are slot defaults the consumer must compose explicitly — the React component is purely slot-based.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-03T11:18:43.156Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "f3059f34939dbf6b"
+  }
+}

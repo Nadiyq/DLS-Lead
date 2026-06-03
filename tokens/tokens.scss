@@ -375,6 +375,19 @@ $dls-component-chip-bg: (base: $dls-color-surface-muted, disabled: $dls-color-su
 $dls-component-chip-fg: (base: $dls-color-text-primary, disabled: $dls-color-text-placeholder);
 $dls-component-chip-border: (base: $dls-color-border-subtle, disabled: $dls-color-border-disabled);
 
+$dls-component-legend-item-swatch: (
+  purple: (100: $dls-color-additional-purple-100, 300: $dls-color-additional-purple-300, 500: $dls-color-additional-purple-500, 700: $dls-color-additional-purple-700),
+  violet: (100: $dls-color-additional-violet-100, 300: $dls-color-additional-violet-300, 500: $dls-color-additional-violet-500, 700: $dls-color-additional-violet-700),
+  pink: (100: $dls-color-additional-pink-100, 300: $dls-color-additional-pink-300, 500: $dls-color-additional-pink-500, 700: $dls-color-additional-pink-700),
+  blue: (100: $dls-color-additional-blue-100, 300: $dls-color-additional-blue-300, 500: $dls-color-additional-blue-500, 700: $dls-color-additional-blue-700),
+  teal: (100: $dls-color-additional-teal-100, 300: $dls-color-additional-teal-300, 500: $dls-color-additional-teal-500, 700: $dls-color-additional-teal-700),
+  yellow: (100: $dls-color-additional-yellow-100, 300: $dls-color-additional-yellow-300, 500: $dls-color-additional-yellow-500, 700: $dls-color-additional-yellow-700),
+  green: (100: $dls-color-additional-green-100, 300: $dls-color-additional-green-300, 500: $dls-color-additional-green-500, 700: $dls-color-additional-green-700),
+  gold: (100: $dls-color-additional-gold-100, 300: $dls-color-additional-gold-300, 500: $dls-color-additional-gold-500, 700: $dls-color-additional-gold-700),
+  cinnamon: (100: $dls-color-additional-cinnamon-100, 300: $dls-color-additional-cinnamon-300, 500: $dls-color-additional-cinnamon-500, 700: $dls-color-additional-cinnamon-700),
+  orange: (100: $dls-color-additional-orange-100, 300: $dls-color-additional-orange-300, 500: $dls-color-additional-orange-500, 700: $dls-color-additional-orange-700),
+);
+
 $dls-component-tab-fg: (base: $dls-color-text-secondary, active: $dls-color-text-primary, hover: $dls-color-text-primary, disabled: $dls-color-text-disabled);
 $dls-component-tab-border-active: $dls-color-intent-primary-base;
 
@@ -544,6 +557,7 @@ $dls-radius-component-input: $dls-radius-m;
 $dls-radius-component-input-toolbar: $dls-radius-m;
 $dls-radius-component-item: $dls-radius-l;
 $dls-radius-component-kbd: $dls-radius-m;
+$dls-radius-component-legend-item-swatch: $dls-radius-full;
 $dls-radius-component-list: $dls-radius-xl;
 $dls-radius-component-list-item: $dls-radius-s;
 $dls-radius-component-modal: $dls-radius-xl;

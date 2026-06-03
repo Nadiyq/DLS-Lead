@@ -25,6 +25,7 @@ import { DropdownColumns } from '../dropdown-columns/DropdownColumns';
 import { DropdownFilters } from '../dropdown-filters/DropdownFilters';
 import { DropdownExport } from '../dropdown-export/DropdownExport';
 import { Checkbox } from '../checkbox/Checkbox';
+import { BadgeIndicator } from '../badge/indicator/BadgeIndicator';
 
 const FILTER_OPTIONS: Record<string, string[]> = {
   Status: ['Active', 'Inactive', 'Pending', 'Archived'],
@@ -45,7 +46,18 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={{ width: 720, border: '1px solid var(--dls-color-border-subtle)', borderRadius: 'var(--dls-radius-component-card)', overflow: 'hidden' }}>
+      // NOTE: do NOT set overflow:hidden here. The FilterChip dropdown
+      // (and any other popover composed inside the TableTopBar) would
+      // otherwise be clipped by this wrapper. The TableTopBar itself
+      // has rounded edges via the inner cells; the wrapper only needs
+      // the outer border + radius for the demo frame.
+      //
+      // Width tuned so the canonical filters-row pattern (Sort chip +
+      // separator + 4 FilterChips + add-filter Plus) fits on one row
+      // — closer to real-world table widths (~1100–1200px) than the
+      // original Figma frame (716px), which forces Plus to wrap onto
+      // a confusing second row whenever filters >= 4.
+      <div style={{ width: 1080, border: '1px solid var(--dls-color-border-subtle)', borderRadius: 'var(--dls-radius-component-card)' }}>
         <Story />
       </div>
     ),
@@ -136,9 +148,13 @@ const DefaultFiltersPanel = () => {
 interface OptionsMenuProps {
   /** Custom filters panel — mirrors the actual filter row chips */
   filtersPanel?: React.ReactNode;
+  /** Controlled open state for the underlying DropdownOptions. */
+  open?: boolean;
+  /** Called when the underlying DropdownOptions wants to change open state. */
+  onOpenChange?: (open: boolean) => void;
 }
 
-const OptionsMenu = ({ filtersPanel }: OptionsMenuProps = {}) => {
+const OptionsMenu = ({ filtersPanel, open, onOpenChange }: OptionsMenuProps = {}) => {
   const [menu, setMenu] = React.useState<SubMenu>('root');
 
   const rootMenu = (
@@ -186,7 +202,12 @@ const OptionsMenu = ({ filtersPanel }: OptionsMenuProps = {}) => {
   }
 
   return (
-    <DropdownOptions triggerIcon={<MoreIcon />} triggerLabel="Options">
+    <DropdownOptions
+      triggerIcon={<MoreIcon />}
+      triggerLabel="Options"
+      open={open}
+      onOpenChange={onOpenChange}
+    >
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--dls-spacing-2)' }}>
         {rootMenu}
         {submenu}
@@ -194,6 +215,58 @@ const OptionsMenu = ({ filtersPanel }: OptionsMenuProps = {}) => {
     </DropdownOptions>
   );
 };
+
+// ---------------------------------------------------------------------------
+// Helper — Filter icon-Button with a "filters-active" BadgeIndicator dot.
+//
+// When at least 1 filter is active, a tiny xs danger BadgeIndicator (8px red
+// dot) is absolutely-positioned at the top-right corner of the Filter button
+// (2px from the top, 2px from the right edge) so users get an at-a-glance
+// signal that filters are applied without opening the row.
+// ---------------------------------------------------------------------------
+
+interface FilterButtonProps {
+  /** Whether at least one filter is currently active — drives the indicator dot. */
+  hasActiveFilters?: boolean;
+  /** Click handler (typically toggles the filters row). */
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  /** `aria-pressed` value — pass when this button toggles the filters row. */
+  ariaPressed?: boolean;
+  /** `aria-controls` value — pass when this button controls the filters row id. */
+  ariaControls?: string;
+  /** Accessible label. */
+  ariaLabel?: string;
+}
+
+const FilterButton = ({
+  hasActiveFilters = false,
+  onClick,
+  ariaPressed,
+  ariaControls,
+  ariaLabel = 'Filter',
+}: FilterButtonProps) => (
+  <span style={{ position: 'relative', display: 'inline-flex' }}>
+    <Button
+      variant="soft"
+      intent="neutral"
+      size="m"
+      icon={<FilterIcon />}
+      iconOnly
+      aria-label={ariaLabel}
+      aria-pressed={ariaPressed}
+      aria-controls={ariaControls}
+      onClick={onClick}
+    />
+    {hasActiveFilters && (
+      <BadgeIndicator
+        size="xs"
+        intent="danger"
+        style={{ position: 'absolute', top: 2, right: 2, pointerEvents: 'none' }}
+        aria-label="Filters active"
+      />
+    )}
+  </span>
+);
 
 // ---------------------------------------------------------------------------
 // Playground
@@ -205,7 +278,7 @@ export const Playground: Story = {
     slotLeft: (
       <>
         <SearchField placeholder="Search..." />
-        <Button variant="soft" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filter" />
+        <FilterButton hasActiveFilters={false} />
       </>
     ),
     slotRight: (
@@ -227,7 +300,7 @@ export const WithoutFilters: Story = {
     slotLeft: (
       <>
         <SearchField placeholder="Search..." />
-        <Button variant="soft" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filter" />
+        <FilterButton hasActiveFilters={false} />
       </>
     ),
     slotRight: (
@@ -317,7 +390,7 @@ export const WithFilters: Story = {
         slotLeft={
           <>
             <SearchField placeholder="Search..." />
-            <Button variant="soft" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Filter" />
+            <FilterButton hasActiveFilters={activeFilters.length > 0} />
           </>
         }
         slotRight={
@@ -362,6 +435,35 @@ export const WithFilters: Story = {
                 children: <>{buildChips('m')}</>,
               },
             ]}
+            addMenu={(close) => {
+              const used = new Set(activeFilters.map(f => f.label));
+              const remaining = Object.keys(FILTER_OPTIONS).filter(f => !used.has(f));
+              if (remaining.length === 0) {
+                return (
+                  <List>
+                    <ListItem type="empty-state" text="No more filters" />
+                  </List>
+                );
+              }
+              return (
+                <List>
+                  {remaining.map((label) => (
+                    <ListItem
+                      key={label}
+                      type="text"
+                      text={label}
+                      onClick={() => {
+                        setActiveFilters(prev => [
+                          ...prev,
+                          { id: label.toLowerCase(), label, values: new Set<string>(), isVisible: true },
+                        ]);
+                        close();
+                      }}
+                    />
+                  ))}
+                </List>
+              );
+            }}
           />
         }
       />
@@ -389,17 +491,13 @@ export const Interactive: Story = {
     const [activeFilters, setActiveFilters] = React.useState<
       { id: string; label: string; values: Set<string>; isVisible: boolean }[]
     >([{ id: 'status', label: 'Status', values: new Set(['Active']), isVisible: true }]);
-
-    const addFilter = () => {
-      const used = new Set(activeFilters.map(f => f.label));
-      const next = availableFilters.find(f => !used.has(f));
-      if (next) {
-        setActiveFilters(prev => [
-          ...prev,
-          { id: next.toLowerCase(), label: next, values: new Set<string>(), isVisible: true },
-        ]);
-      }
-    };
+    // Cross-surface chip-open coordination. When a chip in the
+    // DropdownFilters mirror is clicked, we set this id to flip the
+    // matching top-bar chip's value popover open.
+    const [openFilterId, setOpenFilterId] = React.useState<string | null>(null);
+    // Controlled state for the row-right Options (3-dot) menu so the
+    // mirror-chip handoff can dismiss it cleanly.
+    const [optionsOpen, setOptionsOpen] = React.useState(false);
 
     const removeFilter = (id: string) => {
       setActiveFilters(prev => prev.filter(f => f.id !== id));
@@ -416,6 +514,20 @@ export const Interactive: Story = {
         if (next.has(opt)) next.delete(opt); else next.add(opt);
         return { ...f, values: next };
       }));
+    };
+
+    /** Cross-surface handoff fired by a DropdownFilters mirror chip:
+     *  1. Reveal the filter row if it's hidden.
+     *  2. Close the OptionsMenu (and the nested DropdownFilters).
+     *  3. Open the matching top-bar chip's value popover.
+     *  Uses real controlled state on every surface — no synthetic
+     *  events. The earlier "dispatch mousedown on body" workaround
+     *  also closed the top-bar chip via its own click-outside
+     *  listener, which is why a clean controlled API is required. */
+    const jumpToTopbarFilter = (id: string) => {
+      setShowFilters(true);
+      setOptionsOpen(false);
+      setOpenFilterId(id);
     };
 
     const sortGroup: FilterGroup = {
@@ -439,7 +551,7 @@ export const Interactive: Story = {
       ),
     };
 
-    const buildFilterGroupChildren = (size: 'm' | 's') => activeFilters.map(f => (
+    const buildFilterGroupChildren = (size: 'm' | 's', isMirror = false) => activeFilters.map(f => (
       <FilterChip
         key={f.id}
         label={f.label}
@@ -447,6 +559,17 @@ export const Interactive: Story = {
         size={size}
         valueSummary={<span className="dls-filter-chip__value-text">{summarizeValues(f.values)}</span>}
         onVisibilityChange={(v) => setVisibility(f.id, v)}
+        // Mirror chips inside DropdownFilters are read-only — they
+        // never open their own popover. Clicking their chevron fires
+        // a handoff that opens the matching TOP-BAR chip instead.
+        open={isMirror ? false : openFilterId === f.id}
+        onOpenChange={(o) => {
+          if (isMirror) {
+            if (o) jumpToTopbarFilter(f.id);
+          } else {
+            setOpenFilterId(o ? f.id : null);
+          }
+        }}
       >
         <List className="dls-filter-chip__enum-list">
           {(FILTER_OPTIONS[f.label] ?? []).map((opt) => (
@@ -481,16 +604,23 @@ export const Interactive: Story = {
           slotLeft={
             <>
               <SearchField placeholder="Search..." />
-              <Button variant="soft" intent="neutral" size="m" icon={<FilterIcon />} iconOnly aria-label="Toggle filters" onClick={() => setShowFilters(v => !v)} />
+              <FilterButton
+                hasActiveFilters={activeFilters.length > 0}
+                ariaLabel="Toggle filters"
+                ariaPressed={showFilters}
+                onClick={() => setShowFilters(v => !v)}
+              />
             </>
           }
           slotRight={
             <>
               <Button variant="filled" intent="neutral" size="m" icon={<PlusIcon />}>Button</Button>
               <OptionsMenu
+                open={optionsOpen}
+                onOpenChange={setOptionsOpen}
                 filtersPanel={
                   activeFilters.length > 0
-                    ? <DropdownFilters>{buildFilterGroupChildren('s')}</DropdownFilters>
+                    ? <DropdownFilters>{buildFilterGroupChildren('s', /* isMirror */ true)}</DropdownFilters>
                     : <DropdownFilters />
                 }
               />
@@ -502,7 +632,35 @@ export const Interactive: Story = {
               size="m"
               groups={groups}
               showAdd={activeFilters.length < availableFilters.length}
-              onAdd={addFilter}
+              addMenu={(close) => {
+                const used = new Set(activeFilters.map(f => f.label));
+                const remaining = availableFilters.filter(f => !used.has(f));
+                if (remaining.length === 0) {
+                  return (
+                    <List>
+                      <ListItem type="empty-state" text="No more filters" />
+                    </List>
+                  );
+                }
+                return (
+                  <List>
+                    {remaining.map((label) => (
+                      <ListItem
+                        key={label}
+                        type="text"
+                        text={label}
+                        onClick={() => {
+                          setActiveFilters(prev => [
+                            ...prev,
+                            { id: label.toLowerCase(), label, values: new Set<string>(), isVisible: true },
+                          ]);
+                          close();
+                        }}
+                      />
+                    ))}
+                  </List>
+                );
+              }}
             />
           }
         />

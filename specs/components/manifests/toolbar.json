@@ -43,7 +43,7 @@
     "tokens": []
   },
   "composition": {
-    "allowedChildren": ["Button", "ToolbarGroup", "Separator"],
+    "allowedChildren": ["Button", "ToolbarGroup", "Separator", "DropdownOptions"],
     "forbiddenChildren": ["Toolbar"],
     "maxDepth": 1
   },
@@ -68,6 +68,15 @@
           "false": "false",
           "true": "true"
         }
+      },
+      {
+        "figmaProperty": "options",
+        "reactProp": null,
+        "valueMapping": {
+          "false": "omit the overflow Dropdown",
+          "true": "attach a DropdownOptions wrapping the trailing Ellipsis button"
+        },
+        "note": "Figma-only structural toggle. In code, consumers attach a DropdownOptions (or any other dropdown) as the final child of <Toolbar>. The MessageComposer convention is a Pin/Unpin menu — Pin → render the Toolbar in the sticky slot; Unpin → render in the selection-aware floatingToolbar slot."
       }
     ]
   },
@@ -83,7 +92,7 @@
     "A single action → use Button directly",
     "Dropdown menus → use Dropdown (Toolbar may contain a trigger that opens a Dropdown for overflow actions)"
   ],
-  "relations": ["Button", "Separator", "MessageComposer", "Dropdown"],
+  "relations": ["Button", "Separator", "MessageComposer", "Dropdown", "DropdownOptions", "List", "ListItem"],
   "knownDeviations": [
     {
       "area": "token-layer",
@@ -92,7 +101,7 @@
     }
   ],
   "_meta": {
-    "generatedAt": "2026-06-02T14:45:00.022Z",
+    "generatedAt": "2026-06-03T06:16:19.237Z",
     "generator": "claude-code-manual@1.0.0",
     "sourceHash": "0f20da30b98c5a1d"
   }
