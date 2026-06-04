@@ -1,0 +1,234 @@
+{
+  "name": "SidebarItem",
+  "kebabName": "sidebar-item",
+  "category": "navigation item",
+  "description": "Individual navigation entry within a Sidebar — supports simple links, tree nodes, option menus, collapsible sections, and workspace/account switchers.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "'simple' | 'tree' | 'option' | 'collapsible' | 'big-icon'",
+      "required": false,
+      "default": "simple",
+      "enum": ["simple", "tree", "option", "collapsible", "big-icon"],
+      "description": "Item type — determines which slots are shown"
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "required": true,
+      "description": "Primary label text"
+    },
+    {
+      "name": "secondaryText",
+      "type": "string",
+      "required": false,
+      "description": "Secondary text (big-icon type only)"
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Leading icon slot"
+    },
+    {
+      "name": "media",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Media slot — 32×32 logo/avatar (big-icon type)"
+    },
+    {
+      "name": "showIndicator",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show notification indicator dot"
+    },
+    {
+      "name": "badgeCount",
+      "type": "number",
+      "required": false,
+      "description": "Number badge value"
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the item is currently selected / active"
+    },
+    {
+      "name": "collapsed",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the sidebar is collapsed (icon-only mode)"
+    },
+    {
+      "name": "expanded",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Whether a tree/collapsible section is expanded"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the item is disabled"
+    },
+    {
+      "name": "onClick",
+      "type": "() => void",
+      "required": false,
+      "description": "Click handler"
+    },
+    {
+      "name": "onToggle",
+      "type": "() => void",
+      "required": false,
+      "description": "Expand/collapse handler (tree/collapsible)"
+    },
+    {
+      "name": "onAction",
+      "type": "() => void",
+      "required": false,
+      "description": "Action handler (option type — ellipsis click)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-radius-component-sidebar-item",
+    "--dls-color-intent-neutral-text",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-neutral-on-base",
+    "--dls-color-text-secondary",
+    "--dls-color-text-disabled",
+    "--dls-color-surface-base",
+    "--dls-state-hover-overlay",
+    "--dls-state-focus-ring-color"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Normal state has transparent surface — uses overlay tokens for hover. Active state uses filled neutral base but suppresses hover.",
+    "available": [
+      ":hover:not(:disabled):not([data-disabled]):not([data-active])",
+      ":focus-visible",
+      "[data-active]",
+      "[data-disabled]",
+      "[data-collapsed]",
+      "[data-expanded]"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["BadgeNumber", "BadgeIndicator"],
+    "forbiddenChildren": ["SidebarItem"],
+    "maxDepth": 1,
+    "minItems": 0
+  },
+  "accessibility": {
+    "semanticElement": "div[role=menuitem]",
+    "requiredAria": ["aria-current", "aria-disabled"],
+    "keyboard": {
+      "Enter": "Activates the item (calls onClick)",
+      "Space": "Activates the item (calls onClick)",
+      "Tab": "Moves focus between sidebar items"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "76-13399",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=76-13399",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "simple": "simple",
+          "tree": "tree",
+          "option": "option",
+          "collapsible": "collapsible",
+          "big-icon": "big-icon"
+        }
+      },
+      {
+        "figmaProperty": "state",
+        "reactProp": null,
+        "note": "Figma-only — CSS pseudo-classes (:hover, :focus-visible) and data-attributes ([data-active])"
+      },
+      {
+        "figmaProperty": "collapsed?",
+        "reactProp": "collapsed"
+      },
+      {
+        "figmaProperty": "icon",
+        "reactProp": "icon",
+        "note": "Boolean toggle in Figma; ReactNode slot in code"
+      },
+      {
+        "figmaProperty": "indicator",
+        "reactProp": "showIndicator"
+      },
+      {
+        "figmaProperty": "number",
+        "reactProp": "badgeCount",
+        "note": "Boolean in Figma; number in code — badge renders when badgeCount > 0"
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "text"
+      },
+      {
+        "figmaProperty": "subtitle",
+        "reactProp": "secondaryText",
+        "note": "Boolean toggle in Figma; string prop in code — controls visibility"
+      },
+      {
+        "figmaProperty": "subtitleText",
+        "reactProp": "secondaryText",
+        "note": "String value in Figma; maps to same secondaryText prop"
+      },
+      {
+        "figmaProperty": "slotMedia",
+        "reactProp": "media",
+        "note": "Boolean in Figma; ReactNode slot in code (big-icon type)"
+      },
+      {
+        "figmaProperty": "change",
+        "reactProp": "icon",
+        "note": "Figma slot swap for icon content; maps to icon prop in code"
+      }
+    ]
+  },
+  "useWhen": [
+    "Building left-side navigation menus with icon + text rows",
+    "Representing hierarchical navigation with tree/collapsible types",
+    "Workspace or account switchers with logo/avatar + subtitle",
+    "Option menus with per-item action buttons"
+  ],
+  "doNotUseFor": [
+    "Top-level horizontal navigation — use Tabs",
+    "Dropdown menu rows — use ListItem",
+    "Breadcrumb links — use Breadcrumbs",
+    "Standalone buttons — use Button"
+  ],
+  "relations": ["Sidebar", "Submenu", "BadgeNumber", "BadgeIndicator", "IconShape"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T12:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "7ea9c67e4877b542"
+  }
+}

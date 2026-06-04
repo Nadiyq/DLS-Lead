@@ -1,0 +1,218 @@
+{
+  "name": "TableColumn",
+  "kebabName": "table-column",
+  "category": "table / data display",
+  "description": "Typed column primitive for Table. Wraps a TableHeaderCell (auto-derived header per type) and one TableCell per row, choosing the type-appropriate variant. 12 column types — 1:1 with the Figma component set symbols.",
+  "subComponents": [],
+  "variants": [
+    "text",
+    "number",
+    "checkbox",
+    "date",
+    "badge",
+    "user",
+    "users-stacked",
+    "two-line",
+    "two-line+avatar",
+    "icon-shape",
+    "card",
+    "actions"
+  ],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "TableColumnType",
+      "required": true,
+      "enum": ["text", "number", "checkbox", "date", "badge", "user", "users-stacked", "two-line", "two-line+avatar", "icon-shape", "card", "actions"],
+      "description": "Column type — determines header layout and cell rendering. 1:1 with the 12 type-* symbols in the Figma frame."
+    },
+    {
+      "name": "header",
+      "type": "string",
+      "required": false,
+      "description": "Column header text. Defaults to a per-type label (Text / Number / Date / Badge / User / Users / Two-line / Icon / Card / Actions). The checkbox type renders a select-all Checkbox in the header cell instead of text."
+    },
+    {
+      "name": "rows",
+      "type": "TableColumnRow[]",
+      "required": true,
+      "description": "Row data — one entry per cell. Shape varies by type: text/number/date use { text }; badge uses { badgeLabel, badgeIntent }; user / two-line+avatar use { text, initials | avatarSrc }; users-stacked uses { users: [{ name, initials?, src? }] (or legacy stackedCount); two-line uses { text, secondaryText }; checkbox uses { checked }; card uses { cardLast4 }; icon-shape / actions accept the generic { render } escape hatch."
+    },
+    {
+      "name": "sortable",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the header is sortable. Drives TableHeaderCell.sortable — direction is owned by the parent Table."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-spacing-2",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "TableColumn is a layout container — it delegates all interactive state to composed cells (TableHeaderCell sortable/aria-sort, TableCell row hover via the parent Table). The root has no hover/pressed/focus of its own.",
+    "available": [],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["TableHeaderCell", "TableCell", "Avatar", "AvatarStack", "Button", "Checkbox", "IconShape", "Badge"],
+    "forbiddenChildren": ["TableColumn", "Table", "Dialog", "AlertDialog"],
+    "forbiddenParents": ["Button", "ListItem"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Focuses interactive children in row order (Checkbox cells, action Buttons, sortable column headers)"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Root is a plain <div> — semantic table grouping (role=\"table\" / role=\"grid\", row primitives) is owned by the parent Table. Composed TableHeaderCell carries role=\"columnheader\" + aria-sort; each TableCell carries role=\"cell\". Action Buttons in actions cells are native <button>s with aria-label. Checkbox columns use native <input type=\"checkbox\"> in both header (select-all) and each cell."
+  },
+  "figma": {
+    "nodeId": "6123:18069",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-18069",
+    "propertyMapping": [
+      {
+        "figmaProperty": "(variant name)",
+        "reactProp": "type",
+        "valueMapping": {
+          "type=text": "text",
+          "type=number": "number",
+          "type=checkbox": "checkbox",
+          "type=date": "date",
+          "type=badge": "badge",
+          "type=user": "user",
+          "type=users-stacked": "users-stacked",
+          "type=two-line": "two-line",
+          "type=two-line+avatar": "two-line+avatar",
+          "type=icon-shape": "icon-shape",
+          "type=card": "card",
+          "type=actions": "actions"
+        },
+        "note": "12 Figma type-* symbols map 1:1 to TableColumnType enum values."
+      },
+      {
+        "figmaProperty": "(header text)",
+        "reactProp": "header",
+        "note": "Default per-type label (Text / Number / Date / Badge / User / Users / Two-line / Icon / Card / Actions). Checkbox column shows a select-all Checkbox in the header cell."
+      },
+      {
+        "figmaProperty": "(row data)",
+        "reactProp": "rows",
+        "note": "TableColumnRow shape varies by type — see props.rows.description."
+      }
+    ],
+    "componentSets": [
+      {
+        "name": "type=text",
+        "nodeId": "6123:18068",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-18068",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=text": "text" } }]
+      },
+      {
+        "name": "type=number",
+        "nodeId": "6123:18070",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-18070",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=number": "number" } }]
+      },
+      {
+        "name": "type=checkbox",
+        "nodeId": "6123:18199",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-18199",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=checkbox": "checkbox" } }]
+      },
+      {
+        "name": "type=date",
+        "nodeId": "6123:18342",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-18342",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=date": "date" } }]
+      },
+      {
+        "name": "type=badge",
+        "nodeId": "6123:18438",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-18438",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=badge": "badge" } }]
+      },
+      {
+        "name": "type=user",
+        "nodeId": "6123:19898",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-19898",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=user": "user" } }]
+      },
+      {
+        "name": "type=users-stacked",
+        "nodeId": "6123:19475",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-19475",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=users-stacked": "users-stacked" } }]
+      },
+      {
+        "name": "type=two-line",
+        "nodeId": "6123:19060",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-19060",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=two-line": "two-line" } }]
+      },
+      {
+        "name": "type=two-line+avatar",
+        "nodeId": "6123:20371",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-20371",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=two-line+avatar": "two-line+avatar" } }]
+      },
+      {
+        "name": "type=icon-shape",
+        "nodeId": "6124:21428",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6124-21428",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=icon-shape": "icon-shape" } }]
+      },
+      {
+        "name": "type=card",
+        "nodeId": "6123:19267",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-19267",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=card": "card" } }]
+      },
+      {
+        "name": "type=actions",
+        "nodeId": "6123:18642",
+        "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-18642",
+        "propertyMapping": [{ "figmaProperty": "(symbol)", "reactProp": "type", "valueMapping": { "type=actions": "actions" } }]
+      }
+    ]
+  },
+  "useWhen": [
+    "Composing a Table from typed column primitives",
+    "Need a consistent column-type vocabulary across many tables in the app",
+    "Demo / Storybook context for showing column-type patterns"
+  ],
+  "doNotUseFor": [
+    "Header-row-only surfaces → use TableHeaderCell directly",
+    "Single cells in a custom row → use TableCell directly",
+    "Full table chrome (toolbar + filter row + body + footer) → compose Table + TableTopBar + Filters + columns"
+  ],
+  "relations": ["Table", "TableHeaderCell", "TableCell", "TableTopBar", "DropdownColumns", "DropdownColumnActions", "Avatar", "AvatarStack", "Badge", "Button", "Checkbox", "IconShape"],
+  "knownDeviations": [
+    {
+      "area": "primitive-coverage",
+      "description": "The card type's masked digits use a small inline composition (•••• + last 4) rather than a dedicated DLS primitive. The Mastercard logo comes from the brand-logos asset module. Future enhancement: extract a <CardNumber> helper if used in more than ~3 places.",
+      "severity": "low"
+    },
+    {
+      "area": "architecture-boundary",
+      "description": "TableColumn intentionally does not own pinned / locked flags — this is a design decision, not a TODO. Rationale: (1) locked has zero render implication on the column itself; it's a UI-state flag the management surfaces (DropdownColumns hides the Pin button and skips drag targets; DropdownColumnActions hides Pin/Move/Hide rows) consume to gate user actions. Adding it to TableColumn would be a no-op prop. (2) pinned has a real visual implication (position: sticky on cells) but requires Table-level coordination — each pinned column's left offset depends on the cumulative width of pinned columns before it, which TableColumn alone can't compute. A correct implementation requires lifting a ColumnModel into the parent Table (columns: ColumnModel[] + onColumnsChange) where the model owns pinned/locked/hidden/order. Today the consumer derives the rendered TableColumn props from their own column state (typically driven by DropdownColumns + DropdownColumnActions). This works correctly until a real consumer needs horizontally-scrolling tables with sticky pinned columns, at which point the proper fix is the ColumnModel refactor, not adding props piecemeal to TableColumn.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-04T05:57:53.862Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "7bc05b17da1b6979"
+  }
+}

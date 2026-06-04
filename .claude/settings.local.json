@@ -80,7 +80,11 @@
       "Bash(npx --yes ajv-cli@5 validate -s specs/schemas/component.v1.json -d specs/components/manifests/dropdown-options.json --strict=false --spec=draft2020)",
       "Bash(npx --yes ajv-cli@5 validate -s specs/schemas/component.v1.json -d specs/components/manifests/dropdown-columns.json --strict=false --spec=draft2020)",
       "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dropdown-filters/dropdown-filters.css)",
-      "Bash(npx --yes ajv-cli@5 validate -s specs/schemas/component.v1.json -d specs/components/manifests/dropdown-filters.json --strict=false --spec=draft2020)"
+      "Bash(npx --yes ajv-cli@5 validate -s specs/schemas/component.v1.json -d specs/components/manifests/dropdown-filters.json --strict=false --spec=draft2020)",
+      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dropdown-export/dropdown-export.css)",
+      "Bash(npx --yes ajv-cli@5 validate -s specs/schemas/component.v1.json -d specs/components/manifests/dropdown-export.json --strict=false --spec=draft2020)",
+      "Bash(node /Users/nadaabrosimova/Documents/DLS-Lead/.claude/hooks/lint-tokens.mjs /Users/nadaabrosimova/Documents/DLS-Lead/apps/storybook/src/stories/dropdown-sorting/dropdown-sorting.css)",
+      "Bash(npx --yes ajv-cli@5 validate -s specs/schemas/component.v1.json -d specs/components/manifests/dropdown-sorting.json --strict=false --spec=draft2020)"
     ]
   },
   "enabledMcpjsonServers": [

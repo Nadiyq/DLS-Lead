@@ -24,6 +24,20 @@ export const Playground: Story = {
     pinned: false,
     canMoveLeft: true,
     canMoveRight: true,
+    locked: false,
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Locked column — Pin / Move / Hide are hidden because the
+// ColumnItem.locked contract in DropdownColumns forbids those
+// mutations. Only Sort + Filter remain.
+// ---------------------------------------------------------------------------
+
+export const Locked: Story = {
+  args: {
+    sortState: 'none',
+    locked: true,
   },
 };
 

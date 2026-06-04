@@ -1,0 +1,82 @@
+/* ==========================================================================
+   DLS Summary Item - dashboard/table summary metric
+   Type: positive | negative | no-changes
+   ========================================================================== */
+
+.dls-summary-item {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+  gap: var(--dls-spacing-1);
+  font-family: var(--dls-font-family);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-summary-item[data-only-trend="true"] {
+  gap: var(--dls-spacing-0);
+}
+
+.dls-summary-item__top {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  gap: var(--dls-spacing-2);
+}
+
+.dls-summary-item__value {
+  min-width: 0;
+  color: var(--dls-color-text-primary);
+  font-size: var(--dls-text-heading-h2-font-size);
+  font-weight: var(--dls-text-heading-h2-font-weight);
+  line-height: var(--dls-text-heading-h2-line-height);
+  white-space: nowrap;
+}
+
+.dls-summary-item__label {
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--dls-color-text-secondary);
+  font-size: var(--dls-text-paragraph-m-font-size);
+  font-weight: var(--dls-text-paragraph-m-light-font-weight);
+  line-height: var(--dls-text-paragraph-m-line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dls-summary-item__trend {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: var(--dls-spacing-1);
+  color: var(--dls-color-intent-success-base);
+}
+
+.dls-summary-item[data-type="negative"] .dls-summary-item__trend {
+  color: var(--dls-color-intent-warning-base);
+}
+
+.dls-summary-item[data-type="no-changes"] .dls-summary-item__trend {
+  color: var(--dls-color-text-placeholder);
+}
+
+.dls-summary-item__trend-icon {
+  width: var(--dls-spacing-4);
+  height: var(--dls-spacing-4);
+  flex: 0 0 auto;
+  stroke-width: var(--dls-icon-stroke-16);
+}
+
+.dls-summary-item__trend-text {
+  color: currentColor;
+  font-size: var(--dls-text-paragraph-s-font-size);
+  font-weight: var(--dls-text-paragraph-s-medium-font-weight);
+  line-height: var(--dls-text-paragraph-s-line-height);
+  white-space: nowrap;
+}

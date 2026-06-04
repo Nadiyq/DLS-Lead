@@ -16,3 +16,32 @@
   box-shadow: var(--dls-shadow-surface-md);
   font-family: var(--dls-font-family);
 }
+
+/* ---------------------------------------------------------------------------
+   Disabled rows (e.g. Move-left on the first column, Move-right on
+   the last). aria-disabled is the semantic marker; data-disabled is
+   the styling hook so we can de-emphasize text + icon and suppress
+   the hover overlay without conflicting with the native :disabled
+   pseudo-class (the row is still a focusable <button>; we want it
+   announced as disabled, not removed from the tab order).
+   --------------------------------------------------------------------------- */
+
+.dls-dropdown-column-actions .dls-list-item[data-disabled],
+.dls-dropdown-column-actions .dls-list-item[aria-disabled="true"] {
+  color: var(--dls-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.dls-dropdown-column-actions .dls-list-item[data-disabled] .dls-list-item__icon,
+.dls-dropdown-column-actions .dls-list-item[aria-disabled="true"] .dls-list-item__icon,
+.dls-dropdown-column-actions .dls-list-item[data-disabled] .dls-list-item__text,
+.dls-dropdown-column-actions .dls-list-item[aria-disabled="true"] .dls-list-item__text {
+  color: var(--dls-color-text-disabled);
+}
+
+/* Suppress the hover overlay so disabled rows don't visually invite
+   interaction. */
+.dls-dropdown-column-actions .dls-list-item[data-disabled]:hover:not(:disabled),
+.dls-dropdown-column-actions .dls-list-item[aria-disabled="true"]:hover:not(:disabled) {
+  background: transparent;
+}

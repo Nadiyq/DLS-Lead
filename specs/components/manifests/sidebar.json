@@ -1,0 +1,120 @@
+{
+  "name": "Sidebar",
+  "kebabName": "sidebar",
+  "category": "navigation container",
+  "subComponents": ["SidebarGroup", "SidebarDivider"],
+  "description": "Primary navigation panel with four layout variants and collapsible icon-only mode.",
+  "variants": ["1", "2", "3", "4"],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'1' | '2' | '3' | '4'",
+      "required": false,
+      "default": "1",
+      "enum": ["1", "2", "3", "4"],
+      "description": "Layout variant (1–4)"
+    },
+    {
+      "name": "collapsed",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the sidebar is collapsed (icon-only)"
+    },
+    {
+      "name": "slotTop",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Top slot — typically a company/account switcher (big-icon SidebarItem)"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Navigation content — menu items, submenus, groups"
+    },
+    {
+      "name": "slotBottom",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Bottom slot — typically a user account item"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-spacing-4"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Static layout container. Collapsed/expanded controlled by prop and data-attribute. All interactive states delegated to child components.",
+    "available": [
+      "[data-collapsed]",
+      "[data-variant]"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["SidebarItem", "SidebarGroup", "SidebarDivider", "Submenu"],
+    "minItems": 1
+  },
+  "accessibility": {
+    "semanticElement": "nav",
+    "requiredAria": ["aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6627-13946",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6627-13946",
+    "propertyMapping": [
+      {
+        "figmaProperty": "variant",
+        "reactProp": "variant",
+        "valueMapping": {
+          "1": "1",
+          "2": "2",
+          "3": "3",
+          "4": "4"
+        }
+      },
+      {
+        "figmaProperty": "collapsed?",
+        "reactProp": "collapsed"
+      }
+    ]
+  },
+  "useWhen": [
+    "Building the main left-side navigation shell of an application",
+    "Organizing navigation into grouped or hierarchical sections",
+    "Supporting a collapsible sidebar with icon-only rail mode"
+  ],
+  "doNotUseFor": [
+    "Top navigation bars — use TopBar",
+    "In-page navigation — use Tabs",
+    "Dropdown menus — use Dropdown or ContextMenu"
+  ],
+  "relations": ["SidebarItem", "Submenu", "TopBar", "DropdownAccount"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "CSS uses --dls-color-surface-base (white) for background, but tokens.json defines color.component.sidebar.bg as {color.surface.subtle} (fafafa). CSS matches Figma design; L4 token needs updating.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-04T12:45:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "e1bce90d92cecc35"
+  }
+}

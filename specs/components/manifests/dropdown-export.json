@@ -1,0 +1,161 @@
+{
+  "name": "DropdownExport",
+  "kebabName": "dropdown-export",
+  "category": "menu / table-utility",
+  "description": "Export-settings panel adjacent to the main DropdownOptions. Two mutually-exclusive radio groups (scope: all/visible columns; format: CSV/Excel/PDF) plus a trailing Export Button. Defaults to all columns + CSV per the Figma spec.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "scope",
+      "type": "\"all\" | \"visible\"",
+      "required": false,
+      "default": "all",
+      "enum": ["all", "visible"],
+      "description": "Currently selected scope. Default 'all' matches the Figma spec."
+    },
+    {
+      "name": "format",
+      "type": "\"csv\" | \"excel\" | \"pdf\"",
+      "required": false,
+      "default": "csv",
+      "enum": ["csv", "excel", "pdf"],
+      "description": "Currently selected format. Default 'csv' matches the Figma spec."
+    },
+    {
+      "name": "onScopeChange",
+      "type": "(scope: ExportScope) => void",
+      "required": false,
+      "description": "Called when scope radio selection changes"
+    },
+    {
+      "name": "onFormatChange",
+      "type": "(format: ExportFormat) => void",
+      "required": false,
+      "description": "Called when format radio selection changes"
+    },
+    {
+      "name": "onExport",
+      "type": "(scope: ExportScope, format: ExportFormat) => void",
+      "required": false,
+      "description": "Called when the user clicks the Export button. Receives the staged (scope, format) payload."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-shadow-surface-md",
+    "--dls-radius-component-list",
+    "--dls-spacing-2",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "The dropdown panel itself is a passive floating surface. Interactive states live on the composed Radiobuttons (hybrid — checked uses OKLCH L-shift on neutral-base) and the outline Export Button (overlay). The selected ListItem rows paint --dls-color-intent-info-subtle via the ListItem selected contract.",
+    "available": [
+      "[aria-selected]",
+      ":focus-visible",
+      "aria-disabled"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["ListItem", "Radiobutton", "Button"],
+    "forbiddenChildren": ["DropdownExport", "Dialog", "AlertDialog"],
+    "forbiddenParents": ["Button", "ListItem"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=dialog]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {
+      "Tab": "Move focus to the next focusable element (Radiobutton inputs and the Export Button)",
+      "Shift+Tab": "Move focus to the previous focusable element",
+      "ArrowUp / ArrowDown": "Within a radio group, move selection to the previous/next radio (native <input type=\"radio\"> behavior)",
+      "Space": "Select the focused radio / activate the Export Button"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Each row is a non-interactive ListItem (interactive=false) rendered as a <div> so the nested <input type=\"radio\"> is the focusable child without button-in-button nesting. Radio groups are scoped by useId-generated name attributes (export-scope-{id} and export-format-{id}) so multiple instances on the same page don't collide. The Export Button is a native <button>."
+  },
+  "figma": {
+    "nodeId": "6122:15056",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6122-15056",
+    "propertyMapping": [
+      {
+        "figmaProperty": "(Export label)",
+        "reactProp": null,
+        "note": "Auto-rendered as <ListItem type=\"label\" text=\"Export\" />"
+      },
+      {
+        "figmaProperty": "(scope radio rows)",
+        "reactProp": "scope",
+        "valueMapping": {
+          "All columns (selected)": "all",
+          "Only visible columns": "visible"
+        },
+        "note": "Two Radiobutton rows in a single name group. Default 'all' per Figma spec."
+      },
+      {
+        "figmaProperty": "(divider)",
+        "reactProp": null,
+        "note": "Auto-rendered as <ListItem type=\"divider\" />."
+      },
+      {
+        "figmaProperty": "(Format label)",
+        "reactProp": null,
+        "note": "Auto-rendered as <ListItem type=\"label\" text=\"Format\" />."
+      },
+      {
+        "figmaProperty": "(format radio rows)",
+        "reactProp": "format",
+        "valueMapping": {
+          "CSV (selected by default)": "csv",
+          "Excel": "excel",
+          "PDF": "pdf"
+        },
+        "note": "Three Radiobutton rows in a single name group. Default 'csv' per Figma spec."
+      },
+      {
+        "figmaProperty": "(Export button row)",
+        "reactProp": "onExport",
+        "note": "Outline Button (variant=\"outline\" intent=\"neutral\" size=\"m\"). Fires onExport(scope, format) with the staged selection."
+      }
+    ]
+  },
+  "useWhen": [
+    "Below the Export item in the DropdownOptions menu on a table top bar",
+    "Any surface that triggers a table / dataset export with scope + format choices"
+  ],
+  "doNotUseFor": [
+    "Column visibility → use DropdownColumns",
+    "Filter management → use DropdownFilters",
+    "Sort controls → use DropdownSorting",
+    "Saving / downloading a single file → use a plain Button",
+    "Multi-step export wizards → use Dialog with a stepper"
+  ],
+  "relations": ["DropdownOptions", "DropdownColumns", "DropdownFilters", "Radiobutton", "Button", "List", "ListItem", "TableTopBar"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Spec mentions --dls-color-component-dropdown-export-* tokens but they do not exist in tokens.json. CSS uses semantic surface/border tokens directly via the composed <List> building blocks.",
+      "severity": "low"
+    },
+    {
+      "area": "figma-code-contract",
+      "description": "The Figma 'state=pressed' info-subtle highlight on the default-selected rows ('All columns' + 'CSV') is driven in code by the ListItem selected={true} contract (paints --dls-color-intent-info-subtle). Visual match.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-04T05:14:21.243Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "100f1a0fafe0a2d4"
+  }
+}

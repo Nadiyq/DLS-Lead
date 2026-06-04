@@ -243,3 +243,21 @@
 .dls-sidebar-item[data-type="big-icon"][data-collapsed] {
   padding: var(--dls-spacing-2);
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .dls-sidebar-item {
+    transition: none;
+  }
+
+  .dls-sidebar-item__chevron {
+    transition: none;
+  }
+
+  .dls-sidebar-item__action {
+    transition: none;
+  }
+}

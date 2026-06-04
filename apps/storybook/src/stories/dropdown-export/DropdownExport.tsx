@@ -48,7 +48,8 @@ export const DropdownExport = React.forwardRef<HTMLDivElement, DropdownExportPro
   (
     {
       scope: scopeProp = 'all',
-      format: formatProp = 'excel',
+      // Figma spec: "By default the all columns and CSV format is selected."
+      format: formatProp = 'csv',
       onScopeChange,
       onFormatChange,
       onExport,

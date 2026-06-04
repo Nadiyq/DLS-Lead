@@ -1,0 +1,128 @@
+{
+  "name": "DropdownSorting",
+  "kebabName": "dropdown-sorting",
+  "category": "menu / table-utility",
+  "description": "Sort-settings panel mounted in the Sort FilterChip's value popover. Two side-by-side <Dropdown> selects: Column (pick sortable parameter from the columns array) and Sort (Ascending / Descending). Pure state-staging surface — onColumnChange / onDirectionChange callbacks fire on selection.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "columns",
+      "type": "SortColumn[]",
+      "required": true,
+      "description": "Available columns to sort by. SortColumn = { value: string; label: string }."
+    },
+    {
+      "name": "column",
+      "type": "string",
+      "required": false,
+      "description": "Currently selected column value. Defaults to columns[0].value when not provided."
+    },
+    {
+      "name": "direction",
+      "type": "\"ascending\" | \"descending\"",
+      "required": false,
+      "default": "ascending",
+      "enum": ["ascending", "descending"],
+      "description": "Current sort direction"
+    },
+    {
+      "name": "onColumnChange",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Called when the Column dropdown's selection changes"
+    },
+    {
+      "name": "onDirectionChange",
+      "type": "(value: SortDirection) => void",
+      "required": false,
+      "description": "Called when the Sort direction dropdown's selection changes"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-shadow-surface-md",
+    "--dls-radius-component-list",
+    "--dls-spacing-2",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "The panel itself is a passive floating container. Each composed <Dropdown> select (Column + Direction) carries its own state contract — overlay hover on the trigger, focus-visible ring, listbox open/close on chevron click, ListItem selected highlight via info-subtle fill.",
+    "available": [],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["Dropdown"],
+    "forbiddenChildren": ["DropdownSorting", "Dialog", "AlertDialog"],
+    "forbiddenParents": ["Button", "ListItem"],
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 2
+  },
+  "accessibility": {
+    "semanticElement": "div[role=dialog]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {
+      "Tab": "Move focus between the two Dropdowns (Column → Direction) and out to neighbors",
+      "Shift+Tab": "Move focus backwards",
+      "Enter": "On a focused Dropdown trigger: open the listbox. On a focused option: select it.",
+      "Space": "Same as Enter for native buttons",
+      "ArrowUp / ArrowDown": "Within an open listbox: move highlight to previous/next option",
+      "Escape": "Close the open listbox"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Root is a passive <div role=\"dialog\">. The two composed <Dropdown>s own focus management — each trigger is a native <button> with aria-haspopup=\"listbox\" and aria-expanded; each listbox has role=\"listbox\" with aria-selected on options. Tab navigates Column → Direction in visual order."
+  },
+  "figma": {
+    "nodeId": "6123:17316",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-17316",
+    "propertyMapping": [
+      {
+        "figmaProperty": "(Column input)",
+        "reactProp": "columns",
+        "note": "Left <Dropdown> with label \"Column\". Options come from the columns prop. column + onColumnChange control the value."
+      },
+      {
+        "figmaProperty": "(Sort input)",
+        "reactProp": "direction",
+        "valueMapping": {
+          "Ascending": "ascending",
+          "Descending": "descending"
+        },
+        "note": "Right <Dropdown> with label \"Sort\". Hard-coded two options: Ascending / Descending."
+      }
+    ]
+  },
+  "useWhen": [
+    "Inside the value-side popover of the Sort FilterChip in the Filters row of a TableTopBar",
+    "Any compact 'sort by column + direction' picker where the consumer owns the staging state"
+  ],
+  "doNotUseFor": [
+    "Multi-column sorting (sort by name asc, then date desc) — not supported by this component",
+    "Filter management → use DropdownFilters",
+    "Column visibility / order → use DropdownColumns",
+    "Export → use DropdownExport"
+  ],
+  "relations": ["FilterChip", "Filters", "Dropdown", "DropdownFilters", "DropdownColumns", "DropdownExport", "TableTopBar"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Spec mentions --dls-color-component-dropdown-sorting-* tokens but they do not exist in tokens.json. CSS uses semantic surface/border tokens directly; the composed Dropdowns carry their own token references.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-04T05:23:55.245Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "9a04f2fa1252348f"
+  }
+}

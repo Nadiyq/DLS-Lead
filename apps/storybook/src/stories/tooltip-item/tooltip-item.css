@@ -1,0 +1,71 @@
+/* ==========================================================================
+   DLS Tooltip Item - chart tooltip row
+   Layout: inline | split
+   ========================================================================== */
+
+.dls-tooltip-item {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  gap: var(--dls-spacing-2);
+  font-family: var(--dls-font-family);
+  color: var(--dls-color-text-primary);
+}
+
+.dls-tooltip-item[data-layout="split"] {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.dls-tooltip-item__legend {
+  min-width: 0;
+}
+
+.dls-tooltip-item[data-layout="split"] .dls-tooltip-item__legend,
+.dls-tooltip-item[data-layout="split"] .dls-tooltip-item__label {
+  flex: 1 1 auto;
+}
+
+.dls-tooltip-item__label,
+.dls-tooltip-item__value,
+.dls-tooltip-item__unit {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.dls-tooltip-item__label {
+  overflow: hidden;
+  color: var(--dls-color-text-primary);
+  font-size: var(--dls-text-paragraph-m-font-size);
+  font-weight: var(--dls-text-paragraph-m-light-font-weight);
+  line-height: var(--dls-text-paragraph-m-line-height);
+  text-overflow: ellipsis;
+}
+
+.dls-tooltip-item__metric {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-width: 0;
+  gap: var(--dls-spacing-0-5);
+  text-align: right;
+}
+
+.dls-tooltip-item__value {
+  color: var(--dls-color-text-primary);
+  font-size: var(--dls-text-paragraph-m-font-size);
+  font-weight: var(--dls-text-paragraph-m-heavy-font-weight);
+  line-height: var(--dls-text-paragraph-m-line-height);
+  font-variant-numeric: tabular-nums;
+}
+
+.dls-tooltip-item__unit {
+  color: var(--dls-color-text-secondary);
+  font-size: var(--dls-text-paragraph-s-font-size);
+  font-weight: var(--dls-text-paragraph-s-light-font-weight);
+  line-height: var(--dls-text-paragraph-s-line-height);
+}

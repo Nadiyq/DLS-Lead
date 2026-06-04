@@ -1,0 +1,34 @@
+/* ==========================================================================
+   DLS Legend Group - chart legend item group
+   Orientation: vertical | horizontal
+   ========================================================================== */
+
+.dls-legend-group {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  gap: var(--dls-spacing-3);
+  margin: var(--dls-spacing-0);
+  padding: var(--dls-spacing-0);
+  list-style: none;
+}
+
+.dls-legend-group[data-orientation="vertical"] {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dls-legend-group[data-orientation="horizontal"] {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dls-legend-group__item {
+  box-sizing: border-box;
+  display: flex;
+  min-width: 0;
+}

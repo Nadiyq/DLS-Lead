@@ -282,9 +282,9 @@
   --dls-color-component-dropdown-item-fg: var(--dls-color-text-primary);
   --dls-color-component-sidebar-bg: var(--dls-color-surface-subtle);
   --dls-color-component-sidebar-border: var(--dls-color-border-subtle);
-  --dls-color-component-sidebar-item-fg-base: var(--dls-color-text-secondary);
-  --dls-color-component-sidebar-item-fg-active: var(--dls-color-text-primary);
-  --dls-color-component-sidebar-item-bg-active: var(--dls-color-surface-muted);
+  --dls-color-component-sidebar-item-fg-base: var(--dls-color-intent-neutral-text);
+  --dls-color-component-sidebar-item-fg-active: var(--dls-color-intent-neutral-on-base);
+  --dls-color-component-sidebar-item-bg-active: var(--dls-color-intent-neutral-base);
 
   /* Avatar */
   --dls-color-component-avatar-bg: var(--dls-color-surface-subtle);

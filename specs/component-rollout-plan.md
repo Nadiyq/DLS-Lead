@@ -76,6 +76,13 @@ applied to every component in the system — both Figma and code side.
 | Sixty-fifth manifest (DropdownOptions) | DONE | `specs/components/manifests/dropdown-options.json` |
 | Sixty-sixth manifest (DropdownColumns) | DONE | `specs/components/manifests/dropdown-columns.json` |
 | Sixty-seventh manifest (DropdownFilters) | DONE | `specs/components/manifests/dropdown-filters.json` |
+| Sixty-eighth manifest (DropdownExport) | DONE | `specs/components/manifests/dropdown-export.json` |
+| Sixty-ninth manifest (DropdownSorting) | DONE | `specs/components/manifests/dropdown-sorting.json` |
+| Seventieth manifest (DropdownColumnActions) | DONE | `specs/components/manifests/dropdown-column-actions.json` |
+| Seventy-first manifest (TableColumn) | DONE | `specs/components/manifests/table-column.json` |
+| Seventy-second manifest (SidebarItem) | DONE | `specs/components/manifests/sidebar-item.json` |
+| Seventy-third manifest (Submenu) | DONE | `specs/components/manifests/submenu.json` |
+| Seventy-fourth manifest (DropdownAccount) | DONE | `specs/components/manifests/dropdown-account.json` |
 | Figma description template | DONE | Accordion as reference: `specs/figma-descriptions/accordion-item.md` |
 | `llms.txt` | TODO | Gap item #4 |
 | Build script + CI hook | TODO | Gap item #3 |
@@ -180,7 +187,7 @@ prevents cascading issues.
 |---|-----------|------|------------|------------------------|-------------------------|
 | 28 | **Tabs** | tabs.md | FIXED | No | Yes (as `tab`) |
 | 29 | **Sidebar** | sidebar.md | No | No | Yes |
-| 30 | **SidebarItem** | sidebar-item.md | No | YES | No |
+| 30 | **SidebarItem** | sidebar-item.md | No | FIXED | No |
 | 31 | **Breadcrumbs** | breadcrumbs.md | FIXED | FIXED | No |
 | 32 | **Pagination** | pagination.md | No | FIXED | Yes |
 | 33 | **TopBar** | top-bar.md | No | YES | No |

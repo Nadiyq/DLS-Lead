@@ -85,42 +85,5 @@
 
 /* Icon shape uses DLS IconShape — no custom styles needed */
 
-/* ---------------------------------------------------------------------------
-   Status badge (no DLS text badge component yet)
-   --------------------------------------------------------------------------- */
-
-.dls-table-column__badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px var(--dls-spacing-2);
-  border-radius: var(--dls-radius-component-badge);
-  font-family: var(--dls-font-family);
-  font-size: var(--dls-text-s-font-size);
-  line-height: var(--dls-text-s-line-height);
-  font-weight: var(--dls-font-weight-medium);
-}
-
-.dls-table-column__badge[data-intent="neutral"] {
-  background: var(--dls-color-intent-neutral-subtle);
-  color: var(--dls-color-intent-neutral-text);
-}
-
-.dls-table-column__badge[data-intent="info"] {
-  background: var(--dls-color-intent-info-subtle);
-  color: var(--dls-color-intent-info-text);
-}
-
-.dls-table-column__badge[data-intent="success"] {
-  background: var(--dls-color-intent-success-subtle);
-  color: var(--dls-color-intent-success-text);
-}
-
-.dls-table-column__badge[data-intent="warning"] {
-  background: var(--dls-color-intent-warning-subtle);
-  color: var(--dls-color-intent-warning-text);
-}
-
-.dls-table-column__badge[data-intent="danger"] {
-  background: var(--dls-color-intent-danger-subtle);
-  color: var(--dls-color-intent-danger-text);
-}
+/* Status badge uses the DLS <Badge> primitive directly — no custom
+   styles needed. Badge handles variant/intent/size + tokens. */

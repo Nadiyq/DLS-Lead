@@ -5,6 +5,7 @@ import { TableHeaderCell } from '../table-header-cell/TableHeaderCell';
 import { TableCell } from '../table-cell/TableCell';
 import { Avatar } from '../Avatar';
 import { AvatarStack } from '../AvatarStack';
+import { Badge } from '../Badge';
 import { Button } from '../Button';
 import { Checkbox } from '../checkbox/Checkbox';
 import { IconShape } from '../icon-shape/IconShape';
@@ -69,19 +70,6 @@ export interface TableColumnRow {
 /* Lucide icons (Pencil, Trash2, Circle) imported above. Checkbox uses DLS Checkbox component. */
 
 /* ---------------------------------------------------------------------------
-   Helper: status badge (no DLS text badge component exists yet)
-   --------------------------------------------------------------------------- */
-
-const StatusBadge = ({ label, intent = 'neutral' }: { label: string; intent?: string }) => (
-  <span
-    className="dls-table-column__badge"
-    data-intent={intent}
-  >
-    {label}
-  </span>
-);
-
-/* ---------------------------------------------------------------------------
    Cell renderer by column type
    --------------------------------------------------------------------------- */
 
@@ -104,7 +92,9 @@ const renderCell = (type: TableColumnType, row: TableColumnRow, idx: number) => 
     case 'badge':
       return (
         <TableCell key={idx} type="badge">
-          <StatusBadge label={row.badgeLabel || ''} intent={row.badgeIntent} />
+          <Badge variant="soft" intent={row.badgeIntent ?? 'neutral'} size="s">
+            {row.badgeLabel || ''}
+          </Badge>
         </TableCell>
       );
 

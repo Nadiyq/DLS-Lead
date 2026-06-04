@@ -1,0 +1,199 @@
+{
+  "name": "DropdownColumnActions",
+  "kebabName": "dropdown-column-actions",
+  "category": "menu / table-utility",
+  "description": "Per-column action menu opened from a TableHeaderCell's on-hover chevron. Seven rows: Sort ascending / Sort descending / Filter / Pin (or Unpin) / Move left / Move right / Hide column. Locked columns show a REDUCED 3-row menu (Sort×2 + Filter only). Every mutation should round-trip through shared table state so DropdownSorting / DropdownColumns / Filters row stay in sync.",
+  "subComponents": [],
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "sortState",
+      "type": "\"asc\" | \"desc\" | \"none\"",
+      "required": false,
+      "default": "none",
+      "enum": ["asc", "desc", "none"],
+      "description": "Current sort state for this column. Highlights the matching Sort row via selected={true} (info-subtle fill)."
+    },
+    {
+      "name": "pinned",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the column is pinned. Flips the Pin row's text (Pin column / Unpin column) and paints info-subtle when true."
+    },
+    {
+      "name": "canMoveLeft",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Whether 'Move left' is enabled. When false, the row's onClick is omitted (no activation)."
+    },
+    {
+      "name": "canMoveRight",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Whether 'Move right' is enabled. When false, the row's onClick is omitted (no activation)."
+    },
+    {
+      "name": "locked",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the column is locked (matches ColumnItem.locked from DropdownColumns). When true: only the Sort ascending / Sort descending / Filter rows render; Pin / Move-left / Move-right / Hide are omitted because those mutations are forbidden by the locked contract."
+    },
+    {
+      "name": "onSortAsc",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when 'Sort ascending' is clicked. Consumer should set the table's sort column + direction and sync DropdownSorting."
+    },
+    {
+      "name": "onSortDesc",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when 'Sort descending' is clicked. Consumer should set the table's sort column + direction and sync DropdownSorting."
+    },
+    {
+      "name": "onFilter",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when 'Filter' is clicked. Consumer should focus the matching FilterChip in the Filters row, auto-creating one with default value if it doesn't exist yet."
+    },
+    {
+      "name": "onPin",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when 'Pin column' / 'Unpin column' is clicked. Consumer should flip the column's pinned flag and sync DropdownColumns."
+    },
+    {
+      "name": "onMoveLeft",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when 'Move left' is clicked. Consumer should reorder the column and sync DropdownColumns."
+    },
+    {
+      "name": "onMoveRight",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when 'Move right' is clicked. Consumer should reorder the column and sync DropdownColumns."
+    },
+    {
+      "name": "onHide",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when 'Hide column' is clicked. Consumer should move the column from Shown to Hidden in DropdownColumns."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-spacing-2",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "hybrid",
+    "rationale": "Panel itself is passive — no panel-level hover/pressed/focus. Each composed <ListItem type=\"with-slots\"> carries the standard hybrid contract: overlay hover, info-subtle fill on selected (Sort active and pinned rows), OKLCH L-shift on selected+hover. Locked variant just omits the Pin/Move/Hide rows.",
+    "available": [
+      "[data-locked]",
+      "[data-disabled]",
+      "[aria-disabled]",
+      "[aria-selected]",
+      ":hover:not(:disabled)",
+      ":focus-visible"
+    ],
+    "tokens": []
+  },
+  "composition": {
+    "allowedChildren": ["ListItem"],
+    "forbiddenChildren": ["DropdownColumnActions", "Dialog", "AlertDialog"],
+    "forbiddenParents": ["Button", "ListItem"],
+    "maxDepth": 1
+  },
+  "accessibility": {
+    "semanticElement": "div[role=listbox]",
+    "requiredAria": [],
+    "keyboard": {
+      "Tab": "Move focus to the next action row",
+      "Shift+Tab": "Move focus to the previous action row",
+      "Enter": "Activate the focused action row (native button)",
+      "Space": "Same as Enter for native buttons"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "Each action row is a <ListItem type=\"with-slots\"> rendered as a native <button> (the with-slots variant is auto-interactive). Lucide icons inside are aria-hidden via the ListItem icon slot. Sort-active and pinned rows expose aria-selected=\"true\" via the ListItem selected prop. Disabled Move rows carry aria-disabled=\"true\" + data-disabled=\"\" — they remain focusable so AT announces them as disabled, but their onClick is omitted (no activation). The visual treatment uses --dls-color-text-disabled + not-allowed cursor + suppressed hover overlay."
+  },
+  "figma": {
+    "nodeId": "6123:16882",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6123-16882",
+    "propertyMapping": [
+      {
+        "figmaProperty": "(Sort ascending row)",
+        "reactProp": "onSortAsc",
+        "note": "selected={sortState === 'asc'} paints info-subtle highlight."
+      },
+      {
+        "figmaProperty": "(Sort descending row)",
+        "reactProp": "onSortDesc",
+        "note": "selected={sortState === 'desc'} paints info-subtle highlight."
+      },
+      {
+        "figmaProperty": "(Filter row)",
+        "reactProp": "onFilter",
+        "note": "Always present (even in locked variant). Consumer should focus the matching FilterChip; auto-create one if absent."
+      },
+      {
+        "figmaProperty": "(Pin column row)",
+        "reactProp": "onPin",
+        "note": "Text flips between 'Pin column' / 'Unpin column' based on pinned. Omitted when locked=true."
+      },
+      {
+        "figmaProperty": "(Move left row)",
+        "reactProp": "onMoveLeft",
+        "note": "Omitted when locked=true. Gated by canMoveLeft."
+      },
+      {
+        "figmaProperty": "(Move right row)",
+        "reactProp": "onMoveRight",
+        "note": "Omitted when locked=true. Gated by canMoveRight."
+      },
+      {
+        "figmaProperty": "(Hide column row)",
+        "reactProp": "onHide",
+        "note": "Omitted when locked=true."
+      },
+      {
+        "figmaProperty": "(locked variant)",
+        "reactProp": "locked",
+        "note": "When true: only Sort ascending / Sort descending / Filter rows render. Sets data-locked=\"\" on the root for styling hooks."
+      }
+    ]
+  },
+  "useWhen": [
+    "Inside a TableHeaderCell's floatingMenu slot, triggered by the cell's on-hover chevron Button (onMenuClick callback)",
+    "Any per-column action menu where sort / filter / reorder / hide controls are needed in one popover"
+  ],
+  "doNotUseFor": [
+    "Functional / utility columns (checkbox selection, row expansion, drag handle) — those columns should not opt into onMenuClick",
+    "Multi-column sort settings → use DropdownSorting",
+    "Bulk column visibility / order management → use DropdownColumns",
+    "Filter values → use DropdownFilters / the FilterChip value popover"
+  ],
+  "relations": ["TableHeaderCell", "DropdownSorting", "DropdownColumns", "DropdownFilters", "FilterChip", "Filters", "ListItem", "TableTopBar"],
+  "knownDeviations": [
+    {
+      "area": "token-layer",
+      "description": "Spec mentions --dls-color-component-dropdown-column-actions-* tokens but they do not exist in tokens.json. CSS uses ListItem token families directly.",
+      "severity": "low"
+    }
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-04T05:40:12.077Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "8c361bbee99357ec"
+  }
+}

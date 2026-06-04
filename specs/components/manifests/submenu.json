@@ -1,0 +1,92 @@
+{
+  "name": "Submenu",
+  "kebabName": "submenu",
+  "category": "navigation / sidebar",
+  "description": "Groups child navigation items under a collapsible parent within a Sidebar, rendering them indented when expanded.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "parent",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "The parent menu item (rendered at the top)"
+    },
+    {
+      "name": "expanded",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether the submenu children are visible"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Child menu items (rendered indented below parent)"
+    },
+    {
+      "name": "slotContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Additional slot content at the bottom"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-spacing-8",
+    "--dls-spacing-6",
+    "--dls-font-weight-normal"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Pure layout wrapper — no interactive states. Expand/collapse controlled by the expanded prop; visual states belong to child SidebarItems.",
+    "available": []
+  },
+  "composition": {
+    "allowedChildren": ["SidebarItem", "Submenu"],
+    "maxDepth": 2,
+    "minItems": 1,
+    "recommendedItems": 3
+  },
+  "accessibility": {
+    "semanticElement": "div[role=group]",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6475-2085",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6475-2085",
+    "propertyMapping": [
+      {
+        "figmaProperty": "submenu",
+        "reactProp": "expanded",
+        "note": "Boolean — false shows parent only, true shows parent + indented children"
+      }
+    ]
+  },
+  "useWhen": [
+    "Building hierarchical sidebar navigation with collapsible sections",
+    "Grouping related SidebarItem children under a parent header",
+    "Nesting navigation levels within a Sidebar"
+  ],
+  "doNotUseFor": [
+    "Dropdown menus or popovers — use List + ListItem",
+    "Top-level navigation — use Tabs or standalone SidebarItems",
+    "Accordion content — use Accordion / AccordionItem"
+  ],
+  "relations": ["Sidebar", "SidebarItem"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T12:15:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "38e1774bbb2ba2e8"
+  }
+}

@@ -1,0 +1,110 @@
+/* ==========================================================================
+   DLS Tooltip Group - chart tooltip surface
+   ========================================================================== */
+
+.dls-tooltip-group {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: calc(var(--dls-spacing-10) * 4 + var(--dls-spacing-1));
+  font-family: var(--dls-font-family);
+  color: var(--dls-color-text-primary);
+  pointer-events: none;
+}
+
+.dls-tooltip-group__pointer {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: -1px;
+  z-index: 2;
+}
+
+.dls-tooltip-group__arrow {
+  position: relative;
+  display: block;
+  width: var(--dls-spacing-4);
+  height: var(--dls-spacing-2-5);
+}
+
+.dls-tooltip-group__arrow::before,
+.dls-tooltip-group__arrow::after {
+  position: absolute;
+  left: 50%;
+  width: var(--dls-spacing-0);
+  height: var(--dls-spacing-0);
+  content: "";
+  transform: translateX(-50%);
+}
+
+.dls-tooltip-group__arrow::before {
+  bottom: var(--dls-spacing-0);
+  border-right: var(--dls-spacing-2) solid transparent;
+  border-bottom: var(--dls-spacing-2-5) solid var(--dls-color-border-subtle);
+  border-left: var(--dls-spacing-2) solid transparent;
+}
+
+.dls-tooltip-group__arrow::after {
+  bottom: -1px;
+  border-right: calc(var(--dls-spacing-2) - 1px) solid transparent;
+  border-bottom: calc(var(--dls-spacing-2-5) - 1px) solid var(--dls-color-surface-base);
+  border-left: calc(var(--dls-spacing-2) - 1px) solid transparent;
+}
+
+.dls-tooltip-group__body {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  overflow: hidden;
+  background: var(--dls-color-surface-base);
+  border: 1px solid var(--dls-color-border-subtle);
+  border-radius: var(--dls-radius-component-tooltip);
+  box-shadow: var(--dls-shadow-surface-md);
+  z-index: 1;
+}
+
+.dls-tooltip-group__date {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  padding: var(--dls-spacing-3);
+  color: var(--dls-color-text-primary);
+  font-size: var(--dls-text-paragraph-m-font-size);
+  font-weight: var(--dls-text-paragraph-m-light-font-weight);
+  line-height: var(--dls-text-paragraph-m-line-height);
+  white-space: nowrap;
+}
+
+.dls-tooltip-group__content {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--dls-spacing-2);
+  padding: var(--dls-spacing-3);
+  list-style: none;
+}
+
+.dls-tooltip-group__row {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+}
+
+.dls-tooltip-group__total {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  padding: var(--dls-spacing-3);
+  border-top: 1px solid var(--dls-color-border-subtle);
+}

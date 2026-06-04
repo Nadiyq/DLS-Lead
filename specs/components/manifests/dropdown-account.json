@@ -1,0 +1,153 @@
+{
+  "name": "DropdownAccount",
+  "kebabName": "dropdown-account",
+  "category": "menu / navigation",
+  "description": "Account-level dropdown menus for profile actions, switching between accounts or companies, and multi-account log-out confirmation.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "'menu' | 'switch-account' | 'log-out' | 'switch-company'",
+      "required": true,
+      "enum": ["menu", "switch-account", "log-out", "switch-company"],
+      "description": "Dropdown variant type"
+    },
+    {
+      "name": "user",
+      "type": "AccountUser",
+      "required": false,
+      "description": "Current user (menu type — shows avatar + name/email at top)"
+    },
+    {
+      "name": "actions",
+      "type": "MenuAction[]",
+      "required": false,
+      "description": "Menu action items"
+    },
+    {
+      "name": "accounts",
+      "type": "AccountUser[]",
+      "required": false,
+      "description": "List of accounts (switch-account type)"
+    },
+    {
+      "name": "currentAccountIndex",
+      "type": "number",
+      "required": false,
+      "description": "Index of the current account"
+    },
+    {
+      "name": "onSelectAccount",
+      "type": "(index: number) => void",
+      "required": false,
+      "description": "Called when an account is selected"
+    },
+    {
+      "name": "emails",
+      "type": "string[]",
+      "required": false,
+      "description": "List of email addresses (log-out type)"
+    },
+    {
+      "name": "onLogOutAll",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when \"Log out of all accounts\" is clicked"
+    },
+    {
+      "name": "companies",
+      "type": "AccountCompany[]",
+      "required": false,
+      "description": "List of companies (switch-company type)"
+    },
+    {
+      "name": "currentCompanyIndex",
+      "type": "number",
+      "required": false,
+      "description": "Index of the current company"
+    },
+    {
+      "name": "onSelectCompany",
+      "type": "(index: number) => void",
+      "required": false,
+      "description": "Called when a company is selected"
+    },
+    {
+      "name": "footerActions",
+      "type": "MenuAction[]",
+      "required": false,
+      "description": "Extra actions shown below divider (switch-account / switch-company)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-radius-component-list",
+    "--dls-shadow-surface-md",
+    "--dls-spacing-2",
+    "--dls-color-surface-muted",
+    "--dls-radius-component-sidebar-item",
+    "--dls-text-xs-font-size",
+    "--dls-font-weight-semibold",
+    "--dls-color-text-secondary"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Static dropdown container. All interactive states delegated to child ListItem components.",
+    "available": []
+  },
+  "composition": {
+    "allowedChildren": ["ListItem", "Avatar"],
+    "maxDepth": 1,
+    "minItems": 1,
+    "recommendedItems": 4
+  },
+  "accessibility": {
+    "semanticElement": "div[role=listbox]",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6629-4471",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6629-4471",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "menu": "menu",
+          "switch-account": "switch-account",
+          "switch-company": "switch-company",
+          "log-out": "log-out"
+        }
+      }
+    ]
+  },
+  "useWhen": [
+    "Displaying a profile menu with avatar, name, email, and action links",
+    "Letting users switch between multiple accounts or workspaces",
+    "Letting users switch between companies/organizations",
+    "Confirming log-out from multiple accounts"
+  ],
+  "doNotUseFor": [
+    "Generic dropdown menus — use Dropdown or DropdownOptions",
+    "Navigation menus — use Sidebar + SidebarItem",
+    "Context menus — use ContextMenu"
+  ],
+  "relations": ["Dropdown", "ListItem", "List", "Avatar", "Sidebar"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T12:30:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "42efbcf32161668e"
+  }
+}
