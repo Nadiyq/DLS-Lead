@@ -1809,10 +1809,100 @@ function renderTokensLayout(){
   inner.appendChild(card);m.appendChild(inner);
 }
 
+/* ═══════ Page: Installation ═════════════════════════════ */
+function renderInstallation(){
+  const m=$('#main');m.innerHTML='';
+  const inner=h('div',{class:'main-inner'});
+  inner.appendChild(h('h1',{class:'page-title'},'Installation'));
+
+  const row=h('div',{class:'content-row'});
+  const card=h('div',{class:'card content-main'});
+  const sectionTitles=['Quick Start','What’s Included','Token Setup','Using Components','AI Agent Integration','Compatible Agents','Configuration','Project Structure'];
+
+  card.appendChild(h('div',{class:'doc-title'},'Installation Guide'));
+  card.appendChild(h('div',{class:'doc-subtitle'},'Install DLS-Lead and use it to generate AI-driven interfaces with consistent design tokens, components, and LLM-readable specs.'));
+
+  /* ── Quick Start ───────────────────── */
+  docSection(card,'Quick Start','install');
+  docBlock(card,'Install via npm','DLS-Lead is published as a single npm package. Install it as a dependency in your project:');
+  docCode(card,'Terminal','npm install dls-design-tokens');
+  docBlock(card,'Import tokens','Add the CSS custom properties to your app entry point:');
+  docCode(card,'main.ts / main.tsx','import \'dls-design-tokens/tokens.css\';');
+  docBlock(card,'Start building','You now have access to all DLS-Lead design tokens as CSS custom properties. Every --dls-* variable is ready to use in your styles.');
+
+  /* ── What's Included ───────────────── */
+  docSection(card,'What’s Included','install');
+  docBlock(card,'Package contents','The npm package ships with everything you need to build consistent UIs:');
+  docList(card,['tokens.json — DTCG-compliant token source (4-layer model)','tokens.css — CSS custom properties for all tokens','tokens.scss — SCSS variables for Sass-based projects','tokens.ts — TypeScript constants with full type safety','specs/ — LLM-readable design system specifications','prompts/ — Ready-to-use prompts for AI coding agents']);
+  docBlock(card,'4-Layer Token Architecture','DLS-Lead uses a 4-layer token model that ensures consistency from primitives to components:\n\nL1 Primitives → Raw values (colors, sizes, weights)\nL2 Semantics → Meaning-based tokens (surface.base, text.primary)\nL3 State → Interactive state tokens (hover, focus, disabled)\nL4 Component → Component-specific overrides (button.bg, input.border)\n\nComponents reference L4 tokens with L2 fallbacks — never L1 primitives directly.');
+
+  /* ── Token Setup ───────────────────── */
+  docSection(card,'Token Setup','install');
+  docBlock(card,'CSS (recommended)','Import the generated CSS file to get all tokens as custom properties:');
+  docCode(card,'styles.css','@import \'dls-design-tokens/tokens.css\';');
+  docBlock(card,'SCSS','For Sass-based projects, import the SCSS variables:');
+  docCode(card,'styles.scss','@import \'dls-design-tokens/tokens.scss\';');
+  docBlock(card,'TypeScript','Import typed token constants for programmatic access:');
+  docCode(card,'theme.ts','import { tokens } from \'dls-design-tokens/tokens.ts\';\n\nconsole.log(tokens.color.surface.base); // resolved value');
+  docBlock(card,'Using tokens in CSS','Reference any token with the --dls-* prefix:');
+  docCode(card,'component.css','.my-card {\n  background: var(--dls-color-surface-base);\n  color: var(--dls-color-text-primary);\n  padding: var(--dls-spacing-4);\n  border-radius: var(--dls-radius-component-card);\n  box-shadow: var(--dls-shadow-sm);\n}');
+
+  /* ── Using Components ──────────────── */
+  docSection(card,'Using Components','install');
+  docBlock(card,'Component library','DLS-Lead includes 75+ production-ready React components in the Storybook package. Components follow strict conventions:');
+  docList(card,['All CSS classes use the .dls-* namespace','Variants, intents, and sizes are controlled via data-* attributes','Every component starts with all: unset; box-sizing: border-box;','No hardcoded colors, sizes, or radii — everything uses tokens','Icons come from lucide-react only']);
+  docBlock(card,'Example: Button','');
+  docCode(card,'Button.tsx','import \'./button.css\';\n\n<button\n  className="dls-button"\n  data-variant="filled"\n  data-intent="primary"\n  data-size="m"\n>\n  Get Started\n</button>');
+  docBlock(card,'Example: Input Field','');
+  docCode(card,'InputField.tsx','import \'./input-field.css\';\n\n<div className="dls-input-field" data-size="m">\n  <label className="dls-input-field__label">Email</label>\n  <input className="dls-input-field__input" type="email" />\n</div>');
+
+  /* ── AI Agent Integration ──────────── */
+  docSection(card,'AI Agent Integration','install');
+  docBlock(card,'How it works','DLS-Lead is designed for AI-assisted development. The package includes machine-readable specs and ready-to-use prompts that teach coding agents your design system rules.\n\nAI agents read the specs and prompts, then generate UI code that automatically follows your token architecture, component patterns, and zero-custom-CSS policy.');
+  docBlock(card,'Step 1 — Add the base contract','Copy the base agent contract into your project’s AI configuration. This teaches the agent the core DLS rules:');
+  docCode(card,'Terminal','cp node_modules/dls-design-tokens/prompts/base-agent-contract.md \\\n   .claude/skills/dls-contract.md');
+  docBlock(card,'Step 2 — Point agents to specs','Reference the specs directory so agents can look up token names, component APIs, and patterns:');
+  docCode(card,'CLAUDE.md','## DLS-Lead Design System\n\nBefore writing UI code, read:\n- node_modules/dls-design-tokens/specs/session-start.md\n- node_modules/dls-design-tokens/specs/tokens/README.md\n- node_modules/dls-design-tokens/specs/tokens/token-reference.md');
+  docBlock(card,'Step 3 — Use task prompts','Pick a task prompt for the specific UI you’re building:');
+  docList(card,['prompts/settings-page.md — Settings / preferences pages','prompts/data-table-page.md — Data tables with sorting, filtering, pagination','prompts/form-dialog.md — Modal forms and dialogs','prompts/dropdown-menu.md — Dropdown and context menus','prompts/component-scaffold-from-figma.md — New components from Figma designs']);
+
+  /* ── Compatible Agents ─────────────── */
+  docSection(card,'Compatible Agents','install');
+  docBlock(card,'Supported platforms','DLS-Lead specs and prompts work with any AI coding agent that can read markdown files:');
+  docList(card,['Claude Code (CLI, desktop, web, IDE extensions)','Cursor','GitHub Copilot','Codex (OpenAI)','Windsurf','Cline','Aider','Continue','Bolt','v0','Any agent that reads project files']);
+
+  /* ── Configuration ─────────────────── */
+  docSection(card,'Configuration','install');
+  docBlock(card,'Claude Code','Add DLS-Lead rules to your CLAUDE.md:');
+  docCode(card,'CLAUDE.md','## Critical Rules — ZERO CUSTOM CSS POLICY\n\nEvery visual element MUST use existing DLS components and tokens.\nNo custom CSS classes. All classes must be .dls-*.\nNo inline styles for visual properties.\nIcons come from lucide-react only.\nComponents never reference L1 primitives.');
+  docBlock(card,'Cursor','Add the base contract as a Cursor rule:');
+  docCode(card,'.cursor/rules/dls.md','# DLS-Lead Design System\n\nRead specs from node_modules/dls-design-tokens/specs/\nFollow prompts from node_modules/dls-design-tokens/prompts/\nAll CSS must use --dls-* tokens. No hardcoded values.');
+  docBlock(card,'Codex','Place the agent contract in your codex instructions directory:');
+  docCode(card,'codex-instructions/dls.md','# DLS-Lead\n\nImport: dls-design-tokens/tokens.css\nSpecs: node_modules/dls-design-tokens/specs/\nZero custom CSS — all classes .dls-*, all values var(--dls-*)');
+
+  /* ── Project Structure ─────────────── */
+  docSection(card,'Project Structure','install');
+  docBlock(card,'Repository layout','The DLS-Lead package is organized for both human developers and AI agents:');
+  docCode(card,'dls-design-tokens/','tokens/\n  tokens.json          ← DTCG source (4-layer model)\n  tokens.css           ← CSS custom properties\n  tokens.scss          ← SCSS variables\n  tokens.ts            ← TypeScript constants\n\nspecs/\n  session-start.md     ← Agent onboarding\n  tokens/              ← Token architecture docs\n  foundations/         ← Color, typography, spacing\n  patterns/            ← Layout, composition rules\n  components/          ← Per-component specs\n\nprompts/\n  base-agent-contract.md   ← Core DLS rules for agents\n  settings-page.md         ← Task-specific prompts\n  data-table-page.md\n  form-dialog.md\n  dropdown-menu.md');
+
+  row.appendChild(card);
+
+  const aside=h('div',{class:'card-sm content-aside'});
+  for(const[index,title]of sectionTitles.entries()){
+    const target=slugifyDocId('install',title);
+    aside.appendChild(h('button',{class:'toc-item'+(index===0?' active':''),type:'button','data-target':target,onclick:()=>scrollToDocTarget(target,aside)},title));
+  }
+  row.appendChild(aside);
+  inner.appendChild(row);
+  m.appendChild(inner);
+  setupDocToc(aside);
+}
+
 /* ═══════ Router dispatch ═════════════════════════════════ */
 function renderPage(){
   const route=getRoute();
-  if(route.startsWith('changelog')||route.startsWith('documentation'))renderDocumentation();
+  if(route.startsWith('installation'))renderInstallation();
+  else if(route.startsWith('changelog')||route.startsWith('documentation'))renderDocumentation();
   else if(route==='components')renderComponentsIndex();
   else if(route.startsWith('components/'))renderComponentDetail(route.split('/')[1]);
   else if(route.startsWith('tokens/color'))renderTokensColor();
