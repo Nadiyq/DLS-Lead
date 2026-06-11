@@ -1049,6 +1049,7 @@ function renderSidebar(){
   };
   const childItem=(label,active,onClick,cls='nav-child')=>h('div',{class:cls+(active?' active':''),onclick:onClick},label);
 
+  nav.appendChild(topItem('Installation',route.startsWith('installation'),()=>navigate('installation')));
   nav.appendChild(topItem('Documentation',route.startsWith('documentation')||route.startsWith('changelog'),()=>navigate('documentation')));
 
   const tokensOpen=route.startsWith('tokens');
@@ -1159,6 +1160,7 @@ function docSection(card,title,prefix='doc'){
 }
 function docBlock(card,title,text){const b=h('div',{class:'doc-block'});b.appendChild(h('div',{class:'doc-block-title'},title));b.appendChild(h('div',{class:'doc-text'},text));card.appendChild(b)}
 function docList(card,items){const ul=h('ul',{class:'changelog-list',style:{marginTop:'8px'}});items.forEach(i=>ul.appendChild(h('li',{},i)));card.appendChild(ul)}
+function docCode(card,filename,code){const cb=h('div',{class:'code-block',style:{marginTop:'16px'}});const hdr=h('div',{class:'code-block-header'});hdr.innerHTML=ICO.file+'<span class="filename">'+filename+'</span>';const copyBtn=h('span',{class:'copy-btn',style:{cursor:'pointer'},onclick:()=>{navigator.clipboard.writeText(code);const t=$('#toast');t.textContent='Copied!';t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1800)}});copyBtn.innerHTML=ICO.copy;hdr.appendChild(copyBtn);cb.appendChild(hdr);cb.appendChild(h('pre',{class:'code-block-body',style:{whiteSpace:'pre-wrap',fontSize:'12px',lineHeight:'18px'}},code));card.appendChild(cb)}
 function setActiveTocItem(aside,id){
   for(const item of aside.querySelectorAll('.toc-item[data-target]')){
     item.classList.toggle('active',item.dataset.target===id);

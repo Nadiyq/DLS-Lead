@@ -7,6 +7,7 @@
    --------------------------------------------------------------------------- */
 
 .dls-interactive-data-table-shell {
+  all: unset;
   box-sizing: border-box;
   width: min(100%, calc(100vw - (var(--dls-spacing-10) * 2)));
   min-width: 0;
