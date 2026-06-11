@@ -10,6 +10,8 @@ cd apps/storybook && npm run storybook       # Storybook :6006, MCP :6006/mcp
 cd apps/storybook && npx tsc -b              # TypeScript check
 node .claude/hooks/lint-tokens.mjs --all     # Lint ALL component CSS
 node .claude/hooks/lint-tokens.mjs <file>    # Lint single CSS file
+node scripts/build-manifest.mjs --all --ci   # Validate all manifests (CI mode)
+node scripts/build-manifest.mjs --component <name>  # Validate single manifest
 /build-component <name>                      # Scaffold/update component from Figma
 /audit-component <name|--all>                # Detect DLS violations in existing components
 /fix-component <name>                        # Fix violations using Figma as source of truth

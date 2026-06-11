@@ -1,0 +1,101 @@
+# DLS-Lead
+
+> Token-driven design system for SaaS products. React + Storybook + CSS custom properties.
+
+DLS-Lead is a design system built on a 4-layer token model (Primitives → Semantics → State → Component) with a zero custom CSS policy. All visual properties come from design tokens. Components use `data-*` attributes for variants, intents, and sizes — never `.is-*`/`.has-*` classes. Every component CSS starts with `all: unset; box-sizing: border-box;`.
+
+## Getting Started
+
+- [CLAUDE.md](CLAUDE.md): Project instructions, commands, critical rules, repo layout
+- [specs/session-start.md](specs/session-start.md): Checklist for every UI task
+
+## Token System
+
+- [specs/tokens/README.md](specs/tokens/README.md): Token architecture overview
+- [specs/tokens/token-reference.md](specs/tokens/token-reference.md): Complete token reference
+- [specs/tokens/color-tokens.md](specs/tokens/color-tokens.md): Color token system
+- [specs/tokens/typography-tokens.md](specs/tokens/typography-tokens.md): Typography tokens
+- [specs/tokens/spacing-tokens.md](specs/tokens/spacing-tokens.md): Spacing scale
+- [specs/tokens/elevation-tokens.md](specs/tokens/elevation-tokens.md): Shadow and elevation
+- [specs/tokens/motion-tokens.md](specs/tokens/motion-tokens.md): Animation and transition tokens
+- [tokens/tokens.json](tokens/tokens.json): Source of truth (DTCG-compliant, 4-layer model)
+
+## Foundations
+
+- [specs/foundations/README.md](specs/foundations/README.md): Foundations index
+- [specs/foundations/color.md](specs/foundations/color.md): Color system and intent model
+- [specs/foundations/typography.md](specs/foundations/typography.md): Type scale and font usage
+- [specs/foundations/spacing.md](specs/foundations/spacing.md): Spacing scale and application
+- [specs/foundations/radius.md](specs/foundations/radius.md): Border radius system
+- [specs/foundations/borders.md](specs/foundations/borders.md): Border tokens and usage
+- [specs/foundations/elevation.md](specs/foundations/elevation.md): Shadow layers
+- [specs/foundations/motion.md](specs/foundations/motion.md): Animation principles
+- [specs/foundations/iconography.md](specs/foundations/iconography.md): Icon usage (lucide-react only)
+- [specs/foundations/accessibility.md](specs/foundations/accessibility.md): Accessibility requirements
+- [specs/foundations/breakpoints.md](specs/foundations/breakpoints.md): Responsive breakpoints
+- [specs/foundations/grid.md](specs/foundations/grid.md): Layout grid
+- [specs/foundations/opacity.md](specs/foundations/opacity.md): Opacity tokens
+- [specs/foundations/z-index.md](specs/foundations/z-index.md): Stacking order
+
+## Patterns
+
+- [specs/patterns/README.md](specs/patterns/README.md): Patterns index
+- [specs/patterns/composition.md](specs/patterns/composition.md): How DLS components compose
+- [specs/patterns/component-selection.md](specs/patterns/component-selection.md): Choosing between similar components
+- [specs/patterns/accessibility-generation.md](specs/patterns/accessibility-generation.md): Generating accessible React components
+- [specs/patterns/data-table.md](specs/patterns/data-table.md): Heavy data tables (CRM, admin, operational)
+- [specs/patterns/report-dashboard.md](specs/patterns/report-dashboard.md): Reports, dashboards, analytics, KPI screens
+
+## Components
+
+- [specs/components/README.md](specs/components/README.md): Components index
+- [specs/schemas/component.v1.json](specs/schemas/component.v1.json): JSON Schema for component manifests
+
+### Component Manifests (machine-readable)
+
+95 component manifests in `specs/components/manifests/`. Each manifest contains: name, props, tokens, states, composition rules, accessibility contract, Figma mapping, usage guidance, and known deviations.
+
+### Component Specs (human-readable)
+
+Full component specifications in `specs/components/*.md`. Each spec covers: purpose, anatomy, props/API, states, tokens, accessibility, composition rules, and code examples.
+
+### Figma Descriptions
+
+109 Figma-aligned component descriptions in `specs/figma-descriptions/`. Each description includes: anatomy, Figma→Code property mapping, tokens, states, and code examples.
+
+### Storybook
+
+Component stories with interactive controls and play-function tests in `apps/storybook/src/stories/`. Run with `cd apps/storybook && npm run storybook` on port 6006.
+
+## Prompts
+
+Reusable prompt library for DLS-safe agent workflows in `prompts/`.
+
+- [prompts/README.md](prompts/README.md): Prompt library index
+- [prompts/base-agent-contract.md](prompts/base-agent-contract.md): Base contract for DLS UI sessions
+- [prompts/component-scaffold-from-figma.md](prompts/component-scaffold-from-figma.md): Scaffold components from Figma
+- [prompts/audit-fix-component.md](prompts/audit-fix-component.md): Audit and fix component violations
+- [prompts/component-rollout.md](prompts/component-rollout.md): Component rollout workflow
+- [prompts/data-table-page.md](prompts/data-table-page.md): Build data table pages
+- [prompts/dashboard-page.md](prompts/dashboard-page.md): Build dashboard pages
+- [prompts/settings-page.md](prompts/settings-page.md): Build settings pages
+- [prompts/form-dialog.md](prompts/form-dialog.md): Build form dialogs
+- [prompts/dropdown-menu.md](prompts/dropdown-menu.md): Build dropdown menus
+- [prompts/detail-page.md](prompts/detail-page.md): Build detail pages
+- [prompts/list-page.md](prompts/list-page.md): Build list pages
+- [prompts/nav-shell.md](prompts/nav-shell.md): Build navigation shells
+- [prompts/auth-flow.md](prompts/auth-flow.md): Build auth flows
+- [prompts/messaging-ui.md](prompts/messaging-ui.md): Build messaging UI
+- [prompts/token-addition.md](prompts/token-addition.md): Add new tokens
+
+## Critical Rules
+
+1. **Zero custom CSS** — all classes must be `.dls-*`. No `.my-*`, `.custom-*`, `.wrapper`.
+2. **No inline styles** for visual properties — use `data-*` attributes.
+3. **Icons from lucide-react only** — no hand-drawn SVG, no other icon sets.
+4. **Components never reference L1 primitives** — use L4 component → L2 semantic fallback.
+5. **Variants via `data-*` attributes** — never `.is-*`/`.has-*` classes.
+6. **Every component CSS starts with** `all: unset; box-sizing: border-box;`.
+7. **Hover**: `:hover:not(:disabled)`. **Focus**: `:focus-visible` (not `:focus`).
+8. **Focus ring**: `box-shadow` (never `outline`).
+9. **No hardcoded values** — colors, sizes, radii all come from tokens.

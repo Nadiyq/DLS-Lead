@@ -61,7 +61,10 @@
     "figma:audit": "node scripts/figma-sync-audit.mjs",
     "storybook": "cd apps/storybook && npm run storybook",
     "storybook:typecheck": "cd apps/storybook && npx tsc -b",
-    "tokens:lint": "node .claude/hooks/lint-tokens.mjs --all"
+    "tokens:lint": "node .claude/hooks/lint-tokens.mjs --all",
+    "manifests:validate": "node scripts/build-manifest.mjs --all --ci",
+    "usage": "node scripts/usage-tracker.mjs",
+    "figma:components": "node scripts/figma-sync-audit.mjs --components"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

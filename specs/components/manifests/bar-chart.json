@@ -135,11 +135,15 @@
   ],
   "relations": ["Grid", "Bar", "BarChartItem", "LegendGroup", "TooltipGroup"],
   "knownDeviations": [
-    "Negative legends are internal to BarChart because existing LegendItem and LegendGroup do not expose a danger red swatch."
+    {
+      "area": "composition",
+      "description": "Negative legends are internal to BarChart because existing LegendItem and LegendGroup do not expose a danger red swatch.",
+      "severity": "low"
+    }
   ],
   "_meta": {
     "generatedAt": "2026-06-08T00:00:00.000Z",
     "generator": "codex-manual@1.0.0",
-    "sourceHash": "figma-node-6644-18592"
+    "sourceHash": "9a2a6b0745509742"
   }
 }

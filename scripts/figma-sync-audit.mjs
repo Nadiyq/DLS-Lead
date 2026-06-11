@@ -1,19 +1,25 @@
 #!/usr/bin/env node
 
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 
 const TOKENS_PATH = new URL('../tokens/tokens.json', import.meta.url);
+const MANIFESTS_DIR = new URL('../specs/components/manifests', import.meta.url).pathname;
+const STORIES_DIR = new URL('../apps/storybook/src/stories', import.meta.url).pathname;
+const DESCRIPTIONS_DIR = new URL('../specs/figma-descriptions', import.meta.url).pathname;
 const REFERENCE_RE = /\{([^}]+)\}/g;
 
 function printUsage() {
   console.log(`
-Figma token audit for DLS-Lead
+Figma sync audit for DLS-Lead
 
 Usage:
   node scripts/figma-sync-audit.mjs --token <token-name>
   node scripts/figma-sync-audit.mjs --prefix <token-prefix>
   node scripts/figma-sync-audit.mjs --compare <figma-vars.json>
+  node scripts/figma-sync-audit.mjs --components              # Audit all component manifests
+  node scripts/figma-sync-audit.mjs --components --ci          # Exit 1 on errors
+  node scripts/figma-sync-audit.mjs --component <kebab-name>   # Audit one component
 
 Accepted token formats:
   color.intent.primary.base
@@ -215,6 +221,176 @@ function formatTokenDetails(token, byPath) {
   return lines.join('\n');
 }
 
+// ---------------------------------------------------------------------------
+// Component / variant drift audit
+// ---------------------------------------------------------------------------
+
+function kebabToPascal(s) {
+  return s.replace(/(^|-)([a-z])/g, (_, __, c) => c.toUpperCase());
+}
+
+async function fileExists(p) {
+  try { await readFile(p); return true; } catch { return false; }
+}
+
+async function findFileRecursive(dir, filename) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const full = path.join(dir, entry.name);
+    if (entry.isFile() && entry.name === filename) return full;
+    if (entry.isDirectory() && !entry.name.startsWith('_') && entry.name !== 'node_modules') {
+      const found = await findFileRecursive(full, filename);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+async function auditComponent(manifestPath) {
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  const report = { name: manifest.name, kebab: manifest.kebabName, errors: [], warnings: [], info: [] };
+
+  // 1. Check Figma URL is present
+  if (!manifest.figma?.componentSetUrl || manifest.figma.componentSetUrl === 'TODO') {
+    report.errors.push('Missing figma.componentSetUrl');
+  }
+
+  // 2. Check Figma property mapping exists
+  if (!manifest.figma?.propertyMapping || manifest.figma.propertyMapping.length === 0) {
+    if (!manifest.figma?.componentSets || manifest.figma.componentSets.length === 0) {
+      report.warnings.push('No figma.propertyMapping — Figma↔Code prop mapping undocumented');
+    }
+  } else {
+    // Check each mapping has either reactProp or a note explaining why null
+    for (const mapping of manifest.figma.propertyMapping) {
+      if (mapping.reactProp === null && !mapping.note) {
+        report.warnings.push(`Figma property "${mapping.figmaProperty}" mapped to null with no explanatory note`);
+      }
+    }
+
+    // Check mapped react props actually exist in props array
+    const HTML_ATTRS = new Set(['value', 'placeholder', 'disabled', 'checked', 'type', 'name', 'id', 'children', 'className', 'style', 'onChange', 'onClick', 'onFocus', 'onBlur']);
+    const propNames = new Set((manifest.props || []).map(p => p.name));
+    for (const mapping of manifest.figma.propertyMapping) {
+      if (mapping.reactProp && !propNames.has(mapping.reactProp)) {
+        if (HTML_ATTRS.has(mapping.reactProp)) {
+          report.warnings.push(`Figma mapping references "${mapping.reactProp}" — inherited HTML attribute, not in explicit props`);
+        } else {
+          report.errors.push(`Figma mapping references reactProp "${mapping.reactProp}" which is not in props array`);
+        }
+      }
+    }
+  }
+
+  // 3. Check variant/intent/size coverage in Figma mapping
+  const mappedFigmaProps = new Set((manifest.figma?.propertyMapping || []).map(m => m.reactProp).filter(Boolean));
+  if (manifest.variants?.length > 0 && !mappedFigmaProps.has('variant')) {
+    report.warnings.push('Component has variants but no Figma mapping for "variant"');
+  }
+  if (manifest.intents?.length > 0 && !mappedFigmaProps.has('intent')) {
+    report.warnings.push('Component has intents but no Figma mapping for "intent"');
+  }
+  if (manifest.sizes?.length > 0 && !mappedFigmaProps.has('size')) {
+    report.warnings.push('Component has sizes but no Figma mapping for "size"');
+  }
+
+  // 4. Check TSX file exists (search recursively for sub-components)
+  const kebab = manifest.kebabName;
+  const pascal = manifest.name;
+  const tsxPath = await findFileRecursive(STORIES_DIR, `${pascal}.tsx`);
+  if (!tsxPath) {
+    report.errors.push(`Component TSX file not found: ${pascal}.tsx`);
+  }
+
+  // 5. Check CSS file exists
+  const cssPath = await findFileRecursive(STORIES_DIR, `${kebab}.css`);
+  if (!cssPath) {
+    report.warnings.push(`No CSS file found for ${kebab} (may use parent component styles)`);
+  }
+
+  // 6. Check stories file exists
+  const storiesPath = await findFileRecursive(STORIES_DIR, `${pascal}.stories.tsx`);
+  if (!storiesPath) {
+    report.warnings.push(`No stories file found for ${pascal}`);
+  }
+
+  // 7. Check Figma description exists
+  const descPath = path.join(DESCRIPTIONS_DIR, `${kebab}.md`);
+  if (!await fileExists(descPath)) {
+    report.warnings.push(`No Figma description file: specs/figma-descriptions/${kebab}.md`);
+  }
+
+  // 8. Check accessibility contract
+  if (!manifest.accessibility?.semanticElement || manifest.accessibility.semanticElement === 'TODO') {
+    report.warnings.push('accessibility.semanticElement is missing or TODO');
+  }
+
+  // 9. Check state model
+  if (manifest.states?.implementation && manifest.states.implementation !== 'none') {
+    if (!manifest.states.tokens || manifest.states.tokens.length === 0) {
+      report.warnings.push(`states.implementation is "${manifest.states.implementation}" but no state tokens listed`);
+    }
+  }
+
+  // 10. Check _meta completeness
+  if (!manifest._meta?.generatedAt) report.warnings.push('Missing _meta.generatedAt');
+  if (!manifest._meta?.sourceHash || !/^[0-9a-f]{16}$/.test(manifest._meta.sourceHash)) {
+    report.errors.push(`Invalid or missing _meta.sourceHash: "${manifest._meta?.sourceHash}"`);
+  }
+
+  // 11. Check knownDeviations format
+  if (manifest.knownDeviations) {
+    for (const dev of manifest.knownDeviations) {
+      if (typeof dev === 'string') {
+        report.errors.push(`knownDeviation is a plain string: "${dev.slice(0, 60)}..."`);
+      }
+    }
+  }
+
+  return report;
+}
+
+async function auditAllComponents(targetKebab = null) {
+  let files;
+  try {
+    files = (await readdir(MANIFESTS_DIR)).filter(f => f.endsWith('.json'));
+  } catch {
+    console.error('No manifests directory found at', MANIFESTS_DIR);
+    process.exit(1);
+  }
+
+  if (targetKebab) {
+    const target = `${targetKebab}.json`;
+    if (!files.includes(target)) {
+      console.error(`Manifest not found: ${target}`);
+      process.exit(1);
+    }
+    files = [target];
+  }
+
+  let totalErrors = 0;
+  let totalWarnings = 0;
+
+  for (const file of files.sort()) {
+    const report = await auditComponent(path.join(MANIFESTS_DIR, file));
+    const hasIssues = report.errors.length > 0 || report.warnings.length > 0;
+
+    if (!hasIssues && !targetKebab) continue;
+
+    const icon = report.errors.length > 0 ? '✗' : report.warnings.length > 0 ? '⚠' : '✓';
+    console.log(`\n${icon} ${report.name} (${report.kebab})`);
+    for (const e of report.errors) console.log(`  ERROR: ${e}`);
+    for (const w of report.warnings) console.log(`  WARN:  ${w}`);
+    for (const i of report.info) console.log(`  INFO:  ${i}`);
+
+    totalErrors += report.errors.length;
+    totalWarnings += report.warnings.length;
+  }
+
+  console.log(`\n--- Component sync: ${files.length} manifests, ${totalErrors} errors, ${totalWarnings} warnings ---`);
+  return totalErrors;
+}
+
 async function main() {
   const args = process.argv.slice(2);
   if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
@@ -316,6 +492,22 @@ async function main() {
       }
     }
 
+    return;
+  }
+
+  if (args[0] === '--components') {
+    const ci = args.includes('--ci');
+    const errors = await auditAllComponents();
+    if (ci && errors > 0) process.exit(1);
+    return;
+  }
+
+  if (args[0] === '--component') {
+    const name = args[1];
+    if (!name) throw new Error('Missing component name after --component');
+    const ci = args.includes('--ci');
+    const errors = await auditAllComponents(name);
+    if (ci && errors > 0) process.exit(1);
     return;
   }
 

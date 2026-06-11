@@ -138,11 +138,15 @@
   ],
   "relations": ["Pie", "PieChartLabels", "LegendGroup", "TooltipGroup"],
   "knownDeviations": [
-    "The Figma MCP output used temporary image asset URLs for segment and leader drawings. The code composes durable DLS SVG/CSS primitives instead."
+    {
+      "area": "figma-asset",
+      "description": "The Figma MCP output used temporary image asset URLs for segment and leader drawings. The code composes durable DLS SVG/CSS primitives instead.",
+      "severity": "low"
+    }
   ],
   "_meta": {
     "generatedAt": "2026-06-08T00:00:00.000Z",
     "generator": "codex-manual@1.0.0",
-    "sourceHash": "figma-node-6644-18688"
+    "sourceHash": "7b3d17c42cdfd1a6"
   }
 }

@@ -213,6 +213,10 @@
       "description": "Related component names (e.g. 'AlertDialog' relates to 'Dialog').",
       "items": { "type": "string" }
     },
+    "deprecated": {
+      "$ref": "#/$defs/deprecation",
+      "description": "Present only when the component is deprecated. Omit entirely for active components."
+    },
     "knownDeviations": {
       "type": "array",
       "description": "Documented gaps between the code and the ideal system rules.",
@@ -340,6 +344,37 @@
           "type": "string",
           "enum": ["low", "medium", "high"],
           "description": "Impact severity."
+        }
+      }
+    },
+    "deprecation": {
+      "type": "object",
+      "required": ["since", "replacement"],
+      "additionalProperties": false,
+      "properties": {
+        "since": {
+          "type": "string",
+          "description": "ISO 8601 date when the component was deprecated (e.g. '2026-07-01')."
+        },
+        "replacement": {
+          "type": ["string", "null"],
+          "description": "PascalCase name of the replacement component, or null if removed without replacement."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Why the component is deprecated (e.g. 'Merged into DialogContent', 'Replaced by Card with data-variant=\"summary\"')."
+        },
+        "migrationGuide": {
+          "type": "string",
+          "description": "Brief migration instructions or a relative path to a migration doc (e.g. 'Replace <OldName> with <NewName replacement={true}>' or 'docs/migrations/old-name-to-new-name.md')."
+        },
+        "removeAfter": {
+          "type": "string",
+          "description": "ISO 8601 date after which the component may be removed from the codebase. Gives consumers a hard deadline."
+        },
+        "codemod": {
+          "type": ["string", "null"],
+          "description": "Path to a jscodeshift codemod script that automates the migration, or null if no codemod exists yet."
         }
       }
     }

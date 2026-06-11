@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: apps/storybook
+
+      - name: TypeScript check
+        run: npx tsc -b
+        working-directory: apps/storybook
+
+      - name: Lint component CSS tokens
+        run: node .claude/hooks/lint-tokens.mjs --all
+
+      - name: Validate component manifests
+        run: node scripts/build-manifest.mjs --all --ci
+
+      - name: Audit Figma component sync
+        run: node scripts/figma-sync-audit.mjs --components --ci
+
+      - name: Check composition drift
+        run: node scripts/usage-tracker.mjs --ci

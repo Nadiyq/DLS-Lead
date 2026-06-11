@@ -140,11 +140,15 @@
   ],
   "relations": ["Grid", "Dot", "LegendGroup", "TooltipGroup"],
   "knownDeviations": [
-    "Legend and markers are internal to TrendChart because existing LegendItem and Dot APIs do not expose the red danger swatch and additional green chart color required by the Figma node."
+    {
+      "area": "composition",
+      "description": "Legend and markers are internal to TrendChart because existing LegendItem and Dot APIs do not expose the red danger swatch and additional green chart color required by the Figma node.",
+      "severity": "low"
+    }
   ],
   "_meta": {
     "generatedAt": "2026-06-05T00:00:00.000Z",
     "generator": "codex-manual@1.0.0",
-    "sourceHash": "figma-node-6644-18552"
+    "sourceHash": "bdd63ee17d8671c0"
   }
 }

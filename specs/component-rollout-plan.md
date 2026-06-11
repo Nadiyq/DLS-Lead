@@ -98,11 +98,11 @@ applied to every component in the system — both Figma and code side.
 | Eighty-seventh manifest (PieChart) | DONE | `specs/components/manifests/pie-chart.json` |
 | Eighty-eighth manifest (DonutChart) | DONE | `specs/components/manifests/donut-chart.json` |
 | Figma description template | DONE | Accordion as reference: `specs/figma-descriptions/accordion-item.md` |
-| `llms.txt` | TODO | Gap item #4 |
-| Build script + CI hook | TODO | Gap item #3 |
-| Deprecation schema fields | TODO | Gap item #7 — design now, use later |
-| Component usage tracker | TODO | Gap item #8 |
-| `figma-sync-audit` component extension | TODO | Gap item #9 |
+| `llms.txt` | DONE | `llms.txt` at repo root |
+| Build script + CI hook | DONE | `scripts/build-manifest.mjs` + `.github/workflows/ci.yml` |
+| Deprecation schema fields | DONE | `deprecated` object added to `specs/schemas/component.v1.json` |
+| Component usage tracker | DONE | `scripts/usage-tracker.mjs` — dependency graph, orphan detection, composition drift |
+| `figma-sync-audit` component extension | DONE | `--components` / `--component <name>` modes added to `scripts/figma-sync-audit.mjs` |
 
 ## Per-component checklist
 
@@ -302,13 +302,16 @@ Every CSS file with `transition` or `animation` needs a
 `@media (prefers-reduced-motion: reduce)` block.
 Fix during each component's Phase 2.
 
-### 5. Build script + CI hook (gap item #3)
+### 5. Build script + CI hook (gap item #3) — DONE
 
-After 5-10 manifests exist, create:
-- `scripts/build-manifest.mjs` — reads TSX + stories + CSS +
-  spec + tokens.json → emits validated JSON
-- CI step that runs on PRs touching component files
-- Fails if schema validation breaks or props drift
+Created `scripts/build-manifest.mjs` and `.github/workflows/ci.yml`:
+- `node scripts/build-manifest.mjs --all --ci` — validates all manifests
+- `node scripts/build-manifest.mjs --component <name>` — validate one
+- `node scripts/build-manifest.mjs --component <name> --emit` — scaffold stub
+- Extracts props from TSX interfaces, variants from stories argTypes, tokens from CSS `var(--dls-*)` patterns
+- Cross-references tokens against `tokens/tokens.json`
+- CI workflow runs TypeScript check, CSS lint, and manifest validation on push/PR to main
+- `npm run manifests:validate` added as package.json script
 
 ### 6. Figma description template
 
@@ -333,13 +336,15 @@ is the canonical template. Key sections every component must have:
   Cross-references
 ```
 
-### 7. Figma property renaming (gap Figma item #3)
+### 7. Figma gap items — resolved
 
-Where feasible, rename Figma properties to match React prop names:
-- `active` → `defaultOpen` (Accordion) — values stay Off/On
-- Similar renames per component discovered during Phase 1
-
-Keep `state` as Figma-only (explicitly mark as `reactProp: null`).
+| Figma gap | Status | Resolution |
+|-----------|--------|------------|
+| #2 Documentation link field | DONE | Links added to all components |
+| #3 Property names match React props | CLOSED | Not needed — `propertyMapping` in manifests bridges Figma↔React naming |
+| #5 Annotations on slots/properties | DONE | Added to Figma |
+| #6 Variant documentation in Figma | CLOSED | Not needed — covered by figma-descriptions and manifests |
+| #7 Naming convention for dev frames | CLOSED | Not needed — manifests store explicit `figma.nodeId` and `componentSetUrl` |
 
 ## Execution cadence
 
@@ -358,7 +363,6 @@ Button is next after Accordion.
 
 - [ ] Figma description written and pasted
 - [ ] Figma documentation link set
-- [ ] Figma property names reviewed (renamed where feasible)
 - [ ] Figma variable bindings match CSS token names 1:1
 - [ ] Manifest written to `specs/components/manifests/{name}.json`
 - [ ] Schema validation passes
@@ -375,9 +379,9 @@ Button is next after Accordion.
 
 - [ ] All 75 component manifests written
 - [ ] `llms.txt` created
-- [ ] Build script + CI hook operational
+- [x] Build script + CI hook operational
 - [ ] Deprecation fields designed in schema (even if unused)
-- [ ] `figma-sync-audit` extended for component coverage
+- [x] `figma-sync-audit` extended for component coverage
 - [ ] Zero inline SVGs remaining
 - [ ] Zero CSS files missing reduced-motion (where applicable)
 - [ ] All L4 tokens in tokens.json (not just tokens.ts)

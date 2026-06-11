@@ -158,12 +158,20 @@
   ],
   "relations": ["LegendGroup", "LegendItem", "Pie", "PieChartLabels", "TooltipGroup"],
   "knownDeviations": [
-    "The Figma MCP output used temporary image asset URLs for donut segment slices. The code uses durable SVG paths and DLS tokens instead.",
-    "Figma hover is implemented as a static prop-driven state rather than browser hover behavior because the design exposes it as a variant."
+    {
+      "area": "figma-asset",
+      "description": "The Figma MCP output used temporary image asset URLs for donut segment slices. The code uses durable SVG paths and DLS tokens instead.",
+      "severity": "low"
+    },
+    {
+      "area": "state-model",
+      "description": "Figma hover is implemented as a static prop-driven state rather than browser hover behavior because the design exposes it as a variant.",
+      "severity": "low"
+    }
   ],
   "_meta": {
     "generatedAt": "2026-06-08T00:00:00.000Z",
     "generator": "codex-manual@1.0.0",
-    "sourceHash": "figma-node-6644-18708"
+    "sourceHash": "f52d93dfa4e6933b"
   }
 }

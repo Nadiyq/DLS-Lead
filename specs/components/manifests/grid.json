@@ -92,13 +92,13 @@
       },
       {
         "figmaProperty": "y-axis",
-        "reactProp": "showPrimaryAxis (vertical) / showSecondaryAxis (horizontal)",
-        "notes": "In vertical mode maps to showPrimaryAxis; in horizontal mode maps to showSecondaryAxis."
+        "reactProp": "showPrimaryAxis",
+        "note": "In vertical orientation maps to showPrimaryAxis; in horizontal orientation maps to showSecondaryAxis."
       },
       {
         "figmaProperty": "x-axis",
-        "reactProp": "showSecondaryAxis (vertical) / showPrimaryAxis (horizontal)",
-        "notes": "In vertical mode maps to showSecondaryAxis; in horizontal mode maps to showPrimaryAxis."
+        "reactProp": "showSecondaryAxis",
+        "note": "In vertical orientation maps to showSecondaryAxis; in horizontal orientation maps to showPrimaryAxis."
       }
     ]
   },

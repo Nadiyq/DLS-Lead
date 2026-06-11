@@ -108,6 +108,12 @@
       "description": "Right action buttons slot (submit)"
     },
     {
+      "name": "textareaRef",
+      "type": "React.RefObject<HTMLTextAreaElement | null>",
+      "required": false,
+      "description": "External ref to the internal textarea element."
+    },
+    {
       "name": "className",
       "type": "string",
       "required": false
