@@ -1,0 +1,235 @@
+{
+  "name": "TopBar",
+  "kebabName": "top-bar",
+  "category": "navigation / header",
+  "description": "Persistent app-wide header bar with menu button, search, notifications, help, and account avatar across three layout types.",
+  "variants": ["1", "2", "3"],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "'1' | '2' | '3'",
+      "required": false,
+      "default": "1",
+      "enum": ["1", "2", "3"],
+      "description": "Layout type: 1 = minimal, 2 = centered search, 3 = nav tabs"
+    },
+    {
+      "name": "onMenuClick",
+      "type": "() => void",
+      "required": false,
+      "description": "Menu button click handler (hamburger / sidebar toggle)"
+    },
+    {
+      "name": "slotLeft",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Extra content in the left slot"
+    },
+    {
+      "name": "slotRight",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Extra content in the right slot (before default icons)"
+    },
+    {
+      "name": "navItems",
+      "type": "NavItem[]",
+      "required": false,
+      "description": "Nav items (type=3 only)"
+    },
+    {
+      "name": "searchPlaceholder",
+      "type": "string",
+      "required": false,
+      "default": "Search…",
+      "description": "Search placeholder (type=2 only)"
+    },
+    {
+      "name": "searchValue",
+      "type": "string",
+      "required": false,
+      "description": "Search value (type=2 only)"
+    },
+    {
+      "name": "onSearchChange",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Search change handler (type=2 only)"
+    },
+    {
+      "name": "showSearch",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show search icon button (type=1 only)"
+    },
+    {
+      "name": "onSearchClick",
+      "type": "() => void",
+      "required": false,
+      "description": "Search click handler (type=1)"
+    },
+    {
+      "name": "showNotifications",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show notification bell"
+    },
+    {
+      "name": "onNotificationClick",
+      "type": "() => void",
+      "required": false,
+      "description": "Notification click handler"
+    },
+    {
+      "name": "showHelp",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show help button"
+    },
+    {
+      "name": "onHelpClick",
+      "type": "() => void",
+      "required": false,
+      "description": "Help click handler"
+    },
+    {
+      "name": "avatarInitials",
+      "type": "string",
+      "required": false,
+      "default": "AS",
+      "description": "Avatar initials"
+    },
+    {
+      "name": "avatarSrc",
+      "type": "string",
+      "required": false,
+      "description": "Avatar image src"
+    },
+    {
+      "name": "onAvatarClick",
+      "type": "() => void",
+      "required": false,
+      "description": "Avatar click handler"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-spacing-2",
+    "--dls-spacing-3",
+    "--dls-spacing-4",
+    "--dls-radius-component-button",
+    "--dls-radius-component-input",
+    "--dls-color-text-secondary",
+    "--dls-color-text-primary",
+    "--dls-state-hover-overlay",
+    "--dls-state-focus-ring-color",
+    "--dls-color-border-base",
+    "--dls-color-border-strong",
+    "--dls-color-component-input-fg-placeholder"
+  ],
+  "states": {
+    "implementation": "overlay",
+    "rationale": "Nav items (type 3) use overlay for hover/active. Container itself has no interactive states.",
+    "available": [
+      "[data-type]",
+      ":hover",
+      "[data-active]",
+      ":focus-visible"
+    ],
+    "tokens": [
+      "--dls-state-hover-overlay",
+      "--dls-state-focus-ring-color"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["Button", "Avatar", "SearchField"]
+  },
+  "accessibility": {
+    "semanticElement": "header",
+    "requiredAria": ["aria-label"],
+    "keyboard": {
+      "Tab": "Move focus through interactive children",
+      "Enter/Space": "Activate focused button or nav item"
+    },
+    "respectsReducedMotion": true,
+    "focusManagement": "natural tab order"
+  },
+  "figma": {
+    "nodeId": "6631-1569",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6631-1569",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "1": "1",
+          "2": "2",
+          "3": "3"
+        }
+      },
+      {
+        "figmaProperty": "indicator",
+        "reactProp": "showNotifications",
+        "note": "Figma indicator dot maps to notification bell visibility in code"
+      },
+      {
+        "figmaProperty": "left1",
+        "reactProp": "slotLeft",
+        "note": "Type 1 left slot"
+      },
+      {
+        "figmaProperty": "left2",
+        "reactProp": "slotLeft",
+        "note": "Type 2 left slot"
+      },
+      {
+        "figmaProperty": "left3",
+        "reactProp": "slotLeft",
+        "note": "Type 3 left slot"
+      },
+      {
+        "figmaProperty": "right1",
+        "reactProp": "slotRight",
+        "note": "Type 1 right slot"
+      },
+      {
+        "figmaProperty": "right2",
+        "reactProp": "slotRight",
+        "note": "Type 2 right slot"
+      },
+      {
+        "figmaProperty": "right3",
+        "reactProp": "slotRight",
+        "note": "Type 3 right slot"
+      }
+    ]
+  },
+  "useWhen": [
+    "Building the main application header above content area",
+    "Providing a sidebar toggle with global search and notifications",
+    "Adding navigation tabs in the header (type 3)"
+  ],
+  "doNotUseFor": [
+    "Sidebar navigation — use Sidebar + SidebarItem",
+    "In-page tab navigation — use Tabs",
+    "Toolbar within a page section — use Toolbar"
+  ],
+  "relations": ["Sidebar", "Avatar", "Button", "SearchField"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T13:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "b7b570604e74d607"
+  }
+}

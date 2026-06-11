@@ -1,0 +1,110 @@
+{
+  "name": "LegendItem",
+  "kebabName": "legend-item",
+  "category": "data display / chart",
+  "description": "Chart legend row with colored swatch dot, category label, and optional numeric value.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "default": "Item 1",
+      "description": "Category label text."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Optional metric/value shown after the label."
+    },
+    {
+      "name": "color",
+      "type": "LegendItemColor",
+      "required": false,
+      "default": "green",
+      "enum": ["purple", "violet", "pink", "blue", "teal", "yellow", "green", "gold", "cinnamon", "orange", "danger"],
+      "description": "DLS chart swatch hue. Additional palette hues plus semantic danger."
+    },
+    {
+      "name": "tone",
+      "type": "LegendItemTone",
+      "required": false,
+      "default": "500",
+      "enum": ["100", "300", "500", "700"],
+      "description": "DLS additional palette tone used for the chart swatch."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-spacing-2",
+    "--dls-spacing-2-5",
+    "--dls-radius-component-legend-item-swatch",
+    "--dls-color-text-primary",
+    "--dls-color-intent-danger-base",
+    "--dls-text-paragraph-m-font-size",
+    "--dls-text-paragraph-m-line-height",
+    "--dls-text-paragraph-m-light-font-weight",
+    "--dls-text-paragraph-m-heavy-font-weight"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Passive data-display element with no interactive states.",
+    "available": [
+      "[data-color]",
+      "[data-tone]"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": ["Button", "ListItem"]
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6635-5501",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6635-5501",
+    "propertyMapping": [
+      {
+        "figmaProperty": "text",
+        "reactProp": "label"
+      },
+      {
+        "figmaProperty": "value",
+        "reactProp": null,
+        "note": "Figma boolean toggle for value visibility. In code, presence of value string controls visibility."
+      },
+      {
+        "figmaProperty": "valueText",
+        "reactProp": "value",
+        "note": "Figma string content for the value. Maps to code value prop."
+      }
+    ]
+  },
+  "useWhen": [
+    "Displaying a single legend entry for a chart or data visualization",
+    "Labeling chart data series with color-coded categories"
+  ],
+  "doNotUseFor": [
+    "Badge indicators — use BadgeIndicator",
+    "Status dots — use Badge with intent",
+    "List items — use ListItem"
+  ],
+  "relations": ["LegendGroup"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T13:30:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "0f8270907fa58a3b"
+  }
+}

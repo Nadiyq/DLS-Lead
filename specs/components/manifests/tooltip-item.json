@@ -1,0 +1,143 @@
+{
+  "name": "TooltipItem",
+  "kebabName": "tooltip-item",
+  "category": "data display / chart",
+  "description": "Chart tooltip data row with colored swatch, category label, numeric value, and optional unit.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "default": "Item 1",
+      "description": "Category label text."
+    },
+    {
+      "name": "value",
+      "type": "string | null",
+      "required": false,
+      "default": "50%",
+      "description": "Optional metric/value shown after the label."
+    },
+    {
+      "name": "unit",
+      "type": "string | null",
+      "required": false,
+      "default": "kcal",
+      "description": "Optional unit shown after the value."
+    },
+    {
+      "name": "color",
+      "type": "LegendItemColor",
+      "required": false,
+      "default": "green",
+      "enum": ["purple", "violet", "pink", "blue", "teal", "yellow", "green", "gold", "cinnamon", "orange", "danger"],
+      "description": "DLS chart swatch hue. Additional palette hues plus semantic danger."
+    },
+    {
+      "name": "tone",
+      "type": "LegendItemTone",
+      "required": false,
+      "default": "500",
+      "enum": ["100", "300", "500", "700"],
+      "description": "DLS additional palette tone used for the chart swatch."
+    },
+    {
+      "name": "showSwatch",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Whether to show the chart swatch before the label."
+    },
+    {
+      "name": "layout",
+      "type": "'inline' | 'split'",
+      "required": false,
+      "default": "inline",
+      "enum": ["inline", "split"],
+      "description": "Inline content or split row layout."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-spacing-2",
+    "--dls-spacing-0-5",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-text-paragraph-m-font-size",
+    "--dls-text-paragraph-m-line-height",
+    "--dls-text-paragraph-m-light-font-weight",
+    "--dls-text-paragraph-m-heavy-font-weight",
+    "--dls-text-paragraph-s-font-size",
+    "--dls-text-paragraph-s-line-height",
+    "--dls-text-paragraph-s-light-font-weight"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Passive data-display row with no interactive states.",
+    "available": [
+      "[data-layout]",
+      "[data-swatch]"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["LegendItem"]
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6635-5581",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6635-5581",
+    "propertyMapping": [
+      {
+        "figmaProperty": "text",
+        "reactProp": "label"
+      },
+      {
+        "figmaProperty": "value",
+        "reactProp": null,
+        "note": "Boolean toggle for value visibility. In code, presence of value string controls visibility."
+      },
+      {
+        "figmaProperty": "valueText",
+        "reactProp": "value"
+      },
+      {
+        "figmaProperty": "unit",
+        "reactProp": null,
+        "note": "Boolean toggle for unit visibility. In code, presence of unit string controls visibility."
+      },
+      {
+        "figmaProperty": "unitText",
+        "reactProp": "unit"
+      }
+    ]
+  },
+  "useWhen": [
+    "Displaying a data series row inside a chart tooltip",
+    "Showing label + value + unit for a chart data point"
+  ],
+  "doNotUseFor": [
+    "Chart legends — use LegendItem / LegendGroup",
+    "General tooltips — use the DLS Tooltip component",
+    "List items — use ListItem"
+  ],
+  "relations": ["TooltipGroup", "LegendItem"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T14:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "a10f09e236b49f65"
+  }
+}

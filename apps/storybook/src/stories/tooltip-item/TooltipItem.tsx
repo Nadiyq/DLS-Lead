@@ -15,7 +15,7 @@ export interface TooltipItemProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   value?: string | null;
   /** Optional unit shown after the value. */
   unit?: string | null;
-  /** DLS additional palette hue used for the chart swatch. */
+  /** DLS chart swatch hue. Additional palette hues plus semantic danger. */
   color?: LegendItemColor;
   /** DLS additional palette tone used for the chart swatch. */
   tone?: LegendItemTone;

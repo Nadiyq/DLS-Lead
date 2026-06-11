@@ -1,0 +1,162 @@
+{
+  "name": "BarChartItem",
+  "kebabName": "bar-chart-item",
+  "category": "data display / chart",
+  "description": "Single bar chart item supporting default, two-segment stacked, and positive/negative bar shapes in vertical or horizontal orientation.",
+  "variants": ["default", "stacked", "negative"],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "type",
+      "type": "BarChartItemType",
+      "required": false,
+      "default": "default",
+      "enum": ["default", "stacked", "negative"],
+      "description": "Bar shape from the Figma component."
+    },
+    {
+      "name": "horizontal",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Rotate the item for horizontal bar chart layouts."
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show the active chart state with inverse border and overlay."
+    },
+    {
+      "name": "value",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show numeric value labels."
+    },
+    {
+      "name": "valueText",
+      "type": "string",
+      "required": false,
+      "default": "12",
+      "description": "Positive or total value label text."
+    },
+    {
+      "name": "negativeValueText",
+      "type": "string",
+      "required": false,
+      "default": "12",
+      "description": "Negative value label text for negative bars."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-bar-chart-item-bar-default",
+    "--dls-color-component-bar-chart-item-bar-stack-primary",
+    "--dls-color-component-bar-chart-item-bar-stack-secondary",
+    "--dls-color-component-bar-chart-item-bar-positive",
+    "--dls-color-component-bar-chart-item-bar-negative",
+    "--dls-color-component-bar-chart-item-bar-overlay-active",
+    "--dls-color-component-bar-chart-item-bar-border-active",
+    "--dls-color-component-bar-chart-item-label-fg",
+    "--dls-radius-component-bar-chart-item",
+    "--dls-spacing-0",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1-5",
+    "--dls-spacing-3",
+    "--dls-spacing-8",
+    "--dls-spacing-10",
+    "--dls-spacing-16",
+    "--dls-text-paragraph-s-font-size",
+    "--dls-text-paragraph-s-line-height",
+    "--dls-text-paragraph-s-medium-font-weight",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "data attributes",
+    "rationale": "Passive chart data-display primitive. Active state is a visual highlight owned by the chart consumer.",
+    "available": [
+      "[data-type]",
+      "[data-orientation]",
+      "[data-active]"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": ["Button", "ListItem"],
+    "allowedParents": ["Grid", "chart containers"]
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": ["role=\"img\"", "aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6636-4506",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6636-4506",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "default": "default",
+          "stacked": "stacked",
+          "negative": "negative"
+        }
+      },
+      {
+        "figmaProperty": "horizontal?",
+        "reactProp": "horizontal",
+        "valueMapping": {
+          "false": false,
+          "true": true
+        }
+      },
+      {
+        "figmaProperty": "active?",
+        "reactProp": "active",
+        "valueMapping": {
+          "false": false,
+          "true": true
+        }
+      },
+      {
+        "figmaProperty": "value",
+        "reactProp": "value",
+        "note": "Boolean visibility toggle for value labels."
+      },
+      {
+        "figmaProperty": "valueText",
+        "reactProp": "valueText"
+      },
+      {
+        "figmaProperty": "negativeValueText",
+        "reactProp": "negativeValueText"
+      }
+    ]
+  },
+  "useWhen": [
+    "Rendering a single bar in a vertical or horizontal bar chart",
+    "Showing two-category stacked bars",
+    "Showing positive and negative bar values around an axis"
+  ],
+  "doNotUseFor": [
+    "Progress indicators — use ProgressBar",
+    "Chart grid lines and axis labels — use Grid",
+    "Chart legends — use LegendItem or LegendGroup"
+  ],
+  "relations": ["Grid", "LegendItem", "TooltipGroup"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-05T00:00:00.000Z",
+    "generator": "codex-manual@1.0.0",
+    "sourceHash": "figma-node-6636-4506"
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "name": "PieChartLabels",
+  "kebabName": "pie-chart-labels",
+  "category": "data display / chart",
+  "description": "Value callouts and category labels for pie charts with colored L-shaped leader strokes at 5 fixed positions.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "items",
+      "type": "PieChartLabelItem[]",
+      "required": false,
+      "description": "Pie chart label items rendered in their fixed Figma positions."
+    },
+    {
+      "name": "categories",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show category labels inside the pie chart area."
+    },
+    {
+      "name": "stroke",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show colored leader strokes for value callouts."
+    },
+    {
+      "name": "tone",
+      "type": "PieChartLabelTone",
+      "required": false,
+      "default": "700",
+      "enum": ["100", "300", "500", "700"],
+      "description": "Default stroke tone used when an item does not provide one."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-text-primary",
+    "--dls-text-paragraph-s-font-size",
+    "--dls-text-paragraph-s-line-height",
+    "--dls-text-paragraph-s-medium-font-weight",
+    "--dls-spacing-0",
+    "--dls-spacing-0-5",
+    "--dls-spacing-2",
+    "--dls-spacing-4",
+    "--dls-spacing-6",
+    "--dls-spacing-16"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Passive label overlay for pie charts. No interactive states.",
+    "available": [
+      "[data-slot]",
+      "[data-color]",
+      "[data-tone]"
+    ]
+  },
+  "composition": {
+    "maxDepth": 1,
+    "minItems": 0,
+    "recommendedItems": 5
+  },
+  "accessibility": {
+    "semanticElement": "ul[role=list]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6644-8228",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6644-8228",
+    "propertyMapping": [
+      {
+        "figmaProperty": "categories",
+        "reactProp": "categories"
+      },
+      {
+        "figmaProperty": "stroke",
+        "reactProp": "stroke"
+      },
+      {
+        "figmaProperty": "label1",
+        "reactProp": null,
+        "note": "Boolean toggle per slot. In code, items[0].visible controls visibility."
+      },
+      {
+        "figmaProperty": "label1Text",
+        "reactProp": null,
+        "note": "Value text per slot. In code, items[0].value."
+      }
+    ]
+  },
+  "useWhen": [
+    "Labeling segments of a pie/donut chart with value and category",
+    "Overlaying a pie chart with colored leader strokes to segments"
+  ],
+  "doNotUseFor": [
+    "Chart tooltips — use TooltipGroup",
+    "Chart legends — use LegendGroup",
+    "Dynamic chart annotations — use charting library labels"
+  ],
+  "relations": ["LegendItem", "LegendGroup"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T15:15:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "4f44a880eac0f237"
+  }
+}

@@ -1,0 +1,146 @@
+/* ==========================================================================
+   DLS Pie Chart - fixed pie chart composition
+   Legend bottom: false | true
+   ========================================================================== */
+
+.dls-pie-chart {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  overflow: visible;
+  gap: var(--dls-spacing-4);
+  font-family: var(--dls-font-family);
+  color: var(--dls-color-text-primary);
+
+  --_pie-chart-plot-width: calc(
+    var(--dls-spacing-16) * 5 + var(--dls-spacing-2) + calc(var(--dls-spacing-0-5) / 2)
+  );
+  --_pie-chart-plot-height: calc(var(--dls-spacing-16) * 4 + var(--dls-spacing-1-5));
+  --_pie-chart-pie-size: calc(
+    var(--dls-spacing-16) * 3 + var(--dls-spacing-6) + var(--dls-spacing-1)
+  );
+  --_pie-chart-pie-left: calc((var(--_pie-chart-plot-width) - var(--_pie-chart-pie-size)) / 2);
+  --_pie-chart-pie-top: calc((var(--_pie-chart-plot-height) - var(--_pie-chart-pie-size)) / 2);
+  --_pie-chart-hover-offset: var(--dls-spacing-1-5);
+}
+
+.dls-pie-chart[data-legend-bottom="true"] {
+  flex-direction: column;
+}
+
+.dls-pie-chart__plot {
+  box-sizing: border-box;
+  position: relative;
+  flex: 0 0 auto;
+  inline-size: var(--_pie-chart-plot-width);
+  block-size: var(--_pie-chart-plot-height);
+  overflow: visible;
+}
+
+.dls-pie-chart__pie.dls-pie {
+  position: absolute;
+  inset-block-start: var(--_pie-chart-pie-top);
+  inset-inline-start: var(--_pie-chart-pie-left);
+}
+
+.dls-pie-chart__labels.dls-pie-chart-labels {
+  position: absolute;
+  inset: var(--dls-spacing-0);
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+}
+
+.dls-pie-chart__segment.dls-pie__segment {
+  cursor: default;
+  outline: none;
+  transform-box: fill-box;
+  transform-origin: center;
+
+  --_pie-chart-active-x: var(--dls-spacing-0);
+  --_pie-chart-active-y: var(--dls-spacing-0);
+}
+
+.dls-pie-chart__segment[data-segment="cinnamon"] {
+  --_pie-chart-active-x: var(--_pie-chart-hover-offset);
+  --_pie-chart-active-y: var(--dls-spacing-1);
+}
+
+.dls-pie-chart__segment[data-segment="blue"] {
+  --_pie-chart-active-x: calc(-1 * var(--dls-spacing-1));
+  --_pie-chart-active-y: var(--_pie-chart-hover-offset);
+}
+
+.dls-pie-chart__segment[data-segment="yellow"] {
+  --_pie-chart-active-x: calc(-1 * var(--_pie-chart-hover-offset));
+  --_pie-chart-active-y: var(--dls-spacing-1);
+}
+
+.dls-pie-chart__segment[data-segment="pink"] {
+  --_pie-chart-active-x: calc(-1 * var(--_pie-chart-hover-offset));
+  --_pie-chart-active-y: calc(-1 * var(--dls-spacing-1));
+}
+
+.dls-pie-chart__segment[data-segment="teal"] {
+  --_pie-chart-active-x: var(--_pie-chart-hover-offset);
+  --_pie-chart-active-y: calc(-1 * var(--_pie-chart-hover-offset));
+}
+
+.dls-pie-chart__segment:hover:not(:disabled),
+.dls-pie-chart__segment:focus-visible,
+.dls-pie-chart__segment[data-active="true"] {
+  transform: translate(var(--_pie-chart-active-x), var(--_pie-chart-active-y));
+}
+
+.dls-pie-chart__segment:focus-visible {
+  stroke: var(--dls-color-border-focus);
+  stroke-width: var(--dls-spacing-1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dls-pie-chart__segment {
+    transition: transform 150ms ease;
+  }
+}
+
+.dls-pie-chart__tooltip.dls-tooltip-group {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -100%);
+}
+
+.dls-pie-chart__tooltip[data-segment="cinnamon"] {
+  inset-block-start: 30%;
+  inset-inline-start: 74%;
+}
+
+.dls-pie-chart__tooltip[data-segment="blue"] {
+  inset-block-start: 53%;
+  inset-inline-start: 72%;
+}
+
+.dls-pie-chart__tooltip[data-segment="yellow"] {
+  inset-block-start: 70%;
+  inset-inline-start: 45%;
+}
+
+.dls-pie-chart__tooltip[data-segment="pink"] {
+  inset-block-start: 44%;
+  inset-inline-start: 30%;
+}
+
+.dls-pie-chart__tooltip[data-segment="teal"] {
+  inset-block-start: 22%;
+  inset-inline-start: 55%;
+}
+
+.dls-pie-chart__legend.dls-legend-group {
+  flex: 0 1 auto;
+  max-inline-size: 100%;
+}
+
+.dls-pie-chart[data-legend-bottom="true"] .dls-pie-chart__legend.dls-legend-group {
+  justify-content: center;
+}

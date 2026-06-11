@@ -1,0 +1,96 @@
+/* ==========================================================================
+   DLS Dot - chart marker for trend diagrams
+   Sizes: xs | s | m
+   Intents: neutral | primary | info | success | warning | danger
+   ========================================================================== */
+
+.dls-dot {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  gap: var(--dls-spacing-2);
+  font-family: var(--dls-font-family);
+  color: var(--dls-color-text-primary);
+
+  --_dot-color: var(--dls-color-intent-danger-base);
+  --_dot-size: var(--dls-spacing-2);
+  --_dot-ring-width: calc(var(--dls-spacing-0-5) / 2);
+  --_dot-shadow: var(--dls-shadow-surface-sm);
+}
+
+.dls-dot[data-size="s"] {
+  --_dot-size: var(--dls-spacing-2-5);
+  --_dot-ring-width: var(--dls-spacing-0-5);
+  --_dot-shadow: var(--dls-shadow-surface-md);
+}
+
+.dls-dot[data-size="m"] {
+  --_dot-size: var(--dls-spacing-3);
+  --_dot-ring-width: calc(var(--dls-spacing-0-5) + var(--dls-spacing-0-5) / 2);
+  --_dot-shadow: var(--dls-shadow-surface-md);
+}
+
+.dls-dot[data-intent="neutral"] {
+  --_dot-color: var(--dls-color-intent-neutral-base);
+}
+
+.dls-dot[data-intent="primary"] {
+  --_dot-color: var(--dls-color-intent-primary-base);
+}
+
+.dls-dot[data-intent="info"] {
+  --_dot-color: var(--dls-color-intent-info-base);
+}
+
+.dls-dot[data-intent="success"] {
+  --_dot-color: var(--dls-color-intent-success-base);
+}
+
+.dls-dot[data-intent="warning"] {
+  --_dot-color: var(--dls-color-intent-warning-base);
+}
+
+.dls-dot[data-intent="danger"] {
+  --_dot-color: var(--dls-color-intent-danger-base);
+}
+
+.dls-dot__label {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--dls-color-text-primary);
+  font-size: var(--dls-text-paragraph-s-font-size);
+  font-weight: var(--dls-text-paragraph-s-light-font-weight);
+  line-height: var(--dls-text-paragraph-s-line-height);
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dls-dot__marker {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: var(--_dot-size);
+  height: var(--_dot-size);
+}
+
+.dls-dot__marker::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-sizing: content-box;
+  width: var(--_dot-size);
+  height: var(--_dot-size);
+  transform: translate(-50%, -50%);
+  border: var(--_dot-ring-width) solid var(--dls-color-surface-base);
+  border-radius: var(--dls-radius-component-badge);
+  background: var(--_dot-color);
+  box-shadow: var(--_dot-shadow);
+}

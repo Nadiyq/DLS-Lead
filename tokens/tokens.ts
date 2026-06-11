@@ -286,6 +286,46 @@ function getComponentTokens(theme: keyof typeof semantic) {
     legendItem: {
       swatch: color.additional,
     },
+    barChartItem: {
+      bar: {
+        default: color.additional.orange[500],
+        stackPrimary: color.additional.teal[500],
+        stackSecondary: color.additional.orange[500],
+        positive: color.additional.teal[500],
+        negative: s.intent.danger.base,
+        overlayActive: color.opacity.light[40],
+        borderActive: s.border.inverse,
+      },
+      labelFg: s.text.secondary,
+    },
+    bar: {
+      segment: {
+        pink: color.additional.pink[500],
+        orange: color.additional.orange[500],
+        teal: color.additional.teal[500],
+      },
+      labelFg: s.text.secondary,
+    },
+    pie: {
+      segment: {
+        pink: color.additional.pink[500],
+        teal: color.additional.teal[500],
+        cinnamon: color.additional.cinnamon[500],
+        blue: color.additional.blue[500],
+        yellow: color.additional.yellow[500],
+        border: s.border.inverse,
+      },
+    },
+    trendChart: {
+      series: {
+        danger: s.intent.danger.base,
+        green: color.additional.green[500],
+        yellow: color.additional.yellow[500],
+        blue: color.additional.blue[500],
+        pink: color.additional.pink[500],
+        violet: color.additional.violet[500],
+      },
+    },
     alert: {
       neutral: { bg: s.surface.muted, fg: s.text.primary, border: s.border.subtle },
       primary: { bg: s.intent.primary.subtle, fg: s.intent.primary.text, border: s.intent.primary.border },
@@ -487,6 +527,7 @@ export const radius = {
     "avatar-remove-btn": 9999,
     badge:          9999,
     "badge-number": 6,
+    "bar-chart-item": 6,
     button:         6,
     calendar:       12,
     "calendar-day": 6,

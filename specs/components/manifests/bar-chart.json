@@ -1,0 +1,145 @@
+{
+  "name": "BarChart",
+  "kebabName": "bar-chart",
+  "category": "data display / chart",
+  "description": "Composed bar chart with optional grid, legend, horizontal/vertical orientation, and default, multiple, stacked, or negative bar layouts.",
+  "variants": ["default", "multiple", "stacked", "negative"],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "grid",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the chart grid background and axis labels."
+    },
+    {
+      "name": "horizontal",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Horizontal bar chart layout."
+    },
+    {
+      "name": "legend",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the chart legend."
+    },
+    {
+      "name": "type",
+      "type": "BarChartType",
+      "required": false,
+      "default": "negative",
+      "enum": ["default", "multiple", "stacked", "negative"],
+      "description": "Bar chart variant from the Figma component set."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-bar-chart-item-bar-positive",
+    "--dls-color-component-bar-chart-item-bar-negative",
+    "--dls-color-component-bar-chart-item-bar-default",
+    "--dls-color-component-legend-item-swatch-blue-500",
+    "--dls-color-component-legend-item-swatch-pink-500",
+    "--dls-color-component-legend-item-swatch-violet-500",
+    "--dls-color-text-primary",
+    "--dls-radius-component-bar-chart-item",
+    "--dls-radius-component-legend-item-swatch",
+    "--dls-spacing-0",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-spacing-2-5",
+    "--dls-spacing-3",
+    "--dls-spacing-4",
+    "--dls-spacing-6",
+    "--dls-spacing-8",
+    "--dls-spacing-10",
+    "--dls-spacing-12",
+    "--dls-spacing-14",
+    "--dls-spacing-16",
+    "--dls-text-paragraph-m-font-size",
+    "--dls-text-paragraph-m-line-height",
+    "--dls-text-paragraph-m-light-font-weight",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "data attributes",
+    "rationale": "Passive data-display composition. Type and orientation control geometry; booleans control layer visibility.",
+    "available": [
+      "[data-type]",
+      "[data-orientation]"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["Grid", "BarChartItem", "LegendGroup"],
+    "forbiddenChildren": ["Button", "ListItem"]
+  },
+  "accessibility": {
+    "semanticElement": "div[role=group]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6644-18592",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6644-18592",
+    "propertyMapping": [
+      {
+        "figmaProperty": "grid",
+        "reactProp": "grid"
+      },
+      {
+        "figmaProperty": "horizontal?",
+        "reactProp": "horizontal",
+        "valueMapping": {
+          "false": false,
+          "true": true
+        }
+      },
+      {
+        "figmaProperty": "legend",
+        "reactProp": "legend"
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "default": "default",
+          "multiple": "multiple",
+          "stacked": "stacked",
+          "negative": "negative"
+        }
+      }
+    ]
+  },
+  "useWhen": [
+    "Rendering the fixed DLS bar chart composition from Figma",
+    "Showing passive default, multi-series, stacked, or negative bar-chart examples over the DLS chart grid"
+  ],
+  "doNotUseFor": [
+    "Dynamic production analytics charts - use a charting library and DLS tokens",
+    "Single grouped bar primitives - use Bar",
+    "Single standalone bar chart item states - use BarChartItem",
+    "Chart grid lines and axis labels alone - use Grid",
+    "Standalone legends - use LegendGroup"
+  ],
+  "relations": ["Grid", "Bar", "BarChartItem", "LegendGroup", "TooltipGroup"],
+  "knownDeviations": [
+    "Negative legends are internal to BarChart because existing LegendItem and LegendGroup do not expose a danger red swatch."
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-08T00:00:00.000Z",
+    "generator": "codex-manual@1.0.0",
+    "sourceHash": "figma-node-6644-18592"
+  }
+}

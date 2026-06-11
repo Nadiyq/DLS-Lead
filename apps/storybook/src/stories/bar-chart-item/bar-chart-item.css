@@ -1,0 +1,136 @@
+/* ==========================================================================
+   DLS Bar Chart Item - simple, stacked, and negative bar chart primitive
+   Type: default | stacked | negative
+   Orientation: vertical | horizontal
+   ========================================================================== */
+
+.dls-bar-chart-item {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  inline-size: var(--_bar-thickness);
+  block-size: var(--_bar-length);
+  min-inline-size: var(--dls-spacing-0);
+  min-block-size: var(--dls-spacing-0);
+  gap: var(--dls-spacing-1-5);
+  overflow: visible;
+  font-family: var(--dls-font-family);
+  color: var(--dls-color-component-bar-chart-item-label-fg);
+
+  --_bar-length: calc(
+    var(--dls-spacing-16) + var(--dls-spacing-16) + var(--dls-spacing-10) + var(--dls-spacing-3)
+  );
+  --_bar-thickness: var(--dls-spacing-10);
+  --_bar-default: var(--dls-color-component-bar-chart-item-bar-default);
+  --_bar-stack-primary: var(--dls-color-component-bar-chart-item-bar-stack-primary);
+  --_bar-stack-secondary: var(--dls-color-component-bar-chart-item-bar-stack-secondary);
+  --_bar-positive: var(--dls-color-component-bar-chart-item-bar-positive);
+  --_bar-negative: var(--dls-color-component-bar-chart-item-bar-negative);
+  --_bar-active-overlay: var(--dls-color-component-bar-chart-item-bar-overlay-active);
+  --_bar-active-border: var(--dls-color-component-bar-chart-item-bar-border-active);
+  --_bar-active-border-width: var(--dls-spacing-0-5);
+  --_value-max-size: calc(var(--dls-spacing-16) + var(--dls-spacing-8));
+}
+
+.dls-bar-chart-item[data-orientation="horizontal"] {
+  flex-direction: row;
+  align-items: center;
+  inline-size: var(--_bar-length);
+  block-size: var(--_bar-thickness);
+}
+
+.dls-bar-chart-item__track {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-self: stretch;
+  inline-size: 100%;
+  min-inline-size: var(--dls-spacing-0-5);
+  min-block-size: var(--dls-spacing-0-5);
+  gap: var(--dls-spacing-0-5);
+  overflow: hidden;
+  border: var(--dls-spacing-0) solid transparent;
+  border-radius: var(--dls-radius-component-bar-chart-item);
+}
+
+.dls-bar-chart-item[data-orientation="horizontal"] .dls-bar-chart-item__track {
+  flex-direction: row;
+  block-size: 100%;
+}
+
+.dls-bar-chart-item[data-active] .dls-bar-chart-item__track {
+  border-width: var(--_bar-active-border-width);
+  border-color: var(--_bar-active-border);
+}
+
+.dls-bar-chart-item__segment {
+  box-sizing: border-box;
+  display: block;
+  flex: 1 1 0%;
+  min-inline-size: var(--dls-spacing-0-5);
+  min-block-size: var(--dls-spacing-0-5);
+  background-color: var(--_bar-default);
+}
+
+.dls-bar-chart-item__segment[data-segment="stack-primary"] {
+  background-color: var(--_bar-stack-primary);
+}
+
+.dls-bar-chart-item__segment[data-segment="positive"] {
+  background-color: var(--_bar-positive);
+}
+
+.dls-bar-chart-item__segment[data-segment="stack-secondary"] {
+  background-color: var(--_bar-stack-secondary);
+}
+
+.dls-bar-chart-item__segment[data-segment="negative"] {
+  background-color: var(--_bar-negative);
+}
+
+.dls-bar-chart-item[data-active] .dls-bar-chart-item__segment {
+  background-image: linear-gradient(var(--_bar-active-overlay), var(--_bar-active-overlay));
+}
+
+.dls-bar-chart-item__value {
+  box-sizing: border-box;
+  display: block;
+  min-inline-size: var(--dls-spacing-0);
+  max-inline-size: 100%;
+  overflow: hidden;
+  color: var(--dls-color-component-bar-chart-item-label-fg);
+  font-size: var(--dls-text-paragraph-s-font-size);
+  font-weight: var(--dls-text-paragraph-s-medium-font-weight);
+  line-height: var(--dls-text-paragraph-s-line-height);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-word;
+}
+
+.dls-bar-chart-item[data-orientation="horizontal"] .dls-bar-chart-item__value {
+  position: absolute;
+  inset-block-start: 50%;
+  max-inline-size: var(--_value-max-size);
+  transform: translateY(-50%);
+}
+
+.dls-bar-chart-item[data-orientation="horizontal"] .dls-bar-chart-item__value[data-position="positive"] {
+  inset-inline-start: calc(100% + var(--dls-spacing-1-5));
+}
+
+.dls-bar-chart-item[data-orientation="horizontal"][data-type="negative"] .dls-bar-chart-item__value[data-position="positive"] {
+  inset-inline-start: auto;
+  inset-inline-end: calc(100% + var(--dls-spacing-1-5));
+  text-align: right;
+}
+
+.dls-bar-chart-item[data-orientation="horizontal"] .dls-bar-chart-item__value[data-position="negative"] {
+  inset-inline-start: calc(100% + var(--dls-spacing-1-5));
+}

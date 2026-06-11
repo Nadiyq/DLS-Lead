@@ -85,13 +85,9 @@ Sidebar:
 - `--dls-spacing-3` — sidebar gap (variant 1)
 - `--dls-spacing-4` — sidebar gap and nav gap (variants 2–4)
 
-L4 tokens in tokens.json (not currently used by CSS):
-- `--dls-color-component-sidebar-bg` → `{color.surface.subtle}`
+L4 tokens in tokens.json:
+- `--dls-color-component-sidebar-bg` → `{color.surface.base}`
 - `--dls-color-component-sidebar-border` → `{color.border.subtle}`
-
-Note: CSS uses `--dls-color-surface-base` (white) for background.
-The L4 token maps to `surface.subtle` (fafafa). The CSS matches
-the Figma design (white backgrounds). See Known deviations.
 
 ## States
 
@@ -119,10 +115,7 @@ states belong to child components.
 
 ## Known deviations
 
-1. **L4 token mismatch** — tokens.json defines
-   `color.component.sidebar.bg` → `{color.surface.subtle}` (fafafa),
-   but CSS and Figma both use `surface/base` (white). The L4 token
-   needs updating to match.
+None.
 
 ## Code example
 

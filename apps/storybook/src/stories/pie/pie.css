@@ -1,0 +1,76 @@
+/* ==========================================================================
+   DLS Pie - five-segment pie chart primitive
+   Stroke: false | true
+   ========================================================================== */
+
+.dls-pie {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  inline-size: var(--_pie-size);
+  max-inline-size: 100%;
+  aspect-ratio: 1;
+  overflow: visible;
+  font-family: var(--dls-font-family);
+
+  --_pie-size: calc(
+    var(--dls-spacing-16) + var(--dls-spacing-16) + var(--dls-spacing-16) +
+    var(--dls-spacing-6) + var(--dls-spacing-1)
+  );
+  --_pie-segment-stroke-color: var(--_pie-segment-fill);
+  --_pie-segment-stroke-width: calc(var(--dls-spacing-0-5) / 2);
+}
+
+.dls-pie[data-stroke="true"] {
+  --_pie-segment-stroke-color: var(--dls-color-component-pie-segment-border);
+}
+
+.dls-pie__svg {
+  box-sizing: border-box;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+  shape-rendering: geometricPrecision;
+}
+
+.dls-pie__segment {
+  box-sizing: border-box;
+  --_pie-segment-fill: var(--dls-color-component-pie-segment-pink);
+
+  fill: var(--dls-color-component-pie-segment-pink);
+  stroke: var(--_pie-segment-stroke-color);
+  stroke-linejoin: round;
+  stroke-width: var(--_pie-segment-stroke-width);
+}
+
+.dls-pie__segment[data-segment="pink"] {
+  --_pie-segment-fill: var(--dls-color-component-pie-segment-pink);
+
+  fill: var(--_pie-segment-fill);
+}
+
+.dls-pie__segment[data-segment="teal"] {
+  --_pie-segment-fill: var(--dls-color-component-pie-segment-teal);
+
+  fill: var(--_pie-segment-fill);
+}
+
+.dls-pie__segment[data-segment="cinnamon"] {
+  --_pie-segment-fill: var(--dls-color-component-pie-segment-cinnamon);
+
+  fill: var(--_pie-segment-fill);
+}
+
+.dls-pie__segment[data-segment="blue"] {
+  --_pie-segment-fill: var(--dls-color-component-pie-segment-blue);
+
+  fill: var(--_pie-segment-fill);
+}
+
+.dls-pie__segment[data-segment="yellow"] {
+  --_pie-segment-fill: var(--dls-color-component-pie-segment-yellow);
+
+  fill: var(--_pie-segment-fill);
+}

@@ -1,0 +1,133 @@
+{
+  "name": "TooltipGroup",
+  "kebabName": "tooltip-group",
+  "category": "data display / chart",
+  "description": "Chart tooltip surface showing a date header, data series rows, and an optional total with a configurable pointer arrow.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "date",
+      "type": "string | null",
+      "required": false,
+      "default": "1 Jan, 2026",
+      "description": "Optional date/header text shown above the tooltip values."
+    },
+    {
+      "name": "items",
+      "type": "TooltipGroupItem[]",
+      "required": false,
+      "description": "Tooltip value rows rendered in order."
+    },
+    {
+      "name": "total",
+      "type": "TooltipGroupItem | null",
+      "required": false,
+      "description": "Optional total row shown below a divider."
+    },
+    {
+      "name": "showPointer",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Whether to show the decorative pointer."
+    },
+    {
+      "name": "pointerPlacement",
+      "type": "TooltipGroupPointerPlacement",
+      "required": false,
+      "default": "top",
+      "enum": ["top", "bottom"],
+      "description": "Placement of the decorative pointer relative to the tooltip body."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-surface-base",
+    "--dls-color-border-subtle",
+    "--dls-radius-component-tooltip",
+    "--dls-shadow-surface-md",
+    "--dls-spacing-3",
+    "--dls-spacing-2",
+    "--dls-spacing-4",
+    "--dls-spacing-2-5",
+    "--dls-spacing-10",
+    "--dls-spacing-1",
+    "--dls-spacing-0",
+    "--dls-color-text-primary",
+    "--dls-text-paragraph-m-font-size",
+    "--dls-text-paragraph-m-line-height",
+    "--dls-text-paragraph-m-light-font-weight"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Passive tooltip surface. pointer-events: none on root. No interactive states.",
+    "available": [
+      "[data-pointer]",
+      "[data-pointer-placement]"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["TooltipItem"],
+    "minItems": 0,
+    "recommendedItems": 3
+  },
+  "accessibility": {
+    "semanticElement": "div[role=tooltip]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6635-6750",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6635-6750",
+    "propertyMapping": [
+      {
+        "figmaProperty": "date",
+        "reactProp": null,
+        "note": "Boolean toggle for date visibility. In code, presence of date string controls visibility."
+      },
+      {
+        "figmaProperty": "dateText",
+        "reactProp": "date"
+      },
+      {
+        "figmaProperty": "pointer",
+        "reactProp": "showPointer",
+        "note": "Figma exposes pointer visibility only. Code also exposes pointerPlacement for chart wrappers that place a tooltip above a hovered mark."
+      },
+      {
+        "figmaProperty": "total",
+        "reactProp": null,
+        "note": "Boolean toggle for total row. In code, total is a TooltipGroupItem object or null."
+      },
+      {
+        "figmaProperty": "children",
+        "reactProp": "items",
+        "note": "Figma slot for tooltip items. In code, items array."
+      }
+    ]
+  },
+  "useWhen": [
+    "Displaying data values on chart hover",
+    "Showing multi-series data at a single point in time"
+  ],
+  "doNotUseFor": [
+    "General UI tooltips — use the DLS Tooltip component",
+    "Dropdown menus — use Dropdown",
+    "Popovers — use a popover pattern"
+  ],
+  "relations": ["TooltipItem", "LegendItem", "Tooltip"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T14:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "73007a4b17e6498a"
+  }
+}

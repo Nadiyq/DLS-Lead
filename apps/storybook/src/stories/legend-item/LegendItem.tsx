@@ -12,6 +12,7 @@ export const LEGEND_ITEM_COLORS = [
   'gold',
   'cinnamon',
   'orange',
+  'danger',
 ] as const;
 
 export const LEGEND_ITEM_TONES = ['100', '300', '500', '700'] as const;
@@ -24,7 +25,7 @@ export interface LegendItemProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   label?: string;
   /** Optional metric/value shown after the label. */
   value?: string;
-  /** DLS additional palette hue used for the chart swatch. */
+  /** DLS chart swatch hue. Additional palette hues plus semantic danger. */
   color?: LegendItemColor;
   /** DLS additional palette tone used for the chart swatch. */
   tone?: LegendItemTone;

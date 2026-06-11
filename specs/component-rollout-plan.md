@@ -83,6 +83,20 @@ applied to every component in the system — both Figma and code side.
 | Seventy-second manifest (SidebarItem) | DONE | `specs/components/manifests/sidebar-item.json` |
 | Seventy-third manifest (Submenu) | DONE | `specs/components/manifests/submenu.json` |
 | Seventy-fourth manifest (DropdownAccount) | DONE | `specs/components/manifests/dropdown-account.json` |
+| Seventy-fifth manifest (Sidebar) | DONE | `specs/components/manifests/sidebar.json` |
+| Seventy-sixth manifest (TopBar) | DONE | `specs/components/manifests/top-bar.json` |
+| Seventy-seventh manifest (LegendItem) | DONE | `specs/components/manifests/legend-item.json` |
+| Seventy-eighth manifest (LegendGroup) | DONE | `specs/components/manifests/legend-group.json` |
+| Seventy-ninth manifest (TooltipItem) | DONE | `specs/components/manifests/tooltip-item.json` |
+| Eightieth manifest (TooltipGroup) | DONE | `specs/components/manifests/tooltip-group.json` |
+| Eighty-first manifest (SummaryItem) | DONE | `specs/components/manifests/summary-item.json` |
+| Eighty-second manifest (Dot) | DONE | `specs/components/manifests/dot.json` |
+| Eighty-third manifest (PieChartLabels) | DONE | `specs/components/manifests/pie-chart-labels.json` |
+| Eighty-fourth manifest (Grid) | DONE | `specs/components/manifests/grid.json` |
+| Eighty-fifth manifest (TrendChart) | DONE | `specs/components/manifests/trend-chart.json` |
+| Eighty-sixth manifest (BarChart) | DONE | `specs/components/manifests/bar-chart.json` |
+| Eighty-seventh manifest (PieChart) | DONE | `specs/components/manifests/pie-chart.json` |
+| Eighty-eighth manifest (DonutChart) | DONE | `specs/components/manifests/donut-chart.json` |
 | Figma description template | DONE | Accordion as reference: `specs/figma-descriptions/accordion-item.md` |
 | `llms.txt` | TODO | Gap item #4 |
 | Build script + CI hook | TODO | Gap item #3 |

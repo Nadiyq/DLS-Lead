@@ -1,0 +1,86 @@
+{
+  "name": "Pie",
+  "kebabName": "pie",
+  "category": "data display / chart",
+  "description": "Five-segment pie chart primitive for the DLS chart system, with optional white borders between segments.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "stroke",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show white borders between pie segments."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-pie-segment-pink",
+    "--dls-color-component-pie-segment-teal",
+    "--dls-color-component-pie-segment-cinnamon",
+    "--dls-color-component-pie-segment-blue",
+    "--dls-color-component-pie-segment-yellow",
+    "--dls-color-component-pie-segment-border",
+    "--dls-spacing-0",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-spacing-6",
+    "--dls-spacing-16",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "data attributes",
+    "rationale": "Passive chart data-display primitive. The only state is whether segment borders are visible.",
+    "available": [
+      "[data-stroke]"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": ["Button", "ListItem"],
+    "allowedParents": ["Grid", "chart containers"]
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": ["role=\"img\"", "aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6644-7567",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6644-7567",
+    "propertyMapping": [
+      {
+        "figmaProperty": "stroke",
+        "reactProp": "stroke",
+        "valueMapping": {
+          "false": false,
+          "true": true
+        }
+      }
+    ]
+  },
+  "useWhen": [
+    "Rendering the actual pie graphic for a pie chart",
+    "Showing the fixed DLS five-segment pie chart shape with or without segment borders"
+  ],
+  "doNotUseFor": [
+    "Pie chart value callouts or category labels - use PieChartLabels",
+    "Chart legends - use LegendGroup",
+    "Chart tooltips - use TooltipGroup",
+    "Dynamic production analytics charts - use a charting library and DLS tokens"
+  ],
+  "relations": ["PieChartLabels", "LegendGroup", "TooltipGroup"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-05T00:00:00.000Z",
+    "generator": "codex-manual@1.0.0",
+    "sourceHash": "figma-node-6644-7567"
+  }
+}

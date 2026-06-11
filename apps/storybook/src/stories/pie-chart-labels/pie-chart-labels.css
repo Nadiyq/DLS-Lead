@@ -1,0 +1,177 @@
+/* ==========================================================================
+   DLS Pie Chart Labels - value callouts and category labels for pie charts
+   Slots: label-1 | label-2 | label-3 | label-4 | label-5
+   ========================================================================== */
+
+.dls-pie-chart-labels {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  inline-size: calc(var(--dls-spacing-16) * 5 + var(--dls-spacing-2) + var(--dls-spacing-0-5));
+  max-inline-size: 100%;
+  aspect-ratio: 329 / 262;
+  margin: var(--dls-spacing-0);
+  padding: var(--dls-spacing-0);
+  font-family: var(--dls-font-family);
+  color: var(--dls-color-text-primary);
+  list-style: none;
+}
+
+.dls-pie-chart-labels__item {
+  box-sizing: border-box;
+  position: absolute;
+  inset: var(--dls-spacing-0);
+  list-style: none;
+
+  --_leader-color: var(--dls-color-component-legend-item-swatch-pink-700);
+  --_stroke-width: calc(var(--dls-spacing-0-5) / 2);
+  --_value-left: var(--dls-spacing-0);
+  --_value-top: var(--dls-spacing-0);
+  --_leader-left: var(--dls-spacing-0);
+  --_leader-top: var(--dls-spacing-0);
+  --_leader-width: var(--dls-spacing-6);
+  --_leader-height: var(--dls-spacing-4);
+  --_category-left: var(--dls-spacing-0);
+  --_category-top: var(--dls-spacing-0);
+}
+
+.dls-pie-chart-labels__value,
+.dls-pie-chart-labels__category {
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  max-inline-size: 100%;
+  overflow: hidden;
+  color: var(--dls-color-text-primary);
+  font-size: var(--dls-text-paragraph-s-font-size);
+  font-weight: var(--dls-text-paragraph-s-medium-font-weight);
+  line-height: var(--dls-text-paragraph-s-line-height);
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dls-pie-chart-labels__value {
+  inset-block-start: var(--_value-top);
+  inset-inline-start: var(--_value-left);
+}
+
+.dls-pie-chart-labels__category {
+  inset-block-start: var(--_category-top);
+  inset-inline-start: var(--_category-left);
+}
+
+.dls-pie-chart-labels__leader {
+  box-sizing: border-box;
+  position: absolute;
+  inset-block-start: var(--_leader-top);
+  inset-inline-start: var(--_leader-left);
+  inline-size: var(--_leader-width);
+  block-size: var(--_leader-height);
+  color: var(--_leader-color);
+}
+
+.dls-pie-chart-labels__leader::before,
+.dls-pie-chart-labels__leader::after {
+  content: "";
+  position: absolute;
+  display: block;
+  background: currentColor;
+}
+
+.dls-pie-chart-labels__leader::before {
+  inset-block-start: var(--dls-spacing-0);
+  inset-inline-start: var(--dls-spacing-0);
+  inline-size: var(--_stroke-width);
+  block-size: 100%;
+}
+
+.dls-pie-chart-labels__leader::after {
+  inset-block-end: var(--dls-spacing-0);
+  inset-inline-start: var(--dls-spacing-0);
+  inline-size: 100%;
+  block-size: var(--_stroke-width);
+}
+
+.dls-pie-chart-labels__item[data-slot="label-1"] {
+  --_value-left: 22.07%;
+  --_value-top: 1.88%;
+  --_leader-left: 24.65%;
+  --_leader-top: 8.53%;
+  --_leader-width: 5.16%;
+  --_leader-height: 5.97%;
+  --_category-left: 40.39%;
+  --_category-top: 25.46%;
+}
+
+.dls-pie-chart-labels__item[data-slot="label-2"] {
+  --_value-left: 82.36%;
+  --_value-top: 14.5%;
+  --_leader-left: 78.73%;
+  --_leader-top: 21.22%;
+  --_leader-width: 6.06%;
+  --_leader-height: 4.42%;
+  --_category-left: 62.34%;
+  --_category-top: 36.13%;
+}
+
+.dls-pie-chart-labels__item[data-slot="label-3"] {
+  --_value-left: 82.42%;
+  --_value-top: 89.61%;
+  --_leader-left: 71.91%;
+  --_leader-top: 86.81%;
+  --_leader-width: 9.75%;
+  --_leader-height: 5.79%;
+  --_category-left: 52%;
+  --_category-top: 66.99%;
+}
+
+.dls-pie-chart-labels__item[data-slot="label-4"] {
+  --_value-left: 17.05%;
+  --_value-top: 87.63%;
+  --_leader-left: 22.88%;
+  --_leader-top: 85.06%;
+  --_leader-width: 6.13%;
+  --_leader-height: 5.82%;
+  --_category-left: 32.48%;
+  --_category-top: 68.52%;
+}
+
+.dls-pie-chart-labels__item[data-slot="label-5"] {
+  --_value-left: 3.79%;
+  --_value-top: 37.64%;
+  --_leader-left: 6.38%;
+  --_leader-top: 44.5%;
+  --_leader-width: 7.18%;
+  --_leader-height: 6.45%;
+  --_category-left: 23.72%;
+  --_category-top: 47.72%;
+}
+
+.dls-pie-chart-labels__item[data-slot="label-2"] .dls-pie-chart-labels__leader::before,
+.dls-pie-chart-labels__item[data-slot="label-4"] .dls-pie-chart-labels__leader::before {
+  inset-inline-start: auto;
+  inset-inline-end: var(--dls-spacing-0);
+}
+
+.dls-pie-chart-labels__item[data-color="pink"][data-tone="100"] { --_leader-color: var(--dls-color-component-legend-item-swatch-pink-100); }
+.dls-pie-chart-labels__item[data-color="pink"][data-tone="300"] { --_leader-color: var(--dls-color-component-legend-item-swatch-pink-300); }
+.dls-pie-chart-labels__item[data-color="pink"][data-tone="500"] { --_leader-color: var(--dls-color-component-legend-item-swatch-pink-500); }
+.dls-pie-chart-labels__item[data-color="pink"][data-tone="700"] { --_leader-color: var(--dls-color-component-legend-item-swatch-pink-700); }
+.dls-pie-chart-labels__item[data-color="teal"][data-tone="100"] { --_leader-color: var(--dls-color-component-legend-item-swatch-teal-100); }
+.dls-pie-chart-labels__item[data-color="teal"][data-tone="300"] { --_leader-color: var(--dls-color-component-legend-item-swatch-teal-300); }
+.dls-pie-chart-labels__item[data-color="teal"][data-tone="500"] { --_leader-color: var(--dls-color-component-legend-item-swatch-teal-500); }
+.dls-pie-chart-labels__item[data-color="teal"][data-tone="700"] { --_leader-color: var(--dls-color-component-legend-item-swatch-teal-700); }
+.dls-pie-chart-labels__item[data-color="cinnamon"][data-tone="100"] { --_leader-color: var(--dls-color-component-legend-item-swatch-cinnamon-100); }
+.dls-pie-chart-labels__item[data-color="cinnamon"][data-tone="300"] { --_leader-color: var(--dls-color-component-legend-item-swatch-cinnamon-300); }
+.dls-pie-chart-labels__item[data-color="cinnamon"][data-tone="500"] { --_leader-color: var(--dls-color-component-legend-item-swatch-cinnamon-500); }
+.dls-pie-chart-labels__item[data-color="cinnamon"][data-tone="700"] { --_leader-color: var(--dls-color-component-legend-item-swatch-cinnamon-700); }
+.dls-pie-chart-labels__item[data-color="blue"][data-tone="100"] { --_leader-color: var(--dls-color-component-legend-item-swatch-blue-100); }
+.dls-pie-chart-labels__item[data-color="blue"][data-tone="300"] { --_leader-color: var(--dls-color-component-legend-item-swatch-blue-300); }
+.dls-pie-chart-labels__item[data-color="blue"][data-tone="500"] { --_leader-color: var(--dls-color-component-legend-item-swatch-blue-500); }
+.dls-pie-chart-labels__item[data-color="blue"][data-tone="700"] { --_leader-color: var(--dls-color-component-legend-item-swatch-blue-700); }
+.dls-pie-chart-labels__item[data-color="yellow"][data-tone="100"] { --_leader-color: var(--dls-color-component-legend-item-swatch-yellow-100); }
+.dls-pie-chart-labels__item[data-color="yellow"][data-tone="300"] { --_leader-color: var(--dls-color-component-legend-item-swatch-yellow-300); }
+.dls-pie-chart-labels__item[data-color="yellow"][data-tone="500"] { --_leader-color: var(--dls-color-component-legend-item-swatch-yellow-500); }
+.dls-pie-chart-labels__item[data-color="yellow"][data-tone="700"] { --_leader-color: var(--dls-color-component-legend-item-swatch-yellow-700); }

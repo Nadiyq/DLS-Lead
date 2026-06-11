@@ -88,3 +88,4 @@
 .dls-legend-item[data-color="orange"][data-tone="300"] { --_swatch: var(--dls-color-component-legend-item-swatch-orange-300); }
 .dls-legend-item[data-color="orange"][data-tone="500"] { --_swatch: var(--dls-color-component-legend-item-swatch-orange-500); }
 .dls-legend-item[data-color="orange"][data-tone="700"] { --_swatch: var(--dls-color-component-legend-item-swatch-orange-700); }
+.dls-legend-item[data-color="danger"] { --_swatch: var(--dls-color-intent-danger-base); }

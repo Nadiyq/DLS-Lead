@@ -1,0 +1,153 @@
+{
+  "name": "SummaryItem",
+  "kebabName": "summary-item",
+  "category": "data display / dashboard",
+  "description": "Dashboard/table summary metric with primary value, trend direction icon, change percentage, and optional label.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "value",
+      "type": "string | null",
+      "required": false,
+      "default": "50%",
+      "description": "Primary metric value."
+    },
+    {
+      "name": "label",
+      "type": "string | null",
+      "required": false,
+      "default": "Label",
+      "description": "Supporting metric label."
+    },
+    {
+      "name": "trendValue",
+      "type": "string | null",
+      "required": false,
+      "description": "Trend value shown beside the icon."
+    },
+    {
+      "name": "type",
+      "type": "'positive' | 'negative' | 'no-changes'",
+      "required": false,
+      "default": "positive",
+      "enum": ["positive", "negative", "no-changes"],
+      "description": "Trend direction/meaning."
+    },
+    {
+      "name": "onlyTrend",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Render only the trend line without the value and label."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-spacing-0",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-4",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-color-text-placeholder",
+    "--dls-color-intent-success-base",
+    "--dls-color-intent-warning-base",
+    "--dls-text-heading-h2-font-size",
+    "--dls-text-heading-h2-font-weight",
+    "--dls-text-heading-h2-line-height",
+    "--dls-text-paragraph-m-font-size",
+    "--dls-text-paragraph-m-line-height",
+    "--dls-text-paragraph-m-light-font-weight",
+    "--dls-text-paragraph-s-font-size",
+    "--dls-text-paragraph-s-line-height",
+    "--dls-text-paragraph-s-medium-font-weight",
+    "--dls-icon-stroke-16"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Passive data-display element. Trend color driven by data-type attribute, not interactive.",
+    "available": [
+      "[data-type]",
+      "[data-only-trend]"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": ["Button", "ListItem"]
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6812-60986",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6812-60986",
+    "propertyMapping": [
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "positive": "positive",
+          "negative": "negative",
+          "no-changes": "no-changes"
+        }
+      },
+      {
+        "figmaProperty": "valueText",
+        "reactProp": "value"
+      },
+      {
+        "figmaProperty": "labelText",
+        "reactProp": "label"
+      },
+      {
+        "figmaProperty": "trendText",
+        "reactProp": "trendValue"
+      },
+      {
+        "figmaProperty": "onlyTrend",
+        "reactProp": "onlyTrend"
+      },
+      {
+        "figmaProperty": "value",
+        "reactProp": null,
+        "note": "Boolean toggle for value visibility. In code, presence of value string controls visibility."
+      },
+      {
+        "figmaProperty": "label",
+        "reactProp": null,
+        "note": "Boolean toggle for label visibility. In code, presence of label string controls visibility."
+      },
+      {
+        "figmaProperty": "trend",
+        "reactProp": null,
+        "note": "Boolean toggle for trend visibility. In code, trendValue presence controls visibility."
+      }
+    ]
+  },
+  "useWhen": [
+    "Displaying KPI summary cards above tables or dashboards",
+    "Showing a metric value with trend direction and percentage change",
+    "Compact trend-only display without the primary value"
+  ],
+  "doNotUseFor": [
+    "Chart legend items — use LegendItem",
+    "Badge/status indicators — use Badge",
+    "Progress bars — use ProgressBar"
+  ],
+  "relations": ["Card", "TableTopBar"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T14:30:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "36663110c33cde72"
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "name": "Bar",
+  "kebabName": "bar",
+  "category": "data display / chart",
+  "description": "Grouped bar chart primitive that renders one to three simple bars with value labels and an optional axis label.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "axis",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the axis label for the grouped bars."
+    },
+    {
+      "name": "axisText",
+      "type": "string",
+      "required": false,
+      "default": "Jan",
+      "description": "Axis label text, usually a period such as a month."
+    },
+    {
+      "name": "bars",
+      "type": "BarCount",
+      "required": false,
+      "default": "3",
+      "enum": ["1", "2", "3"],
+      "description": "Number of bars rendered together."
+    },
+    {
+      "name": "horizontal",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Horizontal grouped bar layout."
+    },
+    {
+      "name": "value",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show value labels for every bar."
+    },
+    {
+      "name": "valueText",
+      "type": "string",
+      "required": false,
+      "default": "12",
+      "description": "Value label text shown for each bar."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-bar-segment-pink",
+    "--dls-color-component-bar-segment-orange",
+    "--dls-color-component-bar-segment-teal",
+    "--dls-color-component-bar-label-fg",
+    "--dls-spacing-0",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-spacing-4",
+    "--dls-spacing-6",
+    "--dls-spacing-8",
+    "--dls-spacing-10",
+    "--dls-spacing-12",
+    "--dls-spacing-16",
+    "--dls-text-paragraph-s-font-size",
+    "--dls-text-paragraph-s-line-height",
+    "--dls-text-paragraph-s-medium-font-weight",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "data attributes",
+    "rationale": "Passive data-display component. Count and orientation control layout; no interactive states.",
+    "available": [
+      "[data-bars]",
+      "[data-orientation]"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["BarChartItem"],
+    "forbiddenChildren": ["Button", "ListItem"]
+  },
+  "accessibility": {
+    "semanticElement": "div",
+    "requiredAria": ["role=\"img\"", "aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6641-4570",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6641-4570",
+    "propertyMapping": [
+      {
+        "figmaProperty": "axis",
+        "reactProp": "axis"
+      },
+      {
+        "figmaProperty": "axisText",
+        "reactProp": "axisText"
+      },
+      {
+        "figmaProperty": "bars",
+        "reactProp": "bars",
+        "valueMapping": {
+          "1": "1",
+          "2": "2",
+          "3": "3"
+        }
+      },
+      {
+        "figmaProperty": "horizontal?",
+        "reactProp": "horizontal",
+        "valueMapping": {
+          "false": false,
+          "true": true
+        }
+      }
+    ]
+  },
+  "useWhen": [
+    "Rendering a grouped monthly or period bar chart marker",
+    "Showing one to three comparable bar values in a chart row or column"
+  ],
+  "doNotUseFor": [
+    "Single standalone bar chart item states — use BarChartItem",
+    "Progress indicators — use ProgressBar",
+    "Chart grid lines and axis labels — use Grid"
+  ],
+  "relations": ["BarChartItem", "Grid", "LegendGroup", "TooltipGroup"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-05T00:00:00.000Z",
+    "generator": "codex-manual@1.0.0",
+    "sourceHash": "figma-node-6641-4570"
+  }
+}

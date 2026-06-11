@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Check as CheckIcon, User as UserIcon, Pencil as PencilIcon, Copy as CopyIcon, Trash2 as TrashIcon, MoreHorizontal as MoreHorizontalIcon, Plus as PlusIcon, TrendingUp as TrendingUpIcon, TrendingDown as TrendingDownIcon } from 'lucide-react';
+import { Check as CheckIcon, User as UserIcon, Pencil as PencilIcon, Copy as CopyIcon, Trash2 as TrashIcon, MoreHorizontal as MoreHorizontalIcon, Plus as PlusIcon } from 'lucide-react';
 import { TableCell } from './TableCell';
 import { TableHeaderCell } from '../table-header-cell/TableHeaderCell';
 import { Checkbox } from '../checkbox/Checkbox';
@@ -8,6 +8,7 @@ import { Button } from '../Button';
 import { Badge } from '../Badge';
 import { Avatar } from '../Avatar';
 import { AvatarStack } from '../AvatarStack';
+import { SummaryItem } from '../summary-item/SummaryItem';
 import { mastercardLogo } from '../assets/brand-logos';
 import { SAMPLE_USERS } from '../_fixtures';
 import '../table/table.css';
@@ -309,45 +310,18 @@ export const CreditCardCell: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// Trend cell — sparkline-style icon + percentage with intent color
-// Direction: up = success, down = danger.
+// Trend cell — uses SummaryItem onlyTrend mode
 // ---------------------------------------------------------------------------
-
-type TrendDirection = 'up' | 'down';
-
-const Trend = ({ value, direction }: { value: string; direction: TrendDirection }) => {
-  const Glyph = direction === 'up' ? TrendingUpIcon : TrendingDownIcon;
-  const color = direction === 'up'
-    ? 'var(--dls-color-intent-success-text)'
-    : 'var(--dls-color-intent-danger-text)';
-  return (
-    <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 'var(--dls-spacing-1)',
-        color,
-        fontFamily: 'var(--dls-font-family)',
-        fontSize: 'var(--dls-text-s-font-size)',
-        lineHeight: 'var(--dls-text-s-line-height)',
-        fontWeight: 'var(--dls-font-weight-medium)',
-      }}
-    >
-      <Glyph style={{ width: 16, height: 16 }} />
-      {value}
-    </span>
-  );
-};
 
 export const TrendCell: Story = {
   args: { text: 'Item text' },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0, width: 300 }}>
-      <TableCell type="trend" align="left"><Trend value="5%" direction="up" /></TableCell>
-      <TableCell type="trend" align="center"><Trend value="5%" direction="up" /></TableCell>
-      <TableCell type="trend" align="right"><Trend value="5%" direction="up" /></TableCell>
-      <TableCell type="trend" align="left"><Trend value="2.4%" direction="down" /></TableCell>
-      <TableCell type="trend" align="right"><Trend value="2.4%" direction="down" /></TableCell>
+      <TableCell type="trend" align="left"><SummaryItem onlyTrend trendValue="5%" type="positive" /></TableCell>
+      <TableCell type="trend" align="center"><SummaryItem onlyTrend trendValue="5%" type="positive" /></TableCell>
+      <TableCell type="trend" align="right"><SummaryItem onlyTrend trendValue="5%" type="positive" /></TableCell>
+      <TableCell type="trend" align="left"><SummaryItem onlyTrend trendValue="2.4%" type="negative" /></TableCell>
+      <TableCell type="trend" align="right"><SummaryItem onlyTrend trendValue="2.4%" type="negative" /></TableCell>
     </div>
   ),
 };

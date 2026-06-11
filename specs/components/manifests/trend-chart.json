@@ -1,0 +1,150 @@
+{
+  "name": "TrendChart",
+  "kebabName": "trend-chart",
+  "category": "data display / chart",
+  "description": "Composed trend line chart with optional grid, legend, highlighted dots, and straight or smooth single/multiple series.",
+  "variants": ["single", "multiple"],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "dot",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show highlighted data point markers."
+    },
+    {
+      "name": "grid",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the chart grid background and axes."
+    },
+    {
+      "name": "legend",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the chart legend."
+    },
+    {
+      "name": "smooth",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Render curved trend lines instead of straight segments."
+    },
+    {
+      "name": "type",
+      "type": "TrendChartType",
+      "required": false,
+      "default": "single",
+      "enum": ["single", "multiple"],
+      "description": "Single-series or two-series chart from the Figma component."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-trend-chart-series-danger",
+    "--dls-color-component-trend-chart-series-green",
+    "--dls-color-component-trend-chart-series-yellow",
+    "--dls-color-component-trend-chart-series-blue",
+    "--dls-color-component-trend-chart-series-pink",
+    "--dls-color-component-trend-chart-series-violet",
+    "--dls-color-text-primary",
+    "--dls-color-surface-base",
+    "--dls-radius-component-legend-item-swatch",
+    "--dls-shadow-surface-md",
+    "--dls-spacing-0",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-spacing-2",
+    "--dls-spacing-2-5",
+    "--dls-spacing-3",
+    "--dls-spacing-4",
+    "--dls-spacing-8",
+    "--dls-spacing-12",
+    "--dls-spacing-14",
+    "--dls-spacing-16",
+    "--dls-text-paragraph-s-font-size",
+    "--dls-text-paragraph-s-line-height",
+    "--dls-text-paragraph-s-light-font-weight",
+    "--dls-text-paragraph-m-font-size",
+    "--dls-text-paragraph-m-line-height",
+    "--dls-text-paragraph-m-light-font-weight",
+    "--dls-font-family"
+  ],
+  "states": {
+    "implementation": "data attributes",
+    "rationale": "Passive chart data-display composition. Type and smooth control line geometry; booleans control layer visibility.",
+    "available": [
+      "[data-type]",
+      "[data-smooth]"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["Grid"],
+    "forbiddenChildren": ["Button", "ListItem"]
+  },
+  "accessibility": {
+    "semanticElement": "div[role=group]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6644-18552",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6644-18552",
+    "propertyMapping": [
+      {
+        "figmaProperty": "dot",
+        "reactProp": "dot"
+      },
+      {
+        "figmaProperty": "grid",
+        "reactProp": "grid"
+      },
+      {
+        "figmaProperty": "legend",
+        "reactProp": "legend"
+      },
+      {
+        "figmaProperty": "smooth",
+        "reactProp": "smooth"
+      },
+      {
+        "figmaProperty": "type",
+        "reactProp": "type",
+        "valueMapping": {
+          "single": "single",
+          "multiple": "multiple"
+        }
+      }
+    ]
+  },
+  "useWhen": [
+    "Rendering the DLS fixed trend chart composition from Figma",
+    "Showing a passive single or two-series trend over the DLS chart grid"
+  ],
+  "doNotUseFor": [
+    "Dynamic production analytics charts - use a charting library and DLS tokens",
+    "Standalone data point markers - use Dot",
+    "Standalone chart background axes - use Grid",
+    "Standalone legends - use LegendGroup"
+  ],
+  "relations": ["Grid", "Dot", "LegendGroup", "TooltipGroup"],
+  "knownDeviations": [
+    "Legend and markers are internal to TrendChart because existing LegendItem and Dot APIs do not expose the red danger swatch and additional green chart color required by the Figma node."
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-05T00:00:00.000Z",
+    "generator": "codex-manual@1.0.0",
+    "sourceHash": "figma-node-6644-18552"
+  }
+}

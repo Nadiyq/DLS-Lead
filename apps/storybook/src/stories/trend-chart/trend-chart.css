@@ -1,0 +1,225 @@
+/* ==========================================================================
+   DLS Trend Chart - line chart composition
+   Type: single | multiple
+   Smooth: false | true
+   ========================================================================== */
+
+.dls-trend-chart {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  inline-size: var(--_trend-chart-width);
+  overflow: hidden;
+  gap: var(--dls-spacing-4);
+  font-family: var(--dls-font-family);
+  color: var(--dls-color-text-primary);
+
+  --_trend-chart-width: calc(var(--dls-spacing-16) * 12 + var(--dls-spacing-8));
+  --_trend-chart-height: calc(
+    var(--dls-spacing-16) * 5 + var(--dls-spacing-4) - calc(var(--dls-spacing-0-5) / 2)
+  );
+  --_trend-plot-top: calc(var(--dls-spacing-14) + var(--dls-spacing-0-5));
+  --_trend-plot-left: calc(var(--dls-spacing-8) + calc(var(--dls-spacing-0-5) / 2));
+  --_trend-plot-width: calc(100% - var(--_trend-plot-left) - var(--dls-spacing-1));
+  --_trend-plot-height: calc(var(--dls-spacing-16) * 3 + var(--dls-spacing-8));
+  --_trend-line-width: calc(var(--dls-spacing-0-5) / 2);
+  --_trend-dot-size: var(--dls-spacing-2-5);
+  --_trend-dot-ring-width: var(--dls-spacing-0-5);
+  --_trend-dot-outer-size: calc(
+    var(--_trend-dot-size) + var(--_trend-dot-ring-width) + var(--_trend-dot-ring-width)
+  );
+}
+
+.dls-trend-chart__chart {
+  box-sizing: border-box;
+  position: relative;
+  inline-size: 100%;
+  block-size: var(--_trend-chart-height);
+  overflow: hidden;
+}
+
+.dls-trend-chart__grid.dls-grid {
+  position: absolute;
+  inset: var(--dls-spacing-0);
+}
+
+.dls-trend-chart__lines {
+  box-sizing: border-box;
+  position: absolute;
+  inset-block-start: var(--_trend-plot-top);
+  inset-inline-start: var(--_trend-plot-left);
+  display: block;
+  inline-size: var(--_trend-plot-width);
+  block-size: var(--_trend-plot-height);
+  overflow: visible;
+  fill: none;
+}
+
+.dls-trend-chart__line {
+  fill: none;
+  stroke: var(--dls-color-component-trend-chart-series-danger);
+  stroke-width: var(--_trend-line-width);
+}
+
+.dls-trend-chart__line[data-series="green"] {
+  stroke: var(--dls-color-component-trend-chart-series-green);
+}
+
+.dls-trend-chart__points {
+  box-sizing: border-box;
+  position: absolute;
+  inset-block-start: var(--_trend-plot-top);
+  inset-inline-start: var(--_trend-plot-left);
+  inline-size: var(--_trend-plot-width);
+  block-size: var(--_trend-plot-height);
+  overflow: visible;
+}
+
+.dls-trend-chart__dot {
+  box-sizing: border-box;
+  position: absolute;
+  inset-block-start: var(--_trend-point-y);
+  inset-inline-start: var(--_trend-point-x);
+  display: block;
+  inline-size: calc(var(--_trend-dot-outer-size) + var(--dls-spacing-2));
+  block-size: calc(var(--_trend-dot-outer-size) + var(--dls-spacing-2));
+  padding: var(--dls-spacing-1);
+  color: var(--dls-color-text-primary);
+  cursor: default;
+  outline: none;
+  transform: translate(-50%, -50%);
+
+  --_trend-dot-color: var(--dls-color-component-trend-chart-series-danger);
+}
+
+.dls-trend-chart__dot[data-series="green"] {
+  --_trend-dot-color: var(--dls-color-component-trend-chart-series-green);
+}
+
+.dls-trend-chart__dot-label {
+  box-sizing: border-box;
+  position: absolute;
+  inset-block-end: calc(50% + (var(--_trend-dot-outer-size) / 2) + var(--dls-spacing-2));
+  inset-inline-start: 50%;
+  display: inline-block;
+  max-inline-size: calc(var(--dls-spacing-16) + var(--dls-spacing-8));
+  overflow: hidden;
+  color: var(--dls-color-text-primary);
+  font-size: var(--dls-text-paragraph-s-font-size);
+  font-weight: var(--dls-text-paragraph-s-light-font-weight);
+  line-height: var(--dls-text-paragraph-s-line-height);
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: var(--_trend-dot-opacity, 0);
+  transform: translateX(-50%);
+}
+
+.dls-trend-chart__dot-marker {
+  box-sizing: content-box;
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  display: block;
+  inline-size: var(--_trend-dot-size);
+  block-size: var(--_trend-dot-size);
+  border: var(--_trend-dot-ring-width) solid var(--dls-color-surface-base);
+  border-radius: var(--dls-radius-component-legend-item-swatch);
+  background: var(--_trend-dot-color);
+  box-shadow: var(--dls-shadow-surface-md);
+  opacity: var(--_trend-dot-opacity, 0);
+  transform: translate(-50%, -50%);
+}
+
+.dls-trend-chart__dot:hover:not(:disabled),
+.dls-trend-chart__dot:focus-visible,
+.dls-trend-chart__dot[data-active="true"] {
+  --_trend-dot-opacity: 1;
+}
+
+.dls-trend-chart__dot:focus-visible .dls-trend-chart__dot-marker {
+  box-shadow: var(--dls-shadow-surface-md), var(--dls-shadow-focus-ring);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dls-trend-chart__dot-label,
+  .dls-trend-chart__dot-marker {
+    transition: opacity 150ms ease;
+  }
+}
+
+.dls-trend-chart__tooltip.dls-tooltip-group {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: var(--_trend-point-y);
+  inset-inline-start: var(--_trend-point-x);
+  transform: translate(-50%, -100%);
+}
+
+.dls-trend-chart__legend {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--dls-spacing-3);
+  max-inline-size: 100%;
+  margin: var(--dls-spacing-0);
+  padding: var(--dls-spacing-0);
+  list-style: none;
+}
+
+.dls-trend-chart__legend-item {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  min-inline-size: var(--dls-spacing-0);
+  gap: var(--dls-spacing-2);
+  color: var(--dls-color-text-primary);
+
+  --_trend-legend-color: var(--dls-color-component-trend-chart-series-danger);
+}
+
+.dls-trend-chart__legend-item[data-series="green"] {
+  --_trend-legend-color: var(--dls-color-component-trend-chart-series-green);
+}
+
+.dls-trend-chart__legend-item[data-series="yellow"] {
+  --_trend-legend-color: var(--dls-color-component-trend-chart-series-yellow);
+}
+
+.dls-trend-chart__legend-item[data-series="blue"] {
+  --_trend-legend-color: var(--dls-color-component-trend-chart-series-blue);
+}
+
+.dls-trend-chart__legend-item[data-series="pink"] {
+  --_trend-legend-color: var(--dls-color-component-trend-chart-series-pink);
+}
+
+.dls-trend-chart__legend-item[data-series="violet"] {
+  --_trend-legend-color: var(--dls-color-component-trend-chart-series-violet);
+}
+
+.dls-trend-chart__legend-swatch {
+  box-sizing: border-box;
+  display: block;
+  flex: 0 0 auto;
+  inline-size: var(--dls-spacing-2-5);
+  block-size: var(--dls-spacing-2-5);
+  border-radius: var(--dls-radius-component-legend-item-swatch);
+  background: var(--_trend-legend-color);
+}
+
+.dls-trend-chart__legend-label {
+  min-inline-size: var(--dls-spacing-0);
+  overflow: hidden;
+  color: var(--dls-color-text-primary);
+  font-size: var(--dls-text-paragraph-m-font-size);
+  font-weight: var(--dls-text-paragraph-m-light-font-weight);
+  line-height: var(--dls-text-paragraph-m-line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

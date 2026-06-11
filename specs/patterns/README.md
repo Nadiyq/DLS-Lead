@@ -17,6 +17,7 @@ Patterns explain how DLS components fit together.
 | Building screens and composing components | [composition.md](composition.md) |
 | Generating accessible React components | [accessibility-generation.md](accessibility-generation.md) |
 | Heavy data tables (CRM, admin, operational) | [data-table.md](data-table.md) |
+| Reports, dashboards, analytics, KPI screens | [report-dashboard.md](report-dashboard.md) |
 
 ## Rule
 

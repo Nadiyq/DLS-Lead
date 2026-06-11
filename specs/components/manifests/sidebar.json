@@ -105,13 +105,7 @@
     "Dropdown menus — use Dropdown or ContextMenu"
   ],
   "relations": ["SidebarItem", "Submenu", "TopBar", "DropdownAccount"],
-  "knownDeviations": [
-    {
-      "area": "token-layer",
-      "description": "CSS uses --dls-color-surface-base (white) for background, but tokens.json defines color.component.sidebar.bg as {color.surface.subtle} (fafafa). CSS matches Figma design; L4 token needs updating.",
-      "severity": "low"
-    }
-  ],
+  "knownDeviations": [],
   "_meta": {
     "generatedAt": "2026-06-04T12:45:00.000Z",
     "generator": "claude-code-manual@1.0.0",

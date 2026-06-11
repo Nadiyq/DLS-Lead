@@ -10,6 +10,10 @@ export interface TooltipGroupItem extends Omit<TooltipItemProps, 'className' | '
   id?: string;
 }
 
+export const TOOLTIP_GROUP_POINTER_PLACEMENTS = ['top', 'bottom'] as const;
+
+export type TooltipGroupPointerPlacement = (typeof TOOLTIP_GROUP_POINTER_PLACEMENTS)[number];
+
 export const TOOLTIP_GROUP_DEFAULT_ITEMS: TooltipGroupItem[] = [
   { id: 'item-1', label: 'Item 1', value: '50%', unit: 'kcal', color: 'green' },
   { id: 'item-2', label: 'Item 1', value: '50%', unit: 'kcal', color: 'green' },
@@ -23,8 +27,10 @@ export interface TooltipGroupProps extends Omit<React.HTMLAttributes<HTMLDivElem
   items?: TooltipGroupItem[];
   /** Optional total row shown below a divider. */
   total?: TooltipGroupItem | null;
-  /** Whether to show the decorative top pointer. */
+  /** Whether to show the decorative pointer. */
   showPointer?: boolean;
+  /** Placement of the decorative pointer relative to the tooltip body. */
+  pointerPlacement?: TooltipGroupPointerPlacement;
   /** Additional class name for the root tooltip group. */
   className?: string;
 }
@@ -36,6 +42,7 @@ export const TooltipGroup = React.forwardRef<HTMLDivElement, TooltipGroupProps>(
       items = TOOLTIP_GROUP_DEFAULT_ITEMS,
       total = { id: 'total', label: 'Total', value: '50%', unit: 'kcal', showSwatch: false },
       showPointer = true,
+      pointerPlacement = 'top',
       className,
       role = 'tooltip',
       'aria-label': ariaLabel = 'Chart tooltip',
@@ -47,6 +54,7 @@ export const TooltipGroup = React.forwardRef<HTMLDivElement, TooltipGroupProps>(
       ref={ref}
       className={['dls-tooltip-group', className].filter(Boolean).join(' ')}
       data-pointer={showPointer ? 'true' : 'false'}
+      data-pointer-placement={pointerPlacement}
       role={role}
       aria-label={ariaLabel}
       {...props}

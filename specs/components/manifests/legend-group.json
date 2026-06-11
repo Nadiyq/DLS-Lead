@@ -1,0 +1,100 @@
+{
+  "name": "LegendGroup",
+  "kebabName": "legend-group",
+  "category": "data display / chart",
+  "description": "Groups LegendItem rows into a vertical or horizontal list for chart/data visualization legends.",
+  "variants": [],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "items",
+      "type": "LegendGroupItem[]",
+      "required": false,
+      "description": "Legend items rendered in order."
+    },
+    {
+      "name": "orientation",
+      "type": "'vertical' | 'horizontal'",
+      "required": false,
+      "default": "vertical",
+      "enum": ["vertical", "horizontal"],
+      "description": "Layout direction for the legend items."
+    },
+    {
+      "name": "tone",
+      "type": "LegendItemTone",
+      "required": false,
+      "default": "500",
+      "enum": ["100", "300", "500", "700"],
+      "description": "Default swatch tone used when an item does not provide one."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-spacing-0",
+    "--dls-spacing-3"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Passive layout container for LegendItem children. No interactive states.",
+    "available": [
+      "[data-orientation]"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["LegendItem"],
+    "minItems": 0,
+    "recommendedItems": 5
+  },
+  "accessibility": {
+    "semanticElement": "ul[role=list]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6635-5292",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6635-5292",
+    "propertyMapping": [
+      {
+        "figmaProperty": "horizontal",
+        "reactProp": "orientation",
+        "valueMapping": {
+          "false": "vertical",
+          "true": "horizontal"
+        }
+      },
+      {
+        "figmaProperty": "slotHorizontal",
+        "reactProp": "items",
+        "note": "Figma slot for vertical items. In code, items array + orientation prop."
+      },
+      {
+        "figmaProperty": "slotVertical",
+        "reactProp": "items",
+        "note": "Figma slot for horizontal items. In code, items array + orientation prop."
+      }
+    ]
+  },
+  "useWhen": [
+    "Displaying a chart legend with multiple data series",
+    "Laying out legend items vertically or horizontally"
+  ],
+  "doNotUseFor": [
+    "Navigation lists — use List + ListItem",
+    "Chip groups — use ChipInput or FilterChip"
+  ],
+  "relations": ["LegendItem"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T13:30:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "2ee196eb27a0034c"
+  }
+}

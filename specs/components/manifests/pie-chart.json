@@ -1,0 +1,148 @@
+{
+  "name": "PieChart",
+  "kebabName": "pie-chart",
+  "category": "data display / chart",
+  "description": "Composed pie chart with fixed DLS pie geometry, optional value labels, optional segment borders, and side or bottom legend placement.",
+  "variants": ["legend-side", "legend-bottom"],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "stroke",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show white borders between pie segments."
+    },
+    {
+      "name": "labels",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the value callout label layer over the pie."
+    },
+    {
+      "name": "labelCategories",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Show category labels inside the pie label layer."
+    },
+    {
+      "name": "labelStroke",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show colored leader strokes for value callouts."
+    },
+    {
+      "name": "labelItems",
+      "type": "PieChartLabelItem[]",
+      "required": false,
+      "description": "Label items rendered in their fixed Figma positions."
+    },
+    {
+      "name": "legend",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the chart legend."
+    },
+    {
+      "name": "legendBottom",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Place the legend under the chart instead of beside it."
+    },
+    {
+      "name": "legendItems",
+      "type": "LegendGroupItem[]",
+      "required": false,
+      "description": "Legend items rendered in order."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-text-primary",
+    "--dls-font-family",
+    "--dls-spacing-0",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-2",
+    "--dls-spacing-4",
+    "--dls-spacing-6",
+    "--dls-spacing-16"
+  ],
+  "states": {
+    "implementation": "data attributes",
+    "rationale": "Passive data-display composition. The only state-like attributes control label visibility and side vs bottom legend placement.",
+    "available": [
+      "[data-legend-bottom]",
+      "[data-labels]"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["Pie", "PieChartLabels", "LegendGroup"],
+    "forbiddenChildren": ["Button", "ListItem"]
+  },
+  "accessibility": {
+    "semanticElement": "div[role=group]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6644-18688",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6644-18688",
+    "propertyMapping": [
+      {
+        "figmaProperty": "legend",
+        "reactProp": "legend"
+      },
+      {
+        "figmaProperty": "legend bottom?",
+        "reactProp": "legendBottom",
+        "valueMapping": {
+          "false": false,
+          "true": true
+        }
+      },
+      {
+        "figmaProperty": "pie.stroke",
+        "reactProp": "stroke"
+      },
+      {
+        "figmaProperty": "pie-labels.stroke",
+        "reactProp": "labelStroke"
+      }
+    ]
+  },
+  "useWhen": [
+    "Rendering the fixed DLS pie chart composition from Figma",
+    "Showing passive pie-chart examples with value callouts and a side or bottom legend",
+    "Composing Pie, PieChartLabels, and LegendGroup into a single chart unit"
+  ],
+  "doNotUseFor": [
+    "Dynamic production analytics charts - use a charting library and DLS tokens",
+    "Pie graphic alone - use Pie",
+    "Pie value callouts alone - use PieChartLabels",
+    "Standalone legends - use LegendGroup",
+    "Chart tooltips - use TooltipGroup"
+  ],
+  "relations": ["Pie", "PieChartLabels", "LegendGroup", "TooltipGroup"],
+  "knownDeviations": [
+    "The Figma MCP output used temporary image asset URLs for segment and leader drawings. The code composes durable DLS SVG/CSS primitives instead."
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-08T00:00:00.000Z",
+    "generator": "codex-manual@1.0.0",
+    "sourceHash": "figma-node-6644-18688"
+  }
+}

@@ -388,6 +388,42 @@ $dls-component-legend-item-swatch: (
   orange: (100: $dls-color-additional-orange-100, 300: $dls-color-additional-orange-300, 500: $dls-color-additional-orange-500, 700: $dls-color-additional-orange-700),
 );
 
+$dls-component-bar-chart-item-bar: (
+  default: $dls-color-additional-orange-500,
+  stack-primary: $dls-color-additional-teal-500,
+  stack-secondary: $dls-color-additional-orange-500,
+  positive: $dls-color-additional-teal-500,
+  negative: $dls-color-intent-danger-base,
+  overlay-active: $dls-color-opacity-light-40,
+  border-active: $dls-color-border-inverse,
+);
+$dls-component-bar-chart-item-label-fg: $dls-color-text-secondary;
+
+$dls-component-bar-segment: (
+  pink: $dls-color-additional-pink-500,
+  orange: $dls-color-additional-orange-500,
+  teal: $dls-color-additional-teal-500,
+);
+$dls-component-bar-label-fg: $dls-color-text-secondary;
+
+$dls-component-pie-segment: (
+  pink: $dls-color-additional-pink-500,
+  teal: $dls-color-additional-teal-500,
+  cinnamon: $dls-color-additional-cinnamon-500,
+  blue: $dls-color-additional-blue-500,
+  yellow: $dls-color-additional-yellow-500,
+  border: $dls-color-border-inverse,
+);
+
+$dls-component-trend-chart-series: (
+  danger: $dls-color-intent-danger-base,
+  green: $dls-color-additional-green-500,
+  yellow: $dls-color-additional-yellow-500,
+  blue: $dls-color-additional-blue-500,
+  pink: $dls-color-additional-pink-500,
+  violet: $dls-color-additional-violet-500,
+);
+
 $dls-component-tab-fg: (base: $dls-color-text-secondary, active: $dls-color-text-primary, hover: $dls-color-text-primary, disabled: $dls-color-text-disabled);
 $dls-component-tab-border-active: $dls-color-intent-primary-base;
 
@@ -537,6 +573,7 @@ $dls-radius-component-avatar-dot: $dls-radius-full;
 $dls-radius-component-avatar-remove-btn: $dls-radius-full;
 $dls-radius-component-badge: $dls-radius-full;
 $dls-radius-component-badge-number: $dls-radius-m;
+$dls-radius-component-bar-chart-item: $dls-radius-m;
 $dls-radius-component-breadcrumb: $dls-radius-s;
 $dls-radius-component-button: $dls-radius-m;
 $dls-radius-component-calendar: $dls-radius-xl;

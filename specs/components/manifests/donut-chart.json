@@ -1,0 +1,169 @@
+{
+  "name": "DonutChart",
+  "kebabName": "donut-chart",
+  "category": "data display / chart",
+  "description": "Composed donut chart with fixed DLS segment geometry, optional center metric text, side or bottom legend placement, and a static hover-state segment offset.",
+  "variants": ["legend-side", "legend-bottom", "hover"],
+  "intents": [],
+  "sizes": [],
+  "props": [
+    {
+      "name": "hover",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Render the hovered donut segment state from Figma."
+    },
+    {
+      "name": "legend",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the chart legend."
+    },
+    {
+      "name": "legendBottom",
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Place the legend under the chart instead of beside it."
+    },
+    {
+      "name": "text",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the central total and unit text."
+    },
+    {
+      "name": "totalText",
+      "type": "string",
+      "required": false,
+      "default": "1000",
+      "description": "Total metric displayed inside the donut."
+    },
+    {
+      "name": "unitText",
+      "type": "string",
+      "required": false,
+      "default": "Unit",
+      "description": "Unit label displayed below the total."
+    },
+    {
+      "name": "legendItems",
+      "type": "LegendGroupItem[]",
+      "required": false,
+      "description": "Legend items rendered in order."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-color-component-pie-segment-pink",
+    "--dls-color-component-pie-segment-teal",
+    "--dls-color-component-pie-segment-cinnamon",
+    "--dls-color-component-pie-segment-blue",
+    "--dls-color-component-pie-segment-yellow",
+    "--dls-color-component-pie-segment-border",
+    "--dls-color-text-primary",
+    "--dls-color-text-secondary",
+    "--dls-font-family",
+    "--dls-spacing-0",
+    "--dls-spacing-0-5",
+    "--dls-spacing-1",
+    "--dls-spacing-1-5",
+    "--dls-spacing-4",
+    "--dls-spacing-6",
+    "--dls-spacing-8",
+    "--dls-spacing-14",
+    "--dls-spacing-16",
+    "--dls-text-heading-h1-font-size",
+    "--dls-text-heading-h1-line-height",
+    "--dls-text-heading-h1-font-weight",
+    "--dls-text-paragraph-s-font-size",
+    "--dls-text-paragraph-s-line-height",
+    "--dls-text-paragraph-s-light-font-weight"
+  ],
+  "states": {
+    "implementation": "data attributes",
+    "rationale": "Passive data-display composition. Figma hover is represented as a static variant attribute, not an interactive browser hover behavior.",
+    "available": [
+      "[data-hover]",
+      "[data-legend-bottom]",
+      "[data-text]"
+    ]
+  },
+  "composition": {
+    "allowedChildren": ["LegendGroup"],
+    "forbiddenChildren": ["Button", "ListItem"]
+  },
+  "accessibility": {
+    "semanticElement": "div[role=group]",
+    "requiredAria": ["aria-label"],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6644-18708",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6644-18708",
+    "propertyMapping": [
+      {
+        "figmaProperty": "hover?",
+        "reactProp": "hover",
+        "valueMapping": {
+          "false": false,
+          "true": true
+        }
+      },
+      {
+        "figmaProperty": "legend",
+        "reactProp": "legend"
+      },
+      {
+        "figmaProperty": "legend bottom?",
+        "reactProp": "legendBottom",
+        "valueMapping": {
+          "false": false,
+          "true": true
+        }
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "text"
+      },
+      {
+        "figmaProperty": "totalText",
+        "reactProp": "totalText"
+      },
+      {
+        "figmaProperty": "unitText",
+        "reactProp": "unitText"
+      }
+    ]
+  },
+  "useWhen": [
+    "Rendering the fixed DLS donut chart composition from Figma",
+    "Showing a passive donut chart with a centered total metric and chart legend",
+    "Demonstrating side, bottom, and hovered donut chart states in Storybook"
+  ],
+  "doNotUseFor": [
+    "Dynamic production analytics charts - use a charting library and DLS tokens",
+    "Pie chart value callouts - use PieChartLabels",
+    "Standalone chart legends - use LegendGroup",
+    "Chart tooltips - use TooltipGroup"
+  ],
+  "relations": ["LegendGroup", "LegendItem", "Pie", "PieChartLabels", "TooltipGroup"],
+  "knownDeviations": [
+    "The Figma MCP output used temporary image asset URLs for donut segment slices. The code uses durable SVG paths and DLS tokens instead.",
+    "Figma hover is implemented as a static prop-driven state rather than browser hover behavior because the design exposes it as a variant."
+  ],
+  "_meta": {
+    "generatedAt": "2026-06-08T00:00:00.000Z",
+    "generator": "codex-manual@1.0.0",
+    "sourceHash": "figma-node-6644-18708"
+  }
+}

@@ -280,7 +280,7 @@
   --dls-color-component-dropdown-bg: var(--dls-color-surface-base);
   --dls-color-component-dropdown-border: var(--dls-color-border-base);
   --dls-color-component-dropdown-item-fg: var(--dls-color-text-primary);
-  --dls-color-component-sidebar-bg: var(--dls-color-surface-subtle);
+  --dls-color-component-sidebar-bg: var(--dls-color-surface-base);
   --dls-color-component-sidebar-border: var(--dls-color-border-subtle);
   --dls-color-component-sidebar-item-fg-base: var(--dls-color-intent-neutral-text);
   --dls-color-component-sidebar-item-fg-active: var(--dls-color-intent-neutral-on-base);
@@ -368,6 +368,38 @@
   --dls-color-component-legend-item-swatch-orange-300: var(--dls-color-additional-orange-300);
   --dls-color-component-legend-item-swatch-orange-500: var(--dls-color-additional-orange-500);
   --dls-color-component-legend-item-swatch-orange-700: var(--dls-color-additional-orange-700);
+
+  /* Bar chart item */
+  --dls-color-component-bar-chart-item-bar-default: var(--dls-color-additional-orange-500);
+  --dls-color-component-bar-chart-item-bar-stack-primary: var(--dls-color-additional-teal-500);
+  --dls-color-component-bar-chart-item-bar-stack-secondary: var(--dls-color-additional-orange-500);
+  --dls-color-component-bar-chart-item-bar-positive: var(--dls-color-additional-teal-500);
+  --dls-color-component-bar-chart-item-bar-negative: var(--dls-color-intent-danger-base);
+  --dls-color-component-bar-chart-item-bar-overlay-active: var(--dls-color-opacity-light-40);
+  --dls-color-component-bar-chart-item-bar-border-active: var(--dls-color-border-inverse);
+  --dls-color-component-bar-chart-item-label-fg: var(--dls-color-text-secondary);
+
+  /* Bar */
+  --dls-color-component-bar-segment-pink: var(--dls-color-additional-pink-500);
+  --dls-color-component-bar-segment-orange: var(--dls-color-additional-orange-500);
+  --dls-color-component-bar-segment-teal: var(--dls-color-additional-teal-500);
+  --dls-color-component-bar-label-fg: var(--dls-color-text-secondary);
+
+  /* Pie */
+  --dls-color-component-pie-segment-pink: var(--dls-color-additional-pink-500);
+  --dls-color-component-pie-segment-teal: var(--dls-color-additional-teal-500);
+  --dls-color-component-pie-segment-cinnamon: var(--dls-color-additional-cinnamon-500);
+  --dls-color-component-pie-segment-blue: var(--dls-color-additional-blue-500);
+  --dls-color-component-pie-segment-yellow: var(--dls-color-additional-yellow-500);
+  --dls-color-component-pie-segment-border: var(--dls-color-border-inverse);
+
+  /* Trend chart */
+  --dls-color-component-trend-chart-series-danger: var(--dls-color-intent-danger-base);
+  --dls-color-component-trend-chart-series-green: var(--dls-color-additional-green-500);
+  --dls-color-component-trend-chart-series-yellow: var(--dls-color-additional-yellow-500);
+  --dls-color-component-trend-chart-series-blue: var(--dls-color-additional-blue-500);
+  --dls-color-component-trend-chart-series-pink: var(--dls-color-additional-pink-500);
+  --dls-color-component-trend-chart-series-violet: var(--dls-color-additional-violet-500);
 
   /* Tab */
   --dls-color-component-tab-fg-base: var(--dls-color-text-secondary);
@@ -629,6 +661,7 @@
   --dls-radius-component-alert: var(--dls-radius-l);
   --dls-radius-component-badge: var(--dls-radius-full);
   --dls-radius-component-badge-number: var(--dls-radius-m);
+  --dls-radius-component-bar-chart-item: var(--dls-radius-m);
   --dls-radius-component-breadcrumb: var(--dls-radius-s);
   --dls-radius-component-button: var(--dls-radius-m);
   --dls-radius-component-calendar: var(--dls-radius-xl);

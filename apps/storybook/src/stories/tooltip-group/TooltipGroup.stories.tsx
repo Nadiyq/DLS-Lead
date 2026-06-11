@@ -3,6 +3,7 @@ import type React from 'react';
 import { expect } from 'storybook/test';
 import {
   TOOLTIP_GROUP_DEFAULT_ITEMS,
+  TOOLTIP_GROUP_POINTER_PLACEMENTS,
   TooltipGroup,
   type TooltipGroupItem,
 } from './TooltipGroup';
@@ -35,12 +36,14 @@ const meta = {
     items: { control: 'object' },
     total: { control: 'object' },
     showPointer: { control: 'boolean' },
+    pointerPlacement: { control: 'radio', options: TOOLTIP_GROUP_POINTER_PLACEMENTS },
   },
   args: {
     date: '1 Jan, 2026',
     items: TOOLTIP_GROUP_DEFAULT_ITEMS,
     total: { id: 'total', label: 'Total', value: '50%', unit: 'kcal', showSwatch: false },
     showPointer: true,
+    pointerPlacement: 'top',
   },
 } satisfies Meta<typeof TooltipGroup>;
 
@@ -63,6 +66,10 @@ const Matrix = ({ children }: { children: React.ReactNode }) => (
 export const Playground: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('tooltip', { name: 'Chart tooltip' })).toBeVisible();
+    await expect(canvas.getByRole('tooltip', { name: 'Chart tooltip' })).toHaveAttribute(
+      'data-pointer-placement',
+      'top',
+    );
   },
 };
 
@@ -83,6 +90,18 @@ export const FigmaDefault: Story = {
 export const WithoutPointer: Story = {
   args: {
     showPointer: false,
+  },
+};
+
+export const BottomPointer: Story = {
+  args: {
+    pointerPlacement: 'bottom',
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('tooltip', { name: 'Chart tooltip' })).toHaveAttribute(
+      'data-pointer-placement',
+      'bottom',
+    );
   },
 };
 
@@ -126,6 +145,7 @@ export const MatrixStates: Story = {
   render: () => (
     <Matrix>
       <TooltipGroup />
+      <TooltipGroup pointerPlacement="bottom" />
       <TooltipGroup showPointer={false} />
       <TooltipGroup date={null} />
       <TooltipGroup total={null} />

@@ -1,0 +1,123 @@
+{
+  "name": "Dot",
+  "kebabName": "dot",
+  "category": "data display / chart",
+  "description": "Chart data point marker with filled circle, white ring border, shadow, and optional numeric label for trend diagrams.",
+  "variants": [],
+  "intents": ["neutral", "primary", "info", "success", "warning", "danger"],
+  "sizes": ["xs", "s", "m"],
+  "props": [
+    {
+      "name": "size",
+      "type": "'xs' | 's' | 'm'",
+      "required": false,
+      "default": "xs",
+      "enum": ["xs", "s", "m"],
+      "description": "Marker size from the Figma dot component."
+    },
+    {
+      "name": "label",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Show the numeric label above the chart marker."
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "required": false,
+      "default": "120",
+      "description": "Numeric label text shown when label is true."
+    },
+    {
+      "name": "intent",
+      "type": "DotIntent",
+      "required": false,
+      "default": "danger",
+      "enum": ["neutral", "primary", "info", "success", "warning", "danger"],
+      "description": "Semantic color for the filled marker."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "tokens": [
+    "--dls-spacing-2",
+    "--dls-spacing-2-5",
+    "--dls-spacing-3",
+    "--dls-spacing-0-5",
+    "--dls-color-intent-neutral-base",
+    "--dls-color-intent-primary-base",
+    "--dls-color-intent-info-base",
+    "--dls-color-intent-success-base",
+    "--dls-color-intent-warning-base",
+    "--dls-color-intent-danger-base",
+    "--dls-color-surface-base",
+    "--dls-radius-component-badge",
+    "--dls-shadow-surface-sm",
+    "--dls-shadow-surface-md",
+    "--dls-color-text-primary",
+    "--dls-text-paragraph-s-font-size",
+    "--dls-text-paragraph-s-line-height",
+    "--dls-text-paragraph-s-light-font-weight"
+  ],
+  "states": {
+    "implementation": "none",
+    "rationale": "Passive chart marker. Visibility controlled by charting code, not by the component itself.",
+    "available": [
+      "[data-size]",
+      "[data-intent]"
+    ]
+  },
+  "composition": {
+    "forbiddenChildren": ["Button", "ListItem"]
+  },
+  "accessibility": {
+    "semanticElement": "span",
+    "requiredAria": [],
+    "keyboard": {},
+    "respectsReducedMotion": true,
+    "focusManagement": "not focusable"
+  },
+  "figma": {
+    "nodeId": "6635-5557",
+    "componentSetUrl": "https://www.figma.com/design/oKckNLXwLm5fYEmdXaynYB/DLS-Lead?node-id=6635-5557",
+    "propertyMapping": [
+      {
+        "figmaProperty": "size",
+        "reactProp": "size",
+        "valueMapping": {
+          "XS": "xs",
+          "S": "s",
+          "M": "m"
+        }
+      },
+      {
+        "figmaProperty": "label",
+        "reactProp": "label"
+      },
+      {
+        "figmaProperty": "text",
+        "reactProp": "text"
+      }
+    ]
+  },
+  "useWhen": [
+    "Highlighting a hovered data point on a line/area/trend chart",
+    "Showing a value label above a chart data point on hover"
+  ],
+  "doNotUseFor": [
+    "Status indicators — use BadgeIndicator",
+    "Legend swatches — use LegendItem",
+    "Notification dots — use BadgeIndicator"
+  ],
+  "relations": ["TooltipGroup", "LegendItem", "BadgeIndicator"],
+  "knownDeviations": [],
+  "_meta": {
+    "generatedAt": "2026-06-04T15:00:00.000Z",
+    "generator": "claude-code-manual@1.0.0",
+    "sourceHash": "dfc7cdabf2eb13b2"
+  }
+}
