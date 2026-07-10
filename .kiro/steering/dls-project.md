@@ -1,0 +1,64 @@
+---
+inclusion: always
+---
+
+# DLS-Lead Design System
+
+Token-driven design system for SaaS products. React + Storybook + CSS custom properties.
+
+## Commands
+
+```bash
+npm start                                    # Token reference site :3000
+cd apps/storybook && npm run storybook       # Storybook :6006
+cd apps/storybook && npx tsc -b              # TypeScript check
+```
+
+## Source of Truth
+
+`tokens/tokens.json` — DTCG-compliant, 4-layer model: L1 Primitives → L2 Semantics → L3 State → L4 Component.
+Generated outputs (don't hand-edit): `tokens/tokens.css`, `tokens/tokens.scss`, `tokens/tokens.ts`.
+
+## LLM Specs
+
+Before writing or modifying UI code, read the repo-local specs:
+
+1. `specs/session-start.md`
+2. `specs/tokens/README.md` and `specs/tokens/token-reference.md`
+3. Relevant files in `specs/foundations/`, `specs/patterns/`, and `specs/components/`
+4. For generated React UI, `specs/foundations/accessibility.md` and `specs/patterns/accessibility-generation.md`
+
+These markdown files are the machine-readable design-system layer for AI agents. If a spec exists, look it up instead of guessing.
+
+## Prompt Library
+
+Reusable prompts for DLS-safe Claude, Cursor, Codex, and other coding-agent workflows live in `prompts/`.
+
+- Start with `prompts/base-agent-contract.md`
+- Use task prompts such as `prompts/settings-page.md`, `prompts/data-table-page.md`, `prompts/form-dialog.md`, `prompts/dropdown-menu.md`, `prompts/component-scaffold-from-figma.md`, `prompts/audit-fix-component.md`, and `prompts/token-addition.md`
+
+## Critical Rules
+
+- **Always check the library first.** Before writing any UI element, check `apps/storybook/src/stories/` and Storybook. Never build from scratch if a DLS component exists. If you can't find a component, stop and ask.
+- Components NEVER reference L1 primitives. Use L4 component → L2 semantic fallback.
+- Variants/intents/sizes via `data-*` attributes, never `.is-*`/`.has-*` classes.
+- Every component CSS starts with `all: unset; box-sizing: border-box;`.
+- `:hover:not(:disabled)`, `:focus-visible` (not `:focus`), focus ring via `box-shadow` (never `outline`).
+- No hardcoded colors, sizes, or radii. Use `--dls-radius-component-*`, never primitive `--dls-radius-*`.
+- Use semantic HTML, accessible names, keyboard behavior, and ARIA state relationships for every interactive component.
+- Tests should query by role and accessible name, not `getByTestId`, for user-facing UI.
+
+## Figma Workflow
+
+Uses the **official Figma MCP** (authenticated via Figma MCP Auth). Key tools: `use_figma`, `get_screenshot`, `get_design_context`, `search_design_system`, `get_variable_defs`.
+
+## Repo Layout
+
+```
+tokens/              → tokens.json (source), generated .css/.scss/.ts, figma-sync-4layer.js
+apps/storybook/      → React components + stories (Vite + Storybook 10)
+specs/               → LLM-readable foundation, token, pattern, and component specs
+prompts/             → Copy-paste prompt library for DLS-safe agent workflows
+.claude/skills/      → Detailed instructions per domain (read these for deep guidance)
+index.html + server.js → Token reference documentation site
+```
